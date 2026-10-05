@@ -25,3 +25,20 @@
 .font-sans-bn {
   font-family: 'Hind Siliguri', sans-serif;
 }
+
+.font-solaiman {
+  font-family: 'SolaimanLipi', 'Solaiman Lipi', 'Hind Siliguri', system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'ArmWrestler';
+  src: url('/fonts/ArmWrestler.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-armwrestler {
+  font-family: 'ArmWrestler', 'Plus Jakarta Sans', system-ui, sans-serif;
+  letter-spacing: 0.05em;
+}

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { FeaturesRibbon } from './components/FeaturesRibbon';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
 import { StatsSection } from './components/StatsSection';
@@ -15,16 +14,40 @@ import { Footer } from './components/Footer';
 import { DonationModal } from './components/DonationModal';
 import { ZakatCalculatorModal } from './components/ZakatCalculatorModal';
 import { VolunteerModal } from './components/VolunteerModal';
+import { AboutPage } from './pages/AboutPage';
 import { Project } from './types';
 import { Heart } from 'lucide-react';
 
 export function App() {
+  const [currentPage, setCurrentPage] = useState<'home' | 'about'>(() => {
+    return window.location.hash === '#about-page' ? 'about' : 'home';
+  });
+
   const [isDonationOpen, setIsDonationOpen] = useState(false);
   const [donationCategory, setDonationCategory] = useState<string>('সাধারণ সদকা ও দান');
   const [donationAmount, setDonationAmount] = useState<number>(1000);
 
   const [isZakatOpen, setIsZakatOpen] = useState(false);
   const [isVolunteerOpen, setIsVolunteerOpen] = useState(false);
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#about-page') {
+        setCurrentPage('about');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setCurrentPage('home');
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const navigateTo = (page: 'home' | 'about') => {
+    setCurrentPage(page);
+    window.location.hash = page === 'about' ? 'about-page' : '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleOpenDonation = (category?: string, amount?: number) => {
     if (category) setDonationCategory(category);
@@ -50,53 +73,71 @@ export function App() {
       
       {/* Top Header */}
       <Header
+        currentPage={currentPage}
+        onNavigateHome={() => navigateTo('home')}
+        onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenZakat={() => setIsZakatOpen(true)}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
 
       <main className="flex-1">
-        {/* Hero Banner */}
-        <Hero
-          onOpenDonation={() => handleOpenDonation()}
-          onOpenZakat={() => setIsZakatOpen(true)}
-        />
+        {currentPage === 'about' ? (
+          /* Dedicated Separate About Us Page with Mission & Vision */
+          <AboutPage
+            onBackToHome={() => navigateTo('home')}
+            onOpenVolunteer={() => setIsVolunteerOpen(true)}
+            onOpenDonation={(cat) => handleOpenDonation(cat)}
+          />
+        ) : (
+          /* Full Home Page Flow */
+          <>
+            {/* Hero Banner */}
+            <Hero
+              onNavigateToAbout={() => navigateTo('about')}
+              onOpenDonation={() => handleOpenDonation()}
+              onOpenZakat={() => setIsZakatOpen(true)}
+            />
 
-        {/* Feature Highlights Ribbon */}
-        <FeaturesRibbon />
+            {/* About Organization Summary */}
+            <AboutSection 
+              onNavigateToAbout={() => navigateTo('about')}
+              onOpenVolunteer={() => setIsVolunteerOpen(true)} 
+            />
 
-        {/* About Organization */}
-        <AboutSection onOpenVolunteer={() => setIsVolunteerOpen(true)} />
+            {/* Services / Mission & Vision Initiatives */}
+            <ServicesSection
+              onSelectServiceDonation={(title) => handleOpenDonation(title)}
+            />
 
-        {/* Services & Initiatives */}
-        <ServicesSection
-          onSelectServiceDonation={(title) => handleOpenDonation(title)}
-        />
+            {/* Key Statistics */}
+            <StatsSection />
 
-        {/* Key Statistics */}
-        <StatsSection />
+            {/* Running Projects with Fund Tracking */}
+            <ProjectsSection onDonateToProject={handleDonateToProject} />
 
-        {/* Running Projects with Fund Tracking */}
-        <ProjectsSection onDonateToProject={handleDonateToProject} />
+            {/* Bogura Prayer Times & Hadith */}
+            <PrayerTimesBogura />
 
-        {/* Bogura Prayer Times & Hadith */}
-        <PrayerTimesBogura />
+            {/* Call to Action Banner */}
+            <CallToActionBanner onOpenDonation={() => handleOpenDonation()} />
 
-        {/* Call to Action Banner */}
-        <CallToActionBanner onOpenDonation={() => handleOpenDonation()} />
+            {/* Photo Gallery & Lightbox */}
+            <GallerySection />
 
-        {/* Photo Gallery & Lightbox */}
-        <GallerySection />
+            {/* News & Updates */}
+            <NewsSection />
 
-        {/* News & Updates */}
-        <NewsSection />
-
-        {/* Contact & Map */}
-        <ContactSection />
+            {/* Contact & Map */}
+            <ContactSection />
+          </>
+        )}
       </main>
 
       {/* Institutional Footer */}
       <Footer
+        onNavigateHome={() => navigateTo('home')}
+        onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenZakat={() => setIsZakatOpen(true)}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}

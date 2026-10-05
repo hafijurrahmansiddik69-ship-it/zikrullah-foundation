@@ -1,12 +1,16 @@
 import React from 'react';
-import { Check, Users, ArrowUpRight, Award, Compass, HeartHandshake } from 'lucide-react';
+import { Check, Users, ArrowUpRight, Award, Compass, ArrowRight } from 'lucide-react';
 import { heroImg, FOUNDATION_INFO } from '../data/mockData';
 
 interface AboutSectionProps {
   onOpenVolunteer: () => void;
+  onNavigateToAbout?: () => void;
 }
 
-export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVolunteer }) => {
+export const AboutSection: React.FC<AboutSectionProps> = ({ 
+  onOpenVolunteer,
+  onNavigateToAbout 
+}) => {
   return (
     <section id="about" className="py-20 bg-[#fafcfb] border-b border-emerald-100/60">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -17,8 +21,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVolunteer }) =
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl overflow-hidden border border-emerald-100 shadow-xl shadow-emerald-950/5 aspect-4/5 bg-slate-100">
               <img
-                src={heroImg}
-                alt="জিকিরুল্লাহ ফাউন্ডেশন কার্যক্রম"
+                src={FOUNDATION_INFO.aboutImageUrl || heroImg}
+                alt="জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center"
               />
@@ -65,7 +69,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVolunteer }) =
             </h2>
 
             {/* User exact primary statement */}
-            <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-6 font-medium bg-emerald-50/60 p-5 rounded-2xl border-l-4 border-[#087443]">
+            <p className="font-solaiman text-slate-800 text-base sm:text-lg lg:text-xl leading-relaxed mb-6 font-normal bg-emerald-50/70 p-5 rounded-2xl border-l-4 border-[#087443]">
               “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
             </p>
 
@@ -134,10 +138,18 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVolunteer }) =
             </div>
 
             {/* Actions */}
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3.5">
+              <button
+                onClick={onNavigateToAbout}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-sm shadow-md shadow-emerald-800/20 transition-all cursor-pointer"
+              >
+                <span>আমাদের লক্ষ্য ও উদ্দেশ্য জানুন</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
               <button
                 onClick={onOpenVolunteer}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-sm shadow-md shadow-emerald-800/20 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 font-semibold text-sm transition-all cursor-pointer"
               >
                 <Users className="w-4 h-4" />
                 <span>স্বেচ্ছাসেবক হিসেবে যোগ দিন</span>
@@ -145,9 +157,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVolunteer }) =
 
               <a
                 href="#contact"
-                className="inline-flex items-center gap-1.5 px-5 py-3 rounded-full bg-emerald-50 text-emerald-800 hover:bg-emerald-100 font-semibold text-sm transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-3 text-slate-600 hover:text-emerald-800 font-semibold text-sm transition-colors cursor-pointer"
               >
-                <span>যোগাযোগ করুন</span>
+                <span>যোগাযোগ</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>

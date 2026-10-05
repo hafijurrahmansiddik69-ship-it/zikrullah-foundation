@@ -100,7 +100,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               <h3 className="font-serif-bn font-bold text-xl leading-tight">
                 মানবতার সেবায় দান করুন
               </h3>
-              <p className="text-xs text-emerald-200 font-light">
+              <p className="text-xs text-emerald-200 font-solaiman tracking-wide font-light">
                 {FOUNDATION_INFO.name} · {FOUNDATION_INFO.slogan}
               </p>
             </div>

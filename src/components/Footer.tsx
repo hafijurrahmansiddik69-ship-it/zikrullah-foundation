@@ -6,12 +6,16 @@ interface FooterProps {
   onOpenDonation: () => void;
   onOpenZakat: () => void;
   onOpenVolunteer: () => void;
+  onNavigateToAbout?: () => void;
+  onNavigateHome?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenDonation,
   onOpenZakat,
-  onOpenVolunteer
+  onOpenVolunteer,
+  onNavigateToAbout,
+  onNavigateHome
 }) => {
   return (
     <footer className="bg-[#002e1d] text-emerald-100/90 pt-16 pb-8 border-t border-emerald-950">
@@ -23,14 +27,18 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Brand Col (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-emerald-800/60 border border-emerald-600/40 flex items-center justify-center text-white text-2xl shadow-inner">
-                🕌
+              <div className="w-12 h-12 rounded-2xl bg-white/10 border border-emerald-500/30 p-1 flex items-center justify-center shadow-inner overflow-hidden">
+                <img
+                  src={FOUNDATION_INFO.logoUrl}
+                  alt={FOUNDATION_INFO.name}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
                 <h3 className="font-serif-bn font-bold text-2xl text-white tracking-tight leading-tight">
                   {FOUNDATION_INFO.name}
                 </h3>
-                <span className="text-[10px] tracking-widest text-emerald-400 font-semibold uppercase font-sans">
+                <span className="font-armwrestler text-sm sm:text-base font-bold text-emerald-300 uppercase tracking-wider block mt-1">
                   {FOUNDATION_INFO.englishName}
                 </span>
               </div>
@@ -58,19 +66,57 @@ export const Footer: React.FC<FooterProps> = ({
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
               <li>
-                <a href="#home" className="hover:text-white transition-colors">হোমপেজ</a>
+                <button
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome();
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer text-left"
+                >
+                  হোমপেজ
+                </button>
               </li>
               <li>
-                <a href="#about" className="hover:text-white transition-colors">আমাদের পরিচয়</a>
+                <button
+                  onClick={() => {
+                    if (onNavigateToAbout) onNavigateToAbout();
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer text-left"
+                >
+                  আমাদের সম্পর্কে (লক্ষ্য ও উদ্দেশ্য)
+                </button>
               </li>
               <li>
-                <a href="#services" className="hover:text-white transition-colors">সেবাসমূহ</a>
+                <a
+                  href="#services"
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome();
+                  }}
+                  className="hover:text-white transition-colors"
+                >
+                  লক্ষ্য ও উদ্দেশ্য
+                </a>
               </li>
               <li>
-                <a href="#projects" className="hover:text-white transition-colors">চলমান প্রকল্প</a>
+                <a
+                  href="#projects"
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome();
+                  }}
+                  className="hover:text-white transition-colors"
+                >
+                  চলমান প্রকল্প
+                </a>
               </li>
               <li>
-                <a href="#prayer" className="hover:text-white transition-colors">নামাজের সময়</a>
+                <a
+                  href="#prayer"
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome();
+                  }}
+                  className="hover:text-white transition-colors"
+                >
+                  নামাজের সময়
+                </a>
               </li>
             </ul>
           </div>
@@ -157,7 +203,7 @@ export const Footer: React.FC<FooterProps> = ({
             © {new Date().getFullYear()} {FOUNDATION_INFO.name}। সর্বস্বত্ব সংরক্ষিত।
           </div>
           <div className="flex items-center gap-4 text-emerald-300">
-            <span>মানবতার সেবায় • ইসলামের পথে</span>
+            <span className="font-solaiman tracking-wide">কুরআন-সুন্নাহর আলোকে • উম্মাহর খেদমতে</span>
             <span>·</span>
             <span>বগুড়া, বাংলাদেশ</span>
           </div>

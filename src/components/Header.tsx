@@ -6,12 +6,18 @@ interface HeaderProps {
   onOpenDonation: (category?: string) => void;
   onOpenZakat: () => void;
   onOpenVolunteer: () => void;
+  onNavigateToAbout?: () => void;
+  onNavigateHome?: () => void;
+  currentPage?: 'home' | 'about';
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenDonation,
   onOpenZakat,
-  onOpenVolunteer
+  onOpenVolunteer,
+  onNavigateToAbout,
+  onNavigateHome,
+  currentPage = 'home'
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -28,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{FOUNDATION_INFO.address}</span>
             </span>
             <span className="hidden md:inline text-emerald-300/60">•</span>
-            <span className="hidden md:inline-flex items-center text-emerald-300 font-medium">
+            <span className="hidden md:inline-flex items-center text-emerald-300 font-solaiman text-xs sm:text-[13px] tracking-wide">
               {FOUNDATION_INFO.slogan}
             </span>
           </div>
@@ -58,66 +64,109 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
           
           {/* Brand Wordmark (Zone 1) */}
-          <a href="#home" className="flex items-center gap-3 group shrink-0">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-sm group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
-              <span className="text-2xl" role="img" aria-label="Mosque">🕌</span>
+          <button
+            onClick={() => {
+              if (onNavigateHome) onNavigateHome();
+            }}
+            className="flex items-center gap-3 group shrink-0 text-left cursor-pointer"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-white border border-emerald-200/90 p-1 flex items-center justify-center shadow-xs overflow-hidden group-hover:scale-105 transition-all duration-300">
+              <img
+                src={FOUNDATION_INFO.logoUrl}
+                alt={FOUNDATION_INFO.name}
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  // Fallback if image fails to load
+                  (e.currentTarget as HTMLElement).style.display = 'none';
+                }}
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] leading-tight tracking-tight">
                 {FOUNDATION_INFO.name}
               </span>
-              <span className="text-[10px] tracking-widest font-semibold text-emerald-800 uppercase font-sans">
+              <span className="font-armwrestler text-xs sm:text-[13.5px] font-bold text-emerald-800 uppercase tracking-wider leading-none mt-1">
                 {FOUNDATION_INFO.englishName}
               </span>
             </div>
-          </a>
+          </button>
 
           {/* Navigation Links (Zone 2) */}
           <nav className="hidden lg:flex items-center gap-1 text-[15px] font-medium text-slate-700">
-            <a
-              href="#home"
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
+            <button
+              onClick={() => {
+                if (onNavigateHome) onNavigateHome();
+              }}
+              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer ${
+                currentPage === 'home'
+                  ? 'text-emerald-800 bg-emerald-50/90 font-semibold'
+                  : 'hover:text-emerald-700 hover:bg-emerald-50/70'
+              }`}
             >
               হোম
-            </a>
-            <a
-              href="#about"
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
+            </button>
+            <button
+              onClick={() => {
+                if (onNavigateToAbout) onNavigateToAbout();
+              }}
+              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer ${
+                currentPage === 'about'
+                  ? 'text-emerald-800 bg-emerald-50/90 font-semibold'
+                  : 'hover:text-emerald-700 hover:bg-emerald-50/70'
+              }`}
             >
               আমাদের সম্পর্কে
-            </a>
+            </button>
             <a
               href="#services"
+              onClick={() => {
+                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+              }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
-              সেবাসমূহ
+              লক্ষ্য ও উদ্দেশ্য
             </a>
             <a
               href="#projects"
+              onClick={() => {
+                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+              }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               চলমান প্রকল্প
             </a>
             <a
               href="#prayer"
+              onClick={() => {
+                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+              }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               নামাজের সময়
             </a>
             <a
               href="#gallery"
+              onClick={() => {
+                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+              }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               গ্যালারি
             </a>
             <a
               href="#news"
+              onClick={() => {
+                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+              }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               খবর
             </a>
             <a
               href="#contact"
+              onClick={() => {
+                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+              }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               যোগাযোগ
@@ -158,58 +207,88 @@ export const Header: React.FC<HeaderProps> = ({
         {mobileMenuOpen && (
           <div className="lg:hidden bg-white border-b border-emerald-100 px-4 pt-3 pb-6 shadow-xl animate-in fade-in duration-200">
             <nav className="flex flex-col space-y-1 text-base font-medium text-slate-800">
-              <a
-                href="#home"
-                onClick={closeMobileMenu}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
+              <button
+                onClick={() => {
+                  closeMobileMenu();
+                  if (onNavigateHome) onNavigateHome();
+                }}
+                className={`text-left px-3 py-2.5 rounded-lg ${
+                  currentPage === 'home'
+                    ? 'bg-emerald-50 text-emerald-800 font-bold'
+                    : 'hover:bg-emerald-50 hover:text-emerald-800'
+                }`}
               >
                 হোম
-              </a>
-              <a
-                href="#about"
-                onClick={closeMobileMenu}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
+              </button>
+              <button
+                onClick={() => {
+                  closeMobileMenu();
+                  if (onNavigateToAbout) onNavigateToAbout();
+                }}
+                className={`text-left px-3 py-2.5 rounded-lg ${
+                  currentPage === 'about'
+                    ? 'bg-emerald-50 text-emerald-800 font-bold'
+                    : 'hover:bg-emerald-50 hover:text-emerald-800'
+                }`}
               >
                 আমাদের সম্পর্কে
-              </a>
+              </button>
               <a
                 href="#services"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+                }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
-                সেবাসমূহ
+                লক্ষ্য ও উদ্দেশ্য
               </a>
               <a
                 href="#projects"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+                }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 চলমান প্রকল্প
               </a>
               <a
                 href="#prayer"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+                }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 নামাজের সময়সূচি
               </a>
               <a
                 href="#gallery"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+                }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 গ্যালারি
               </a>
               <a
                 href="#news"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+                }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 সাম্প্রতিক খবর
               </a>
               <a
                 href="#contact"
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
+                }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 যোগাযোগ

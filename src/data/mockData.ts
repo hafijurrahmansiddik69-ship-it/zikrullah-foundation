@@ -1,16 +1,65 @@
 import { Project, ServiceItem, NewsItem, GalleryItem } from '../types';
 
-import heroImg from '../assets/images/hero_charity_aid_1791208739853.jpg';
+const heroImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1791214336/bfl9h9ic5e2zvkynca1b.jpg";
 import foodImg from '../assets/images/food_aid_relief_1791208757690.jpg';
 import eduImg from '../assets/images/education_aid_students_1791208774675.jpg';
 import medImg from '../assets/images/medical_camp_aid_1791208791787.jpg';
+import scholar1 from '../assets/images/scholar_portrait_1_1791215646908.jpg';
+import scholar2 from '../assets/images/scholar_portrait_2_1791215662651.jpg';
+import scholar3 from '../assets/images/scholar_portrait_3_1791215675188.jpg';
+import scholar4 from '../assets/images/scholar_portrait_4_1791215689324.jpg';
+import scholar5 from '../assets/images/scholar_portrait_5_1791215706422.jpg';
+import scholar6 from '../assets/images/scholar_portrait_6_1791215718775.jpg';
 
-export { heroImg, foodImg, eduImg, medImg };
+export { heroImg, foodImg, eduImg, medImg, scholar1, scholar2, scholar3, scholar4, scholar5, scholar6 };
+
+export const EXECUTIVE_MEMBERS = [
+  {
+    id: 1,
+    name: 'ড. মুহাম্মদ হাবিবুল্লাহ',
+    role: 'ভাইস-চেয়ারম্যান',
+    image: scholar1,
+  },
+  {
+    id: 2,
+    name: 'ড. মুহাম্মদ নূরে আলম',
+    role: 'কোষাধ্যক্ষ',
+    image: scholar2,
+  },
+  {
+    id: 3,
+    name: 'আব্দুর রহমান সালাফী',
+    role: 'ট্রাস্টি',
+    image: scholar3,
+  },
+  {
+    id: 4,
+    name: 'শায়খ আব্দুল হাই মিশকাতী',
+    role: 'ট্রাস্টি',
+    image: scholar4,
+  },
+  {
+    id: 5,
+    name: 'আবু আসাদুল্লাহ',
+    role: 'ট্রাস্টি',
+    image: scholar5,
+  },
+  {
+    id: 6,
+    name: 'সাইফুল ইসলাম',
+    role: 'ট্রাস্টি',
+    image: scholar6,
+  },
+];
 
 export const FOUNDATION_INFO = {
   name: "জিকরুল্লাহ ফাউন্ডেশন",
   englishName: "ZIKRULLAH FOUNDATION",
-  slogan: "মানবতার সেবায়, ইসলামের পথে",
+  logoUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791212936/xkufns6zn3c7rhaccxo2.png",
+  homeBackgroundUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791214336/bfl9h9ic5e2zvkynca1b.jpg",
+  aboutImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",
+  founderImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",
+  slogan: "কুরআন-সুন্নাহর আলোকে, উম্মাহর খেদমতে",
   motto: "সৎকাজ, ইসলামের আদর্শ ও মানবতার সেবাই আমাদের পথচলা।",
   founder: "হাফিজুর রহমান সিদ্দিক (বগুড়া)",
   established: "১লা জানুয়ারি ২০২৩",
@@ -30,34 +79,6 @@ export const FOUNDATION_INFO = {
     routingNumber: "125272183"
   }
 };
-
-export const FEATURE_LIST = [
-  {
-    icon: "🤝",
-    title: "মানবসেবা",
-    desc: "অসহায় ও বিপন্ন মানুষের তাৎক্ষণিক খাদ্য ও মৌলিক সহায়তা"
-  },
-  {
-    icon: "🕌",
-    title: "ইসলাম প্রচার",
-    desc: "কুরআন-সুন্নাহর সঠিক শিক্ষা ও দাওয়াহ প্রসার"
-  },
-  {
-    icon: "📖",
-    title: "শিক্ষা সহায়তা",
-    desc: "দরিদ্র ও এতিম শিক্ষার্থীদের শিক্ষা উপকরণ ও উপবৃত্তি"
-  },
-  {
-    icon: "❤",
-    title: "স্বাস্থ্যসেবা",
-    desc: "বিনামূল্যে চিকিৎসা ক্যাম্প, ঔষধ ও চিকিৎসা ব্যয় সহায়তা"
-  },
-  {
-    icon: "🌱",
-    title: "সমাজ উন্নয়ন",
-    desc: "কর্মসংস্থান সৃষ্টি, সুপেয় পানি ও দুর্যোগকালীন ত্রাণ কার্যক্রম"
-  }
-];
 
 export const SERVICES: ServiceItem[] = [
   {
