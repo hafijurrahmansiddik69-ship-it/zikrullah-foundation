@@ -87,26 +87,26 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onDonateToProj
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-6 sm:p-7">
+                  <div className="p-5 sm:p-7">
                     
                     {/* Metadata line */}
-                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-500 mb-2.5 sm:mb-3">
                       <span className="flex items-center gap-1 text-emerald-700 font-medium">
-                        <MapPin className="w-3.5 h-3.5" />
+                        <MapPin className="w-3.5 h-3.5 shrink-0" />
                         <span>{project.location}</span>
                       </span>
                       <span>·</span>
                       <span className="flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5" />
+                        <Users className="w-3.5 h-3.5 shrink-0" />
                         <span>উপকারভোগী: {project.beneficiaries}</span>
                       </span>
                     </div>
 
-                    <h3 className="font-serif-bn font-bold text-xl sm:text-2xl text-slate-800 leading-snug mb-3">
+                    <h3 className="font-serif-bn font-bold text-lg sm:text-2xl text-slate-800 leading-snug mb-2 sm:mb-3">
                       {project.title}
                     </h3>
 
-                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">
                       {project.description}
                     </p>
 
@@ -141,10 +141,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onDonateToProj
                 </div>
 
                 {/* Card Action Footer */}
-                <div className="px-6 sm:px-7 pb-6 pt-2">
+                <div className="px-5 sm:px-7 pb-5 sm:pb-6 pt-2">
                   <button
                     onClick={() => onDonateToProject(project)}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-sm transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-3 sm:py-3.5 px-4 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer min-h-[44px]"
                   >
                     <Heart className="w-4 h-4 fill-white" />
                     <span>এই প্রকল্পে সহায়তা করুন</span>

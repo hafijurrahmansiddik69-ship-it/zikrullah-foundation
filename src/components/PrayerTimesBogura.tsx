@@ -45,44 +45,44 @@ export const PrayerTimesBogura: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Prayer Times Card (7 columns) */}
-          <div className="lg:col-span-7 bg-[#fafcfb] rounded-3xl p-6 sm:p-8 border border-emerald-100 shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-emerald-100/80">
+          <div className="lg:col-span-7 bg-[#fafcfb] rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-emerald-100 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 mb-5 pb-4 border-b border-emerald-100/80">
               <div>
                 <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block mb-1">
                   দৈনিক ওয়াক্ত
                 </span>
-                <h3 className="font-serif-bn font-bold text-2xl text-[#045332]">
+                <h3 className="font-serif-bn font-bold text-lg sm:text-2xl text-[#045332]">
                   নামাজের সময়সূচি (বগুড়া ও পার্শ্ববর্তী এলাকা)
                 </h3>
               </div>
-              <div className="text-right">
-                <span className="text-[11px] text-slate-500 block">বর্তমান সময়</span>
-                <span className="text-sm font-bold text-emerald-800 font-mono">
+              <div className="text-left sm:text-right">
+                <span className="text-[10px] sm:text-[11px] text-slate-500 block">বর্তমান সময়</span>
+                <span className="text-xs sm:text-sm font-bold text-emerald-800 font-mono">
                   {currentTimeStr || 'লোড হচ্ছে...'}
                 </span>
               </div>
             </div>
 
             {/* Prayers Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
               {prayerSchedule.map((p, idx) => {
                 const IconComponent = p.icon;
                 return (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-white border border-emerald-100 hover:border-emerald-300 transition-all text-center flex flex-col items-center justify-center group"
+                    className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-emerald-100 hover:border-emerald-300 transition-all text-center flex flex-col items-center justify-center group"
                   >
-                    <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                      <IconComponent className="w-4 h-4" />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mb-1.5 sm:mb-2 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                      <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
-                    <span className="font-bold text-slate-800 text-sm">{p.nameBn}</span>
+                    <span className="font-bold text-slate-800 text-xs sm:text-sm">{p.nameBn}</span>
                     <span className="text-[10px] text-slate-400 font-sans uppercase mb-1">
                       {p.nameEn}
                     </span>
-                    <span className="text-emerald-800 font-bold text-base font-mono tabular-nums">
+                    <span className="text-emerald-800 font-bold text-sm sm:text-base font-mono tabular-nums">
                       {p.time}
                     </span>
-                    <span className="text-[11px] text-slate-500 mt-1">
+                    <span className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">
                       {p.status}
                     </span>
                   </div>
@@ -90,13 +90,13 @@ export const PrayerTimesBogura: React.FC = () => {
               })}
             </div>
 
-            <p className="text-xs text-slate-500 mt-4 text-center">
+            <p className="text-[11px] sm:text-xs text-slate-500 mt-3 sm:mt-4 text-center">
               * মোকামতলা, গুজিয়া ও বগুড়া জেলার স্থানীয় ওয়াক্ত অনুযায়ী সময় নির্ধারণ করা হয়েছে।
             </p>
           </div>
 
           {/* Daily Inspiring Hadith & Reflection Card (5 columns) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-[#045332] to-[#003d27] text-white rounded-3xl p-7 sm:p-8 shadow-lg flex flex-col justify-between h-full min-h-[360px]">
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#045332] to-[#003d27] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-lg flex flex-col justify-between h-full min-h-[320px]">
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/60 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">

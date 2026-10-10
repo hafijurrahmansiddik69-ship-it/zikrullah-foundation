@@ -85,29 +85,29 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
       <div
-        className="bg-white rounded-3xl max-w-xl w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-6 text-slate-800"
+        className="bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Ribbon */}
-        <div className="bg-[#045332] text-white px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center">
-              <Heart className="w-5 h-5 text-emerald-300 fill-emerald-300" />
+        <div className="bg-[#045332] text-white px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300 fill-emerald-300" />
             </div>
-            <div>
-              <h3 className="font-serif-bn font-bold text-xl leading-tight">
+            <div className="min-w-0">
+              <h3 className="font-serif-bn font-bold text-lg sm:text-xl leading-tight truncate">
                 মানবতার খেদমতে শরীক হোন
               </h3>
-              <p className="text-xs text-emerald-200 font-solaiman tracking-wide font-light">
+              <p className="text-[11px] sm:text-xs text-emerald-200 font-solaiman tracking-wide font-light truncate">
                 {FOUNDATION_INFO.name} · {FOUNDATION_INFO.slogan}
               </p>
             </div>
           </div>
           <button
             onClick={resetAndClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
+            className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
             aria-label="বন্ধ করুন"
           >
             <X className="w-5 h-5" />
@@ -115,7 +115,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-7 max-h-[80vh] overflow-y-auto">
+        <div className="p-4 sm:p-7 max-h-[82vh] overflow-y-auto">
           
           {/* STEP 1: Select Amount & Category */}
           {step === 1 && (
@@ -205,7 +205,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   পেমেন্ট মাধ্যম বেছে নিন
                 </label>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('bkash')}
@@ -436,10 +436,23 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 <Check className="w-8 h-8 stroke-[3]" />
               </div>
 
-              <h4 className="font-serif-bn font-bold text-2xl text-[#045332] mb-1">
-                জাযাকুমুল্লাহু খাইরান!
+              <h4 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-2">
+                ধন্যবাদ ও কৃতজ্ঞতা!
               </h4>
-              <p className="text-xs text-slate-600 mb-6">
+
+              {/* Arabic Blessing */}
+              <div className="mb-4 inline-flex items-center justify-center px-4 py-1.5 sm:px-5 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
+                <span
+                  dir="rtl"
+                  lang="ar"
+                  className="font-cairo text-xl sm:text-2xl text-[#045332] font-semibold sm:font-bold tracking-normal leading-[1.8] select-text"
+                  style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
+                >
+                  جَزَاكَ ٱللَّٰهُ خَيْرًا
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-600 mb-5 max-w-sm mx-auto">
                 আপনার অনুদান ও সদকা সফলভাবে গ্রহণ করা হয়েছে। মহান আল্লাহ আপনার দানকে কবুল করুন।
               </p>
 

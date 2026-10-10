@@ -17,11 +17,11 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateHome
 }) => {
   return (
-    <footer className="bg-[#002e1d] text-emerald-100/90 pt-16 pb-8 border-t border-emerald-950">
+    <footer className="bg-[#002e1d] text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-emerald-900/60">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-emerald-900/60">
           
           {/* Brand Col (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
@@ -188,13 +188,13 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-emerald-400/80">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-emerald-400/80">
           <div>
             © {new Date().getFullYear()} {FOUNDATION_INFO.name}। সর্বস্বত্ব সংরক্ষিত।
           </div>
-          <div className="flex items-center gap-4 text-emerald-300">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-emerald-300">
             <span className="font-solaiman tracking-wide">কুরআন-সুন্নাহর আলোকে • উম্মাহর খেদমতে</span>
-            <span>·</span>
+            <span className="hidden sm:inline">·</span>
             <span>বগুড়া, বাংলাদেশ</span>
           </div>
         </div>

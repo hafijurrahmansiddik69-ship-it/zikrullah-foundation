@@ -25,33 +25,35 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <>
       {/* Top Utility Bar */}
-      <div className="bg-[#003d27] text-emerald-100 text-xs sm:text-sm py-2 px-4 border-b border-emerald-900/50">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-            <span className="flex items-center gap-1.5 text-emerald-200">
-              <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>{FOUNDATION_INFO.address}</span>
+      <div className="bg-[#003d27] text-emerald-100 text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-emerald-900/50">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
+          {/* Location / Slogan */}
+          <div className="flex items-center gap-2 sm:gap-4 truncate">
+            <span className="flex items-center gap-1 text-emerald-200 truncate">
+              <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
+              <span className="truncate">{FOUNDATION_INFO.address}</span>
             </span>
             <span className="hidden md:inline text-emerald-300/60">•</span>
-            <span className="hidden md:inline-flex items-center text-emerald-300 font-solaiman text-xs sm:text-[13px] tracking-wide">
+            <span className="hidden md:inline-flex items-center text-emerald-300 font-solaiman text-[12px] tracking-wide">
               {FOUNDATION_INFO.slogan}
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-sans">
+          {/* Contact Details */}
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0 font-sans">
             <a
               href={`mailto:${FOUNDATION_INFO.email}`}
-              className="hover:text-white transition-colors flex items-center gap-1.5"
+              className="hover:text-white transition-colors hidden sm:flex items-center gap-1.5 text-emerald-200"
             >
               <Mail className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="hidden sm:inline">{FOUNDATION_INFO.email}</span>
+              <span>{FOUNDATION_INFO.email}</span>
             </a>
-            <span className="text-emerald-500/50">•</span>
+            <span className="hidden sm:inline text-emerald-500/50">•</span>
             <a
               href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
-              className="hover:text-white transition-colors flex items-center gap-1.5"
+              className="hover:text-white transition-colors flex items-center gap-1 text-emerald-200"
             >
-              <Phone className="w-3.5 h-3.5 text-emerald-400" />
+              <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
               <span>{FOUNDATION_INFO.phone}</span>
             </a>
           </div>
@@ -59,32 +61,31 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Main Sticky Header */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-sm transition-all">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-xs sm:shadow-sm transition-all">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Brand Wordmark (Zone 1) */}
           <button
             onClick={() => {
               if (onNavigateHome) onNavigateHome();
             }}
-            className="flex items-center gap-3 group shrink-0 text-left cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 group min-w-0 max-w-[62%] sm:max-w-none text-left cursor-pointer"
           >
-            <div className="w-12 h-12 rounded-2xl bg-white border border-emerald-200/90 p-1 flex items-center justify-center shadow-xs overflow-hidden group-hover:scale-105 transition-all duration-300">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white border border-emerald-200/90 p-0.5 sm:p-1 flex items-center justify-center shadow-xs overflow-hidden group-hover:scale-105 transition-all duration-300 shrink-0">
               <img
                 src={FOUNDATION_INFO.logoUrl}
                 alt={FOUNDATION_INFO.name}
                 className="w-full h-full object-contain"
                 onError={(e) => {
-                  // Fallback if image fails to load
                   (e.currentTarget as HTMLElement).style.display = 'none';
                 }}
               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] leading-tight tracking-tight">
+            <div className="flex flex-col min-w-0">
+              <span className="font-serif-bn font-bold text-base sm:text-2xl text-[#045332] leading-tight tracking-tight truncate">
                 {FOUNDATION_INFO.name}
               </span>
-              <span className="font-armwrestler text-sm sm:text-base font-bold text-emerald-800 uppercase tracking-wider leading-none mt-1">
+              <span className="font-armwrestler text-[11px] sm:text-base font-bold text-emerald-800 uppercase tracking-wider leading-none mt-0.5 sm:mt-1 truncate">
                 {FOUNDATION_INFO.englishName}
               </span>
             </div>
@@ -173,22 +174,24 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Action Buttons (Zone 3) */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <button
               onClick={() => onOpenDonation()}
-              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 text-sm font-bold text-white bg-[#087443] hover:bg-[#045332] active:scale-95 rounded-full shadow-md shadow-emerald-800/15 transition-all whitespace-nowrap cursor-pointer"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white bg-[#087443] hover:bg-[#045332] active:scale-95 rounded-full shadow-md shadow-emerald-800/15 transition-all whitespace-nowrap cursor-pointer shrink-0"
+              aria-label="দান করুন"
             >
-              <Heart className="w-4 h-4 fill-white" />
-              <span>খেদমতে শরীক হোন</span>
+              <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white shrink-0" />
+              <span className="hidden min-[400px]:inline">খেদমতে শরীক হোন</span>
+              <span className="min-[400px]:hidden">দান করুন</span>
             </button>
 
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-emerald-700 rounded-lg hover:bg-emerald-50 lg:hidden cursor-pointer"
+              className="p-2 sm:p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center text-slate-700 hover:text-emerald-700 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 lg:hidden cursor-pointer"
               aria-label="মেনু খুলুন"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-emerald-800" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>

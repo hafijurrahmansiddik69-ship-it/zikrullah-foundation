@@ -33,12 +33,12 @@ export const GallerySection: React.FC = () => {
         </div>
 
         {/* Filter buttons */}
-        <div className="flex flex-wrap items-center gap-2 mb-10 p-1.5 bg-emerald-50/70 border border-emerald-100 rounded-xl w-fit">
+        <div className="flex items-center gap-1.5 sm:gap-2 mb-8 sm:mb-10 p-1.5 bg-emerald-50/70 border border-emerald-100 rounded-xl max-w-full overflow-x-auto">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-3 sm:px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 activeCategory === cat
                   ? 'bg-[#087443] text-white shadow-xs'
                   : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-100/50'
@@ -92,30 +92,31 @@ export const GallerySection: React.FC = () => {
       {/* Lightbox Modal */}
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm animate-in fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-sm animate-in fade-in"
           onClick={() => setSelectedPhoto(null)}
         >
           <div
-            className="relative max-w-3xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-700"
+            className="relative max-w-3xl w-full bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-700 my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedPhoto(null)}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-900/70 text-white flex items-center justify-center hover:bg-slate-900 transition-colors cursor-pointer"
+              className="absolute top-3 right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-900/70 text-white flex items-center justify-center hover:bg-slate-900 transition-colors cursor-pointer"
+              aria-label="বন্ধ করুন"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
-            <div className="max-h-[65vh] overflow-hidden bg-slate-950 flex items-center justify-center">
+            <div className="max-h-[60vh] sm:max-h-[65vh] overflow-hidden bg-slate-950 flex items-center justify-center">
               <img
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
                 referrerPolicy="no-referrer"
-                className="w-full h-auto max-h-[65vh] object-contain"
+                className="w-full h-auto max-h-[60vh] sm:max-h-[65vh] object-contain"
               />
             </div>
 
-            <div className="p-6 bg-white">
+            <div className="p-4 sm:p-6 bg-white">
               <div className="flex items-center justify-between gap-4 mb-2">
                 <span className="text-xs font-bold text-emerald-700 uppercase">
                   {selectedPhoto.category}

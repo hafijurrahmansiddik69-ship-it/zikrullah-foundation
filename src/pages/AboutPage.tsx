@@ -59,33 +59,33 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Hero Banner Header of About Page */}
-        <div className="bg-gradient-to-br from-[#024a2c] via-[#045332] to-[#087443] text-white rounded-3xl p-8 sm:p-12 mb-12 shadow-xl shadow-emerald-950/10 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#024a2c] via-[#045332] to-[#087443] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 mb-8 sm:mb-12 shadow-xl shadow-emerald-950/10 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
           
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center text-center">
             {/* Arabic Bismillah */}
-            <div className="inline-flex items-center justify-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-emerald-900/60 border border-emerald-400/30 text-emerald-200 text-sm font-serif-bn">
+            <div className="inline-flex items-center justify-center gap-2 mb-3.5 sm:mb-4 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-900/60 border border-emerald-400/30 text-emerald-200 text-xs sm:text-sm font-serif-bn">
               <span>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
             </div>
 
-            <h1 className="font-serif-bn font-bold text-3xl sm:text-5xl text-white tracking-tight leading-[1.2] mb-3 text-center">
+            <h1 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-[1.2] mb-2 sm:mb-3 text-center">
               {FOUNDATION_INFO.name}
-              <span className="block text-emerald-300 font-solaiman text-lg sm:text-2xl lg:text-3xl mt-2.5 font-medium tracking-wide text-center">
+              <span className="block text-emerald-300 font-solaiman text-base sm:text-2xl lg:text-3xl mt-2 sm:mt-2.5 font-medium tracking-wide text-center">
                 কুরআন-সুন্নাহর আলোকে, উম্মাহর খেদমতে।
               </span>
             </h1>
-            <p className="text-emerald-100 text-sm sm:text-base lg:text-lg font-solaiman font-normal leading-relaxed mb-6 max-w-2xl text-center">
+            <p className="text-emerald-100 text-xs sm:text-base lg:text-lg font-solaiman font-normal leading-relaxed mb-5 sm:mb-6 max-w-2xl text-center">
               শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।
             </p>
 
             {/* Quick Metadata Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-emerald-100">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-sm text-emerald-100">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-400/20 shadow-xs">
-                <Award className="w-4 h-4 text-amber-300" />
+                <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 shrink-0" />
                 <span><strong>উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-400/20">
-                <Calendar className="w-4 h-4 text-emerald-300" />
+                <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
                 <span><strong>প্রতিষ্ঠাকাল:</strong> ১লা জানুয়ারি ২০২৩</span>
               </span>
             </div>
@@ -357,18 +357,18 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
           <div className="space-y-6">
             {/* Single Unified Professional Message Card */}
-            <div className="relative overflow-hidden bg-gradient-to-b from-white via-[#fafdfb] to-[#f4f8f5] rounded-3xl sm:rounded-[36px] p-6 sm:p-10 lg:p-12 border border-emerald-100 shadow-xl shadow-emerald-950/5">
+            <div className="relative overflow-hidden bg-gradient-to-b from-white via-[#fafdfb] to-[#f4f8f5] rounded-2xl sm:rounded-[36px] p-5 sm:p-10 lg:p-12 border border-emerald-100 shadow-xl shadow-emerald-950/5">
               
               {/* Background Watermark Quote Symbol */}
-              <div className="absolute top-4 right-8 text-emerald-900/[0.04] text-8xl sm:text-9xl font-serif select-none pointer-events-none leading-none">
+              <div className="absolute top-4 right-8 text-emerald-900/[0.04] text-7xl sm:text-9xl font-serif select-none pointer-events-none leading-none">
                 “
               </div>
 
               {/* 1. Header: Founder Photo, Identity & Badges */}
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 pb-8 border-b border-emerald-100/80 relative z-10 text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 pb-6 sm:pb-8 border-b border-emerald-100/80 relative z-10 text-center sm:text-left">
                 {/* Photo with Emerald Ring & Social Badge */}
                 <div className="relative shrink-0">
-                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-emerald-600 shadow-xl ring-4 ring-emerald-100/90 bg-slate-100">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-emerald-600 shadow-xl ring-4 ring-emerald-100/90 bg-slate-100">
                     <img
                       src="https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg"
                       alt="Hafizur Rahman Siddik (Bogura)"
@@ -380,7 +380,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook Profile"
-                    className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#1877f2] text-white flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors font-bold text-xs border-2 border-white"
+                    className="absolute bottom-0 right-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1877f2] text-white flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors font-bold text-xs border-2 border-white"
                     title="Facebook"
                   >
                     f
@@ -393,10 +393,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     <span>প্রতিষ্ঠাতা ও চেয়ারম্যানের বার্তা</span>
                   </div>
-                  <h3 className="font-bold text-slate-900 text-2xl sm:text-3xl lg:text-4xl tracking-wide mb-2 font-armwrestler">
+                  <h3 className="font-bold text-slate-900 text-xl sm:text-3xl lg:text-4xl tracking-wide mb-2 font-armwrestler">
                     Hafizur Rahman Siddik (Bogura)
                   </h3>
-                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-2.5">
                     <span className="px-3.5 py-1 rounded-full bg-emerald-700 text-white text-xs font-bold tracking-wider uppercase shadow-2xs">
                       Founder & Chairman
                     </span>
@@ -408,19 +408,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </div>
 
               {/* 2. Message Body (Smooth Flow with line-height: 1.8) */}
-              <div className="py-8 space-y-6 font-solaiman text-slate-700 text-base sm:text-[17.5px] leading-[1.8] relative z-10 text-left">
+              <div className="py-6 sm:py-8 space-y-5 sm:space-y-6 font-solaiman text-slate-700 text-sm sm:text-[17.5px] leading-[1.8] relative z-10 text-left">
                 {/* Paragraph 1: Founder's Deep Feeling */}
                 <p className="text-slate-800 font-normal">
                   অসহায় মানুষের নীরব কান্না আর হাহাকার দেখলে আমার কলিজায় রক্তক্ষরণ হয়। সেই দরদি তাগিদ থেকেই আত্মপ্রকাশ করেছে <strong className="text-emerald-900 font-semibold">‘জিকরুল্লাহ ফাউন্ডেশন’</strong>। এই ক্ষণস্থায়ী দুনিয়ায় টাকা-পয়সা আজ আছে, কাল নেই—এটাই সম্পদের বাস্তবতা। আসল সফলতা তো লুকিয়ে আছে আল্লাহর সন্তুষ্টির উদ্দেশ্যে অসহায় মানুষের কল্যাণে তা ব্যয় করার মাঝে।
                 </p>
 
                 {/* Quran & Primary Hadith Inset Box (Soft Green Side-Border) */}
-                <div className="bg-[#f6faf8] rounded-2xl p-5 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-4">
-                  <p className="text-slate-800 font-medium">
+                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-3.5 sm:space-y-4">
+                  <p className="text-slate-800 font-medium text-sm sm:text-base">
                     মহান রব ঘোষণা করেছেন— <span className="italic text-emerald-950 font-normal">‘যারা আল্লাহর সন্তুষ্টির উদ্দেশ্যে গোপনে ও প্রকাশ্যে নিজেদের সম্পদ ব্যয় করে, তাদের জন্য রবের নিকট রয়েছে মহাপুরস্কার। আর আল্লাহর রাস্তায় দেওয়া এই সামান্য দানকে তিনি বহুগুণ বৃদ্ধি করে দেন।’</span> <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সূরা আল-বাকারা: ২৬১, ২৭৪)</span>।
                   </p>
                   
-                  <div className="border-t border-emerald-100/90 pt-3.5 space-y-3.5">
+                  <div className="border-t border-emerald-100/90 pt-3 sm:pt-3.5 space-y-3 sm:space-y-3.5 text-xs sm:text-[16px]">
                     <p>
                       রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-serif-bn font-bold text-emerald-900">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-serif-bn font-bold text-emerald-900">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
                     </p>
@@ -431,8 +431,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </div>
 
                 {/* Medical Hadith Inset Box (Soft Amber Side-Border) */}
-                <div className="bg-[#fffdf7] rounded-2xl p-5 sm:p-6 border border-amber-200/80 border-l-4 border-l-amber-500 shadow-2xs">
-                  <p className="text-slate-800">
+                <div className="bg-[#fffdf7] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200/80 border-l-4 border-l-amber-500 shadow-2xs">
+                  <p className="text-slate-800 text-sm sm:text-base">
                     এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-serif-bn font-bold text-amber-950">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-sans-bn font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
                   </p>
                 </div>
@@ -444,9 +444,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </div>
 
               {/* 3. Footer: Digital Signature + Action Button */}
-              <div className="pt-8 border-t border-emerald-100/90 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
+              <div className="pt-6 sm:pt-8 border-t border-emerald-100/90 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
                 {/* Signature & Identity */}
-                <div className="text-center sm:text-left">
+                <div className="text-center sm:text-left w-full sm:w-auto">
                   <span className="text-[11px] text-slate-400 uppercase tracking-widest font-sans block mb-0.5">
                     ডিজিটাল স্বাক্ষর
                   </span>
@@ -462,12 +462,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </div>
 
                 {/* Attractive Call-to-Action Button */}
-                <div>
+                <div className="w-full sm:w-auto">
                   <button
                     onClick={() => onOpenDonation('সাধারণ সদকা ও দান')}
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-[#087443] to-[#034e2c] hover:from-[#0a8c51] hover:to-[#056338] active:scale-95 text-white font-bold text-base shadow-lg shadow-emerald-900/25 transition-all duration-300 cursor-pointer group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#087443] to-[#034e2c] hover:from-[#0a8c51] hover:to-[#056338] active:scale-95 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-950/25 transition-all duration-300 cursor-pointer group min-h-[44px]"
                   >
-                    <Heart className="w-5 h-5 fill-white group-hover:scale-110 transition-transform duration-300" />
+                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white group-hover:scale-110 transition-transform duration-300" />
                     <span>খেদমতে শরীক হোন</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>

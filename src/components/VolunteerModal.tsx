@@ -37,11 +37,11 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   const displayName = submittedName || name.trim() || 'সম্মানিত ভাই/বোন';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
       {submitted ? (
         /* SUCCESS POPUP (স্বেচ্ছাসেবক নিবন্ধনের সফল পপআপ মডাল) */
         <div
-          className="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-6 text-slate-800 animate-in zoom-in-95 duration-200"
+          className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800 animate-in zoom-in-95 duration-200"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Subtle Top Accent Bar */}
@@ -56,7 +56,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
             <X className="w-5 h-5" />
           </button>
 
-          <div className="p-7 sm:p-9 text-center flex flex-col items-center">
+          <div className="p-5 sm:p-9 text-center flex flex-col items-center">
             {/* Green Checkmark Icon at the top */}
             <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-emerald-50 border-2 border-emerald-200 text-emerald-600 flex items-center justify-center mb-5 shadow-sm shadow-emerald-900/5">
               <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2] text-emerald-600" />
@@ -98,34 +98,34 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
       ) : (
         /* REGISTRATION FORM (স্বেচ্ছাসেবক নিবন্ধন ফর্ম) */
         <div
-          className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-6 text-slate-800"
+          className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-[#045332] text-white px-6 py-5 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center">
-                <Users className="w-5 h-5 text-emerald-300" />
+          <div className="bg-[#045332] text-white px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300" />
               </div>
-              <div>
-                <h3 className="font-serif-bn font-bold text-xl leading-tight">
+              <div className="min-w-0">
+                <h3 className="font-serif-bn font-bold text-lg sm:text-xl leading-tight truncate">
                   স্বেচ্ছাসেবক নিবন্ধন
                 </h3>
-                <p className="text-xs text-emerald-200 font-light">
+                <p className="text-[11px] sm:text-xs text-emerald-200 font-light truncate">
                   মানবতার সেবায় আমাদের সহযাত্রী হোন
                 </p>
               </div>
             </div>
             <button
               onClick={resetAndClose}
-              className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
+              className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
               aria-label="বন্ধ করুন"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="p-6">
+          <div className="p-4 sm:p-6 max-h-[82vh] overflow-y-auto">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">

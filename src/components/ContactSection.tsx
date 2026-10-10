@@ -36,12 +36,12 @@ export const ContactSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           
           {/* Contact Details Card (5 cols) */}
-          <div className="lg:col-span-5 bg-[#fafcfb] rounded-3xl p-7 sm:p-8 border border-emerald-100 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-[#fafcfb] rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-emerald-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-serif-bn font-bold text-2xl text-[#045332] mb-6">
+              <h3 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-5 sm:mb-6">
                 প্রধান কার্যালয় ও তথ্য
               </h3>
 
@@ -127,10 +127,10 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Quick Action Buttons */}
-            <div className="pt-6 mt-6 border-t border-emerald-100/80 flex items-center gap-3">
+            <div className="pt-5 sm:pt-6 mt-5 sm:mt-6 border-t border-emerald-100/80 flex items-center gap-2.5 sm:gap-3">
               <a
                 href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs text-center shadow-xs transition-colors flex items-center justify-center gap-1.5"
+                className="flex-1 py-3 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs text-center shadow-xs transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
               >
                 <Phone className="w-3.5 h-3.5" />
                 <span>সরাসরি কল</span>
@@ -138,7 +138,7 @@ export const ContactSection: React.FC = () => {
 
               <a
                 href={`mailto:${FOUNDATION_INFO.email}`}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-white border border-emerald-200 text-emerald-800 hover:bg-emerald-50 font-bold text-xs text-center transition-colors flex items-center justify-center gap-1.5"
+                className="flex-1 py-3 px-3 rounded-xl bg-white border border-emerald-200 text-emerald-800 hover:bg-emerald-50 font-bold text-xs text-center transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
               >
                 <Mail className="w-3.5 h-3.5" />
                 <span>ইমেইল পাঠান</span>
@@ -148,8 +148,8 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Contact Form (7 cols) */}
-          <div className="lg:col-span-7 bg-[#fafcfb] rounded-3xl p-7 sm:p-8 border border-emerald-100 shadow-sm">
-            <h3 className="font-serif-bn font-bold text-2xl text-[#045332] mb-2">
+          <div className="lg:col-span-7 bg-[#fafcfb] rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-emerald-100 shadow-sm">
+            <h3 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-1.5 sm:mb-2">
               সরাসরি বার্তা পাঠান
             </h3>
             <p className="text-xs text-slate-500 mb-6">

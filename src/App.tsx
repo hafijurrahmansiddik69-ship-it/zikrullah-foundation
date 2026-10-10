@@ -138,14 +138,15 @@ export function App() {
       />
 
       {/* Floating Quick Donate Trigger on Mobile/Desktop */}
-      <div className="fixed bottom-6 right-6 z-30">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
         <button
           onClick={() => handleOpenDonation()}
-          className="flex items-center gap-2 px-5 py-3.5 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white"
-          aria-label="খেদমতে শরীক হোন"
+          className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-2.5 sm:px-5 sm:py-3.5 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white"
+          aria-label="দান করুন"
         >
-          <Heart className="w-5 h-5 fill-white animate-pulse" />
+          <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white animate-pulse shrink-0" />
           <span className="hidden sm:inline">খেদমতে শরীক হোন</span>
+          <span className="sm:hidden">দান করুন</span>
         </button>
       </div>
 
