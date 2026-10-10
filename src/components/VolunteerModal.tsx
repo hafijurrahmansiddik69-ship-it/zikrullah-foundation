@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, Users, CheckCircle, HeartHandshake } from 'lucide-react';
-import { FOUNDATION_INFO } from '../data/mockData';
 
 interface VolunteerModalProps {
   isOpen: boolean;
@@ -10,6 +9,7 @@ interface VolunteerModalProps {
 export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState('');
+  const [submittedName, setSubmittedName] = useState('');
   const [phone, setPhone] = useState('');
   const [upazila, setUpazila] = useState('গুজিয়া, মোকামতলা, বগুড়া');
   const [bloodGroup, setBloodGroup] = useState('A+');
@@ -20,68 +20,112 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanName = name.trim();
+    setSubmittedName(cleanName);
     setSubmitted(true);
   };
 
   const resetAndClose = () => {
     setSubmitted(false);
     setName('');
+    setSubmittedName('');
     setPhone('');
     setMessage('');
     onClose();
   };
 
+  const displayName = submittedName || name.trim() || 'সম্মানিত ভাই/বোন';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
-      <div
-        className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-6 text-slate-800"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="bg-[#045332] text-white px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center">
-              <Users className="w-5 h-5 text-emerald-300" />
-            </div>
-            <div>
-              <h3 className="font-serif-bn font-bold text-xl leading-tight">
-                স্বেচ্ছাসেবক নিবন্ধন
-              </h3>
-              <p className="text-xs text-emerald-200 font-light">
-                মানবতার সেবায় আমাদের সহযাত্রী হোন
-              </p>
-            </div>
-          </div>
+      {submitted ? (
+        /* SUCCESS POPUP (স্বেচ্ছাসেবক নিবন্ধনের সফল পপআপ মডাল) */
+        <div
+          className="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-6 text-slate-800 animate-in zoom-in-95 duration-200"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Subtle Top Accent Bar */}
+          <div className="h-1.5 bg-gradient-to-r from-emerald-500 via-[#087443] to-teal-500" />
+
+          {/* Close X Button */}
           <button
             onClick={resetAndClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
+            className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer z-10"
             aria-label="বন্ধ করুন"
           >
             <X className="w-5 h-5" />
           </button>
-        </div>
 
-        <div className="p-6">
-          {submitted ? (
-            <div className="text-center py-6">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-10 h-10 stroke-[2.5]" />
-              </div>
-              <h4 className="font-serif-bn font-bold text-2xl text-[#045332] mb-2">
-                ধন্যবাদ, {name || 'ভাই/বোন'}!
-              </h4>
-              <p className="text-sm text-slate-600 mb-6 max-w-sm mx-auto leading-relaxed">
-                আপনার স্বেচ্ছাসেবক আবেদন সফলভাবে জমা হয়েছে। খুব শীঘ্রই আমাদের মোকামতলা সমন্বয় টিম আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।
-              </p>
-              <button
-                type="button"
-                onClick={resetAndClose}
-                className="px-6 py-2.5 rounded-xl bg-[#087443] hover:bg-[#045332] text-white font-bold text-sm shadow-xs cursor-pointer"
-              >
-                ঠিক আছে
-              </button>
+          <div className="p-7 sm:p-9 text-center flex flex-col items-center">
+            {/* Green Checkmark Icon at the top */}
+            <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-emerald-50 border-2 border-emerald-200 text-emerald-600 flex items-center justify-center mb-5 shadow-sm shadow-emerald-900/5">
+              <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2] text-emerald-600" />
             </div>
-          ) : (
+
+            {/* 1. Main Title (Dynamic User Name) */}
+            <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-3.5 tracking-tight leading-snug">
+              ধন্যবাদ, {displayName}!
+            </h3>
+
+            {/* 2. Arabic Supplication / Blessing Badge */}
+            <div className="mb-5 inline-flex items-center justify-center px-5 py-2 sm:px-6 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
+              <span
+                dir="rtl"
+                lang="ar"
+                className="font-cairo text-xl sm:text-2xl text-[#045332] font-semibold sm:font-bold tracking-normal leading-[1.8] select-text"
+                style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
+              >
+                جَزَاكَ ٱللَّٰهُ خَيْرًا
+              </span>
+            </div>
+
+            {/* 3. Body Text */}
+            <div className="space-y-1.5 text-slate-600 font-solaiman text-sm sm:text-base leading-relaxed max-w-sm mx-auto mb-7 font-normal">
+              <p>মানুষের কল্যাণে আপনার এই সদিচ্ছা ও শ্রম আল্লাহ কবুল করুন।</p>
+              <p>খুব শীঘ্রই আমাদের টিম আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।</p>
+            </div>
+
+            {/* 4. Action Button */}
+            <button
+              type="button"
+              onClick={resetAndClose}
+              className="w-full sm:w-auto min-w-[150px] inline-flex items-center justify-center px-8 py-3 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-sans-bn font-bold text-sm sm:text-base shadow-md shadow-emerald-900/10 hover:shadow-lg transition-all duration-200 cursor-pointer"
+            >
+              ঠিক আছে
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* REGISTRATION FORM (স্বেচ্ছাসেবক নিবন্ধন ফর্ম) */
+        <div
+          className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-6 text-slate-800"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-[#045332] text-white px-6 py-5 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center">
+                <Users className="w-5 h-5 text-emerald-300" />
+              </div>
+              <div>
+                <h3 className="font-serif-bn font-bold text-xl leading-tight">
+                  স্বেচ্ছাসেবক নিবন্ধন
+                </h3>
+                <p className="text-xs text-emerald-200 font-light">
+                  মানবতার সেবায় আমাদের সহযাত্রী হোন
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={resetAndClose}
+              className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
+              aria-label="বন্ধ করুন"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
@@ -185,9 +229,9 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                 <span>নিবন্ধন জমা দিন</span>
               </button>
             </form>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

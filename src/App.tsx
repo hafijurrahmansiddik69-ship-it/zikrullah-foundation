@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
+import { CoreActivitiesSection } from './components/CoreActivitiesSection';
 import { StatsSection } from './components/StatsSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { PrayerTimesBogura } from './components/PrayerTimesBogura';
@@ -12,7 +13,6 @@ import { NewsSection } from './components/NewsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { DonationModal } from './components/DonationModal';
-import { ZakatCalculatorModal } from './components/ZakatCalculatorModal';
 import { VolunteerModal } from './components/VolunteerModal';
 import { AboutPage } from './pages/AboutPage';
 import { Project } from './types';
@@ -27,7 +27,6 @@ export function App() {
   const [donationCategory, setDonationCategory] = useState<string>('সাধারণ সদকা ও দান');
   const [donationAmount, setDonationAmount] = useState<number>(1000);
 
-  const [isZakatOpen, setIsZakatOpen] = useState(false);
   const [isVolunteerOpen, setIsVolunteerOpen] = useState(false);
 
   useEffect(() => {
@@ -61,13 +60,6 @@ export function App() {
     setIsDonationOpen(true);
   };
 
-  const handleProceedFromZakat = (amount: number) => {
-    setIsZakatOpen(false);
-    setDonationCategory('যাকাত তহবিল');
-    setDonationAmount(amount);
-    setIsDonationOpen(true);
-  };
-
   return (
     <div className="min-h-screen flex flex-col font-sans-bn selection:bg-emerald-100 selection:text-emerald-900">
       
@@ -77,7 +69,6 @@ export function App() {
         onNavigateHome={() => navigateTo('home')}
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
-        onOpenZakat={() => setIsZakatOpen(true)}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
 
@@ -96,7 +87,6 @@ export function App() {
             <Hero
               onNavigateToAbout={() => navigateTo('about')}
               onOpenDonation={() => handleOpenDonation()}
-              onOpenZakat={() => setIsZakatOpen(true)}
             />
 
             {/* About Organization Summary */}
@@ -108,6 +98,11 @@ export function App() {
             {/* Services / Mission & Vision Initiatives */}
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}
+            />
+
+            {/* 4 Core Activities Cards */}
+            <CoreActivitiesSection
+              onOpenDonation={(cat) => handleOpenDonation(cat)}
             />
 
             {/* Key Statistics */}
@@ -139,7 +134,6 @@ export function App() {
         onNavigateHome={() => navigateTo('home')}
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
-        onOpenZakat={() => setIsZakatOpen(true)}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
 
@@ -148,10 +142,10 @@ export function App() {
         <button
           onClick={() => handleOpenDonation()}
           className="flex items-center gap-2 px-5 py-3.5 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white"
-          aria-label="দান করুন"
+          aria-label="খেদমতে শরীক হোন"
         >
           <Heart className="w-5 h-5 fill-white animate-pulse" />
-          <span className="hidden sm:inline">দান করুন</span>
+          <span className="hidden sm:inline">খেদমতে শরীক হোন</span>
         </button>
       </div>
 
@@ -161,12 +155,6 @@ export function App() {
         onClose={() => setIsDonationOpen(false)}
         initialCategory={donationCategory}
         initialAmount={donationAmount}
-      />
-
-      <ZakatCalculatorModal
-        isOpen={isZakatOpen}
-        onClose={() => setIsZakatOpen(false)}
-        onProceedToDonate={handleProceedFromZakat}
       />
 
       <VolunteerModal

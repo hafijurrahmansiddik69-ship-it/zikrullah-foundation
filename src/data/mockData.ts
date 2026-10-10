@@ -4,9 +4,9 @@ const heroImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1791214336/b
 import foodImg from '../assets/images/food_aid_relief_1791208757690.jpg';
 import eduImg from '../assets/images/education_aid_students_1791208774675.jpg';
 import medImg from '../assets/images/medical_camp_aid_1791208791787.jpg';
-import scholar1 from '../assets/images/scholar_portrait_1_1791215646908.jpg';
-import scholar2 from '../assets/images/scholar_portrait_2_1791215662651.jpg';
-import scholar3 from '../assets/images/scholar_portrait_3_1791215675188.jpg';
+import scholar1 from '../assets/images/milon_hossain_portrait_1791292236483.jpg';
+import scholar2 from '../assets/images/mamun_islam_portrait_1791292689791.jpg';
+import scholar3 from '../assets/images/borhan_ali_portrait_1791293367263.jpg';
 import scholar4 from '../assets/images/scholar_portrait_4_1791215689324.jpg';
 import scholar5 from '../assets/images/scholar_portrait_5_1791215706422.jpg';
 import scholar6 from '../assets/images/scholar_portrait_6_1791215718775.jpg';
@@ -16,38 +16,38 @@ export { heroImg, foodImg, eduImg, medImg, scholar1, scholar2, scholar3, scholar
 export const EXECUTIVE_MEMBERS = [
   {
     id: 1,
-    name: 'ড. মুহাম্মদ হাবিবুল্লাহ',
-    role: 'ভাইস-চেয়ারম্যান',
-    image: scholar1,
+    name: 'MD. MILON HOSEN',
+    role: 'VICE CHAIRMAN',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791638482/wregsbuodnmjqptjtrxh.jpg',
   },
   {
     id: 2,
-    name: 'ড. মুহাম্মদ নূরে আলম',
-    role: 'কোষাধ্যক্ষ',
-    image: scholar2,
+    name: 'MD. MAMUN ISLAM',
+    role: 'EXECUTIVE MEMBER',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791638736/wizyfodi4s2zwm8kd47a.jpg',
   },
   {
     id: 3,
-    name: 'আব্দুর রহমান সালাফী',
-    role: 'ট্রাস্টি',
-    image: scholar3,
+    name: 'MD. BORHAN ALI',
+    role: 'EXECUTIVE MEMBER',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791638633/cujqjrrv3hi9oka4lqx6.jpg',
   },
   {
     id: 4,
-    name: 'শায়খ আব্দুল হাই মিশকাতী',
-    role: 'ট্রাস্টি',
+    name: 'MD. JAKIRUL ISLAM',
+    role: 'EXECUTIVE MEMBER',
     image: scholar4,
   },
   {
     id: 5,
-    name: 'আবু আসাদুল্লাহ',
-    role: 'ট্রাস্টি',
-    image: scholar5,
+    name: 'MD. SHIPON ALI',
+    role: 'EXECUTIVE MEMBER',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791641077/l2em2pkkm5c69iyudhb2.jpg',
   },
   {
     id: 6,
-    name: 'সাইফুল ইসলাম',
-    role: 'ট্রাস্টি',
+    name: 'MD. REJAUL ISLAM',
+    role: 'EXECUTIVE MEMBER',
     image: scholar6,
   },
 ];
@@ -64,13 +64,13 @@ export const FOUNDATION_INFO = {
   founder: "হাফিজুর রহমান সিদ্দিক (বগুড়া)",
   established: "১লা জানুয়ারি ২০২৩",
   address: "গুজিয়া, মোকামতলা, বগুড়া, বাংলাদেশ",
-  email: "zikrullhafd@gmail.com",
-  phone: "01300389797",
-  altPhone: "+880 1300-389797",
+  email: "zikrullahfd@gmail.com",
+  phone: "016 20 500 920",
+  altPhone: "+880 16 20 500 920",
   officeHours: "শনিবার – বৃহস্পতিবার: সকাল ৯টা – সন্ধ্যা ৬টা",
-  bkashNumber: "01300-389797 (পার্সোনাল)",
-  nagadNumber: "01300-389797 (পার্সোনাল)",
-  rocketNumber: "01300-389797-2",
+  bkashNumber: "016 20 500 920 (পার্সোনাল)",
+  nagadNumber: "016 20 500 920 (পার্সোনাল)",
+  rocketNumber: "016 20 500 920-2",
   bankDetails: {
     bankName: "ইসলামী ব্যাংক বাংলাদেশ পিএলসি (Islami Bank Bangladesh PLC)",
     branch: "মোকামতলা শাখা, বগুড়া",

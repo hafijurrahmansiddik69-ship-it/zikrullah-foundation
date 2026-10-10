@@ -98,7 +98,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif-bn font-bold text-xl leading-tight">
-                মানবতার সেবায় দান করুন
+                মানবতার খেদমতে শরীক হোন
               </h3>
               <p className="text-xs text-emerald-200 font-solaiman tracking-wide font-light">
                 {FOUNDATION_INFO.name} · {FOUNDATION_INFO.slogan}
@@ -268,7 +268,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       <span className="text-xs font-semibold text-slate-600">বিকাশ পার্সোনাল নম্বর:</span>
                       <button
                         type="button"
-                        onClick={() => handleCopy('01300389797', 'bkash')}
+                        onClick={() => handleCopy('01620500920', 'bkash')}
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'bkash' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -276,7 +276,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       </button>
                     </div>
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
-                      01300-389797
+                      016 20 500 920
                     </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
                       * আপনার বিকাশ অ্যাপ থেকে <strong>Send Money</strong> করুন। রেফারেন্সে আপনার নাম বা <strong>ZF</strong> লিখুন।
@@ -290,7 +290,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       <span className="text-xs font-semibold text-slate-600">নগদ পার্সোনাল নম্বর:</span>
                       <button
                         type="button"
-                        onClick={() => handleCopy('01300389797', 'nagad')}
+                        onClick={() => handleCopy('01620500920', 'nagad')}
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'nagad' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -298,7 +298,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       </button>
                     </div>
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
-                      01300-389797
+                      016 20 500 920
                     </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
                       * নগদ অ্যাপ বা ইউএসএসডি কোড থেকে <strong>Send Money</strong> করুন।
@@ -312,7 +312,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       <span className="text-xs font-semibold text-slate-600">রকেট নম্বর:</span>
                       <button
                         type="button"
-                        onClick={() => handleCopy('013003897972', 'rocket')}
+                        onClick={() => handleCopy('016205009202', 'rocket')}
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'rocket' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -320,7 +320,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       </button>
                     </div>
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
-                      01300-389797-2
+                      016 20 500 920-2
                     </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
                       * রকেট থেকে <strong>Send Money</strong> করুন।

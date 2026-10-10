@@ -91,13 +91,13 @@ export const ContactSection: React.FC = () => {
                     </strong>
                     <div className="space-y-0.5 font-sans text-sm">
                       <a
-                        href={`tel:${FOUNDATION_INFO.phone}`}
+                        href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
                         className="text-slate-600 hover:text-emerald-800 block"
                       >
                         {FOUNDATION_INFO.phone}
                       </a>
                       <a
-                        href={`tel:${FOUNDATION_INFO.altPhone}`}
+                        href={`tel:${FOUNDATION_INFO.altPhone.replace(/\s+/g, '')}`}
                         className="text-slate-600 hover:text-emerald-800 block text-xs"
                       >
                         {FOUNDATION_INFO.altPhone}
@@ -129,7 +129,7 @@ export const ContactSection: React.FC = () => {
             {/* Quick Action Buttons */}
             <div className="pt-6 mt-6 border-t border-emerald-100/80 flex items-center gap-3">
               <a
-                href={`tel:${FOUNDATION_INFO.phone}`}
+                href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
                 className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs text-center shadow-xs transition-colors flex items-center justify-center gap-1.5"
               >
                 <Phone className="w-3.5 h-3.5" />

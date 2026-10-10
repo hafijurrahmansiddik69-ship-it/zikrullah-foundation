@@ -33,7 +33,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({ onOpenDo
               className="inline-flex items-center gap-2.5 px-7 py-4 rounded-full bg-white hover:bg-emerald-50 active:scale-95 text-[#045332] font-bold text-base shadow-xl transition-all cursor-pointer whitespace-nowrap"
             >
               <Heart className="w-5 h-5 fill-[#087443] text-[#087443]" />
-              <span>আজই দান করুন</span>
+              <span>খেদমতে শরীক হোন</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Heart, Menu, X, Phone, Mail, MapPin, Calculator, Users } from 'lucide-react';
+import { Heart, Menu, X, Phone, Mail, MapPin, Users } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 
 interface HeaderProps {
   onOpenDonation: (category?: string) => void;
-  onOpenZakat: () => void;
+  onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: () => void;
@@ -13,7 +13,6 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenDonation,
-  onOpenZakat,
   onOpenVolunteer,
   onNavigateToAbout,
   onNavigateHome,
@@ -49,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
             <span className="text-emerald-500/50">•</span>
             <a
-              href={`tel:${FOUNDATION_INFO.phone}`}
+              href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
               className="hover:text-white transition-colors flex items-center gap-1.5"
             >
               <Phone className="w-3.5 h-3.5 text-emerald-400" />
@@ -85,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] leading-tight tracking-tight">
                 {FOUNDATION_INFO.name}
               </span>
-              <span className="font-armwrestler text-xs sm:text-[13.5px] font-bold text-emerald-800 uppercase tracking-wider leading-none mt-1">
+              <span className="font-armwrestler text-sm sm:text-base font-bold text-emerald-800 uppercase tracking-wider leading-none mt-1">
                 {FOUNDATION_INFO.englishName}
               </span>
             </div>
@@ -176,20 +175,11 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Action Buttons (Zone 3) */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={onOpenZakat}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 rounded-full hover:bg-emerald-100 hover:border-emerald-300 transition-all whitespace-nowrap cursor-pointer"
-              title="যাকাত ক্যালকুলেটর"
-            >
-              <Calculator className="w-3.5 h-3.5 text-emerald-700" />
-              <span>যাকাত ক্যালকুলেটর</span>
-            </button>
-
-            <button
               onClick={() => onOpenDonation()}
               className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 text-sm font-bold text-white bg-[#087443] hover:bg-[#045332] active:scale-95 rounded-full shadow-md shadow-emerald-800/15 transition-all whitespace-nowrap cursor-pointer"
             >
               <Heart className="w-4 h-4 fill-white" />
-              <span>দান করুন</span>
+              <span>খেদমতে শরীক হোন</span>
             </button>
 
             {/* Mobile Hamburger Button */}
@@ -296,17 +286,6 @@ export const Header: React.FC<HeaderProps> = ({
             </nav>
 
             <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-2">
-              <button
-                onClick={() => {
-                  closeMobileMenu();
-                  onOpenZakat();
-                }}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-emerald-900 bg-emerald-50 border border-emerald-200 font-semibold text-sm"
-              >
-                <Calculator className="w-4 h-4 text-emerald-700" />
-                <span>যাকাত ক্যালকুলেটর</span>
-              </button>
-
               <button
                 onClick={() => {
                   closeMobileMenu();

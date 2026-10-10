@@ -1,10 +1,10 @@
 import React from 'react';
-import { Heart, MapPin, Mail, Phone, Calculator, Users } from 'lucide-react';
+import { Heart, MapPin, Mail, Phone, Users } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 
 interface FooterProps {
   onOpenDonation: () => void;
-  onOpenZakat: () => void;
+  onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: () => void;
@@ -12,7 +12,6 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenDonation,
-  onOpenZakat,
   onOpenVolunteer,
   onNavigateToAbout,
   onNavigateHome
@@ -38,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <h3 className="font-serif-bn font-bold text-2xl text-white tracking-tight leading-tight">
                   {FOUNDATION_INFO.name}
                 </h3>
-                <span className="font-armwrestler text-sm sm:text-base font-bold text-emerald-300 uppercase tracking-wider block mt-1">
+                <span className="font-armwrestler text-base sm:text-lg font-bold text-emerald-300 uppercase tracking-wider block mt-1.5">
                   {FOUNDATION_INFO.englishName}
                 </span>
               </div>
@@ -54,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#087443] hover:bg-[#045332] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
               >
                 <Heart className="w-3.5 h-3.5 fill-white" />
-                <span>মানবসেবায় দান করুন</span>
+                <span>খেদমতে শরীক হোন</span>
               </button>
             </div>
           </div>
@@ -129,15 +128,6 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2 text-xs sm:text-sm">
               <li>
                 <button
-                  onClick={onOpenZakat}
-                  className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer text-left"
-                >
-                  <Calculator className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>যাকাত ক্যালকুলেটর</span>
-                </button>
-              </li>
-              <li>
-                <button
                   onClick={onOpenVolunteer}
                   className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer text-left"
                 >
@@ -182,7 +172,7 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`tel:${FOUNDATION_INFO.phone}`} className="hover:text-white font-sans">
+                <a href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`} className="hover:text-white font-sans">
                   {FOUNDATION_INFO.phone}
                 </a>
               </div>
@@ -190,7 +180,7 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="pt-2 text-[11px] bg-emerald-950/70 p-2.5 rounded-xl border border-emerald-800/40 space-y-1">
                 <strong className="text-white block font-serif-bn">ব্যাংক একাউন্ট (অনুদান):</strong>
                 <span className="block font-mono text-emerald-300">IBBL: 20501234567890100</span>
-                <span className="block text-[10px] text-slate-300">বিকাশ / নগদ: 01300-389797</span>
+                <span className="block text-[10px] text-slate-300">বিকাশ / নগদ: 016 20 500 920</span>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Users, ArrowUpRight, Award, Compass, ArrowRight } from 'lucide-react';
+import { Users, ArrowUpRight, Award, Compass, ArrowRight } from 'lucide-react';
 import { heroImg, FOUNDATION_INFO } from '../data/mockData';
 
 interface AboutSectionProps {
@@ -68,21 +68,26 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               মানবতার সেবায় নিবেদিত ‘জিকরুল্লাহ ফাউন্ডেশন’
             </h2>
 
-            {/* User exact primary statement */}
-            <p className="font-solaiman text-slate-800 text-base sm:text-lg lg:text-xl leading-relaxed mb-6 font-normal bg-emerald-50/70 p-5 rounded-2xl border-l-4 border-[#087443]">
-              “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
-            </p>
-
-            {/* Inception and Founder paragraph */}
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
-              উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে <strong>১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”</strong>-এর উদ্যোগে প্রতিষ্ঠিত হয় <strong>‘জিকরুল্লাহ ফাউন্ডেশন’</strong>—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।
-            </p>
+            {/* User exact primary statement in two paragraphs */}
+            <div className="bg-emerald-50/70 p-5 sm:p-6 rounded-2xl border-l-4 border-[#087443] mb-6 space-y-4">
+              <div className="text-center pb-2 border-b border-emerald-200/60">
+                <h3 className="font-fiona text-2xl sm:text-3xl text-[#045332] font-bold tracking-normal inline-block">
+                  আমাদের প্রেরণা
+                </h3>
+              </div>
+              <p className="font-solaiman text-slate-800 text-base sm:text-lg lg:text-xl leading-relaxed font-normal">
+                “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
+              </p>
+              <p className="font-solaiman text-slate-800 text-base sm:text-lg lg:text-xl leading-relaxed font-normal border-t border-emerald-200/60 pt-3">
+                উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।
+              </p>
+            </div>
 
             {/* Founder & Institution Badge */}
             <div className="bg-[#fafcfb] border border-emerald-200/80 rounded-2xl p-4 mb-7 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-700">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                <span><strong>উদ্যোগ ও প্রতিষ্ঠাতৃত্ব:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
+                <Award className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span><strong>উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
@@ -91,49 +96,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
                 <span><strong>কর্মক্ষেত্র:</strong> শিক্ষা, দাওয়াহ ও মানবকল্যাণ</span>
-              </div>
-            </div>
-
-            {/* Core Values List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-9">
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-emerald-100 shadow-2xs">
-                <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-3.5 h-3.5 stroke-[3]" />
-                </div>
-                <div>
-                  <strong className="block text-slate-800 text-sm font-semibold">ইসলামিক মূল্যবোধ ও আমানত</strong>
-                  <span className="text-xs text-slate-500">যাকাত ও সদকার প্রতিটি পয়সার শরী‘আহসম্মত যথাযথ ব্যবহার।</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-emerald-100 shadow-2xs">
-                <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-3.5 h-3.5 stroke-[3]" />
-                </div>
-                <div>
-                  <strong className="block text-slate-800 text-sm font-semibold">শতভাগ স্বচ্ছতা ও উন্মুক্ততা</strong>
-                  <span className="text-xs text-slate-500">প্রত্যেকটি প্রকল্পের আর্থিক হিসাব ও বিতরণ তালিকা সংরক্ষিত।</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-emerald-100 shadow-2xs">
-                <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-3.5 h-3.5 stroke-[3]" />
-                </div>
-                <div>
-                  <strong className="block text-slate-800 text-sm font-semibold">মাঠপর্যায়ে প্রত্যক্ষ তত্ত্বাবধান</strong>
-                  <span className="text-xs text-slate-500">স্বেচ্ছাসেবীদের সরাসরি উপস্থিতিতে ঘরে ঘরে সাহায্য পৌঁছে দেওয়া।</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-emerald-100 shadow-2xs">
-                <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-3.5 h-3.5 stroke-[3]" />
-                </div>
-                <div>
-                  <strong className="block text-slate-800 text-sm font-semibold">স্থায়ী স্বাবলম্বীকরণ লক্ষ্য</strong>
-                  <span className="text-xs text-slate-500">কেবল সাময়িক সহায়তা নয়, বরং আত্মনির্ভরশীল করে তোলা।</span>
-                </div>
               </div>
             </div>
 
