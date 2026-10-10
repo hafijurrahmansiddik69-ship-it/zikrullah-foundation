@@ -36,7 +36,7 @@ export const EXECUTIVE_MEMBERS = [
     id: 4,
     name: 'MD. JAKIRUL ISLAM',
     role: 'EXECUTIVE MEMBER',
-    image: scholar4,
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791652095/eswwsejypdjy6cwkadd2.jpg',
   },
   {
     id: 5,
@@ -48,7 +48,7 @@ export const EXECUTIVE_MEMBERS = [
     id: 6,
     name: 'MD. REJAUL ISLAM',
     role: 'EXECUTIVE MEMBER',
-    image: scholar6,
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791652723/akbkmpdqu9kmhdlle3er.jpg',
   },
 ];
 
