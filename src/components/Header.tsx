@@ -8,8 +8,7 @@ interface HeaderProps {
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: () => void;
-  onNavigateToAdmin?: () => void;
-  currentPage?: 'home' | 'about' | 'admin';
+  currentPage?: 'home' | 'about';
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,7 +16,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenVolunteer,
   onNavigateToAbout,
   onNavigateHome,
-  onNavigateToAdmin,
   currentPage = 'home'
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -302,18 +300,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>স্বেচ্ছাসেবক হিসেবে যোগ দিন</span>
               </button>
 
-              {onNavigateToAdmin && (
-                <button
-                  onClick={() => {
-                    closeMobileMenu();
-                    onNavigateToAdmin();
-                  }}
-                  className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-emerald-800 bg-emerald-50 hover:bg-emerald-100 font-semibold text-xs border border-emerald-200/80 cursor-pointer"
-                >
-                  <Lock className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>অ্যাডমিন প্রবেশদ্বার</span>
-                </button>
-              )}
+
             </div>
           </div>
         )}

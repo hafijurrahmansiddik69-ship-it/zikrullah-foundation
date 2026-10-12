@@ -14,8 +14,7 @@ import {
   Phone,
   BookOpen,
   ArrowRight,
-  Heart,
-  Lock
+  Heart
 } from 'lucide-react';
 import { 
   FoodIllustration, 
@@ -26,20 +25,17 @@ import {
   SadaqahJariyahIllustration
 } from '../components/MissionIcons';
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
-import { AboutAdminPanel } from '../components/AboutAdminPanel';
 
 interface AboutPageProps {
   onBackToHome: () => void;
   onOpenVolunteer: () => void;
   onOpenDonation: (category?: string) => void;
-  onNavigateToAdmin?: () => void;
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ 
   onBackToHome, 
   onOpenVolunteer,
-  onOpenDonation,
-  onNavigateToAdmin
+  onOpenDonation
 }) => {
   return (
     <div className="bg-[#fcfdfc] min-h-screen py-10 sm:py-14 text-slate-800">
@@ -586,19 +582,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
         </div>
 
-        {/* Section 4: প্রশাসনিক প্রবেশদ্বার লিংক */}
-        {onNavigateToAdmin && (
-          <div className="flex justify-center mt-8">
-            <button
-              onClick={onNavigateToAdmin}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 border border-slate-200 hover:border-emerald-300 text-xs sm:text-sm font-medium transition-all shadow-2xs hover:shadow-xs cursor-pointer group active:scale-95"
-              title="অ্যাডমিন"
-            >
-              <Lock className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-colors" />
-              <span>অ্যাডমিন</span>
-            </button>
-          </div>
-        )}
+
 
       </div>
     </div>

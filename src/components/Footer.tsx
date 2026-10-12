@@ -8,15 +8,13 @@ interface FooterProps {
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: () => void;
-  onNavigateToAdmin?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenDonation,
   onOpenVolunteer,
   onNavigateToAbout,
-  onNavigateHome,
-  onNavigateToAdmin
+  onNavigateHome
 }) => {
   return (
     <footer className="bg-[#002e1d] text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950">
@@ -86,24 +84,7 @@ export const Footer: React.FC<FooterProps> = ({
                   আমাদের সম্পর্কে (লক্ষ্য ও উদ্দেশ্য)
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={() => {
-                    if (onNavigateToAdmin) {
-                      onNavigateToAdmin();
-                    } else if (onNavigateHome) {
-                      onNavigateHome();
-                      setTimeout(() => {
-                        const el = document.getElementById('admin-panel');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }
-                  }}
-                  className="hover:text-amber-300 text-emerald-200/90 font-medium transition-colors cursor-pointer text-left"
-                >
-                  প্রশাসনিক প্যানেল (অ্যাডমিন)
-                </button>
-              </li>
+
               <li>
                 <a
                   href="#services"
@@ -170,24 +151,7 @@ export const Footer: React.FC<FooterProps> = ({
                   অফিস যোগাযোগ
                 </a>
               </li>
-              <li className="pt-1">
-                <button
-                  onClick={() => {
-                    if (onNavigateToAdmin) {
-                      onNavigateToAdmin();
-                    } else if (onNavigateHome) {
-                      onNavigateHome();
-                      setTimeout(() => {
-                        const el = document.getElementById('admin-panel');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }
-                  }}
-                  className="inline-flex items-center gap-1.5 text-emerald-300 hover:text-white font-medium transition-colors cursor-pointer text-left"
-                >
-                  <span>অ্যাডমিন</span>
-                </button>
-              </li>
+
             </ul>
           </div>
 
