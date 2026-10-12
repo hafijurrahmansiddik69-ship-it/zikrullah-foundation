@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Menu, X, Phone, Mail, MapPin, Users } from 'lucide-react';
+import { Heart, Menu, X, Phone, Mail, MapPin, Users, Lock } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 
 interface HeaderProps {
@@ -8,7 +8,8 @@ interface HeaderProps {
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: () => void;
-  currentPage?: 'home' | 'about';
+  onNavigateToAdmin?: () => void;
+  currentPage?: 'home' | 'about' | 'admin';
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenVolunteer,
   onNavigateToAbout,
   onNavigateHome,
+  onNavigateToAdmin,
   currentPage = 'home'
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -124,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
-              লক্ষ্য ও উদ্দেশ্য
+              প্রোগ্রাম ও সেবা
             </a>
             <a
               href="#projects"
@@ -234,7 +236,7 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
-                লক্ষ্য ও উদ্দেশ্য
+                প্রোগ্রাম ও সেবা
               </a>
               <a
                 href="#projects"
@@ -299,6 +301,19 @@ export const Header: React.FC<HeaderProps> = ({
                 <Users className="w-4 h-4 text-slate-600" />
                 <span>স্বেচ্ছাসেবক হিসেবে যোগ দিন</span>
               </button>
+
+              {onNavigateToAdmin && (
+                <button
+                  onClick={() => {
+                    closeMobileMenu();
+                    onNavigateToAdmin();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-emerald-800 bg-emerald-50 hover:bg-emerald-100 font-semibold text-xs border border-emerald-200/80 cursor-pointer"
+                >
+                  <Lock className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>অ্যাডমিন প্রবেশদ্বার</span>
+                </button>
+              )}
             </div>
           </div>
         )}

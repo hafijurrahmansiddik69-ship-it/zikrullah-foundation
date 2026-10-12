@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, MessageSquare } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
+import { adminDataService } from '../services/adminDataService';
 
 export const ContactSection: React.FC = () => {
   const [name, setName] = useState('');
@@ -11,6 +12,14 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (name.trim() || message.trim()) {
+      adminDataService.addContactMessage({
+        name: name.trim() || 'অজ্ঞাত শুভানুধ্যায়ী',
+        contactInfo: contactInfo.trim() || 'অনুল্লেখিত',
+        subject: subject.trim() || 'সাধারণ যোগাযোগ',
+        message: message.trim() || 'কোনো বার্তা নেই'
+      });
+    }
     setSubmitted(true);
     setName('');
     setContactInfo('');

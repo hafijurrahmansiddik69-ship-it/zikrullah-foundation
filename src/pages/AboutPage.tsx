@@ -14,7 +14,8 @@ import {
   Phone,
   BookOpen,
   ArrowRight,
-  Heart
+  Heart,
+  Lock
 } from 'lucide-react';
 import { 
   FoodIllustration, 
@@ -25,17 +26,20 @@ import {
   SadaqahJariyahIllustration
 } from '../components/MissionIcons';
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
+import { AboutAdminPanel } from '../components/AboutAdminPanel';
 
 interface AboutPageProps {
   onBackToHome: () => void;
   onOpenVolunteer: () => void;
   onOpenDonation: (category?: string) => void;
+  onNavigateToAdmin?: () => void;
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ 
   onBackToHome, 
   onOpenVolunteer,
-  onOpenDonation 
+  onOpenDonation,
+  onNavigateToAdmin
 }) => {
   return (
     <div className="bg-[#fcfdfc] min-h-screen py-10 sm:py-14 text-slate-800">
@@ -389,7 +393,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
                 {/* Identity Info */}
                 <div className="flex-1">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-2">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-2 font-solaiman">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     <span>প্রতিষ্ঠাতা ও চেয়ারম্যানের বার্তা</span>
                   </div>
@@ -397,48 +401,59 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     Hafizur Rahman Siddik (Bogura)
                   </h3>
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-2.5">
-                    <span className="px-3.5 py-1 rounded-full bg-emerald-700 text-white text-xs font-bold tracking-wider uppercase shadow-2xs">
+                    <span className="px-3.5 py-1 rounded-full bg-emerald-700 text-white text-xs font-bold tracking-wider uppercase shadow-2xs font-solaiman">
                       Founder & Chairman
                     </span>
-                    <span className="text-xs sm:text-sm text-slate-500 font-sans-bn">
+                    <span className="text-xs sm:text-sm text-slate-600 font-solaiman font-semibold">
                       জিকরুল্লাহ ফাউন্ডেশন
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* 2. Message Body (Smooth Flow with line-height: 1.8) */}
+              {/* 2. Message Body (Official, elegant paragraphs in SolaimanLipi) */}
               <div className="py-6 sm:py-8 space-y-5 sm:space-y-6 font-solaiman text-slate-700 text-sm sm:text-[17.5px] leading-[1.8] relative z-10 text-left">
-                {/* Paragraph 1: Founder's Deep Feeling */}
+                {/* Paragraph 1: Founder's Deep Feeling & Inception */}
                 <p className="text-slate-800 font-normal">
                   অসহায় মানুষের নীরব কান্না আর হাহাকার দেখলে আমার কলিজায় রক্তক্ষরণ হয়। সেই দরদি তাগিদ থেকেই আত্মপ্রকাশ করেছে <strong className="text-emerald-900 font-semibold">‘জিকরুল্লাহ ফাউন্ডেশন’</strong>। এই ক্ষণস্থায়ী দুনিয়ায় টাকা-পয়সা আজ আছে, কাল নেই—এটাই সম্পদের বাস্তবতা। আসল সফলতা তো লুকিয়ে আছে আল্লাহর সন্তুষ্টির উদ্দেশ্যে অসহায় মানুষের কল্যাণে তা ব্যয় করার মাঝে।
                 </p>
 
-                {/* Quran & Primary Hadith Inset Box (Soft Green Side-Border) */}
-                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-3.5 sm:space-y-4">
-                  <p className="text-slate-800 font-medium text-sm sm:text-base">
-                    মহান রব ঘোষণা করেছেন— <span className="italic text-emerald-950 font-normal">‘যারা আল্লাহর সন্তুষ্টির উদ্দেশ্যে গোপনে ও প্রকাশ্যে নিজেদের সম্পদ ব্যয় করে, তাদের জন্য রবের নিকট রয়েছে মহাপুরস্কার। আর আল্লাহর রাস্তায় দেওয়া এই সামান্য দানকে তিনি বহুগুণ বৃদ্ধি করে দেন।’</span> <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সূরা আল-বাকারা: ২৬১, ২৭৪)</span>।
+                {/* Quranic Verse Box (Soft Emerald Accent) */}
+                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-3 sm:space-y-3.5">
+                  <p className="text-slate-800 font-medium text-sm sm:text-base font-solaiman">
+                    মহান রব ঘোষণা করেছেন—
                   </p>
-                  
-                  <div className="border-t border-emerald-100/90 pt-3 sm:pt-3.5 space-y-3 sm:space-y-3.5 text-xs sm:text-[16px]">
-                    <p>
-                      রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-serif-bn font-bold text-emerald-900">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-serif-bn font-bold text-emerald-900">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
-                    </p>
-                    <p>
-                      দান হলো মুমিনের জীবনের বহুমুখী রহমত। কারণ— <span className="font-serif-bn font-bold text-emerald-900">«وَالصَّدَقَةُ بُرْهَانٌ»</span> ‘সদকা হলো ঈমানের অকাট্য দলিল’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সহিহ মুসলিম: ৪২২)</span>, <span className="font-serif-bn font-bold text-emerald-900">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> ‘সদকা গুনাহসমূহকে এভাবে মিটিয়ে দেয়, যেমন পানি আগুনকে নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(জামে আত-তিরমিজি: ২৬১৬)</span>, এবং <span className="font-serif-bn font-bold text-emerald-900">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> ‘নিশ্চয়ই সদকা দানকারীর কবরের উত্তাপ নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-sans-bn font-semibold">(সিলসিলাতুস সহীহাহ: ৩৪৮৪)</span>।
-                    </p>
-                  </div>
+                  <p className="font-times font-bold text-emerald-950 text-base sm:text-xl leading-relaxed tracking-wide" dir="rtl">
+                    ﴿الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ﴾
+                  </p>
+                  <blockquote className="italic text-emerald-950 font-normal text-sm sm:text-[17px] leading-relaxed font-solaiman">
+                    ‘যারা আল্লাহর সন্তুষ্টি অর্জনে দিনে ও রাতে, গোপনে ও প্রকাশ্যে নিজেদের অর্থ-সম্পদ ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে মহা পুরস্কার। আর আল্লাহর পথে নিবেদিত এই দানকে তিনি বহুগুণে বৃদ্ধি করে দেন।’
+                    <span className="not-italic block mt-1 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
+                      — (সূরা আল-বাকারা: ২৬১, ২৭৪)
+                    </span>
+                  </blockquote>
                 </div>
 
-                {/* Medical Hadith Inset Box (Soft Amber Side-Border) */}
+                {/* Prophetic Hadith Box: Blessing & Angels' Prayer */}
+                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-4 text-xs sm:text-[16.5px]">
+                  <p className="text-slate-800 leading-relaxed font-solaiman">
+                    রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
+                  </p>
+
+                  <p className="text-slate-800 leading-relaxed border-t border-emerald-100/80 pt-3.5 font-solaiman">
+                    দান হলো মুমিনের জীবনের বহুমুখী রহমত। কারণ— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> ‘সদকা হলো ঈমানের অকাট্য দলিল’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ৪২২)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> ‘সদকা গুনাহসমূহকে এভাবে মিটিয়ে দেয়, যেমন পানি আগুনকে নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(জামে আত-তিরমিজি: ২৬১৬)</span>, এবং <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> ‘নিশ্চয়ই সদকা দানকারীর কবরের উত্তাপ নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সিলসিলাতুস সহীহাহ: ৩৪৮৪)</span>।
+                  </p>
+                </div>
+
+                {/* Medical Hadith Inset Box (Amber Accent) */}
                 <div className="bg-[#fffdf7] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200/80 border-l-4 border-l-amber-500 shadow-2xs">
-                  <p className="text-slate-800 text-sm sm:text-base">
-                    এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-serif-bn font-bold text-amber-950">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-sans-bn font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
+                  <p className="text-slate-800 text-sm sm:text-[16.5px] leading-relaxed font-solaiman">
+                    এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
                   </p>
                 </div>
 
-                {/* Paragraph 3: Warm Invitation */}
-                <p className="text-slate-800 font-normal pt-1">
+                {/* Paragraph 3: Warm Institutional Invitation */}
+                <p className="text-slate-800 font-normal pt-1 font-solaiman">
                   আমরা অনুগ্রহপ্রার্থী হয়ে কারো দ্বারে কিছু চাই না; আমাদের আদর্শের সাথে আপনার মনের টান মিললেই স্বতঃস্ফূর্তভাবে এই খেদমতে যুক্ত হতে পারেন। আপনার সামান্য সহানুভূতিই হতে পারে কারো মুখে এক চিলতে হাসি ফোটানোর উসিলা। পরকালের চিরস্থায়ী কল্যাণ অর্জনে—‘জিকরুল্লাহ ফাউন্ডেশন’ পরিবারে আপনাকে উষ্ণ স্বাগতম।
                 </p>
               </div>
@@ -446,17 +461,18 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* 3. Footer: Digital Signature + Action Button */}
               <div className="pt-6 sm:pt-8 border-t border-emerald-100/90 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
                 {/* Signature & Identity */}
-                <div className="text-center sm:text-left w-full sm:w-auto">
-                  <span className="text-[11px] text-slate-400 uppercase tracking-widest font-sans block mb-0.5">
-                    ডিজিটাল স্বাক্ষর
-                  </span>
-                  <div className="font-signature text-3xl sm:text-4xl text-emerald-800 leading-tight mb-1 select-none">
-                    Hafizur Rahman Siddik
+                <div className="flex flex-col items-center sm:items-start text-center sm:text-left font-solaiman">
+                  <div className="mb-2 flex items-center justify-center sm:justify-start">
+                    <img
+                      src="https://res.cloudinary.com/dlklqihg6/image/upload/v1791661214/vtbxogwfkuzaajs4ptv2.png"
+                      alt="স্বাক্ষর — হাফিজুর রহমান সিদ্দিক"
+                      className="h-10 sm:h-12 md:h-13 w-auto max-w-[140px] sm:max-w-[160px] object-contain select-none transition-transform hover:scale-105 duration-300"
+                    />
                   </div>
-                  <div className="text-sm font-bold text-slate-900 font-serif-bn">
+                  <div className="text-base sm:text-lg font-bold text-slate-900 font-solaiman">
                     হাফিজুর রহমান সিদ্দিক (বগুড়া)
                   </div>
-                  <div className="text-xs text-emerald-700 font-medium font-sans-bn">
+                  <div className="text-xs sm:text-sm text-emerald-700 font-semibold font-solaiman mt-0.5">
                     প্রতিষ্ঠাতা ও চেয়ারম্যান, জিকরুল্লাহ ফাউন্ডেশন
                   </div>
                 </div>
@@ -569,6 +585,20 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </button>
           </div>
         </div>
+
+        {/* Section 4: প্রশাসনিক প্রবেশদ্বার লিংক */}
+        {onNavigateToAdmin && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={onNavigateToAdmin}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 border border-slate-200 hover:border-emerald-300 text-xs sm:text-sm font-medium transition-all shadow-2xs hover:shadow-xs cursor-pointer group active:scale-95"
+              title="অ্যাডমিন"
+            >
+              <Lock className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-colors" />
+              <span>অ্যাডমিন</span>
+            </button>
+          </div>
+        )}
 
       </div>
     </div>

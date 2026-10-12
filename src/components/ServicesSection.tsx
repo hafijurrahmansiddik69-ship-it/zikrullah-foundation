@@ -22,10 +22,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs sm:text-sm font-semibold mb-3.5">
             <Compass className="w-4 h-4 text-emerald-600" />
-            <span>আমাদের মূল দর্শন ও কর্মপরিকল্পনা</span>
+            <span>আমাদের প্রোগ্রাম ও সেবা পরিকল্পনা</span>
           </div>
           <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl lg:text-5xl text-[#045332] tracking-tight leading-tight mb-4">
-            আমাদের লক্ষ্য ও উদ্দেশ্য
+            আমাদের প্রোগ্রাম ও সেবা (লক্ষ্য ও উদ্দেশ্য)
           </h2>
           <p className="text-slate-600 font-solaiman text-base sm:text-lg leading-relaxed">
             কুরআন-সুন্নাহর সঠিক নির্দেশনা অনুযায়ী মানবতার নিঃস্বার্থ খেদমত এবং আখিরাতের সঞ্চয় গড়ে তোলার পবিত্র অঙ্গীকার।

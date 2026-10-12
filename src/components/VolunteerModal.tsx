@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Users, CheckCircle, HeartHandshake } from 'lucide-react';
+import { adminDataService } from '../services/adminDataService';
 
 interface VolunteerModalProps {
   isOpen: boolean;
@@ -22,6 +23,19 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     e.preventDefault();
     const cleanName = name.trim();
     setSubmittedName(cleanName);
+
+    // Save to admin database
+    adminDataService.addVolunteer({
+      name: cleanName || 'সম্মানিত ভাই/বোন',
+      phone: phone.trim() || 'অনুল্লেখিত',
+      upazila: upazila || 'বগুড়া',
+      bloodGroup: bloodGroup || 'A+',
+      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      message: message.trim() || '',
+      status: 'অপেক্ষমাণ',
+      adminNote: 'অনলাইন আবেদন ফরম থেকে জমাকৃত'
+    });
+
     setSubmitted(true);
   };
 

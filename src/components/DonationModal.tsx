@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Heart, Check, Copy, Printer, CheckCircle, ArrowRight, ShieldCheck, Building2, Phone } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
+import { adminDataService } from '../services/adminDataService';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -68,14 +69,29 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     
     // Generate unique receipt
     const randomId = 'ZK-' + Math.floor(100000 + Math.random() * 900000);
+    const dateStr = new Date().toLocaleDateString('bn-BD', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
     setReceiptNumber(randomId);
-    setDonationDate(
-      new Date().toLocaleDateString('bn-BD', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      })
-    );
+    setDonationDate(dateStr);
+
+    // Save to admin database
+    adminDataService.addDonation({
+      id: randomId,
+      donorName: donorName.trim() || 'অজ্ঞাত দানকারী',
+      phone: donorPhone.trim() || 'অনুল্লেখিত',
+      amount: amount,
+      category: category,
+      paymentMethod: paymentMethod,
+      transactionId: trxId.trim() || 'N/A',
+      donorMessage: donorMessage.trim() || '',
+      date: dateStr,
+      status: 'অপেক্ষমাণ',
+      adminNote: 'অনলাইন ডোনেশন মডাল থেকে জমাকৃত'
+    });
+
     setStep(3);
   };
 

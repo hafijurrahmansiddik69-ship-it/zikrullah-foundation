@@ -8,6 +8,7 @@ import { StatsSection } from './components/StatsSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { PrayerTimesBogura } from './components/PrayerTimesBogura';
 import { CallToActionBanner } from './components/CallToActionBanner';
+import { VolunteerSection } from './components/VolunteerSection';
 import { GallerySection } from './components/GallerySection';
 import { NewsSection } from './components/NewsSection';
 import { ContactSection } from './components/ContactSection';
@@ -15,12 +16,15 @@ import { Footer } from './components/Footer';
 import { DonationModal } from './components/DonationModal';
 import { VolunteerModal } from './components/VolunteerModal';
 import { AboutPage } from './pages/AboutPage';
+import { AdminPage } from './pages/AdminPage';
 import { Project } from './types';
-import { Heart } from 'lucide-react';
+import { Heart, ShieldCheck, Lock, ArrowRight } from 'lucide-react';
 
 export function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'about'>(() => {
-    return window.location.hash === '#about-page' ? 'about' : 'home';
+  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'admin'>(() => {
+    if (window.location.hash === '#about-page') return 'about';
+    if (window.location.hash === '#admin-page' || window.location.hash === '#admin') return 'admin';
+    return 'home';
   });
 
   const [isDonationOpen, setIsDonationOpen] = useState(false);
@@ -34,6 +38,9 @@ export function App() {
       if (window.location.hash === '#about-page') {
         setCurrentPage('about');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (window.location.hash === '#admin-page' || window.location.hash === '#admin') {
+        setCurrentPage('admin');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setCurrentPage('home');
       }
@@ -42,9 +49,15 @@ export function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  const navigateTo = (page: 'home' | 'about') => {
+  const navigateTo = (page: 'home' | 'about' | 'admin') => {
     setCurrentPage(page);
-    window.location.hash = page === 'about' ? 'about-page' : '';
+    if (page === 'about') {
+      window.location.hash = 'about-page';
+    } else if (page === 'admin') {
+      window.location.hash = 'admin-page';
+    } else {
+      window.location.hash = '';
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -68,6 +81,7 @@ export function App() {
         currentPage={currentPage}
         onNavigateHome={() => navigateTo('home')}
         onNavigateToAbout={() => navigateTo('about')}
+        onNavigateToAdmin={() => navigateTo('admin')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
@@ -79,6 +93,12 @@ export function App() {
             onBackToHome={() => navigateTo('home')}
             onOpenVolunteer={() => setIsVolunteerOpen(true)}
             onOpenDonation={(cat) => handleOpenDonation(cat)}
+            onNavigateToAdmin={() => navigateTo('admin')}
+          />
+        ) : currentPage === 'admin' ? (
+          /* Dedicated Separate Admin Portal with Email/Password Protection */
+          <AdminPage
+            onBackToHome={() => navigateTo('home')}
           />
         ) : (
           /* Full Home Page Flow */
@@ -117,14 +137,29 @@ export function App() {
             {/* Call to Action Banner */}
             <CallToActionBanner onOpenDonation={() => handleOpenDonation()} />
 
-            {/* Photo Gallery & Lightbox */}
+            {/* ১. স্বেচ্ছাসেবক নিবন্ধন */}
+            <VolunteerSection onOpenModal={() => setIsVolunteerOpen(true)} />
+
+            {/* ২. ছবি ও স্থিরচিত্র */}
             <GallerySection />
 
-            {/* News & Updates */}
+            {/* ৩. বিজ্ঞপ্তি ও রিপোর্ট */}
             <NewsSection />
 
-            {/* Contact & Map */}
+            {/* ৪. অফিস যোগাযোগ */}
             <ContactSection />
+
+            {/* অফিস যোগাযোগের নিচে শুধুমাত্র অ্যাডমিন বাটন (ক্লিক করলে অ্যাডমিন পেইজে প্রবেশ) */}
+            <div id="admin-panel" className="bg-[#f8faf9] py-5 border-t border-slate-200/60 flex justify-center items-center">
+              <button
+                onClick={() => navigateTo('admin')}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 border border-slate-200 hover:border-emerald-300 text-xs sm:text-sm font-medium transition-all shadow-2xs hover:shadow-xs cursor-pointer group active:scale-95"
+                title="অ্যাডমিন"
+              >
+                <Lock className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-colors" />
+                <span>অ্যাডমিন</span>
+              </button>
+            </div>
           </>
         )}
       </main>
@@ -133,6 +168,7 @@ export function App() {
       <Footer
         onNavigateHome={() => navigateTo('home')}
         onNavigateToAbout={() => navigateTo('about')}
+        onNavigateToAdmin={() => navigateTo('admin')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
