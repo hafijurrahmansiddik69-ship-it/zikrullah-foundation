@@ -16,7 +16,7 @@ const CARDS: CardData[] = [
   { badge: 'ফ্রি চিকিৎসা', title: 'স্বাস্থ্যসেবা', icon: HeartPulse, gradientClass: 'from-[#00c6ff] to-[#0072ff]', cardBorderClass: 'border-[#00c6ff]', cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(0,198,255,0.4)]', description: 'চরম দারিদ্র্যের কারণে উন্নত চিকিৎসা ও দামী ওষুধ ক্রয়ে অক্ষম অসহায় রোগী ও প্রতিবন্ধীদের জন্য দেশের শীর্ষস্থানীয় ভালো মানের চিকিৎসকদের পরামর্শ, প্রয়োজনীয় ওষুধ এবং মানসম্মত চিকিৎসা সেবা নিশ্চিত করা।' },
   { badge: 'লাল ভালোবাসা', title: 'রক্তদান', icon: Heart, gradientClass: 'from-[#ff416c] to-[#ff4b2b]', cardBorderClass: 'border-[#ff416c]', cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(255,65,108,0.4)]', description: 'মুমূর্ষু রোগীদের জরুরি মুহূর্তে জীবন বাঁচানোর তাগিদে বিনামূল্যে রক্তের ব্যবস্থা করা এবং রক্তদানে যুবসমাজকে সচেতন ও উদ্বুদ্ধ করা।' },
   { badge: 'দ্বীনি ও সাধারণ', title: 'শিক্ষা সহায়তা', icon: GraduationCap, gradientClass: 'from-[#f6d365] to-[#fda085]', cardBorderClass: 'border-[#f6d365]', cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(246,211,101,0.4)]', description: 'অসচ্ছল মেধাবী শিক্ষার্থী, এতিম ও হাফেজদের পড়াশোনা, কিতাবপত্র, আবাসন এবং সুন্দর ভবিষ্যৎ গঠনের সুব্যবস্থা করা।' },
-  { badge: 'স্বাবলম্বিতা', title: 'আত্মকর্মসংস্থান', icon: Briefcase, gradientClass: 'from-[#7f7fd5] via-[#86a8e7] to-[#91eae4]', cardBorderClass: 'border-[#7f7fd5]', cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(127,127,213,0.4)]', description: 'কর্মক্ষম বেকার যুবক ও দুস্থ অসহায় মানুষদের স্বাবলম্বী করে তুলতে ক্ষুদ্র উদ্যোগ, প্রশিক্ষণ ও কর্মসংস্থানের সুযোগ সৃষ্টির মাধ্যমে নিজের পায়ে দাঁড়ানোর ব্যবস্থা করা।' },
+  { badge: 'স্বাবলম্বিতা', title: 'আত্মকর্মসংস্থান', icon: Briefcase, gradientClass: 'from-[#6b21a8] to-[#3b82f6]', cardBorderClass: 'border-[#a855f7]', cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(168,85,247,0.4)]', description: 'কর্মক্ষম বেকার যুবক ও দুস্থ অসহায় মানুষদের স্বাবলম্বী করে তুলতে ক্ষুদ্র উদ্যোগ, প্রশিক্ষণ ও কর্মসংস্থানের সুযোগ সৃষ্টির মাধ্যমে নিজের পায়ে দাঁড়ানোর ব্যবস্থা করা।' },
   { badge: 'পানি ও বৃক্ষ', title: 'সদকা-ই-জারিয়া', icon: Sprout, gradientClass: 'from-[#11998e] to-[#38ef7d]', cardBorderClass: 'border-[#38ef7d]', cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(56,239,125,0.4)]', description: 'কেয়ামত পর্যন্ত সওয়াব জারি থাকার নিয়তে তীব্র সংকটপূর্ণ এলাকায় সুপেয় পানির জন্য গভীর নলকূপ স্থাপন এবং পরিবেশ রক্ষায় বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন।' }
 ];
 
@@ -28,7 +28,7 @@ export const ProjectsSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4">
         <div className="text-center mb-12">
           <span className="inline-block px-3 py-1.5 rounded-full bg-green-500/15 text-green-400 text-xs font-semibold mb-3 border border-green-500/20">আমাদের কর্মনীতি ও প্রতিশ্রুতি</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">যাঁদের জন্য আমরা কাজ করি</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">আমাদের সেবামূলক কার্যক্রম</h2>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
