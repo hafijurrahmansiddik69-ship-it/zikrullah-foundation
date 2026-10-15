@@ -15,6 +15,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
 }) => {
   return (
     <section id="about" className="py-20 bg-[#fafcfb] border-b border-emerald-100/60">
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -89,40 +90,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <span>আমাদের লক্ষ্য, দর্শন ও পরিচিতি</span>
             </div>
 
-            <h2 className="font-serif-bn font-bold text-2xl sm:text-4xl text-[#045332] leading-tight mb-4 sm:mb-5">
-              মানবতার সেবায় নিবেদিত ‘জিকরুল্লাহ ফাউন্ডেশন’
-            </h2>
 
-            {/* User exact primary statement in two paragraphs */}
-            <div className="bg-emerald-50/70 p-4 sm:p-6 rounded-2xl border-l-4 border-[#087443] mb-5 sm:mb-6 space-y-3 sm:space-y-4">
-              <div className="text-center pb-2 border-b border-emerald-200/60">
-                <h3 className="font-fiona text-xl sm:text-3xl text-[#045332] font-bold tracking-normal inline-block">
-                  আমাদের প্রেরণা
-                </h3>
-              </div>
-              <p className="font-solaiman text-slate-800 text-sm sm:text-lg lg:text-xl leading-relaxed font-normal">
-                “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
-              </p>
-              <p className="font-solaiman text-slate-800 text-sm sm:text-lg lg:text-xl leading-relaxed font-normal border-t border-emerald-200/60 pt-2.5 sm:pt-3">
-                উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।
-              </p>
-            </div>
-
-            {/* Founder & Institution Badge */}
-            <div className="bg-[#fafcfb] border border-emerald-200/80 rounded-2xl p-3.5 sm:p-4 mb-6 sm:mb-7 flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-2.5 sm:gap-4 text-xs text-slate-700">
-              <div className="flex items-center gap-2">
-                <Award className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                <span><strong>উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                <span><strong>প্রতিষ্ঠাকাল:</strong> ১লা জানুয়ারি ২০২৩</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                <span><strong>কর্মক্ষেত্র:</strong> শিক্ষা, দাওয়াহ ও মানবকল্যাণ</span>
-              </div>
-            </div>
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5">

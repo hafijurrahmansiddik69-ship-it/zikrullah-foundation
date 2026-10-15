@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
+import { MissionSection } from './components/MissionSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
 import { StatsSection } from './components/StatsSection';
@@ -121,8 +122,10 @@ export function App() {
               onOpenDonation={() => handleOpenDonation()}
             />
 
+            <MissionSection />
+
             {/* আমাদের বর্তমান ও চলমান প্রকল্পসমূহ (10 Minute School ক্যাটাগরি বাটন/কার্ড ও বিস্তারিত মডিউল) */}
-            <ProjectsSection onDonateToProject={handleDonateToProject} />
+            <ProjectsSection />
 
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}
