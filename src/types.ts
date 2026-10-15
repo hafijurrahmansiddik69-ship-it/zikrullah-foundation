@@ -1,14 +1,18 @@
 export interface Project {
   id: string;
   title: string;
-  category: 'খাদ্য' | 'শিক্ষা' | 'স্বাস্থ্য' | 'পানি' | 'সমাজ উন্নয়ন';
+  category: string;
+  subtitle?: string;
   description: string;
+  longDescription?: string;
+  objectives?: string[];
   targetAmount: number;
   raisedAmount: number;
   beneficiaries: string;
   location: string;
   image: string;
   status: 'চলমান' | 'সম্পন্ন' | 'আসন্ন';
+  iconType?: string;
 }
 
 export interface ServiceItem {

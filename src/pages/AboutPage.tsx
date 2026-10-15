@@ -22,7 +22,9 @@ import {
   EducationIllustration, 
   SelfRelianceIllustration,
   YouthAwakeningIllustration,
-  SadaqahJariyahIllustration
+  SadaqahJariyahIllustration,
+  VisionIllustration,
+  MissionIllustration
 } from '../components/MissionIcons';
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
 
@@ -110,9 +112,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         {/* Section 1: আমাদের লক্ষ্য (Mission) */}
         <div className="bg-white rounded-3xl p-6 sm:p-10 border border-emerald-100 shadow-md mb-10">
           <div className="flex items-center gap-3.5 mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-[#087443] text-white flex items-center justify-center shadow-md shadow-emerald-900/20 shrink-0">
-              <Target className="w-6 h-6" />
-            </div>
+            <MissionIllustration className="w-13 h-13 sm:w-14 sm:h-14 shrink-0 shadow-md shadow-emerald-950/20 transition-transform duration-300 hover:scale-105" />
             <div>
               <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
                 Our Mission
@@ -170,8 +170,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
               {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ২
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center gap-1 shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
+                  <span className="leading-none">২</span>
+                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 shrink-0" aria-label="Compass icon">
+                    <circle cx="8" cy="8" r="6.8" stroke="#fbbf24" strokeWidth="1.2" fill="#045332" />
+                    <circle cx="8" cy="8" r="5" stroke="#34d399" strokeWidth="0.6" strokeDasharray="1 1" />
+                    <polygon points="8,2.8 9.6,8 8,7.2 6.4,8" fill="#fcd34d" />
+                    <polygon points="8,13.2 9.6,8 8,8.8 6.4,8" fill="#10b981" />
+                    <circle cx="8" cy="8" r="1.3" fill="#ffffff" stroke="#f59e0b" strokeWidth="0.6" />
+                  </svg>
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
                   <MedicalIllustration className="w-full h-full" />
@@ -253,9 +260,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         {/* Section 2: আমাদের উদ্দেশ্য (Vision) */}
         <div className="bg-white rounded-3xl p-6 sm:p-10 border border-emerald-100 shadow-md mb-12">
           <div className="flex items-center gap-3.5 mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-[#045332] text-amber-300 flex items-center justify-center shadow-md shadow-emerald-900/20 shrink-0">
-              <Sparkles className="w-6 h-6" />
-            </div>
+            <VisionIllustration className="w-13 h-13 sm:w-14 sm:h-14 shrink-0 shadow-md shadow-emerald-950/20 transition-transform duration-300 hover:scale-105" />
             <div>
               <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
                 Our Vision
@@ -316,8 +321,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
                   ২
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
-                  <SadaqahJariyahIllustration className="w-full h-full" />
+                <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-emerald-50 via-white to-amber-50/80 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1 shrink-0">
+                  <SadaqahJariyahIllustration className="w-full h-full drop-shadow-xs" />
                 </div>
               </div>
 
@@ -415,17 +420,14 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </p>
 
                 {/* Quranic Verse Box (Soft Emerald Accent) */}
-                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-3 sm:space-y-3.5">
-                  <p className="text-slate-800 font-medium text-sm sm:text-base font-solaiman">
-                    মহান রব ঘোষণা করেছেন—
+                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-2.5 sm:space-y-3">
+                  <p className="font-solaiman font-medium text-emerald-950 text-sm sm:text-base leading-relaxed tracking-normal" dir="rtl">
+                    اَلَّذِيْنَ يُنْفِقُوْنَ اَمْوَالَهُمْ بِالَّيْلِ وَالنَّهَارِ سِرًّا وَّعَلَانِيَةً فَلَهُمْ اَجْرُهُمْ عِنْدَ رَبِّهِمْ ۚ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُوْنَ.
                   </p>
-                  <p className="font-times font-bold text-emerald-950 text-base sm:text-xl leading-relaxed tracking-wide" dir="rtl">
-                    ﴿الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ﴾
-                  </p>
-                  <blockquote className="italic text-emerald-950 font-normal text-sm sm:text-[17px] leading-relaxed font-solaiman">
-                    ‘যারা আল্লাহর সন্তুষ্টি অর্জনে দিনে ও রাতে, গোপনে ও প্রকাশ্যে নিজেদের অর্থ-সম্পদ ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে মহা পুরস্কার। আর আল্লাহর পথে নিবেদিত এই দানকে তিনি বহুগুণে বৃদ্ধি করে দেন।’
-                    <span className="not-italic block mt-1 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
-                      — (সূরা আল-বাকারা: ২৬১, ২৭৪)
+                  <blockquote className="text-emerald-950 font-normal text-sm sm:text-base leading-relaxed font-solaiman">
+                    “যারা তাদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের প্রতিদান তাদের রবের নিকট রয়েছে। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”
+                    <span className="not-italic block mt-1.5 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
+                      — (সূরা আল-বাকারা: ২৭৪)
                     </span>
                   </blockquote>
                 </div>

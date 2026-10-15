@@ -105,8 +105,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
 
                   {/* Number Badge + 3D Colorful Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ২
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center gap-1 shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
+                      <span className="leading-none">২</span>
+                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" aria-label="Compass icon">
+                        <circle cx="8" cy="8" r="6.8" stroke="#fbbf24" strokeWidth="1.2" fill="#045332" />
+                        <circle cx="8" cy="8" r="5" stroke="#34d399" strokeWidth="0.6" strokeDasharray="1 1" />
+                        <polygon points="8,2.8 9.6,8 8,7.2 6.4,8" fill="#fcd34d" />
+                        <polygon points="8,13.2 9.6,8 8,8.8 6.4,8" fill="#10b981" />
+                        <circle cx="8" cy="8" r="1.3" fill="#ffffff" stroke="#f59e0b" strokeWidth="0.6" />
+                      </svg>
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 p-1.5 shrink-0">
                       <MedicalIllustration className="w-full h-full" />

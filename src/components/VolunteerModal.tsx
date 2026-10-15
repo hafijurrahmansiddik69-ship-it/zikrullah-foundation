@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { X, Users, CheckCircle, HeartHandshake } from 'lucide-react';
+import { X, Users, CheckCircle, HeartHandshake, Loader2, Mail, ExternalLink, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
+import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
+import { FOUNDATION_INFO } from '../data/mockData';
 
 interface VolunteerModalProps {
   isOpen: boolean;
@@ -9,6 +11,7 @@ interface VolunteerModalProps {
 
 export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [name, setName] = useState('');
   const [submittedName, setSubmittedName] = useState('');
   const [phone, setPhone] = useState('');
@@ -16,26 +19,58 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   const [bloodGroup, setBloodGroup] = useState('A+');
   const [interest, setInterest] = useState('ত্রাণ ও খাদ্য সহায়তা বিতরণ');
   const [message, setMessage] = useState('');
+  const [mailtoUrl, setMailtoUrl] = useState('');
+  const [gmailUrl, setGmailUrl] = useState('');
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanName = name.trim();
-    setSubmittedName(cleanName);
+    const cleanPhone = phone.trim();
+    if (!cleanName || !cleanPhone) return;
 
-    // Save to admin database
+    setSubmittedName(cleanName);
+    setIsSubmitting(true);
+
+    const submissionPayload = {
+      name: cleanName,
+      phone: cleanPhone,
+      upazila: upazila || 'বগুড়া',
+      bloodGroup: bloodGroup || 'A+',
+      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      message: message.trim() || ''
+    };
+
+    // 1. Save to local admin database
     adminDataService.addVolunteer({
       name: cleanName || 'সম্মানিত ভাই/বোন',
-      phone: phone.trim() || 'অনুল্লেখিত',
+      phone: cleanPhone || 'অনুল্লেখিত',
       upazila: upazila || 'বগুড়া',
       bloodGroup: bloodGroup || 'A+',
       interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
       message: message.trim() || '',
       status: 'অপেক্ষমাণ',
-      adminNote: 'অনলাইন আবেদন ফরম থেকে জমাকৃত'
+      adminNote: 'মডাল আবেদন ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
     });
 
+    // 2. Compute direct Gmail and Mailto URLs
+    const directGmail = getDirectGmailUrl(submissionPayload);
+    const directMailto = getMailtoUrl(submissionPayload);
+    setGmailUrl(directGmail);
+    setMailtoUrl(directMailto);
+
+    // 3. ডাইরেক্ট জিমেইল ওপেন করার কল (Directly open their Gmail with compose window pre-filled)
+    triggerDirectGmail(submissionPayload);
+
+    // 4. Background email service notification
+    try {
+      await sendVolunteerRegistrationEmail(submissionPayload);
+    } catch (err) {
+      console.warn('Background email dispatch log:', err);
+    }
+
+    setIsSubmitting(false);
     setSubmitted(true);
   };
 
@@ -45,6 +80,8 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     setSubmittedName('');
     setPhone('');
     setMessage('');
+    setGmailUrl('');
+    setMailtoUrl('');
     onClose();
   };
 
@@ -70,43 +107,82 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
             <X className="w-5 h-5" />
           </button>
 
-          <div className="p-5 sm:p-9 text-center flex flex-col items-center">
+          <div className="p-5 sm:p-8 text-center flex flex-col items-center">
             {/* Green Checkmark Icon at the top */}
-            <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-emerald-50 border-2 border-emerald-200 text-emerald-600 flex items-center justify-center mb-5 shadow-sm shadow-emerald-900/5">
-              <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2] text-emerald-600" />
+            <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-emerald-50 border-2 border-emerald-200 text-emerald-600 flex items-center justify-center mb-4 shadow-sm shadow-emerald-900/5">
+              <CheckCircle className="w-9 h-9 sm:w-10 sm:h-10 stroke-[2.2] text-emerald-600" />
             </div>
 
             {/* 1. Main Title (Dynamic User Name) */}
-            <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-3.5 tracking-tight leading-snug">
+            <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-2 tracking-tight leading-snug">
               ধন্যবাদ, {displayName}!
             </h3>
 
             {/* 2. Arabic Supplication / Blessing Badge */}
-            <div className="mb-5 inline-flex items-center justify-center px-5 py-2 sm:px-6 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
+            <div className="mb-4 inline-flex items-center justify-center px-5 py-1.5 sm:px-6 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
               <span
                 dir="rtl"
                 lang="ar"
-                className="font-cairo text-xl sm:text-2xl text-[#045332] font-semibold sm:font-bold tracking-normal leading-[1.8] select-text"
+                className="font-cairo text-lg sm:text-xl text-[#045332] font-semibold sm:font-bold tracking-normal leading-[1.8] select-text"
                 style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
               >
                 جَزَاكَ ٱللَّٰهُ خَيْرًا
               </span>
             </div>
 
-            {/* 3. Body Text */}
-            <div className="space-y-1.5 text-slate-600 font-solaiman text-sm sm:text-base leading-relaxed max-w-sm mx-auto mb-7 font-normal">
-              <p>মানুষের কল্যাণে আপনার এই সদিচ্ছা ও শ্রম আল্লাহ কবুল করুন।</p>
-              <p>খুব শীঘ্রই আমাদের টিম আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।</p>
+            {/* 3. Direct Gmail Notification Box */}
+            <div className="w-full space-y-3 font-solaiman text-xs sm:text-sm leading-relaxed mb-5">
+              <div className="bg-red-50/80 border border-red-200 rounded-xl p-3 text-left text-slate-700 flex items-start gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-red-600 text-white flex items-center justify-center shrink-0 font-bold text-xs shadow-xs">
+                  M
+                </div>
+                <div>
+                  <strong className="text-red-900 block text-xs sm:text-sm mb-0.5">
+                    আপনার Gmail ওপেন করা হয়েছে:
+                  </strong>
+                  <p className="text-slate-600 text-[11px] sm:text-xs">
+                    আপনার তথ্য দিয়ে <strong>{FOUNDATION_INFO.email}</strong> ঠিকানায় জিমেইল খসড়া প্রস্তুত হয়েছে। সরাসরি সেন্ড করতে নিচের লাল বাটনে চাপুন।
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* 4. Action Button */}
-            <button
-              type="button"
-              onClick={resetAndClose}
-              className="w-full sm:w-auto min-w-[150px] inline-flex items-center justify-center px-8 py-3 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-sans-bn font-bold text-sm sm:text-base shadow-md shadow-emerald-900/10 hover:shadow-lg transition-all duration-200 cursor-pointer"
-            >
-              ঠিক আছে
-            </button>
+            {/* 4. Action Buttons */}
+            <div className="flex flex-col gap-2.5 w-full">
+              {gmailUrl && (
+                <a
+                  href={gmailUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-red-600 hover:bg-red-700 active:scale-98 text-white font-bold text-sm shadow-md shadow-red-600/20 transition-all cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+                  </svg>
+                  <span>সরাসরি জিমেইল (Gmail)-এ পাঠান</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                </a>
+              )}
+
+              <div className="flex items-center gap-2 w-full">
+                {mailtoUrl && (
+                  <a
+                    href={mailtoUrl}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>অন্যান্য ইমেইল অ্যাপ</span>
+                  </a>
+                )}
+                <button
+                  type="button"
+                  onClick={resetAndClose}
+                  className="flex-1 inline-flex items-center justify-center py-2.5 px-3 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-sans-bn font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
+                >
+                  ঠিক আছে
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
@@ -237,10 +313,20 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
               >
-                <HeartHandshake className="w-4 h-4" />
-                <span>নিবন্ধন জমা দিন</span>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>ইমেইলে পাঠানো হচ্ছে...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>নিবন্ধন সম্পন্ন করুন</span>
+                  </>
+                )}
               </button>
             </form>
           </div>

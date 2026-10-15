@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
-import { ServicesSection } from './components/ServicesSection';
-import { CoreActivitiesSection } from './components/CoreActivitiesSection';
-import { StatsSection } from './components/StatsSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { ServicesSection } from './components/ServicesSection';
+import { StatsSection } from './components/StatsSection';
 import { PrayerTimesBogura } from './components/PrayerTimesBogura';
 import { CallToActionBanner } from './components/CallToActionBanner';
 import { VolunteerSection } from './components/VolunteerSection';
@@ -21,7 +20,7 @@ import { Heart } from 'lucide-react';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>(() => {
-    if (window.location.hash === '#about-page') return 'about';
+    if (typeof window !== 'undefined' && window.location.hash === '#about-page') return 'about';
     return 'home';
   });
 
@@ -38,20 +37,44 @@ export function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setCurrentPage('home');
+        if (window.location.hash === '#projects') {
+          setTimeout(() => {
+            const el = document.getElementById('projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
       }
     };
     window.addEventListener('hashchange', handleHash);
+    
+    // Check initial hash for #projects
+    if (window.location.hash === '#projects') {
+      setTimeout(() => {
+        const el = document.getElementById('projects');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  const navigateTo = (page: 'home' | 'about') => {
+  const navigateTo = (page: 'home' | 'about', targetHash?: string) => {
     setCurrentPage(page);
     if (page === 'about') {
       window.location.hash = 'about-page';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      window.location.hash = '';
+      if (targetHash) {
+        window.location.hash = targetHash;
+        setTimeout(() => {
+          const el = document.getElementById(targetHash.replace('#', ''));
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      } else {
+        window.location.hash = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenDonation = (category?: string, amount?: number) => {
@@ -72,7 +95,7 @@ export function App() {
       {/* Top Header */}
       <Header
         currentPage={currentPage}
-        onNavigateHome={() => navigateTo('home')}
+        onNavigateHome={(hash) => navigateTo('home', hash)}
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
@@ -95,19 +118,17 @@ export function App() {
             <AboutSection 
               onNavigateToAbout={() => navigateTo('about')}
               onOpenVolunteer={() => setIsVolunteerOpen(true)} 
+              onOpenDonation={() => handleOpenDonation()}
             />
+
+            {/* আমাদের বর্তমান ও চলমান প্রকল্পসমূহ (10 Minute School ক্যাটাগরি বাটন/কার্ড ও বিস্তারিত মডিউল) */}
+            <ProjectsSection onDonateToProject={handleDonateToProject} />
 
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}
             />
 
-            <CoreActivitiesSection
-              onOpenDonation={(cat) => handleOpenDonation(cat)}
-            />
-
             <StatsSection />
-
-            <ProjectsSection onDonateToProject={handleDonateToProject} />
 
             <PrayerTimesBogura />
 

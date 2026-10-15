@@ -7,7 +7,7 @@ interface HeaderProps {
   onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
-  onNavigateHome?: () => void;
+  onNavigateHome?: (hash?: string) => void;
   currentPage?: 'home' | 'about';
 }
 
@@ -21,6 +21,20 @@ export const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const handleNavToSection = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
+    closeMobileMenu();
+    if (currentPage !== 'home' && onNavigateHome) {
+      onNavigateHome(`#${sectionId}`);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.pushState(null, '', `#${sectionId}`);
+      }
+    }
+  };
 
   return (
     <>
@@ -118,55 +132,43 @@ export const Header: React.FC<HeaderProps> = ({
               আমাদের সম্পর্কে
             </button>
             <a
+              href="#projects"
+              onClick={(e) => handleNavToSection(e, 'projects')}
+              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 font-semibold text-emerald-800 transition-colors"
+            >
+              চলমান প্রকল্প
+            </a>
+            <a
               href="#services"
-              onClick={() => {
-                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-              }}
+              onClick={(e) => handleNavToSection(e, 'services')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               প্রোগ্রাম ও সেবা
             </a>
             <a
-              href="#projects"
-              onClick={() => {
-                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-              }}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
-            >
-              চলমান প্রকল্প
-            </a>
-            <a
               href="#prayer"
-              onClick={() => {
-                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-              }}
+              onClick={(e) => handleNavToSection(e, 'prayer')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               নামাজের সময়
             </a>
             <a
               href="#gallery"
-              onClick={() => {
-                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-              }}
+              onClick={(e) => handleNavToSection(e, 'gallery')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               গ্যালারি
             </a>
             <a
               href="#news"
-              onClick={() => {
-                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-              }}
+              onClick={(e) => handleNavToSection(e, 'news')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               খবর
             </a>
             <a
               href="#contact"
-              onClick={() => {
-                if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-              }}
+              onClick={(e) => handleNavToSection(e, 'contact')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               যোগাযোগ
@@ -227,61 +229,43 @@ export const Header: React.FC<HeaderProps> = ({
                 আমাদের সম্পর্কে
               </button>
               <a
+                href="#projects"
+                onClick={(e) => handleNavToSection(e, 'projects')}
+                className="px-3 py-2.5 rounded-lg bg-emerald-50/70 text-emerald-800 font-bold hover:bg-emerald-100"
+              >
+                চলমান প্রকল্প
+              </a>
+              <a
                 href="#services"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-                }}
+                onClick={(e) => handleNavToSection(e, 'services')}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 প্রোগ্রাম ও সেবা
               </a>
               <a
-                href="#projects"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-                }}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                চলমান প্রকল্প
-              </a>
-              <a
                 href="#prayer"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-                }}
+                onClick={(e) => handleNavToSection(e, 'prayer')}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 নামাজের সময়সূচি
               </a>
               <a
                 href="#gallery"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-                }}
+                onClick={(e) => handleNavToSection(e, 'gallery')}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 গ্যালারি
               </a>
               <a
                 href="#news"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-                }}
+                onClick={(e) => handleNavToSection(e, 'news')}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 সাম্প্রতিক খবর
               </a>
               <a
                 href="#contact"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (currentPage !== 'home' && onNavigateHome) onNavigateHome();
-                }}
+                onClick={(e) => handleNavToSection(e, 'contact')}
                 className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
               >
                 যোগাযোগ

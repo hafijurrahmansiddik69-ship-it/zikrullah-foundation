@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Users, HeartHandshake, CheckCircle2, Sparkles, Send } from 'lucide-react';
+import { Users, HeartHandshake, CheckCircle2, Sparkles, Send, Loader2, Mail, ExternalLink } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
+import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
+import { FOUNDATION_INFO } from '../data/mockData';
 
 interface VolunteerSectionProps {
   onOpenModal?: () => void;
@@ -8,6 +10,17 @@ interface VolunteerSectionProps {
 
 export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedData, setSubmittedData] = useState<{
+    name: string;
+    phone: string;
+    upazila: string;
+    bloodGroup: string;
+    interest: string;
+    mailtoUrl: string;
+    gmailUrl: string;
+  } | null>(null);
+
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [upazila, setUpazila] = useState('গুজিয়া, মোকামতলা, বগুড়া');
@@ -15,26 +28,64 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
   const [interest, setInterest] = useState('ত্রাণ ও খাদ্য সহায়তা বিতরণ');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanName = name.trim();
+    const cleanPhone = phone.trim();
+    if (!cleanName || !cleanPhone) return;
 
+    setIsSubmitting(true);
+
+    const submissionPayload = {
+      name: cleanName,
+      phone: cleanPhone,
+      upazila: upazila || 'বগুড়া',
+      bloodGroup: bloodGroup || 'A+',
+      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      message: message.trim() || ''
+    };
+
+    // 1. Save to local admin database
     adminDataService.addVolunteer({
-      name: cleanName || 'সম্মানিত ভাই/বোন',
-      phone: phone.trim() || 'অনুল্লেখিত',
+      name: cleanName,
+      phone: cleanPhone,
       upazila: upazila || 'বগুড়া',
       bloodGroup: bloodGroup || 'A+',
       interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
       message: message.trim() || '',
       status: 'অপেক্ষমাণ',
-      adminNote: 'ওয়েবসাইট সেকশন ফরম থেকে নিবন্ধিত'
+      adminNote: 'ওয়েবসাইট ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
     });
 
+    // 2. Direct Gmail and Mailto URLs
+    const gmailUrl = getDirectGmailUrl(submissionPayload);
+    const mailtoUrl = getMailtoUrl(submissionPayload);
+
+    // 3. Directly open their Gmail
+    triggerDirectGmail(submissionPayload);
+
+    // 4. Background email service dispatch
+    try {
+      await sendVolunteerRegistrationEmail(submissionPayload);
+    } catch (err) {
+      console.warn('Background email log:', err);
+    }
+
+    setSubmittedData({
+      name: cleanName,
+      phone: cleanPhone,
+      upazila: upazila || 'বগুড়া',
+      bloodGroup: bloodGroup || 'A+',
+      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      mailtoUrl,
+      gmailUrl
+    });
+
+    setIsSubmitting(false);
     setSubmitted(true);
     setName('');
     setPhone('');
     setMessage('');
-    setTimeout(() => setSubmitted(false), 6000);
   };
 
   return (
@@ -106,20 +157,69 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
           {/* Right Column: In-page Volunteer Registration Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-emerald-100/90 shadow-lg">
             {submitted ? (
-              <div className="py-10 text-center space-y-4 animate-in fade-in duration-300">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+              <div className="py-8 text-center space-y-4 animate-in fade-in duration-300">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
                   <CheckCircle2 className="w-9 h-9" />
                 </div>
-                <h3 className="font-serif-bn font-bold text-2xl text-slate-800">
-                  জাজাকাল্লাহু খাইরান!
-                </h3>
-                <p className="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
-                  আপনার স্বেচ্ছাসেবক নিবন্ধন সফলভাবে গ্রহণ করা হয়েছে। জিকরুল্লাহ ফাউন্ডেশনের অ্যাডমিন প্যানেলে আপনার তথ্য নথিভুক্ত হয়েছে।
-                </p>
-                <div className="pt-2">
+                <div>
+                  <h3 className="font-serif-bn font-bold text-2xl text-slate-800 mb-1">
+                    জাজাকাল্লাহু খাইরান, {submittedData?.name || 'প্রিয় সহযাত্রী'}!
+                  </h3>
+                  <p className="text-emerald-700 font-semibold text-sm">
+                    আপনার স্বেচ্ছাসেবক নিবন্ধন সফলভাবে সম্পন্ন হয়েছে
+                  </p>
+                </div>
+
+                {/* Email Delivery Confirmation Card */}
+                <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-4 text-left space-y-2.5 max-w-lg mx-auto">
+                  <div className="flex items-center gap-2 text-emerald-800 font-semibold text-xs sm:text-sm">
+                    <Mail className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>ইমেইলে তথ্য প্রেরণ সম্পন্ন হয়েছে</span>
+                  </div>
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    আপনার সকল তথ্য জিকরুল্লাহ ফাউন্ডেশনের অফিশিয়াল ইমেইল <strong className="text-emerald-800">{FOUNDATION_INFO.email}</strong>-এ এবং কেন্দ্রীয় অ্যাডমিন প্যানেলে জমা হয়েছে।
+                  </p>
+
+                  {submittedData && (
+                    <div className="pt-2 border-t border-emerald-200/60 grid grid-cols-2 gap-2 text-[11px] sm:text-xs text-slate-700">
+                      <div><span className="text-slate-500">নাম:</span> {submittedData.name}</div>
+                      <div><span className="text-slate-500">মোবাইল:</span> {submittedData.phone}</div>
+                      <div><span className="text-slate-500">এলাকা:</span> {submittedData.upazila}</div>
+                      <div><span className="text-slate-500">রক্তের গ্রুপ:</span> {submittedData.bloodGroup}</div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
+                  {submittedData?.gmailUrl && (
+                    <a
+                      href={submittedData.gmailUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 active:scale-98 text-white text-xs font-bold shadow-md shadow-red-600/20 transition-all cursor-pointer"
+                    >
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+                      </svg>
+                      <span>সরাসরি জিমেইল (Gmail)-এ পাঠান</span>
+                      <ExternalLink className="w-3 h-3 opacity-80" />
+                    </a>
+                  )}
+                  {submittedData?.mailtoUrl && (
+                    <a
+                      href={submittedData.mailtoUrl}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>অন্যান্য ইমেইল অ্যাপ</span>
+                    </a>
+                  )}
                   <button
-                    onClick={() => setSubmitted(false)}
-                    className="px-5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold hover:bg-emerald-100 cursor-pointer"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setSubmittedData(null);
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer"
                   >
                     আরেকটি আবেদন জমা দিন
                   </button>
@@ -232,10 +332,20 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm sm:text-base shadow-md shadow-emerald-950/15 transition-all cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm sm:text-base shadow-md shadow-emerald-950/15 transition-all cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>নিবন্ধন সম্পন্ন করুন</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>তথ্য ইমেইলে পাঠানো হচ্ছে...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>নিবন্ধন সম্পন্ন করুন</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

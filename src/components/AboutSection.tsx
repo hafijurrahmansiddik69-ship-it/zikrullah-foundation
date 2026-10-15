@@ -5,11 +5,13 @@ import { heroImg, FOUNDATION_INFO } from '../data/mockData';
 interface AboutSectionProps {
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
+  onOpenDonation?: () => void;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ 
   onOpenVolunteer,
-  onNavigateToAbout 
+  onNavigateToAbout,
+  onOpenDonation
 }) => {
   return (
     <section id="about" className="py-20 bg-[#fafcfb] border-b border-emerald-100/60">
@@ -17,41 +19,64 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Visual Showcase (5 columns on desktop) */}
+          {/* Visual Showcase (5 columns on desktop) - Matching user requested layout & aesthetic */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden border border-emerald-100 shadow-xl shadow-emerald-950/5 aspect-4/5 bg-slate-100">
+            <div className="relative rounded-3xl overflow-hidden border-2 border-emerald-800/20 shadow-2xl shadow-emerald-950/20 aspect-4/5 bg-[#012213] group">
+              {/* Rich forest green backdrop and photo with warm lighting */}
               <img
                 src={FOUNDATION_INFO.aboutImageUrl || heroImg}
                 alt="জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/30 to-transparent" />
-              
-              {/* Islamic Quote Card */}
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-white/95 backdrop-blur-md border border-white/80 shadow-md sm:shadow-lg text-slate-800">
-                <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-800 tracking-wider uppercase block mb-1">
-                  কুরআনের নির্দেশনা
-                </span>
-                <p className="font-serif-bn text-xs sm:text-base text-slate-900 leading-snug font-medium mb-1">
-                  “তোমরা যা ভালোবাস তা থেকে ব্যয় না করা পর্যন্ত কখনো প্রকৃত পুণ্য লাভ করতে পারবে না।”
-                </p>
-                <span className="text-[11px] sm:text-xs text-slate-500 font-sans">
-                  — সূরা আলে ইমরান: ৯২
-                </span>
-              </div>
-            </div>
+              {/* Forest green overlay with warm lighting gradients */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#012615] via-[#02381e]/40 to-transparent" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,158,11,0.15),transparent_60%)]" />
 
-            {/* Floating Trust Badge */}
-            <div className="absolute top-3 right-3 sm:-top-4 sm:-right-4 bg-[#045332] text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-lg border-2 border-white flex items-center gap-2.5 sm:gap-3 max-w-[170px] sm:max-w-[200px] z-10">
-              <Award className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-300 shrink-0" />
-              <div>
-                <span className="block font-bold text-[10px] sm:text-xs uppercase tracking-wider text-emerald-200">
-                  নিবেদিত প্রাণ
-                </span>
-                <span className="font-bold text-xs sm:text-sm leading-tight block">
-                  মানবতার কল্যাণে নিরলস
-                </span>
+              {/* Top-Right Corner Dark Green Badge with Gold Icon & Text: 'মানবতার সেবায় নিবেদিত' */}
+              <div className="absolute top-3.5 right-3.5 z-20">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#022615]/90 backdrop-blur-md border border-amber-400/40 text-amber-200 text-[11px] sm:text-xs font-solaiman font-medium shadow-md shadow-emerald-950/50">
+                  <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span className="tracking-wide">মানবতার সেবায় নিবেদিত</span>
+                </div>
+              </div>
+              
+              {/* Bottom Clean Frosted-Glass Card Overlay with Quranic Verse & Glowing Donate Button */}
+              <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3.5 sm:left-3.5 sm:right-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/25 shadow-xl text-white z-20 overflow-hidden">
+                {/* Subtle Amber and Emerald glow inside frosted glass */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-amber-400/15 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-emerald-400/15 rounded-full blur-xl pointer-events-none" />
+
+                {/* Arabic Quranic Verse */}
+                <div 
+                  className="font-arabic font-bold text-amber-200 text-sm sm:text-base leading-relaxed tracking-wide mb-1.5 text-center drop-shadow-sm" 
+                  dir="rtl"
+                >
+                  وَمَا أَنفَقْتُم مِّن شَيْءٍ فَهُوَ يُخْلِفُهُ ۖ وَهُوَ خَيْرُ الرَّازِقِينَ
+                </div>
+
+                {/* Bengali Translation & Surah Reference */}
+                <p className="font-solaiman text-[11px] sm:text-[13px] text-white/95 leading-snug font-normal text-center mb-2.5">
+                  “তোমরা যা কিছু ব্যয় করো, তিনি তার প্রতিদান দেবেন। আর তিনিই শ্রেষ্ঠ রিজিকদাতা।”
+                  <span className="block sm:inline text-amber-200/90 font-medium text-[10px] sm:text-xs sm:ml-1 mt-0.5 sm:mt-0 font-solaiman">
+                    — সূরা সাবা: ৩৯
+                  </span>
+                </p>
+
+                {/* Prominent Glowing Green 'দান করুন' (Donate) Button with Heart/Hand Icon */}
+                {onOpenDonation && (
+                  <div className="flex justify-end pt-1 border-t border-white/15">
+                    <button
+                      onClick={onOpenDonation}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#10b981] hover:bg-[#059669] active:scale-95 text-white font-bold text-xs shadow-[0_0_15px_rgba(16,185,129,0.5)] hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] border border-emerald-200/40 transition-all duration-300 cursor-pointer"
+                    >
+                      <svg className="w-3.5 h-3.5 stroke-white fill-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                      </svg>
+                      <span>দান করুন</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

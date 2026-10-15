@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heart, MapPin, Mail, Phone, Users } from 'lucide-react';
-import { FOUNDATION_INFO } from '../data/mockData';
+import { FOUNDATION_INFO, heroImg } from '../data/mockData';
 
 interface FooterProps {
   onOpenDonation: () => void;
@@ -17,8 +17,22 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateHome
 }) => {
   return (
-    <footer className="bg-[#002e1d] text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <footer className="relative overflow-hidden text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950 bg-[#002e1d]">
+      {/* Background Image with Soft Dark Green Tint Overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <img
+          src={FOUNDATION_INFO.homeBackgroundUrl || heroImg}
+          alt="জিকরুল্লাহ ফাউন্ডেশন ব্যাকগ্রাউন্ড"
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover object-center scale-105"
+        />
+        {/* Soft Dark Green Tint Layer: reveals image subtly while keeping text 100% legible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#002818]/93 via-[#013520]/89 to-[#001e12]/95" />
+        <div className="absolute inset-0 bg-emerald-950/75 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-radial from-transparent via-emerald-950/30 to-emerald-950/75" />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-emerald-900/60">
