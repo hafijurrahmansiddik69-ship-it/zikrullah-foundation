@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { X, Heart, Check, Copy, Printer, CheckCircle, ArrowRight, ShieldCheck, Building2, Phone } from 'lucide-react';
+import { X, Heart, Check, Copy, Printer, CheckCircle, ArrowRight, ShieldCheck, Building2, Phone, Mail, ExternalLink, Send, Loader2 } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
+import { 
+  triggerDirectEmailForDonation, 
+  sendDonationEmail, 
+  getDirectGmailUrlForDonation, 
+  getMailtoUrlForDonation,
+  DonationSubmissionData 
+} from '../services/emailService';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -28,6 +35,8 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   const [trxId, setTrxId] = useState('');
   const [donorMessage, setDonorMessage] = useState('');
   const [copiedText, setCopiedText] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailLinks, setEmailLinks] = useState<{ gmailUrl: string; mailtoUrl: string } | null>(null);
 
   // Generated receipt
   const [receiptNumber, setReceiptNumber] = useState('');
@@ -63,10 +72,12 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     setTimeout(() => setCopiedText(''), 2500);
   };
 
-  const handleSubmitStep2 = (e: React.FormEvent) => {
+  const handleSubmitStep2 = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!amount || amount < 10) return;
     
+    setIsSubmitting(true);
+
     // Generate unique receipt
     const randomId = 'ZK-' + Math.floor(100000 + Math.random() * 900000);
     const dateStr = new Date().toLocaleDateString('bn-BD', {
@@ -77,21 +88,45 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     setReceiptNumber(randomId);
     setDonationDate(dateStr);
 
-    // Save to admin database
-    adminDataService.addDonation({
-      id: randomId,
-      donorName: donorName.trim() || 'অজ্ঞাত দানকারী',
+    const donationData: DonationSubmissionData = {
+      receiptId: randomId,
+      donorName: donorName.trim() || 'সম্মানিত শুভাকাঙ্ক্ষী',
       phone: donorPhone.trim() || 'অনুল্লেখিত',
       amount: amount,
       category: category,
       paymentMethod: paymentMethod,
       transactionId: trxId.trim() || 'N/A',
       donorMessage: donorMessage.trim() || '',
+      date: dateStr
+    };
+
+    // Save to admin database
+    adminDataService.addDonation({
+      id: randomId,
+      donorName: donationData.donorName,
+      phone: donationData.phone,
+      amount: amount,
+      category: category,
+      paymentMethod: paymentMethod,
+      transactionId: donationData.transactionId,
+      donorMessage: donationData.donorMessage,
       date: dateStr,
       status: 'অপেক্ষমাণ',
       adminNote: 'অনলাইন ডোনেশন মডাল থেকে জমাকৃত'
     });
 
+    // Compute direct URLs
+    const gmailUrl = getDirectGmailUrlForDonation(donationData);
+    const mailtoUrl = getMailtoUrlForDonation(donationData);
+    setEmailLinks({ gmailUrl, mailtoUrl });
+
+    // Open mobile mail app or Gmail
+    triggerDirectEmailForDonation(donationData);
+
+    // Background delivery to foundation email
+    await sendDonationEmail(donationData);
+
+    setIsSubmitting(false);
     setStep(3);
   };
 
@@ -436,10 +471,20 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
                 <button
                   type="submit"
-                  className="flex-1 py-3 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="flex-1 py-3 px-3 sm:px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-70"
                 >
-                  <CheckCircle className="w-4 h-4" />
-                  <span>দান সম্পন্ন করুন এবং রসিদ পান</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>প্রেরণ করা হচ্ছে...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>টাকা পাঠানোর তথ্য নিশ্চিত করুন ও ইমেইল পাঠান</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -468,9 +513,44 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 </span>
               </div>
 
-              <p className="text-xs text-slate-600 mb-5 max-w-sm mx-auto">
+              <p className="text-xs text-slate-600 mb-4 max-w-sm mx-auto">
                 আপনার অনুদান ও সদকা সফলভাবে গ্রহণ করা হয়েছে। মহান আল্লাহ আপনার দানকে কবুল করুন।
               </p>
+
+              {/* Email Send Confirmation & Direct Buttons */}
+              <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 text-left mb-5 shadow-xs">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <h5 className="font-bold text-xs sm:text-sm text-emerald-950 font-serif-bn">
+                    অফিসিয়াল ইমেইলে তথ্য প্রেরণ (Email Confirmation)
+                  </h5>
+                </div>
+                <p className="text-[11px] sm:text-xs text-emerald-800 leading-relaxed mb-3">
+                  আপনার মোবাইল অ্যাপ বা জিমেইলে অনুদানের TrxID ও বিবরণ তৈরি করা হয়েছে। এক ক্লিকে পাঠাতে নিচের যেকোনো অপশন ব্যবহার করুন:
+                </p>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {emailLinks?.gmailUrl && (
+                    <a
+                      href={emailLinks.gmailUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>🔴 সরাসরি Gmail দিয়ে পাঠান</span>
+                    </a>
+                  )}
+                  {emailLinks?.mailtoUrl && (
+                    <a
+                      href={emailLinks.mailtoUrl}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#045332] hover:bg-[#087443] text-white font-bold text-xs shadow-xs transition-colors"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>📱 মোবাইলের ইমেইল অ্যাপ দিয়ে পাঠান</span>
+                    </a>
+                  )}
+                </div>
+              </div>
 
               {/* Digital Money Receipt */}
               <div className="bg-[#fcfdfa] border-2 border-dashed border-emerald-300 rounded-2xl p-5 text-left mb-6 relative">

@@ -1,31 +1,67 @@
 import React, { useState } from 'react';
-import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, MessageSquare } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, MessageSquare, ExternalLink, Loader2, RotateCcw } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
+import { 
+  triggerDirectEmailForContact, 
+  sendContactMessageEmail, 
+  getDirectGmailUrlForContact, 
+  getMailtoUrlForContact,
+  ContactMessageSubmissionData 
+} from '../services/emailService';
 
 export const ContactSection: React.FC = () => {
   const [name, setName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [emailLinks, setEmailLinks] = useState<{ gmailUrl: string; mailtoUrl: string } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name.trim() || message.trim()) {
-      adminDataService.addContactMessage({
-        name: name.trim() || 'অজ্ঞাত শুভানুধ্যায়ী',
-        contactInfo: contactInfo.trim() || 'অনুল্লেখিত',
-        subject: subject.trim() || 'সাধারণ যোগাযোগ',
-        message: message.trim() || 'কোনো বার্তা নেই'
-      });
-    }
+    if (!name.trim() || !contactInfo.trim() || !message.trim()) return;
+
+    setIsSubmitting(true);
+
+    const contactData: ContactMessageSubmissionData = {
+      name: name.trim(),
+      contactInfo: contactInfo.trim(),
+      subject: subject.trim() || 'সাধারণ অনুসন্ধান',
+      message: message.trim()
+    };
+
+    // Save to admin database
+    adminDataService.addContactMessage({
+      name: contactData.name,
+      contactInfo: contactData.contactInfo,
+      subject: contactData.subject || 'সাধারণ যোগাযোগ',
+      message: contactData.message
+    });
+
+    // Compute direct URLs
+    const gmailUrl = getDirectGmailUrlForContact(contactData);
+    const mailtoUrl = getMailtoUrlForContact(contactData);
+    setEmailLinks({ gmailUrl, mailtoUrl });
+
+    // Open mobile mail app or Gmail
+    triggerDirectEmailForContact(contactData);
+
+    // Background delivery to foundation email
+    await sendContactMessageEmail(contactData);
+
+    setIsSubmitting(false);
     setSubmitted(true);
+  };
+
+  const handleResetForm = () => {
     setName('');
     setContactInfo('');
     setSubject('');
     setMessage('');
-    setTimeout(() => setSubmitted(false), 5000);
+    setSubmitted(false);
+    setEmailLinks(null);
   };
 
   return (
@@ -166,14 +202,49 @@ export const ContactSection: React.FC = () => {
             </p>
 
             {submitted ? (
-              <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center animate-in fade-in">
-                <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-2" />
-                <h4 className="font-serif-bn font-bold text-xl text-emerald-900 mb-1">
-                  আপনার বার্তা সফলভাবে পৌঁছেছে!
+              <div className="p-6 sm:p-8 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center animate-in fade-in">
+                <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-2.5" />
+                <h4 className="font-serif-bn font-bold text-xl sm:text-2xl text-emerald-900 mb-1.5">
+                  আপনার বার্তা সফলভাবে প্রস্তুত হয়েছে!
                 </h4>
-                <p className="text-xs text-emerald-700">
-                  জিকিরুল্লাহ ফাউন্ডেশনের সাথে যোগাযোগের জন্য ধন্যবাদ। আমাদের টিম শীঘ্রই আপনার সাথে যোগাযোগ করবে।
+                <p className="text-xs sm:text-sm text-emerald-700 max-w-md mx-auto mb-5 leading-relaxed">
+                  আপনার মোবাইল অ্যাপ বা জিমেইল স্বয়ংক্রিয়ভাবে ওপেন করা হয়েছে। সরাসরি আমাদের কাছে পৌঁছাতে নিচের যেকোনো মাধ্যমে এখনই সেন্ড করুন:
                 </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
+                  {emailLinks?.gmailUrl && (
+                    <a
+                      href={emailLinks.gmailUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-xs transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>🔴 সরাসরি Gmail দিয়ে পাঠান</span>
+                    </a>
+                  )}
+
+                  {emailLinks?.mailtoUrl && (
+                    <a
+                      href={emailLinks.mailtoUrl}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#045332] hover:bg-[#087443] text-white font-bold text-xs sm:text-sm shadow-xs transition-colors"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>📱 মোবাইলের ইমেইল অ্যাপ দিয়ে পাঠান</span>
+                    </a>
+                  )}
+                </div>
+
+                <div className="pt-2 border-t border-emerald-200/60">
+                  <button
+                    type="button"
+                    onClick={handleResetForm}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-emerald-800 transition-colors cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>আরেকটি নতুন বার্তা পাঠান</span>
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -236,10 +307,20 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-75"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>বার্তা পাঠান</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>বার্তা প্রস্তুত হচ্ছে...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>বার্তা পাঠান (ইমেইল সিস্টেম)</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
