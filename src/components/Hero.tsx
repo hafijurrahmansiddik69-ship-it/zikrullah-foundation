@@ -60,8 +60,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
         </h1>
 
         {/* English Tagline */}
-        <p className="text-emerald-200/90 text-xs sm:text-sm font-medium tracking-[0.2em] uppercase mb-6 sm:mb-8 font-solaiman">
-          {FOUNDATION_INFO.englishName} • EST. {FOUNDATION_INFO.established}
+        <p 
+          className="mb-6 sm:mb-8 text-center drop-shadow-sm"
+          style={{
+            fontFamily: "'ArmWrestler', sans-serif",
+            fontSize: '15px',
+            fontWeight: 'bold',
+            letterSpacing: '3px',
+            textTransform: 'uppercase',
+            color: '#FFFFFF'
+          }}
+        >
+          ZIKRULLAH FOUNDATION • EST. 1 JAN, 2023
         </p>
 
         {/* Foundation Inspiring Statement & Establishment Text with Dark Green Background */}

@@ -58,7 +58,7 @@ export const FOUNDATION_INFO = {
   englishName: "ZIKRULLAH FOUNDATION",
   logoUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791212936/xkufns6zn3c7rhaccxo2.png",
   homeBackgroundUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg",
-  aboutImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",
+  aboutImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg",
   founderImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",
   slogan: "কুরআন-সুন্নাহর আলোকে, উম্মাহর খেদমতে",
   motto: "সৎকাজ, ইসলামের আদর্শ ও মানবতার সেবাই আমাদের পথচলা।",

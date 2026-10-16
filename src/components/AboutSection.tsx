@@ -25,7 +25,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             <div className="relative rounded-3xl overflow-hidden border-2 border-emerald-800/20 shadow-2xl shadow-emerald-950/20 aspect-4/5 bg-[#012213] group">
               {/* Rich forest green backdrop and photo with warm lighting */}
               <img
-                src={FOUNDATION_INFO.aboutImageUrl || heroImg}
+                src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg"
                 alt="জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
@@ -34,33 +34,40 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-[#012615] via-[#02381e]/40 to-transparent" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,158,11,0.15),transparent_60%)]" />
 
-              {/* Top-Right Corner Dark Green Badge with Gold Icon & Text: 'মানবতার সেবায় নিবেদিত' */}
+              {/* Top-Right Corner Badge: 'মানবতার সেবায় নিবেদিত' with Deep Royal Purple Background & Crisp White Text */}
               <div className="absolute top-3.5 right-3.5 z-20">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#022615]/90 backdrop-blur-md border border-amber-400/40 text-amber-200 text-[11px] sm:text-xs font-solaiman font-medium shadow-md shadow-emerald-950/50">
-                  <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span className="tracking-wide">মানবতার সেবায় নিবেদিত</span>
-                </div>
+                <span 
+                  className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide backdrop-blur-md shadow-md border"
+                  style={{
+                    backgroundColor: 'rgba(30, 16, 53, 0.92)',
+                    borderColor: 'rgba(168, 85, 247, 0.65)',
+                    color: '#FFFFFF',
+                    boxShadow: '0 4px 16px rgba(168, 85, 247, 0.3)'
+                  }}
+                >
+                  মানবতার সেবায় নিবেদিত
+                </span>
               </div>
               
-              {/* Bottom Clean Frosted-Glass Card Overlay with Quranic Verse & Glowing Donate Button */}
-              <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3.5 sm:left-3.5 sm:right-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/25 shadow-xl text-white z-20 overflow-hidden">
-                {/* Subtle Amber and Emerald glow inside frosted glass */}
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-amber-400/15 rounded-full blur-xl pointer-events-none" />
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-emerald-400/15 rounded-full blur-xl pointer-events-none" />
+              {/* Bottom Quranic Ayah Box (Deep Royal Purple Theme matching Action Button) */}
+              <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#1a0b2e]/90 via-[#2e1065]/85 to-[#3b0764]/90 backdrop-blur-xl border-2 border-[#a855f7]/70 shadow-[0_12px_28px_rgba(168,85,247,0.4)] text-white z-20 overflow-hidden">
+                {/* Subtle Purple & Amber ambient glow inside frosted glass */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-500/25 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-amber-400/15 rounded-full blur-xl pointer-events-none" />
 
-                {/* Arabic Quranic Verse */}
-                <div 
-                  className="font-arabic font-bold text-amber-200 text-sm sm:text-base leading-relaxed tracking-wide mb-1.5 text-center drop-shadow-sm" 
+                {/* Arabic Portion (Times New Roman / Serif font) */}
+                <p 
+                  className="font-serif text-white text-xs sm:text-sm md:text-base leading-relaxed tracking-wide mb-1.5 text-center drop-shadow-sm font-['Times_New_Roman',Times,serif]" 
                   dir="rtl"
                 >
-                  وَمَا أَنفَقْتُم مِّن شَيْءٍ فَهُوَ يُخْلِفُهُ ۖ وَهُوَ خَيْرُ الرَّازِقِينَ
-                </div>
+                  مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ ۗ وَاللَّهُ يُضَاعِفُ لِمَن يَشَاءُ ۗ وَاللَّهُ وَاسِعٌ عَلِيمٌ
+                </p>
 
                 {/* Bengali Translation & Surah Reference */}
-                <p className="font-solaiman text-[11px] sm:text-[13px] text-white/95 leading-snug font-normal text-center mb-2.5">
-                  “তোমরা যা কিছু ব্যয় করো, তিনি তার প্রতিদান দেবেন। আর তিনিই শ্রেষ্ঠ রিজিকদাতা।”
-                  <span className="block sm:inline text-amber-200/90 font-medium text-[10px] sm:text-xs sm:ml-1 mt-0.5 sm:mt-0 font-solaiman">
-                    — সূরা সাবা: ৩৯
+                <p className="font-solaiman text-[11px] sm:text-xs text-purple-100/95 leading-relaxed font-normal text-center mb-2.5">
+                  “যারা আল্লাহর রাস্তায় নিজেদের ধন-সম্পদ ব্যয় করে, তাদের উপমা একটি শস্যবীজের মতো, যা থেকে সাতটি শীষ জন্মায় এবং প্রতিটি শীষে থাকে একশতটি করে দানা। আর আল্লাহ যাকে ইচ্ছা বহুগুণ বৃদ্ধি করে দেন; আল্লাহ প্রাচুর্যময় ও সর্বজ্ঞ।”
+                  <span className="block text-amber-300 font-bold text-[10px] sm:text-xs mt-1">
+                    — সূরা আল-বাকারা, আয়াত: ২৬১
                   </span>
                 </p>
 
