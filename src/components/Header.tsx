@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Menu, X, Phone, Mail, MapPin, Users, Lock } from 'lucide-react';
+import { Heart, Menu, X, Phone, Mail, MapPin, Users, Lock, User, Globe, Sparkles, ChevronRight } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 
 interface HeaderProps {
@@ -19,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentPage = 'home'
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [lang, setLang] = useState<'bn' | 'en'>('bn');
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -198,94 +199,192 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
+        {/* Mobile Navigation Drawer / Sidebar */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-b border-emerald-100 px-4 pt-3 pb-6 shadow-xl animate-in fade-in duration-200">
-            <nav className="flex flex-col space-y-1 text-base font-medium text-slate-800">
-              <button
-                onClick={() => {
-                  closeMobileMenu();
-                  if (onNavigateHome) onNavigateHome();
-                }}
-                className={`text-left px-3 py-2.5 rounded-lg ${
-                  currentPage === 'home'
-                    ? 'bg-emerald-50 text-emerald-800 font-bold'
-                    : 'hover:bg-emerald-50 hover:text-emerald-800'
-                }`}
-              >
-                হোম
-              </button>
-              <button
-                onClick={() => {
-                  closeMobileMenu();
-                  if (onNavigateToAbout) onNavigateToAbout();
-                }}
-                className={`text-left px-3 py-2.5 rounded-lg ${
-                  currentPage === 'about'
-                    ? 'bg-emerald-50 text-emerald-800 font-bold'
-                    : 'hover:bg-emerald-50 hover:text-emerald-800'
-                }`}
-              >
-                আমাদের সম্পর্কে
-              </button>
-              <a
-                href="#projects"
-                onClick={(e) => handleNavToSection(e, 'projects')}
-                className="px-3 py-2.5 rounded-lg bg-emerald-50/70 text-emerald-800 font-bold hover:bg-emerald-100"
-              >
-                চলমান প্রকল্প
-              </a>
-              <a
-                href="#services"
-                onClick={(e) => handleNavToSection(e, 'services')}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                প্রোগ্রাম ও সেবা
-              </a>
-              <a
-                href="#prayer"
-                onClick={(e) => handleNavToSection(e, 'prayer')}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                নামাজের সময়সূচি
-              </a>
-              <a
-                href="#gallery"
-                onClick={(e) => handleNavToSection(e, 'gallery')}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                গ্যালারি
-              </a>
-              <a
-                href="#news"
-                onClick={(e) => handleNavToSection(e, 'news')}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                সাম্প্রতিক খবর
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => handleNavToSection(e, 'contact')}
-                className="px-3 py-2.5 rounded-lg hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                যোগাযোগ
-              </a>
-            </nav>
+          <div className="fixed inset-0 z-50 lg:hidden flex">
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+              onClick={closeMobileMenu}
+            />
 
-            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-2">
-              <button
-                onClick={() => {
-                  closeMobileMenu();
-                  onOpenVolunteer();
-                }}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 font-semibold text-sm"
-              >
-                <Users className="w-4 h-4 text-slate-600" />
-                <span>স্বেচ্ছাসেবক হিসেবে যোগ দিন</span>
-              </button>
+            {/* Sidebar Container */}
+            <aside className="relative z-10 w-full max-w-[320px] bg-[#0c1017] text-slate-100 h-full flex flex-col justify-between shadow-2xl border-r border-slate-800 animate-in slide-in-from-left duration-300">
+              {/* Header inside Sidebar */}
+              <div>
+                <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-white p-0.5 flex items-center justify-center shadow-xs">
+                      <img src={FOUNDATION_INFO.logoUrl} alt={FOUNDATION_INFO.name} className="w-full h-full object-contain" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif-bn font-bold text-sm text-white leading-tight">
+                        {lang === 'bn' ? FOUNDATION_INFO.name : FOUNDATION_INFO.englishName}
+                      </h4>
+                      <p className="text-[10px] text-emerald-400 font-medium">EST. {FOUNDATION_INFO.established}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={closeMobileMenu}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                    aria-label="Close Sidebar"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
 
+                {/* Navigation Menu Layout */}
+                <nav className="p-3 space-y-1 font-sans text-sm">
+                  {/* 1. Home */}
+                  <button
+                    onClick={() => {
+                      closeMobileMenu();
+                      if (onNavigateHome) onNavigateHome();
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all cursor-pointer ${
+                      currentPage === 'home'
+                        ? 'bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <span>{lang === 'bn' ? 'হোম' : 'Home'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </button>
 
-            </div>
+                  {/* 2. About Us */}
+                  <button
+                    onClick={() => {
+                      closeMobileMenu();
+                      if (onNavigateToAbout) onNavigateToAbout();
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all cursor-pointer ${
+                      currentPage === 'about'
+                        ? 'bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <span>{lang === 'bn' ? 'আমাদের সম্পর্কে' : 'About Us'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* 3. Activities */}
+                  <a
+                    href="#projects"
+                    onClick={(e) => handleNavToSection(e, 'projects')}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all cursor-pointer"
+                  >
+                    <span>{lang === 'bn' ? 'সেবামূলক কার্যক্রম' : 'Activities'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </a>
+
+                  {/* 4. Gallery */}
+                  <a
+                    href="#gallery"
+                    onClick={(e) => handleNavToSection(e, 'gallery')}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all cursor-pointer"
+                  >
+                    <span>{lang === 'bn' ? 'ছবি গ্যালারি' : 'Gallery'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </a>
+
+                  {/* 5. Get Involved */}
+                  <a
+                    href="#volunteer"
+                    onClick={(e) => {
+                      closeMobileMenu();
+                      onOpenVolunteer();
+                    }}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all cursor-pointer"
+                  >
+                    <span>{lang === 'bn' ? 'স্বেচ্ছাসেবক হোন' : 'Get Involved'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </a>
+
+                  {/* 6. Blogs */}
+                  <a
+                    href="#news"
+                    onClick={(e) => handleNavToSection(e, 'news')}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all cursor-pointer"
+                  >
+                    <span>{lang === 'bn' ? 'ব্লগ ও সংবাদ' : 'Blogs'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </a>
+
+                  {/* 7. Notice */}
+                  <a
+                    href="#contact"
+                    onClick={(e) => handleNavToSection(e, 'contact')}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all cursor-pointer"
+                  >
+                    <span>{lang === 'bn' ? 'জরুরি নোটিশ' : 'Notice'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </a>
+
+                  {/* 8. Contact */}
+                  <a
+                    href="#contact"
+                    onClick={(e) => handleNavToSection(e, 'contact')}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all cursor-pointer"
+                  >
+                    <span>{lang === 'bn' ? 'যোগাযোগ' : 'Contact'}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </a>
+                </nav>
+              </div>
+
+              {/* Bottom Section: Dual-Tone Language Switcher & Action Button */}
+              <div className="p-4 border-t border-slate-800/80 bg-[#090d13] space-y-3">
+                {/* Creative Two-Tone Language Switcher */}
+                <div className="dual-tone-lang-switcher bg-[#121824] p-1.5 rounded-2xl border border-slate-800 flex items-center justify-between gap-2 shadow-inner">
+                  {/* Bengali Toggle: Vibrant Emerald Green Accent */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLang('bn');
+                      if (typeof document !== 'undefined') document.documentElement.lang = 'bn';
+                    }}
+                    className={`lang-btn-bn flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
+                      lang === 'bn'
+                        ? 'bg-[#10b981] text-white shadow-[0_0_16px_rgba(16,185,129,0.55)] scale-102 border border-emerald-300/40'
+                        : 'text-slate-400 hover:text-slate-200 bg-transparent hover:bg-white/5'
+                    }`}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+                    <span>বাং</span>
+                  </button>
+
+                  {/* English Toggle: Deep Royal Purple / Navy Blue Accent */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLang('en');
+                      if (typeof document !== 'undefined') document.documentElement.lang = 'en';
+                    }}
+                    className={`lang-btn-en flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
+                      lang === 'en'
+                        ? 'bg-[#6366f1] text-white shadow-[0_0_16px_rgba(99,102,241,0.55)] scale-102 border border-indigo-300/40'
+                        : 'text-slate-400 hover:text-slate-200 bg-transparent hover:bg-white/5'
+                    }`}
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>EN</span>
+                  </button>
+                </div>
+
+                {/* Prominent Action Button: Rich Deep Purple / Royal Navy Blue Gradient */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeMobileMenu();
+                    onOpenDonation();
+                  }}
+                  className="accent-action-button w-full py-3 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#312e81] via-[#4338ca] to-[#3b82f6] hover:from-[#3730a3] hover:to-[#2563eb] active:scale-98 transition-all duration-300 shadow-[0_4px_18px_rgba(67,56,202,0.4)] hover:shadow-[0_6px_22px_rgba(67,56,202,0.6)] border border-indigo-400/30 flex items-center justify-center gap-2 cursor-pointer group"
+                >
+                  <User className="w-4 h-4 text-indigo-200 group-hover:scale-110 transition-transform" />
+                  <span>{lang === 'bn' ? 'আমার অ্যাকাউন্ট / দান করুন' : 'My Account / Donate'}</span>
+                </button>
+              </div>
+            </aside>
           </div>
         )}
       </header>

@@ -57,7 +57,7 @@ export const FOUNDATION_INFO = {
   name: "জিকরুল্লাহ ফাউন্ডেশন",
   englishName: "ZIKRULLAH FOUNDATION",
   logoUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791212936/xkufns6zn3c7rhaccxo2.png",
-  homeBackgroundUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791214336/bfl9h9ic5e2zvkynca1b.jpg",
+  homeBackgroundUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg",
   aboutImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",
   founderImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",
   slogan: "কুরআন-সুন্নাহর আলোকে, উম্মাহর খেদমতে",

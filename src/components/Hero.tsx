@@ -9,15 +9,27 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout }) => {
   return (
-    <section id="home" className="relative min-h-[560px] sm:min-h-[620px] lg:min-h-[680px] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#012817] via-[#024427] to-[#011a0e]">
-      {/* Rich Dark Green Background without photo as requested */}
-      <div className="absolute inset-0 z-0">
-        {/* Deep emerald ambient gradients */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(5,150,105,0.18),transparent_70%)]" />
+    <section id="home" className="relative min-h-[560px] sm:min-h-[620px] lg:min-h-[680px] flex items-center justify-center overflow-hidden bg-black">
+      {/* Background Image: Left side heavily dark & blurred, Right side softly visible */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <img
+          src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg"
+          alt="জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম"
+          className="w-full h-full object-cover object-right sm:object-[75%_center] filter brightness-[0.95] contrast-[1.05]"
+        />
+
+        {/* বাম সাইড একেবারেই কালো ব্লার (Left Side Deep Black & Blur Overlay) */}
+        <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 bg-gradient-to-r from-black via-black/95 via-50% to-transparent backdrop-blur-md z-[1]" />
+
+        {/* মসৃণ ট্রানজিশন: বামে কালো থেকে ডানে হালকা সবুজ আভা ও ছবির দৃশ্যমানতা */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-[#01190e]/90 via-40% via-[#012b18]/50 to-[#023b20]/25 z-[2]" />
+
+        {/* টপ ও বটম মসৃণ শ্যাডো */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-transparent to-[#011309]/95 z-[2]" />
 
         {/* Subtle Islamic Geometric Pattern Texture */}
         <div 
-          className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
+          className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none z-[3]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15L30 0zm0 30l15 15-15 15-15-15 15-15zM0 30l15-15 15 15-15 15L0 30zm30 0l15-15 15 15-15 15-15-15z' fill='%23ffffff' fill-rule='evenodd'/%3E%3C/svg%3E")`,
             backgroundSize: '48px 48px'
@@ -25,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
         />
 
         {/* Warm Ambient Glow in the Center */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-amber-400/10 rounded-full blur-3xl pointer-events-none z-[3]" />
       </div>
 
       {/* Main Content Area */}
@@ -54,10 +66,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
 
         {/* Foundation Inspiring Statement & Establishment Text with Dark Green Background */}
         <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 text-emerald-50/95 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
-          <p className="bg-[#02331d]/75 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-emerald-400/25 shadow-2xl text-justify sm:text-center leading-relaxed">
+          <p className="bg-[#012615]/65 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-emerald-400/30 shadow-2xl text-justify sm:text-center leading-relaxed">
             “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
           </p>
-          <p className="bg-[#012615]/70 backdrop-blur-sm px-5 py-3.5 rounded-xl border border-emerald-400/20 text-sm sm:text-base md:text-lg text-emerald-100/95 font-solaiman font-medium leading-relaxed">
+          <p className="bg-[#012012]/60 backdrop-blur-sm px-5 py-3.5 rounded-xl border border-emerald-400/25 text-sm sm:text-base md:text-lg text-emerald-100/95 font-solaiman font-medium leading-relaxed">
             উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’।
           </p>
         </div>
