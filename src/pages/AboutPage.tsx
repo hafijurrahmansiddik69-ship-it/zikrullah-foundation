@@ -3,9 +3,6 @@ import {
   ArrowLeft, 
   Target, 
   Sparkles, 
-  HeartHandshake, 
-  CheckCircle2, 
-  ShieldCheck, 
   Users, 
   Calendar, 
   Award, 
@@ -27,6 +24,8 @@ import {
   MissionIllustration
 } from '../components/MissionIcons';
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
+import { ProjectsSection } from '../components/ProjectsSection';
 
 interface AboutPageProps {
   onBackToHome: () => void;
@@ -39,6 +38,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenVolunteer,
   onOpenDonation
 }) => {
+  const { t, isEn } = useLanguage();
+
   return (
     <div className="bg-[#fcfdfc] min-h-screen py-10 sm:py-14 text-slate-800">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
@@ -50,13 +51,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-sm transition-all shadow-xs cursor-pointer active:scale-95"
           >
             <ArrowLeft className="w-4 h-4 text-emerald-700" />
-            <span>হোম পেজে ফিরে যান</span>
+            <span>{t.common.backToHome}</span>
           </button>
 
           <div className="text-xs sm:text-sm text-slate-500 font-medium">
-            <span className="text-emerald-700 cursor-pointer hover:underline" onClick={onBackToHome}>হোম</span>
+            <span className="text-emerald-700 cursor-pointer hover:underline" onClick={onBackToHome}>
+              {t.nav.home}
+            </span>
             <span className="mx-2">/</span>
-            <span className="text-slate-800 font-bold">আমাদের সম্পর্কে</span>
+            <span className="text-slate-800 font-bold">{t.nav.about}</span>
           </div>
         </div>
 
@@ -516,70 +519,37 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
         </div>
 
-        {/* Section 3: আমাদের মূল ভিত্তি ও আমানতদারি */}
-        <div className="bg-[#fafcfb] rounded-3xl p-6 sm:p-10 border border-emerald-100 mb-12">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block mb-1">
-              আমাদের কর্মনীতি ও প্রতিশ্রুতি
-            </span>
-            <h3 className="font-serif-bn font-bold text-2xl text-slate-900">
-              যাঁদের জন্য আমরা কাজ করি
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <div className="bg-white p-5 rounded-2xl border border-emerald-100 shadow-2xs">
-              <ShieldCheck className="w-6 h-6 text-emerald-600 mb-3" />
-              <h4 className="font-bold text-slate-900 text-base mb-1">১০০% আমানতদারি</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                আপনার দেওয়া যাকাত ও সদকার প্রতিটি পয়সা সুনির্দিষ্ট শরীয়তসম্মত খাতে শতভাগ সততার সাথে খরচ করা হয়।
-              </p>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-emerald-100 shadow-2xs">
-              <CheckCircle2 className="w-6 h-6 text-emerald-600 mb-3" />
-              <h4 className="font-bold text-slate-900 text-base mb-1">মাঠপর্যায়ে যাচাই</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                স্বেচ্ছাসেবকদের সরাসরি যাচাই-বাছাই ও মাঠপর্যায়ের অনুসন্ধানের মাধ্যমে কেবল প্রকৃত হকদারদের মাঝেই সাহায্য বিতরণ করা হয়।
-              </p>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-emerald-100 shadow-2xs">
-              <HeartHandshake className="w-6 h-6 text-emerald-600 mb-3" />
-              <h4 className="font-bold text-slate-900 text-base mb-1">স্থায়ী পুনর্বাসন</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                এককালীন সাহায্যের পাশাপাশি মানুষকে স্বাবলম্বী করে তোলা যেন তাঁরা ভবিষ্যতে অন্যের সাহায্য ছাড়াই বাঁচতে পারেন।
-              </p>
-            </div>
-          </div>
+        {/* যাঁদের জন্য আমরা কাজ করি (১০ মিনিট স্কুল হুবহু অ্যাপ-বাটন স্টাইল সেকশন) */}
+        <div className="mb-14">
+          <ProjectsSection isEmbedded={true} onOpenDonation={onOpenDonation} />
         </div>
 
         {/* Bottom CTA Box */}
         <div className="bg-gradient-to-r from-emerald-900 to-[#045332] text-white rounded-3xl p-8 sm:p-10 text-center shadow-xl">
           <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl mb-3">
-            আপনিও এই মহতী কাফেলার অংশীদার হোন
+            {t.ctaBanner.heading}
           </h3>
           <p className="text-emerald-100 max-w-xl mx-auto text-sm sm:text-base leading-relaxed mb-6 font-solaiman">
-            দ্বীন প্রচার, অসহায় মানুষের মুখে অন্ন তুলে দেওয়া এবং সদকায়ে জারিয়াহর স্থায়ী সাওয়াব অর্জনে আপনার আন্তরিক দু‘আ ও সহযোগিতা আমাদের একান্ত প্রেরণা।
+            {t.ctaBanner.paragraph}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={() => onOpenDonation('সাধারণ সদকা ও দান')}
               className="px-6 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
             >
-              খেদমতে শরীক হোন
+              {t.common.donateNow}
             </button>
             <button
               onClick={onOpenVolunteer}
               className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm transition-all active:scale-95 cursor-pointer"
             >
-              স্বেচ্ছাসেবক হিসেবে যোগ দিন
+              {t.common.joinVolunteer}
             </button>
             <button
               onClick={onBackToHome}
               className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-emerald-100 font-semibold text-sm transition-all active:scale-95 cursor-pointer"
             >
-              ← মূল পাতায় ফিরে যান
+              ← {t.common.backToHome}
             </button>
           </div>
         </div>

@@ -64,7 +64,7 @@ export const FOUNDATION_INFO = {
   motto: "সৎকাজ, ইসলামের আদর্শ ও মানবতার সেবাই আমাদের পথচলা।",
   founder: "হাফিজুর রহমান সিদ্দিক (বগুড়া)",
   established: "১লা জানুয়ারি ২০২৩",
-  address: "গুজিয়া, মোকামতলা, বগুড়া, বাংলাদেশ",
+  address: "গুজিয়া, মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ",
   email: "zikrullahfd@gmail.com",
   phone: "016 20 500 920",
   altPhone: "+880 16 20 500 920",
@@ -215,23 +215,35 @@ export const PROJECTS: Project[] = [
 export const STATS_DATA = [
   {
     value: "৭৫০+",
+    valueEn: "750+",
     label: "উপকারভোগী পরিবার",
-    sub: "সরাসরি সহায়তা প্রাপ্ত"
+    labelEn: "Beneficiary Families",
+    sub: "সরাসরি সহায়তা প্রাপ্ত",
+    subEn: "Direct aid recipients"
   },
   {
     value: "৩২০+",
+    valueEn: "320+",
     label: "শিক্ষার্থী সুবিধাভোগী",
-    sub: "বই, খাতা ও উপবৃত্তি"
+    labelEn: "Students Supported",
+    sub: "বই, খাতা ও উপবৃত্তি",
+    subEn: "Books, bags & stipends"
   },
   {
     value: "৬০০+",
+    valueEn: "600+",
     label: "চিকিৎসা ও ঔষধ সেবা",
-    sub: "ফ্রি ক্যাম্প ও রোগী ফান্ড"
+    labelEn: "Medical & Health Aid",
+    sub: "ফ্রি ক্যাম্প ও রোগী ফান্ড",
+    subEn: "Free camps & patient funds"
   },
   {
     value: "৩৫+",
+    valueEn: "35+",
     label: "সফল সামাজিক প্রকল্প",
-    sub: "মোকামতলা ও বগুড়া অঞ্চলে"
+    labelEn: "Completed Initiatives",
+    sub: "মোকামতলা ও বগুড়া অঞ্চলে",
+    subEn: "In Mokamtala & Bogura region"
   }
 ];
 
@@ -300,6 +312,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 export const DAILY_HADITH = {
   arabic: "مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ",
   bengali: "“সাদাকাহ প্রদানে কোনো সম্পদ কখনো কমে না।”",
+  english: "“Charity does not decrease wealth in the slightest.”",
   source: "সহীহ মুসলিম — ২৫৮৮",
-  context: "মানবতার কল্যাণে আপনার যেকোনো সামান্য অনুদানও পরকালে মহা প্রতিদান বয়ে আনবে।"
+  sourceEn: "Sahih Muslim — 2588",
+  context: "মানবতার কল্যাণে আপনার যেকোনো সামান্য অনুদানও পরকালে মহা প্রতিদান বয়ে আনবে।",
+  contextEn: "Even the smallest donation for the welfare of humanity brings immense reward in the Hereafter."
 };

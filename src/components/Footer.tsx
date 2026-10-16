@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heart, MapPin, Mail, Phone, Users } from 'lucide-react';
 import { FOUNDATION_INFO, heroImg } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface FooterProps {
   onOpenDonation: () => void;
@@ -16,6 +17,8 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateToAbout,
   onNavigateHome
 }) => {
+  const { t, isEn } = useLanguage();
+
   return (
     <footer className="relative overflow-hidden text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950 bg-[#002e1d]">
       {/* Background Image with Soft Dark Green Tint Overlay */}
@@ -26,7 +29,7 @@ export const Footer: React.FC<FooterProps> = ({
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center scale-105"
         />
-        {/* Soft Dark Green Tint Layer: reveals image subtly while keeping text 100% legible */}
+        {/* Soft Dark Green Tint Layer */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#002818]/93 via-[#013520]/89 to-[#001e12]/95" />
         <div className="absolute inset-0 bg-emerald-950/75 mix-blend-multiply" />
         <div className="absolute inset-0 bg-radial from-transparent via-emerald-950/30 to-emerald-950/75" />
@@ -49,7 +52,7 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div>
                 <h3 className="font-serif-bn font-bold text-2xl text-white tracking-tight leading-tight">
-                  {FOUNDATION_INFO.name}
+                  {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
                 </h3>
                 <span className="font-armwrestler text-base sm:text-lg font-bold text-emerald-300 uppercase tracking-wider block mt-1.5">
                   {FOUNDATION_INFO.englishName}
@@ -58,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-sm text-emerald-200/80 leading-relaxed max-w-sm">
-              মানবতার সেবা, সমাজের সার্বিক কল্যাণ এবং ইসলামের সুন্দর জীবনাদর্শকে পাথেয় করে আমাদের পথচলা। আসুন, আমরা সকলে মিলে অসহায় মানুষের পাশে দাঁড়াই।
+              {t.footer.desc}
             </p>
 
             <div className="pt-2">
@@ -67,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#087443] hover:bg-[#045332] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
               >
                 <Heart className="w-3.5 h-3.5 fill-white" />
-                <span>খেদমতে শরীক হোন</span>
+                <span>{t.common.donateNow}</span>
               </button>
             </div>
           </div>
@@ -75,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Quick Links (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-800/60 pb-2">
-              দ্রুত লিংক
+              {t.footer.quickLinks}
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
               <li>
@@ -85,7 +88,7 @@ export const Footer: React.FC<FooterProps> = ({
                   }}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  হোমপেজ
+                  {t.nav.home}
                 </button>
               </li>
               <li>
@@ -95,20 +98,8 @@ export const Footer: React.FC<FooterProps> = ({
                   }}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  আমাদের সম্পর্কে (লক্ষ্য ও উদ্দেশ্য)
+                  {t.nav.about}
                 </button>
-              </li>
-
-              <li>
-                <a
-                  href="#services"
-                  onClick={() => {
-                    if (onNavigateHome) onNavigateHome();
-                  }}
-                  className="hover:text-white transition-colors"
-                >
-                  লক্ষ্য ও উদ্দেশ্য
-                </a>
               </li>
               <li>
                 <a
@@ -118,7 +109,18 @@ export const Footer: React.FC<FooterProps> = ({
                   }}
                   className="hover:text-white transition-colors"
                 >
-                  চলমান প্রকল্প
+                  {t.nav.projects}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome();
+                  }}
+                  className="hover:text-white transition-colors"
+                >
+                  {t.nav.services}
                 </a>
               </li>
               <li>
@@ -129,7 +131,7 @@ export const Footer: React.FC<FooterProps> = ({
                   }}
                   className="hover:text-white transition-colors"
                 >
-                  নামাজের সময়
+                  {t.nav.prayer}
                 </a>
               </li>
             </ul>
@@ -138,7 +140,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Special Programs (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-800/60 pb-2">
-              প্রোগ্রাম ও সেবা
+              {t.services.badge}
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
               <li>
@@ -147,56 +149,59 @@ export const Footer: React.FC<FooterProps> = ({
                   className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer text-left"
                 >
                   <Users className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>স্বেচ্ছাসেবক নিবন্ধন</span>
+                  <span>{t.volunteer.title}</span>
                 </button>
               </li>
               <li>
                 <a href="#gallery" className="hover:text-white transition-colors block">
-                  ছবি ও স্থিরচিত্র
+                  {t.nav.gallery}
                 </a>
               </li>
               <li>
                 <a href="#news" className="hover:text-white transition-colors block">
-                  বিজ্ঞপ্তি ও রিপোর্ট
+                  {t.nav.news}
                 </a>
               </li>
               <li>
                 <a href="#contact" className="hover:text-white transition-colors block">
-                  অফিস যোগাযোগ
+                  {t.nav.contact}
                 </a>
               </li>
-
             </ul>
           </div>
 
           {/* Contact & Banking (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-800/60 pb-2">
-              যোগাযোগ ও ব্যাংক
+              {t.footer.contactInfo}
             </h4>
             
-            <div className="space-y-2.5 text-xs text-emerald-200/80">
-              <div className="flex items-start gap-2">
+            <div className="space-y-2.5 text-xs text-white">
+              <div className="flex items-start gap-2 text-white">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>{FOUNDATION_INFO.address}</span>
+                <span className="text-white font-medium">{t.common.address}</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-white">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`mailto:${FOUNDATION_INFO.email}`} className="hover:text-white font-sans">
+                <a href={`mailto:${FOUNDATION_INFO.email}`} className="text-white hover:text-emerald-300 font-sans font-medium transition-colors">
                   {FOUNDATION_INFO.email}
                 </a>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-white">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`} className="hover:text-white font-sans">
+                <a href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`} className="text-white hover:text-emerald-300 font-sans font-medium transition-colors">
                   {FOUNDATION_INFO.phone}
                 </a>
               </div>
 
-              <div className="pt-2 text-[11px] bg-emerald-950/70 p-2.5 rounded-xl border border-emerald-800/40 space-y-1">
-                <strong className="text-white block font-serif-bn">ব্যাংক একাউন্ট (অনুদান):</strong>
-                <span className="block font-mono text-emerald-300">IBBL: 20501234567890100</span>
-                <span className="block text-[10px] text-slate-300">বিকাশ / নগদ: 016 20 500 920</span>
+              <div className="pt-2 text-xs bg-emerald-950/70 p-2.5 rounded-xl border border-emerald-800/40 space-y-1.5">
+                <strong className="text-white block font-serif-bn font-semibold">
+                  {isEn ? 'Donation Account:' : 'ব্যাংক একাউন্ট (অনুদান):'}
+                </strong>
+                <span className="block font-mono text-white font-medium">Coming soon ...</span>
+                <span className="block text-xs text-white font-medium">
+                  {isEn ? 'bKash / Nagad: 016 20 500 920' : 'বিকাশ / নগদ: 016 20 500 920'}
+                </span>
               </div>
             </div>
           </div>
@@ -206,12 +211,12 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-emerald-400/80">
           <div>
-            © {new Date().getFullYear()} {FOUNDATION_INFO.name}। সর্বস্বত্ব সংরক্ষিত।
+            © {new Date().getFullYear()} {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}. {t.footer.copyright}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-emerald-300">
-            <span className="font-solaiman tracking-wide">কুরআন-সুন্নাহর আলোকে • উম্মাহর খেদমতে</span>
+            <span className="font-solaiman tracking-wide">{t.common.slogan}</span>
             <span className="hidden sm:inline">·</span>
-            <span>বগুড়া, বাংলাদেশ</span>
+            <span>{isEn ? 'Bogura, Bangladesh' : 'বগুড়া, বাংলাদেশ'}</span>
           </div>
         </div>
 

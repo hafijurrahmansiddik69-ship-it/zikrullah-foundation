@@ -3,12 +3,14 @@ import { Users, HeartHandshake, CheckCircle2, Sparkles, Send, Loader2, Mail, Ext
 import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface VolunteerSectionProps {
   onOpenModal?: () => void;
 }
 
-export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal }) => {
+export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
+  const { t, isEn } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedData, setSubmittedData] = useState<{
@@ -23,9 +25,9 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [upazila, setUpazila] = useState('গুজিয়া, মোকামতলা, বগুড়া');
+  const [upazila, setUpazila] = useState(t.volunteer.areaDefault);
   const [bloodGroup, setBloodGroup] = useState('A+');
-  const [interest, setInterest] = useState('ত্রাণ ও খাদ্য সহায়তা বিতরণ');
+  const [interest, setInterest] = useState(t.volunteer.interestDefault);
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,9 +41,9 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
     const submissionPayload = {
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || 'বগুড়া',
+      upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      interest: interest || t.volunteer.interestDefault,
       message: message.trim() || ''
     };
 
@@ -49,12 +51,12 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
     adminDataService.addVolunteer({
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || 'বগুড়া',
+      upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      interest: interest || t.volunteer.interestDefault,
       message: message.trim() || '',
       status: 'অপেক্ষমাণ',
-      adminNote: 'ওয়েবসাইট ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
+      adminNote: 'Web Registration Form'
     });
 
     // 2. Direct Gmail and Mailto URLs
@@ -74,9 +76,9 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
     setSubmittedData({
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || 'বগুড়া',
+      upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      interest: interest || t.volunteer.interestDefault,
       mailtoUrl,
       gmailUrl
     });
@@ -89,7 +91,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
   };
 
   return (
-    <section id="volunteer-registration" className="py-20 bg-gradient-to-b from-white via-emerald-50/40 to-white border-b border-emerald-100/70">
+    <section id="volunteer" className="py-20 bg-gradient-to-b from-white via-emerald-50/40 to-white border-b border-emerald-100/70">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
@@ -97,14 +99,14 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-2.5 border border-emerald-200">
               <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              <span>মানবতার সেবায় খেদমত</span>
+              <span>{t.volunteer.badge}</span>
             </div>
             <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl text-[#045332] leading-tight">
-              স্বেচ্ছাসেবক নিবন্ধন
+              {t.volunteer.title}
             </h2>
           </div>
           <p className="text-slate-600 text-sm sm:text-base max-w-md">
-            দ্বীনি ও সামাজিক কাজের খেদমতে সময় ও শ্রম দিয়ে অসহায় মানুষের পাশে দাঁড়াতে আমাদের স্বেচ্ছাসেবক কাফেলায় যুক্ত হোন।
+            {t.volunteer.subtitle}
           </p>
         </div>
 
@@ -118,24 +120,24 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                   <Users className="w-6 h-6 text-emerald-300" />
                 </div>
                 <h3 className="font-serif-bn font-bold text-xl sm:text-2xl text-white">
-                  কেন যুক্ত হবেন আমাদের সাথে?
+                  {t.volunteer.cardTitle}
                 </h3>
                 <p className="text-emerald-100/90 text-sm leading-relaxed font-light">
-                  জিকরুল্লাহ ফাউন্ডেশনের কার্যক্রম সম্পূর্ণ নিঃস্বার্থ ও আল্লাহকে সন্তুষ্ট করার উদ্দেশ্যে পরিচালিত। আপনার সততা ও সক্রিয় খেদমত একজন অসহায় মানুষের জীবন বদলে দিতে পারে।
+                  {t.volunteer.cardDesc}
                 </p>
 
                 <ul className="space-y-3 pt-2 text-sm text-emerald-100/95">
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
-                    <span>প্রত্যক্ষ মাঠপর্যায়ে সেবামূলক কাজের সুযোগ</span>
+                    <span>{t.volunteer.point1}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
-                    <span>জরুরি রক্তদান ও ফ্রি মেডিকেল ক্যাম্প কার্যক্রম</span>
+                    <span>{t.volunteer.point2}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
-                    <span>দ্বীনি ভ্রাতৃত্ব ও সামাজিক দায়বদ্ধতা পালন</span>
+                    <span>{t.volunteer.point3}</span>
                   </li>
                 </ul>
               </div>
@@ -149,7 +151,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                 <HeartHandshake className="w-5 h-5 text-emerald-100" />
               </div>
               <p className="text-xs sm:text-sm text-slate-700 font-solaiman">
-                আপনার দেওয়া সকল তথ্য আমাদের অ্যাডমিন প্যানেলে সংরক্ষিত থাকবে এবং প্রয়োজন অনুযায়ী আপনার সাথে যোগাযোগ করা হবে।
+                {t.volunteer.note}
               </p>
             </div>
           </div>
@@ -163,10 +165,10 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                 </div>
                 <div>
                   <h3 className="font-serif-bn font-bold text-2xl text-slate-800 mb-1">
-                    জাজাকাল্লাহু খাইরান, {submittedData?.name || 'প্রিয় সহযাত্রী'}!
+                    {t.volunteer.successTitle} {submittedData?.name || ''}
                   </h3>
                   <p className="text-emerald-700 font-semibold text-sm">
-                    আপনার স্বেচ্ছাসেবক নিবন্ধন সফলভাবে সম্পন্ন হয়েছে
+                    {t.volunteer.successSub}
                   </p>
                 </div>
 
@@ -174,18 +176,20 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                 <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-4 text-left space-y-2.5 max-w-lg mx-auto">
                   <div className="flex items-center gap-2 text-emerald-800 font-semibold text-xs sm:text-sm">
                     <Mail className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>ইমেইলে তথ্য প্রেরণ সম্পন্ন হয়েছে</span>
+                    <span>{t.volunteer.emailConfirmed}</span>
                   </div>
                   <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                    আপনার সকল তথ্য জিকরুল্লাহ ফাউন্ডেশনের অফিশিয়াল ইমেইল <strong className="text-emerald-800">{FOUNDATION_INFO.email}</strong>-এ এবং কেন্দ্রীয় অ্যাডমিন প্যানেলে জমা হয়েছে।
+                    {isEn 
+                      ? `Your application details have been saved to official email ${FOUNDATION_INFO.email} and our central volunteer portal.` 
+                      : `আপনার সকল তথ্য জিকরুল্লাহ ফাউন্ডেশনের অফিশিয়াল ইমেইল ${FOUNDATION_INFO.email}-এ এবং কেন্দ্রীয় অ্যাডমিন প্যানেলে জমা হয়েছে।`}
                   </p>
 
                   {submittedData && (
                     <div className="pt-2 border-t border-emerald-200/60 grid grid-cols-2 gap-2 text-[11px] sm:text-xs text-slate-700">
-                      <div><span className="text-slate-500">নাম:</span> {submittedData.name}</div>
-                      <div><span className="text-slate-500">মোবাইল:</span> {submittedData.phone}</div>
-                      <div><span className="text-slate-500">এলাকা:</span> {submittedData.upazila}</div>
-                      <div><span className="text-slate-500">রক্তের গ্রুপ:</span> {submittedData.bloodGroup}</div>
+                      <div><span className="text-slate-500">{t.volunteer.nameLabel}:</span> {submittedData.name}</div>
+                      <div><span className="text-slate-500">{t.volunteer.phoneLabel}:</span> {submittedData.phone}</div>
+                      <div><span className="text-slate-500">{t.volunteer.areaLabel}:</span> {submittedData.upazila}</div>
+                      <div><span className="text-slate-500">{t.volunteer.bloodLabel}:</span> {submittedData.bloodGroup}</div>
                     </div>
                   )}
                 </div>
@@ -201,17 +205,8 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                       <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                         <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
                       </svg>
-                      <span>সরাসরি জিমেইল (Gmail)-এ পাঠান</span>
+                      <span>{isEn ? 'Open in Gmail' : 'সরাসরি জিমেইল (Gmail)-এ পাঠান'}</span>
                       <ExternalLink className="w-3 h-3 opacity-80" />
-                    </a>
-                  )}
-                  {submittedData?.mailtoUrl && (
-                    <a
-                      href={submittedData.mailtoUrl}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      <span>অন্যান্য ইমেইল অ্যাপ</span>
                     </a>
                   )}
                   <button
@@ -221,7 +216,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                     }}
                     className="px-4 py-2.5 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer"
                   >
-                    আরেকটি আবেদন জমা দিন
+                    {t.volunteer.anotherSubmission}
                   </button>
                 </div>
               </div>
@@ -229,21 +224,21 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="border-b border-slate-100 pb-3 mb-2">
                   <h4 className="font-serif-bn font-bold text-lg text-slate-800">
-                    স্বেচ্ছাসেবক আবেদন ফরম
+                    {t.volunteer.formTitle}
                   </h4>
                   <p className="text-xs text-slate-500">
-                    নিচের তথ্যগুলো দিয়ে নিবন্ধিত হোন
+                    {t.volunteer.formSubtitle}
                   </p>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    আপনার পূর্ণ নাম <span className="text-red-500">*</span>
+                    {t.volunteer.nameLabel} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="উদাঃ মোঃ আব্দুল্লাহ"
+                    placeholder={t.volunteer.namePlaceholder}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
@@ -253,12 +248,12 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      মোবাইল নম্বর <span className="text-red-500">*</span>
+                      {t.volunteer.phoneLabel} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="tel"
                       required
-                      placeholder="০১৭xxxxxxxx"
+                      placeholder="017xxxxxxxx"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
@@ -267,21 +262,21 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      রক্তের গ্রুপ
+                      {t.volunteer.bloodLabel}
                     </label>
                     <select
                       value={bloodGroup}
                       onChange={(e) => setBloodGroup(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 cursor-pointer"
                     >
-                      <option value="A+">A+ (পজিটিভ)</option>
-                      <option value="A-">A- (নেগেটিভ)</option>
-                      <option value="B+">B+ (পজিটিভ)</option>
-                      <option value="B-">B- (নেগেটিভ)</option>
-                      <option value="O+">O+ (পজিটিভ)</option>
-                      <option value="O-">O- (নেগেটিভ)</option>
-                      <option value="AB+">AB+ (পজিটিভ)</option>
-                      <option value="AB-">AB- (নেগেটিভ)</option>
+                      <option value="A+">A+ (Positive)</option>
+                      <option value="A-">A- (Negative)</option>
+                      <option value="B+">B+ (Positive)</option>
+                      <option value="B-">B- (Negative)</option>
+                      <option value="O+">O+ (Positive)</option>
+                      <option value="O-">O- (Negative)</option>
+                      <option value="AB+">AB+ (Positive)</option>
+                      <option value="AB-">AB- (Negative)</option>
                     </select>
                   </div>
                 </div>
@@ -289,7 +284,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      উপজেলা / এলাকা
+                      {t.volunteer.areaLabel}
                     </label>
                     <input
                       type="text"
@@ -301,29 +296,39 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      কাজের ক্ষেত্র
+                      {t.volunteer.interestLabel}
                     </label>
                     <select
                       value={interest}
                       onChange={(e) => setInterest(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 cursor-pointer"
                     >
-                      <option value="ত্রাণ ও খাদ্য সহায়তা বিতরণ">ত্রাণ ও খাদ্য সহায়তা বিতরণ</option>
-                      <option value="ফ্রি মেডিকেল ক্যাম্প পরিচালনা">ফ্রি মেডিকেল ক্যাম্প পরিচালনা</option>
-                      <option value="মক্তব ও শিক্ষা কার্যক্রম">মক্তব ও শিক্ষা কার্যক্রম</option>
-                      <option value="আইটি, গ্রাফিক্স ও সোশ্যাল মিডিয়া">আইটি, গ্রাফিক্স ও প্রচার</option>
-                      <option value="অন্যান্য সামাজিক কাজ">অন্যান্য সামাজিক কাজ</option>
+                      <option value={isEn ? "Relief & Emergency Food Aid" : "ত্রাণ ও খাদ্য সহায়তা বিতরণ"}>
+                        {isEn ? "Relief & Emergency Food Aid" : "ত্রাণ ও খাদ্য সহায়তা বিতরণ"}
+                      </option>
+                      <option value={isEn ? "Free Medical Camp & Care" : "ফ্রি মেডিকেল ক্যাম্প পরিচালনা"}>
+                        {isEn ? "Free Medical Camp & Care" : "ফ্রি মেডিকেল ক্যাম্প পরিচালনা"}
+                      </option>
+                      <option value={isEn ? "Maktab & Education Programs" : "মক্তব ও শিক্ষা কার্যক্রম"}>
+                        {isEn ? "Maktab & Education Programs" : "মক্তব ও শিক্ষা কার্যক্রম"}
+                      </option>
+                      <option value={isEn ? "IT, Media & Communications" : "আইটি, গ্রাফিক্স ও সোশ্যাল মিডিয়া"}>
+                        {isEn ? "IT, Media & Communications" : "আইটি, গ্রাফিক্স ও প্রচার"}
+                      </option>
+                      <option value={isEn ? "General Social Welfare" : "অন্যান্য সামাজিক কাজ"}>
+                        {isEn ? "General Social Welfare" : "অন্যান্য সামাজিক কাজ"}
+                      </option>
                     </select>
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    সংক্ষিপ্ত পরিচয় বা বার্তা (ঐচ্ছিক)
+                    {t.volunteer.messageLabel}
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="আপনার পেশা, পড়াশোনা বা কাজের ইচ্ছা সম্পর্কে..."
+                    placeholder={t.volunteer.messagePlaceholder}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
@@ -338,12 +343,12 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = ({ onOpenModal 
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>তথ্য ইমেইলে পাঠানো হচ্ছে...</span>
+                      <span>{t.volunteer.submittingBtn}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>নিবন্ধন সম্পন্ন করুন</span>
+                      <span>{t.volunteer.submitBtn}</span>
                     </>
                   )}
                 </button>

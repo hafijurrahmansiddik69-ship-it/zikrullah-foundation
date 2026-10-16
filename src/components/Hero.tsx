@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles, HeartHandshake, ShieldCheck, Heart, Users } from 'lucide-react';
-import { heroImg, FOUNDATION_INFO } from '../data/mockData';
+import { FOUNDATION_INFO } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroProps {
   onOpenDonation?: () => void;
@@ -8,6 +9,8 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout }) => {
+  const { t, isEn } = useLanguage();
+
   return (
     <section id="home" className="relative min-h-[560px] sm:min-h-[620px] lg:min-h-[680px] flex items-center justify-center overflow-hidden bg-black">
       {/* Background Image: Left side heavily dark & blurred, Right side softly visible */}
@@ -18,13 +21,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
           className="w-full h-full object-cover object-right sm:object-[75%_center] filter brightness-[0.95] contrast-[1.05]"
         />
 
-        {/* বাম সাইড একেবারেই কালো ব্লার (Left Side Deep Black & Blur Overlay) */}
+        {/* Left Side Deep Black & Blur Overlay */}
         <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 bg-gradient-to-r from-black via-black/95 via-50% to-transparent backdrop-blur-md z-[1]" />
 
-        {/* মসৃণ ট্রানজিশন: বামে কালো থেকে ডানে হালকা সবুজ আভা ও ছবির দৃশ্যমানতা */}
+        {/* Transition */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-[#01190e]/90 via-40% via-[#012b18]/50 to-[#023b20]/25 z-[2]" />
 
-        {/* টপ ও বটম মসৃণ শ্যাডো */}
+        {/* Top & bottom shadows */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-transparent to-[#011309]/95 z-[2]" />
 
         {/* Subtle Islamic Geometric Pattern Texture */}
@@ -46,41 +49,33 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
         {/* Bismillah Calligraphy Badge */}
         <div className="inline-flex items-center gap-2 mb-5 px-4 sm:px-5 py-1.5 rounded-full bg-[#033b21]/80 backdrop-blur-md border border-amber-400/35 text-amber-300 text-xs sm:text-sm font-serif-bn tracking-wider shadow-lg shadow-emerald-950/40">
           <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 fill-amber-400/20" />
-          <span>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
+          <span dir="rtl" className="font-serif">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
           <span className="hidden sm:inline text-amber-200/50">|</span>
-          <span className="hidden sm:inline font-solaiman text-amber-200 text-xs">মানবতার সেবায় নিবেদিত</span>
+          <span className="hidden sm:inline font-solaiman text-amber-200 text-xs">{t.hero.bismillahBadge}</span>
         </div>
 
         {/* Foundation Name */}
         <h1 className="font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-3 sm:mb-4 drop-shadow-md">
-          {FOUNDATION_INFO.name}
+          {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
           <span className="block text-amber-300 font-solaiman text-lg sm:text-2xl md:text-3xl mt-2 sm:mt-3 font-semibold tracking-wide drop-shadow-sm">
-            {FOUNDATION_INFO.slogan}
+            {t.common.slogan}
           </span>
         </h1>
 
         {/* English Tagline */}
         <p 
-          className="mb-6 sm:mb-8 text-center drop-shadow-sm"
-          style={{
-            fontFamily: "'ArmWrestler', sans-serif",
-            fontSize: '15px',
-            fontWeight: 'bold',
-            letterSpacing: '3px',
-            textTransform: 'uppercase',
-            color: '#FFFFFF'
-          }}
+          className="mb-6 sm:mb-8 text-center drop-shadow-sm font-armwrestler tracking-[3px] uppercase font-bold text-sm sm:text-base text-white"
         >
-          ZIKRULLAH FOUNDATION • EST. 1 JAN, 2023
+          {t.common.estTag}
         </p>
 
         {/* Foundation Inspiring Statement & Establishment Text with Dark Green Background */}
         <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 text-emerald-50/95 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
           <p className="bg-[#012615]/65 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-emerald-400/30 shadow-2xl text-justify sm:text-center leading-relaxed">
-            “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
+            {t.hero.quote}
           </p>
           <p className="bg-[#012012]/60 backdrop-blur-sm px-5 py-3.5 rounded-xl border border-emerald-400/25 text-sm sm:text-base md:text-lg text-emerald-100/95 font-solaiman font-medium leading-relaxed">
-            উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’।
+            {t.hero.history}
           </p>
         </div>
 
@@ -92,7 +87,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-emerald-500 to-[#10b981] hover:from-emerald-600 hover:to-emerald-500 active:scale-95 text-white font-bold text-base sm:text-lg shadow-[0_0_25px_rgba(16,185,129,0.5)] hover:shadow-[0_0_35px_rgba(16,185,129,0.7)] border border-emerald-300/40 transition-all duration-300 cursor-pointer min-h-[48px] group"
             >
               <HeartHandshake className="w-5 h-5 sm:w-6 sm:h-6 stroke-white fill-white/20 group-hover:scale-110 transition-transform duration-300" />
-              <span>দান করুন</span>
+              <span>{t.hero.btnDonate}</span>
             </button>
           )}
 
@@ -101,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
               onClick={onNavigateToAbout}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-md active:scale-95 text-white font-semibold text-sm sm:text-base border border-white/25 hover:border-white/40 transition-all cursor-pointer min-h-[48px]"
             >
-              <span>আমাদের সম্পর্কে জানুন</span>
+              <span>{t.hero.btnAbout}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
@@ -111,15 +106,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-3xl pt-6 border-t border-emerald-500/20 text-xs sm:text-sm text-emerald-100/90 font-solaiman">
           <div className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 backdrop-blur-xs border border-white/10">
             <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>১০০% আমানতদারিতা ও স্বচ্ছতা</span>
+            <span>{t.hero.badgeAmanat}</span>
           </div>
           <div className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 backdrop-blur-xs border border-white/10">
             <Heart className="w-4 h-4 text-emerald-400 shrink-0 fill-emerald-400/20" />
-            <span>সরাসরি মাঠপর্যায়ে অসহায়দের সেবা</span>
+            <span>{isEn ? 'Direct Field Relief & Care' : 'সরাসরি মাঠপর্যায়ে অসহায়দের সেবা'}</span>
           </div>
           <div className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 backdrop-blur-xs border border-white/10">
             <Users className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>উম্মাহর সার্বিক কল্যাণ ও ঐক্য</span>
+            <span>{isEn ? 'Unity & Welfare of the Ummah' : 'উম্মাহর সার্বিক কল্যাণ ও ঐক্য'}</span>
           </div>
         </div>
 
@@ -127,4 +122,3 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
     </section>
   );
 };
-

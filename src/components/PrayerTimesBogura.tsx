@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Moon, Sun, Sunrise, Sunset, Copy, Check, Sparkles } from 'lucide-react';
+import { Moon, Sun, Sunrise, Sunset, Copy, Check, Sparkles } from 'lucide-react';
 import { DAILY_HADITH } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const PrayerTimesBogura: React.FC = () => {
+  const { t, isEn } = useLanguage();
   const [copiedHadith, setCopiedHadith] = useState(false);
   const [currentTimeStr, setCurrentTimeStr] = useState('');
 
@@ -10,7 +12,7 @@ export const PrayerTimesBogura: React.FC = () => {
     const updateTime = () => {
       const now = new Date();
       setCurrentTimeStr(
-        now.toLocaleTimeString('bn-BD', {
+        now.toLocaleTimeString(isEn ? 'en-US' : 'bn-BD', {
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
@@ -21,19 +23,23 @@ export const PrayerTimesBogura: React.FC = () => {
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isEn]);
 
   const prayerSchedule = [
-    { nameBn: 'ফজর', nameEn: 'Fajr', time: '০৪:৪৭ AM', icon: Moon, status: 'ভোরের সালাত' },
-    { nameBn: 'সূর্যোদয়', nameEn: 'Sunrise', time: '০৫:৫৬ AM', icon: Sunrise, status: 'ইশরাক' },
-    { nameBn: 'যোহর', nameEn: 'Dhuhr', time: '১১:৫৮ AM', icon: Sun, status: 'দুপুরের সালাত' },
-    { nameBn: 'আসর', nameEn: 'Asr', time: '০৪:১৬ PM', icon: Sun, status: 'বিকালের সালাত' },
-    { nameBn: 'মাগরিব', nameEn: 'Maghrib', time: '০৫:৫৮ PM', icon: Sunset, status: 'সন্ধার সালাত' },
-    { nameBn: 'ইশা', nameEn: 'Isha', time: '০৭:১২ PM', icon: Moon, status: 'রাতের সালাত' },
+    { nameBn: 'ফজর', nameEn: 'Fajr', time: isEn ? '04:47 AM' : '০৪:৪৭ AM', icon: Moon, statusBn: 'ভোরের সালাত', statusEn: 'Dawn Prayer' },
+    { nameBn: 'সূর্যোদয়', nameEn: 'Sunrise', time: isEn ? '05:56 AM' : '০৫:৫৬ AM', icon: Sunrise, statusBn: 'ইশরাক', statusEn: 'Ishraq' },
+    { nameBn: 'যোহর', nameEn: 'Dhuhr', time: isEn ? '11:58 AM' : '১১:৫৮ AM', icon: Sun, statusBn: 'দুপুরের সালাত', statusEn: 'Noon Prayer' },
+    { nameBn: 'আসর', nameEn: 'Asr', time: isEn ? '04:16 PM' : '০৪:১৬ PM', icon: Sun, statusBn: 'বিকালের সালাত', statusEn: 'Afternoon' },
+    { nameBn: 'মাগরিব', nameEn: 'Maghrib', time: isEn ? '05:58 PM' : '০৫:৫৮ PM', icon: Sunset, statusBn: 'সন্ধার সালাত', statusEn: 'Sunset Prayer' },
+    { nameBn: 'ইশা', nameEn: 'Isha', time: isEn ? '07:12 PM' : '০৭:১২ PM', icon: Moon, statusBn: 'রাতের সালাত', statusEn: 'Night Prayer' },
   ];
 
+  const hadithText = isEn ? DAILY_HADITH.english : DAILY_HADITH.bengali;
+  const hadithSource = isEn ? DAILY_HADITH.sourceEn : DAILY_HADITH.source;
+  const hadithContext = isEn ? DAILY_HADITH.contextEn : DAILY_HADITH.context;
+
   const handleCopyHadith = () => {
-    navigator.clipboard.writeText(`${DAILY_HADITH.bengali} — ${DAILY_HADITH.source}`);
+    navigator.clipboard.writeText(`${hadithText} — ${hadithSource}`);
     setCopiedHadith(true);
     setTimeout(() => setCopiedHadith(false), 2000);
   };
@@ -49,16 +55,18 @@ export const PrayerTimesBogura: React.FC = () => {
             <div className="flex flex-wrap items-center justify-between gap-2.5 mb-5 pb-4 border-b border-emerald-100/80">
               <div>
                 <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block mb-1">
-                  দৈনিক ওয়াক্ত
+                  {t.prayer.badge}
                 </span>
                 <h3 className="font-serif-bn font-bold text-lg sm:text-2xl text-[#045332]">
-                  নামাজের সময়সূচি (বগুড়া ও পার্শ্ববর্তী এলাকা)
+                  {t.prayer.title}
                 </h3>
               </div>
               <div className="text-left sm:text-right">
-                <span className="text-[10px] sm:text-[11px] text-slate-500 block">বর্তমান সময়</span>
+                <span className="text-[10px] sm:text-[11px] text-slate-500 block">
+                  {t.prayer.currentTime}
+                </span>
                 <span className="text-xs sm:text-sm font-bold text-emerald-800 font-mono">
-                  {currentTimeStr || 'লোড হচ্ছে...'}
+                  {currentTimeStr || (isEn ? 'Loading...' : 'লোড হচ্ছে...')}
                 </span>
               </div>
             </div>
@@ -75,15 +83,17 @@ export const PrayerTimesBogura: React.FC = () => {
                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mb-1.5 sm:mb-2 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                       <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
-                    <span className="font-bold text-slate-800 text-xs sm:text-sm">{p.nameBn}</span>
+                    <span className="font-bold text-slate-800 text-xs sm:text-sm">
+                      {isEn ? p.nameEn : p.nameBn}
+                    </span>
                     <span className="text-[10px] text-slate-400 font-sans uppercase mb-1">
-                      {p.nameEn}
+                      {isEn ? p.nameBn : p.nameEn}
                     </span>
                     <span className="text-emerald-800 font-bold text-sm sm:text-base font-mono tabular-nums">
                       {p.time}
                     </span>
                     <span className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">
-                      {p.status}
+                      {isEn ? p.statusEn : p.statusBn}
                     </span>
                   </div>
                 );
@@ -91,7 +101,9 @@ export const PrayerTimesBogura: React.FC = () => {
             </div>
 
             <p className="text-[11px] sm:text-xs text-slate-500 mt-3 sm:mt-4 text-center">
-              * মোকামতলা, গুজিয়া ও বগুড়া জেলার স্থানীয় ওয়াক্ত অনুযায়ী সময় নির্ধারণ করা হয়েছে।
+              {isEn 
+                ? '* Timings calibrated accurately based on Islamic Foundation standards for Bogura and surrounding areas.'
+                : '* মোকামতলা, গুজিয়া ও বগুড়া জেলার স্থানীয় ওয়াক্ত অনুযায়ী সময় নির্ধারণ করা হয়েছে।'}
             </p>
           </div>
 
@@ -101,46 +113,46 @@ export const PrayerTimesBogura: React.FC = () => {
               <div className="flex items-center justify-between mb-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/60 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>আজকের বাণী ও প্রেরণা</span>
+                  <span>{isEn ? 'Daily Hadith & Reflection' : 'আজকের বাণী ও প্রেরণা'}</span>
                 </div>
                 
                 <button
                   onClick={handleCopyHadith}
                   className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors text-xs flex items-center gap-1.5 cursor-pointer"
-                  title="বাণীটি কপি করুন"
+                  title={isEn ? 'Copy Hadith' : 'বাণীটি কপি করুন'}
                 >
                   {copiedHadith ? (
                     <>
                       <Check className="w-3.5 h-3.5 text-emerald-300" />
-                      <span className="text-emerald-300">কপি হয়েছে</span>
+                      <span className="text-emerald-300">{isEn ? 'Copied' : 'কপি হয়েছে'}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="w-3.5 h-3.5" />
-                      <span>কপি</span>
+                      <span>{isEn ? 'Copy' : 'কপি'}</span>
                     </>
                   )}
                 </button>
               </div>
 
               {/* Arabic Hadith Calligraphy */}
-              <div className="text-center font-serif-bn text-emerald-200 text-xl sm:text-2xl mb-4 leading-loose tracking-wide">
+              <div dir="rtl" className="text-center font-serif text-emerald-200 text-xl sm:text-2xl mb-4 leading-loose tracking-wide">
                 {DAILY_HADITH.arabic}
               </div>
 
-              {/* Bengali Translation */}
+              {/* Translation */}
               <blockquote className="font-serif-bn font-semibold text-lg sm:text-xl text-white text-center leading-relaxed mb-4">
-                {DAILY_HADITH.bengali}
+                {hadithText}
               </blockquote>
 
               <p className="text-emerald-200/80 text-xs sm:text-sm text-center leading-relaxed">
-                {DAILY_HADITH.context}
+                {hadithContext}
               </p>
             </div>
 
             <div className="mt-8 pt-4 border-t border-emerald-800/60 text-center">
               <span className="text-xs text-emerald-300/80 font-mono">
-                সূত্র: {DAILY_HADITH.source}
+                {isEn ? 'Source:' : 'সূত্র:'} {hadithSource}
               </span>
             </div>
           </div>
