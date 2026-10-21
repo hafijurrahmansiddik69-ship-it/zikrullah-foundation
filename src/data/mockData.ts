@@ -1,7 +1,7 @@
 import { Project, ServiceItem, NewsItem, GalleryItem } from '../types';
 
 const heroImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1791214336/bfl9h9ic5e2zvkynca1b.jpg";
-import foodImg from '../assets/images/food_aid_relief_1791208757690.jpg';
+const foodImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg";
 import eduImg from '../assets/images/education_aid_students_1791208774675.jpg';
 import medImg from '../assets/images/medical_camp_aid_1791208791787.jpg';
 import selfRelianceImg from '../assets/images/self_reliance_aid_1791986374204.jpg';
@@ -288,7 +288,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "শিক্ষার্থীদের মাঝে পাঠ্যবই ও ব্যাগ উপহার",
     category: "শিক্ষা সহায়তা",
     location: "মোকামতলা, বগুড়া",
-    imageUrl: eduImg,
     date: "আগস্ট ২০২৬"
   },
   {

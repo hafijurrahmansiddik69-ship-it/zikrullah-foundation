@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Sparkles, HeartHandshake, ShieldCheck, Heart, Users } from 'lucide-react';
+import { ArrowRight, HeartHandshake, ShieldCheck, Heart, Users } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -13,7 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
 
   return (
     <section id="home" className="relative min-h-[560px] sm:min-h-[620px] lg:min-h-[680px] flex items-center justify-center overflow-hidden bg-black">
-      {/* Background Image: Left side heavily dark & blurred, Right side softly visible */}
+      {/* Background Image: Left side heavily dark & blurred with black, Right side softly visible */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg"
@@ -24,11 +24,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
         {/* Left Side Deep Black & Blur Overlay */}
         <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 bg-gradient-to-r from-black via-black/95 via-50% to-transparent backdrop-blur-md z-[1]" />
 
-        {/* Transition */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-[#01190e]/90 via-40% via-[#012b18]/50 to-[#023b20]/25 z-[2]" />
+        {/* Smooth Dark Transition */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 via-40% via-black/50 to-black/20 z-[2]" />
 
-        {/* Top & bottom shadows */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-transparent to-[#011309]/95 z-[2]" />
+        {/* Top & bottom subtle black shadows */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-transparent to-black/95 z-[2]" />
 
         {/* Subtle Islamic Geometric Pattern Texture */}
         <div 
@@ -45,15 +45,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
 
       {/* Main Content Area */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24 text-center text-white flex flex-col items-center">
-        
-        {/* Bismillah Calligraphy Badge */}
-        <div className="inline-flex items-center gap-2 mb-5 px-4 sm:px-5 py-1.5 rounded-full bg-[#033b21]/80 backdrop-blur-md border border-amber-400/35 text-amber-300 text-xs sm:text-sm font-serif-bn tracking-wider shadow-lg shadow-emerald-950/40">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 fill-amber-400/20" />
-          <span dir="rtl" className="font-serif">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
-          <span className="hidden sm:inline text-amber-200/50">|</span>
-          <span className="hidden sm:inline font-solaiman text-amber-200 text-xs">{t.hero.bismillahBadge}</span>
-        </div>
-
         {/* Foundation Name */}
         <h1 className="font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-3 sm:mb-4 drop-shadow-md">
           {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
@@ -69,14 +60,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
           {t.common.estTag}
         </p>
 
-        {/* Foundation Inspiring Statement & Establishment Text with Dark Green Background */}
-        <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 text-emerald-50/95 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
-          <p className="bg-[#012615]/65 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-emerald-400/30 shadow-2xl text-justify sm:text-center leading-relaxed">
-            {t.hero.quote}
-          </p>
-          <p className="bg-[#012012]/60 backdrop-blur-sm px-5 py-3.5 rounded-xl border border-emerald-400/25 text-sm sm:text-base md:text-lg text-emerald-100/95 font-solaiman font-medium leading-relaxed">
-            {t.hero.history}
-          </p>
+        {/* Foundation Inspiring Statement & Establishment Text with Vibrant Blue & Green Accents */}
+        <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
+          {/* First Box: Healthcare / ফ্রি চিকিৎসা Style (Vibrant Blue Border & Gradient) */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/50 via-[#0a1b38]/65 to-[#020b1a]/75 backdrop-blur-md p-5 sm:p-6 border-2 border-blue-400 shadow-[0_8px_30px_rgba(37,99,235,0.3)] text-justify sm:text-center">
+            {/* Subtle Blue ambient glow inside frosted glass */}
+            <div className="absolute -top-8 -right-8 w-28 h-28 bg-blue-500/20 rounded-full blur-xl pointer-events-none" />
+            <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-sky-400/15 rounded-full blur-xl pointer-events-none" />
+            <p className="relative z-10 text-white leading-relaxed drop-shadow-xs">
+              {t.hero.quote}
+            </p>
+          </div>
+
+          {/* Second Box: Sadaqah-e-Jariyah / সদকা-ই-জারিয়া Style (Vibrant Green Border & Gradient) */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950/80 via-[#045332]/75 to-[#087443]/65 backdrop-blur-md px-5 sm:px-6 py-4 sm:py-4.5 border-2 border-emerald-400 shadow-[0_8px_28px_rgba(16,185,129,0.25)] text-center">
+            {/* Subtle Emerald ambient glow inside frosted glass */}
+            <div className="absolute -top-6 -right-6 w-24 h-24 bg-emerald-400/20 rounded-full blur-xl pointer-events-none" />
+            <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-teal-400/15 rounded-full blur-xl pointer-events-none" />
+            <p className="relative z-10 text-sm sm:text-base md:text-lg text-emerald-50 font-solaiman font-medium leading-relaxed drop-shadow-xs">
+              {t.hero.history}
+            </p>
+          </div>
         </div>
 
         {/* Action Buttons */}
@@ -104,15 +108,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
 
         {/* Trust Badges / Pillars */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-3xl pt-6 border-t border-emerald-500/20 text-xs sm:text-sm text-emerald-100/90 font-solaiman">
-          <div className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 backdrop-blur-xs border border-white/10">
+          <div className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-black/45 backdrop-blur-sm border border-white/15 shadow-sm">
             <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
             <span>{t.hero.badgeAmanat}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 backdrop-blur-xs border border-white/10">
+          <div className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-black/45 backdrop-blur-sm border border-white/15 shadow-sm">
             <Heart className="w-4 h-4 text-emerald-400 shrink-0 fill-emerald-400/20" />
             <span>{isEn ? 'Direct Field Relief & Care' : 'সরাসরি মাঠপর্যায়ে অসহায়দের সেবা'}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 backdrop-blur-xs border border-white/10">
+          <div className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-black/45 backdrop-blur-sm border border-white/15 shadow-sm">
             <Users className="w-4 h-4 text-amber-400 shrink-0" />
             <span>{isEn ? 'Unity & Welfare of the Ummah' : 'উম্মাহর সার্বিক কল্যাণ ও ঐক্য'}</span>
           </div>

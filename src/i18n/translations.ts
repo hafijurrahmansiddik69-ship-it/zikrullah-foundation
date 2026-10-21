@@ -20,7 +20,7 @@ export const translations = {
       humanityDedicated: 'মানবতার সেবায় নিবেদিত',
       callUs: 'ফোন:',
       emailUs: 'ইমেইল:',
-      myAccountOrDonate: 'আমার অ্যাকাউন্ট / দান করুন',
+      myAccountOrDonate: 'আমার অ্যাকাউন্ট / খেদমতে শরীক হোন',
       close: 'বন্ধ করুন',
       viewAll: 'সব দেখুন',
       learnMore: 'বিস্তারিত জানুন',
@@ -53,9 +53,9 @@ export const translations = {
     },
     aboutVisual: {
       badge: 'মানবতার সেবায় নিবেদিত',
-      quranArabic: 'مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنবَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ ۗ وَاللَّهُ يُضَاعِفُ لِمَن يَشَاءُ ۗ وَاللَّهُ وَاسِعٌ عَلِيمٌ',
-      quranTranslation: '“যারা আল্লাহর রাস্তায় নিজেদের ধন-সম্পদ ব্যয় করে, তাদের উপমা একটি শস্যবীজের মতো, যা থেকে সাতটি শীষ জন্মায় এবং প্রতিটি শীষে থাকে একশতটি করে দানা। আর আল্লাহ যাকে ইচ্ছা বহুগুণ বৃদ্ধি করে দেন; আল্লাহ প্রাচুর্যময় ও সর্বজ্ঞ।”',
-      surahRef: '— সূরা আল-বাকারা, আয়াত: ২৬১',
+      quranArabic: 'الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ .',
+      quranTranslation: '“যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”',
+      surahRef: '— সূরা আল-বাক্বারাহ্ : ২৭৪',
       btnDonate: 'দান করুন',
       visionBadge: 'আমাদের লক্ষ্য, দর্শন ও পরিচিতি',
       btnLearnMission: 'আমাদের লক্ষ্য ও উদ্দেশ্য জানুন',
@@ -63,7 +63,7 @@ export const translations = {
     },
     projects: {
       badge: 'আমাদের কর্মনীতি ও প্রতিশ্রুতি',
-      title: 'যাঁদের জন্য আমরা কাজ করি',
+      title: 'আমাদের সেবামূলক কার্যক্রম',
       subtitle: 'প্রতিটি বাটনে ক্লিক করে বিস্তারিত কার্যক্রম জেনে নিন',
       cards: [
         {
@@ -233,7 +233,7 @@ export const translations = {
       humanityDedicated: 'Dedicated to Humanity',
       callUs: 'Phone:',
       emailUs: 'Email:',
-      myAccountOrDonate: 'My Account / Donate',
+      myAccountOrDonate: 'My Account / Join the Cause',
       close: 'Close',
       viewAll: 'View All',
       learnMore: 'Learn More',
@@ -266,9 +266,9 @@ export const translations = {
     },
     aboutVisual: {
       badge: 'Dedicated to Humanity',
-      quranArabic: 'مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنবَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ ۗ وَاللَّهُ يُضَاعِফُ لِمَن يَشَاءُ ۗ وَاللَّهُ وَاسِعٌ عَلِيمٌ',
-      quranTranslation: '“The example of those who spend their wealth in the way of Allah is like a seed of grain which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.”',
-      surahRef: '— Surah Al-Baqarah, Ayah: 261',
+      quranArabic: 'الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ .',
+      quranTranslation: '“Those who spend their wealth [in Allah\'s way] by night and by day, secretly and publicly - they will have their reward with their Lord. And no fear will there be concerning them, nor will they grieve.”',
+      surahRef: '— Surah Al-Baqarah: 274',
       btnDonate: 'Donate Now',
       visionBadge: 'Our Mission, Vision & Identity',
       btnLearnMission: 'Discover Our Mission & Goals',
@@ -276,7 +276,7 @@ export const translations = {
     },
     projects: {
       badge: 'Our Principles & Commitments',
-      title: 'Who We Work For',
+      title: 'Our Welfare Activities',
       subtitle: 'Click each button to learn about our detailed initiatives',
       cards: [
         {

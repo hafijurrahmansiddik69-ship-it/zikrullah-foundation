@@ -309,7 +309,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                 <div className="flex items-start gap-3 sm:gap-3.5">
                   <HeartHandshake className="w-5 h-5 text-amber-300 shrink-0 mt-1" />
                   <div className="space-y-2 flex-1">
-                    <p dir="rtl" className="font-serif-bn font-semibold text-white text-base sm:text-lg lg:text-xl leading-relaxed sm:leading-loose tracking-wide text-right">
+                    <p dir="rtl" className="font-arabic font-bold text-white text-sm sm:text-base lg:text-lg leading-[2.1] tracking-wide text-right">
                       الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ .
                     </p>
                     <p className="font-solaiman text-emerald-50 text-xs sm:text-[13.5px] leading-relaxed">
@@ -318,7 +318,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     <div className="pt-1 flex items-center justify-between sm:justify-start gap-2">
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-900/90 text-[11px] sm:text-xs text-amber-300 font-sans-bn font-medium border border-emerald-700/60">
                         <Sparkles className="w-3 h-3 text-amber-300" />
-                        সূরা আল-বাক্বারাহ্‌ : ২৭৪
+                        সূরা আল-বাক্বারাহ্ : ২৭৪
                       </span>
                     </div>
                   </div>

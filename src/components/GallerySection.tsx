@@ -57,12 +57,16 @@ export const GallerySection: React.FC = () => {
               onClick={() => setSelectedPhoto(item)}
               className="group relative rounded-2xl overflow-hidden border border-emerald-100/80 bg-slate-100 aspect-4/3 cursor-pointer shadow-xs hover:shadow-xl transition-all duration-300"
             >
-              <img
-                src={item.imageUrl}
-                alt={item.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              />
+              {item.imageUrl ? (
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-emerald-950 via-[#034a2c] to-emerald-900" />
+              )}
               
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
 
@@ -108,12 +112,18 @@ export const GallerySection: React.FC = () => {
             </button>
 
             <div className="max-h-[60vh] sm:max-h-[65vh] overflow-hidden bg-slate-950 flex items-center justify-center">
-              <img
-                src={selectedPhoto.imageUrl}
-                alt={selectedPhoto.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-auto max-h-[60vh] sm:max-h-[65vh] object-contain"
-              />
+              {selectedPhoto.imageUrl ? (
+                <img
+                  src={selectedPhoto.imageUrl}
+                  alt={selectedPhoto.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-auto max-h-[60vh] sm:max-h-[65vh] object-contain"
+                />
+              ) : (
+                <div className="w-full h-48 sm:h-64 bg-gradient-to-br from-emerald-950 via-[#034a2c] to-emerald-900 flex items-center justify-center text-emerald-200 text-sm font-solaiman">
+                  এই ইভেন্টের কোনো ছবি নেই
+                </div>
+              )}
             </div>
 
             <div className="p-4 sm:p-6 bg-white">

@@ -37,7 +37,7 @@ export interface GalleryItem {
   title: string;
   category: string;
   location: string;
-  imageUrl: string;
+  imageUrl?: string;
   date: string;
 }
 

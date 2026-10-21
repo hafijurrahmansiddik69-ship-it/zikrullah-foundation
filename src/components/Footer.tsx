@@ -176,30 +176,54 @@ export const Footer: React.FC<FooterProps> = ({
               {t.footer.contactInfo}
             </h4>
             
-            <div className="space-y-2.5 text-xs text-white">
-              <div className="flex items-start gap-2 text-white">
+            <div className="space-y-3 text-xs sm:text-[13px]">
+              <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span className="text-white font-medium">{t.common.address}</span>
+                <span 
+                  className="font-semibold text-white leading-relaxed tracking-wide drop-shadow-sm"
+                  style={{ color: '#FFFFFF' }}
+                >
+                  {t.common.address}
+                </span>
               </div>
-              <div className="flex items-center gap-2 text-white">
+              <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`mailto:${FOUNDATION_INFO.email}`} className="text-white hover:text-emerald-300 font-sans font-medium transition-colors">
+                <a 
+                  href={`mailto:${FOUNDATION_INFO.email}`} 
+                  className="font-sans font-semibold text-white hover:text-emerald-300 transition-colors tracking-wide drop-shadow-sm"
+                  style={{ color: '#FFFFFF' }}
+                >
                   {FOUNDATION_INFO.email}
                 </a>
               </div>
-              <div className="flex items-center gap-2 text-white">
+              <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`} className="text-white hover:text-emerald-300 font-sans font-medium transition-colors">
+                <a 
+                  href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`} 
+                  className="font-sans font-bold text-white hover:text-emerald-300 transition-colors tracking-wide drop-shadow-sm"
+                  style={{ color: '#FFFFFF' }}
+                >
                   {FOUNDATION_INFO.phone}
                 </a>
               </div>
 
-              <div className="pt-2 text-xs bg-emerald-950/70 p-2.5 rounded-xl border border-emerald-800/40 space-y-1.5">
-                <strong className="text-white block font-serif-bn font-semibold">
+              <div className="pt-2 text-xs bg-emerald-950/80 p-3 rounded-xl border border-emerald-800/60 space-y-1.5 shadow-inner">
+                <strong 
+                  className="block font-serif-bn font-bold text-white text-[13px]"
+                  style={{ color: '#FFFFFF' }}
+                >
                   {isEn ? 'Donation Account:' : 'ব্যাংক একাউন্ট (অনুদান):'}
                 </strong>
-                <span className="block font-mono text-white font-medium">Coming soon ...</span>
-                <span className="block text-xs text-white font-medium">
+                <span 
+                  className="block font-mono font-semibold text-white text-xs tracking-wider"
+                  style={{ color: '#FFFFFF' }}
+                >
+                  Coming soon ...
+                </span>
+                <span 
+                  className="block font-bold text-white text-xs tracking-wide"
+                  style={{ color: '#FFFFFF' }}
+                >
                   {isEn ? 'bKash / Nagad: 016 20 500 920' : 'বিকাশ / নগদ: 016 20 500 920'}
                 </span>
               </div>

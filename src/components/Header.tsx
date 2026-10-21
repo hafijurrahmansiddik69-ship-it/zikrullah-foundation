@@ -77,15 +77,17 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2.5 sm:gap-4 shrink-0 font-sans">
             <a
               href={`mailto:${FOUNDATION_INFO.email}`}
-              className="hover:text-white transition-colors hidden sm:flex items-center gap-1.5 text-emerald-200"
+              className="text-white hover:text-emerald-200 transition-colors hidden sm:flex items-center gap-1.5 font-medium"
+              style={{ color: '#FFFFFF' }}
             >
               <Mail className="w-3.5 h-3.5 text-emerald-400" />
               <span>{FOUNDATION_INFO.email}</span>
             </a>
-            <span className="hidden sm:inline text-emerald-500/50">•</span>
+            <span className="hidden sm:inline text-white/50">•</span>
             <a
               href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
-              className="hover:text-white transition-colors flex items-center gap-1 text-emerald-200"
+              className="text-white hover:text-emerald-200 transition-colors flex items-center gap-1 font-bold tracking-wide"
+              style={{ color: '#FFFFFF' }}
             >
               <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
               <span>{FOUNDATION_INFO.phone}</span>
@@ -228,11 +230,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={() => onOpenDonation()}
               className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white bg-[#087443] hover:bg-[#045332] active:scale-95 rounded-full shadow-md shadow-emerald-800/15 transition-all whitespace-nowrap cursor-pointer shrink-0"
-              aria-label={t.common.donate}
+              aria-label={t.common.donateNow}
             >
               <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white shrink-0" />
-              <span className="hidden min-[400px]:inline">{t.common.donateNow}</span>
-              <span className="min-[400px]:hidden">{t.common.donate}</span>
+              <span>{t.common.donateNow}</span>
             </button>
 
             {/* Mobile Hamburger Button */}

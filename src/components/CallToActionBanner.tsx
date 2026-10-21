@@ -42,7 +42,8 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({ onOpenDo
 
               <a
                 href={`tel:${FOUNDATION_INFO.phone.replace(/\s+/g, '')}`}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-emerald-900/60 hover:bg-emerald-900/90 border border-emerald-400/30 text-emerald-200 hover:text-white font-semibold text-sm transition-all cursor-pointer min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-emerald-900/80 hover:bg-emerald-900 border border-emerald-400/40 text-white font-bold text-sm transition-all cursor-pointer min-h-[44px]"
+                style={{ color: '#FFFFFF' }}
               >
                 <PhoneCall className="w-4 h-4 text-amber-300" />
                 <span>{t.ctaBanner.callUs} {FOUNDATION_INFO.phone}</span>

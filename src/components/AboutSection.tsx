@@ -36,31 +36,18 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-[#012615] via-[#02381e]/40 to-transparent" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,158,11,0.15),transparent_60%)]" />
 
-              {/* Top-Right Corner Badge: 'মানবতার সেবায় নিবেদিত' with Black Background & White Border */}
-              <div className="absolute top-3.5 right-3.5 z-20">
-                <span 
-                  className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide backdrop-blur-md shadow-lg border"
-                  style={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.82)',
-                    borderColor: 'rgba(255, 255, 255, 0.75)',
-                    color: '#FFFFFF',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  {t.aboutVisual.badge}
-                </span>
-              </div>
-              
-              {/* Bottom Quranic Ayah Box */}
-              <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#1a0b2e]/90 via-[#2e1065]/85 to-[#3b0764]/90 backdrop-blur-xl border-2 border-[#a855f7]/70 shadow-[0_12px_28px_rgba(168,85,247,0.4)] text-white z-20 overflow-hidden">
+              {/* Bottom Quranic Ayah Box with Semi-Transparent Glass Effect */}
+              <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 p-3.5 sm:p-5 rounded-2xl bg-gradient-to-br from-[#120720]/60 via-[#1e0a3d]/50 to-[#290545]/60 backdrop-blur-md border border-white/25 sm:border-2 sm:border-[#a855f7]/50 shadow-[0_12px_28px_rgba(0,0,0,0.35)] text-white z-20 overflow-hidden">
                 {/* Subtle Purple & Amber ambient glow inside frosted glass */}
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-500/25 rounded-full blur-xl pointer-events-none" />
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-amber-400/15 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute -top-6 -right-6 w-20 h-20 bg-purple-500/15 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-amber-400/10 rounded-full blur-xl pointer-events-none" />
 
-                {/* Arabic Portion (Times New Roman / Serif font) */}
+                {/* Arabic Portion (Times New Roman / Classic serif Arabic font, well-balanced size, pure bright white) */}
                 <p 
-                  className="font-serif text-white text-xs sm:text-sm md:text-base leading-relaxed tracking-wide mb-1.5 text-center drop-shadow-sm font-['Times_New_Roman',Times,serif]" 
+                  className="text-white text-[15px] sm:text-base md:text-lg lg:text-[1.15rem] font-bold leading-[2.05] sm:leading-[2.15] tracking-normal mb-2 text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] selection:bg-purple-900 selection:text-white font-['Times_New_Roman',Times,'Amiri','Noto_Naskh_Arabic','Traditional_Arabic',serif]" 
+                  style={{ color: '#FFFFFF' }}
                   dir="rtl"
+                  lang="ar"
                 >
                   {t.aboutVisual.quranArabic}
                 </p>

@@ -424,13 +424,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
                 {/* Quranic Verse Box (Soft Emerald Accent) */}
                 <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-2.5 sm:space-y-3">
-                  <p className="font-solaiman font-medium text-emerald-950 text-sm sm:text-base leading-relaxed tracking-normal" dir="rtl">
-                    اَلَّذِيْنَ يُنْفِقُوْنَ اَمْوَالَهُمْ بِالَّيْلِ وَالنَّهَارِ سِرًّا وَّعَلَانِيَةً فَلَهُمْ اَجْرُهُمْ عِنْدَ رَبِّهِمْ ۚ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُوْنَ.
+                  <p className="font-arabic font-medium text-emerald-950 text-base sm:text-lg leading-[2.1] tracking-normal" dir="rtl">
+                    الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ .
                   </p>
                   <blockquote className="text-emerald-950 font-normal text-sm sm:text-base leading-relaxed font-solaiman">
-                    “যারা তাদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের প্রতিদান তাদের রবের নিকট রয়েছে। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”
+                    “যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”
                     <span className="not-italic block mt-1.5 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
-                      — (সূরা আল-বাকারা: ২৭৪)
+                      — সূরা আল-বাক্বারাহ্ : ২৭৪
                     </span>
                   </blockquote>
                 </div>
@@ -519,7 +519,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
         </div>
 
-        {/* যাঁদের জন্য আমরা কাজ করি (১০ মিনিট স্কুল হুবহু অ্যাপ-বাটন স্টাইল সেকশন) */}
+        {/* আমাদের সেবামূলক কার্যক্রম (১০ মিনিট স্কুল হুবহু অ্যাপ-বাটন স্টাইল সেকশন) */}
         <div className="mb-14">
           <ProjectsSection isEmbedded={true} onOpenDonation={onOpenDonation} />
         </div>

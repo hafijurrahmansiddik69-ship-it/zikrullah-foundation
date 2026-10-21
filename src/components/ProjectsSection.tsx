@@ -80,13 +80,22 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <div className="bg-[#111827] rounded-3xl p-8 max-w-sm w-full relative border border-white/10 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <button 
               onClick={() => setSelectedIndex(null)} 
-              className="absolute top-4 right-4 text-gray-400 hover:text-white cursor-pointer"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white cursor-pointer z-10 p-1 rounded-full bg-black/40"
               aria-label="Close"
             >
-              <X />
+              <X className="w-5 h-5" />
             </button>
-            <h3 className="text-2xl font-bold text-green-500 mb-4">{selectedCard.title}</h3>
-            <p className="text-gray-200 mb-8 leading-relaxed text-sm">{selectedCard.description}</p>
+            {selectedIndex === 0 && (
+              <div className="rounded-2xl overflow-hidden mb-4 -mt-2 aspect-video bg-black/40 border border-white/10 shadow-md">
+                <img 
+                  src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg" 
+                  alt="খাদ্য সহায়তা" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+            <h3 className="text-2xl font-bold text-green-500 mb-3">{selectedCard.title}</h3>
+            <p className="text-gray-200 mb-6 leading-relaxed text-sm">{selectedCard.description}</p>
             <div className="flex gap-4">
               <button 
                 onClick={() => setSelectedIndex(null)} 
