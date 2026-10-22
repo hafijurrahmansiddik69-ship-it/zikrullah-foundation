@@ -136,7 +136,7 @@ export const PrayerTimesBogura: React.FC = () => {
               </div>
 
               {/* Arabic Hadith Calligraphy */}
-              <div dir="rtl" className="text-center font-serif text-emerald-200 text-xl sm:text-2xl mb-4 leading-loose tracking-wide">
+              <div dir="rtl" className="text-center font-times font-bold text-emerald-200 text-xl sm:text-2xl mb-4 leading-loose tracking-wide">
                 {DAILY_HADITH.arabic}
               </div>
 

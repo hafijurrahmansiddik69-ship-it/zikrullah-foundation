@@ -42,9 +42,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 <div className="absolute -top-6 -right-6 w-20 h-20 bg-purple-500/15 rounded-full blur-xl pointer-events-none" />
                 <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-amber-400/10 rounded-full blur-xl pointer-events-none" />
 
-                {/* Arabic Portion (Times New Roman / Classic serif Arabic font, well-balanced size, pure bright white) */}
+                {/* Arabic Portion (Chairman speech Hadith font: font-times font-bold, slightly smaller & well balanced) */}
                 <p 
-                  className="text-white text-[15px] sm:text-base md:text-lg lg:text-[1.15rem] font-bold leading-[2.05] sm:leading-[2.15] tracking-normal mb-2 text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] selection:bg-purple-900 selection:text-white font-['Times_New_Roman',Times,'Amiri','Noto_Naskh_Arabic','Traditional_Arabic',serif]" 
+                  className="font-times font-bold text-white text-[15px] sm:text-[17px] md:text-[19px] leading-[2.05] sm:leading-[2.15] tracking-normal mb-2 text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] selection:bg-purple-900 selection:text-white" 
                   style={{ color: '#FFFFFF' }}
                   dir="rtl"
                   lang="ar"

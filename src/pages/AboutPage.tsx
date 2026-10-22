@@ -424,8 +424,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
                 {/* Quranic Verse Box (Soft Emerald Accent) */}
                 <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-2.5 sm:space-y-3">
-                  <p className="font-arabic font-medium text-emerald-950 text-base sm:text-lg leading-[2.1] tracking-normal" dir="rtl">
-                    الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ .
+                  <p className="font-times font-bold text-emerald-950 text-sm sm:text-[15px] lg:text-base leading-[2.05] tracking-normal" dir="rtl">
+                    الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
                   </p>
                   <blockquote className="text-emerald-950 font-normal text-sm sm:text-base leading-relaxed font-solaiman">
                     “যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”

@@ -309,8 +309,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                 <div className="flex items-start gap-3 sm:gap-3.5">
                   <HeartHandshake className="w-5 h-5 text-amber-300 shrink-0 mt-1" />
                   <div className="space-y-2 flex-1">
-                    <p dir="rtl" className="font-arabic font-bold text-white text-sm sm:text-base lg:text-lg leading-[2.1] tracking-wide text-right">
-                      الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ .
+                    <p dir="rtl" className="font-times font-bold text-white text-sm sm:text-[15px] lg:text-base leading-[2.05] tracking-normal text-right">
+                      الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
                     </p>
                     <p className="font-solaiman text-emerald-50 text-xs sm:text-[13.5px] leading-relaxed">
                       “যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”
