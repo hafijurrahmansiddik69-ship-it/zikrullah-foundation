@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, Heart, Check, Copy, Printer, CheckCircle, ArrowRight, ShieldCheck, Building2, Phone, Mail, ExternalLink, Send, Loader2 } from 'lucide-react';
+import { X, Heart, Check, Copy, Printer, ArrowRight, Building2, Mail, ExternalLink, Send, Loader2 } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
+import { DONATION_CATEGORIES, resolveDonationCategoryId } from '../data/donationCategories';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   triggerDirectEmailForDonation, 
   sendDonationEmail, 
@@ -20,13 +22,14 @@ interface DonationModalProps {
 export const DonationModal: React.FC<DonationModalProps> = ({
   isOpen,
   onClose,
-  initialCategory = 'সাধারণ সদকা ও দান',
+  initialCategory = 'general-sadaqah',
   initialAmount = 1000
 }) => {
+  const { lang, isEn, t } = useLanguage();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [amount, setAmount] = useState<number>(initialAmount);
   const [customAmountStr, setCustomAmountStr] = useState<string>(initialAmount ? initialAmount.toString() : '');
-  const [category, setCategory] = useState<string>(initialCategory);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>(() => resolveDonationCategoryId(initialCategory));
   const [paymentMethod, setPaymentMethod] = useState<'bkash' | 'nagad' | 'rocket' | 'bank'>('bkash');
   
   // Donor Details
@@ -42,8 +45,13 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   const [receiptNumber, setReceiptNumber] = useState('');
   const [donationDate, setDonationDate] = useState('');
 
+  const activeCategory = DONATION_CATEGORIES.find((c) => c.id === selectedCategoryId) || DONATION_CATEGORIES[0];
+  const currentCategoryName = isEn ? activeCategory.en : activeCategory.bn;
+
   useEffect(() => {
-    if (initialCategory) setCategory(initialCategory);
+    if (initialCategory) {
+      setSelectedCategoryId(resolveDonationCategoryId(initialCategory));
+    }
     if (initialAmount) {
       setAmount(initialAmount);
       setCustomAmountStr(initialAmount.toString());
@@ -80,7 +88,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
     // Generate unique receipt
     const randomId = 'ZK-' + Math.floor(100000 + Math.random() * 900000);
-    const dateStr = new Date().toLocaleDateString('bn-BD', {
+    const dateStr = new Date().toLocaleDateString(isEn ? 'en-US' : 'bn-BD', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -88,12 +96,16 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     setReceiptNumber(randomId);
     setDonationDate(dateStr);
 
+    const submissionCategory = isEn 
+      ? `${activeCategory.en} (${activeCategory.bn})` 
+      : `${activeCategory.bn} (${activeCategory.en})`;
+
     const donationData: DonationSubmissionData = {
       receiptId: randomId,
-      donorName: donorName.trim() || 'সম্মানিত শুভাকাঙ্ক্ষী',
-      phone: donorPhone.trim() || 'অনুল্লেখিত',
+      donorName: donorName.trim() || (isEn ? 'Respected Well-wisher' : 'সম্মানিত শুভাকাঙ্ক্ষী'),
+      phone: donorPhone.trim() || (isEn ? 'Not specified' : 'অনুল্লেখিত'),
       amount: amount,
-      category: category,
+      category: submissionCategory,
       paymentMethod: paymentMethod,
       transactionId: trxId.trim() || 'N/A',
       donorMessage: donorMessage.trim() || '',
@@ -106,13 +118,13 @@ export const DonationModal: React.FC<DonationModalProps> = ({
       donorName: donationData.donorName,
       phone: donationData.phone,
       amount: amount,
-      category: category,
+      category: submissionCategory,
       paymentMethod: paymentMethod,
       transactionId: donationData.transactionId,
       donorMessage: donationData.donorMessage,
       date: dateStr,
       status: 'অপেক্ষমাণ',
-      adminNote: 'অনলাইন ডোনেশন মডাল থেকে জমাকৃত'
+      adminNote: isEn ? 'Submitted via Online Donation Modal' : 'অনলাইন ডোনেশন মডাল থেকে জমাকৃত'
     });
 
     // Compute direct URLs
@@ -124,7 +136,11 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     triggerDirectEmailForDonation(donationData);
 
     // Background delivery to foundation email
-    await sendDonationEmail(donationData);
+    try {
+      await sendDonationEmail(donationData);
+    } catch (err) {
+      console.warn('Background donation email notification:', err);
+    }
 
     setIsSubmitting(false);
     setStep(3);
@@ -149,17 +165,17 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             </div>
             <div className="min-w-0">
               <h3 className="font-serif-bn font-bold text-lg sm:text-xl leading-tight truncate">
-                মানবতার খেদমতে শরীক হোন
+                {t.donationModal.title}
               </h3>
               <p className="text-[11px] sm:text-xs text-emerald-200 font-solaiman tracking-wide font-light truncate">
-                {FOUNDATION_INFO.name} · {FOUNDATION_INFO.slogan}
+                {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name} · {t.donationModal.subtitle}
               </p>
             </div>
           </div>
           <button
             onClick={resetAndClose}
             className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
-            aria-label="বন্ধ করুন"
+            aria-label={t.donationModal.close}
           >
             <X className="w-5 h-5" />
           </button>
@@ -173,26 +189,25 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             <div>
               <div className="mb-5">
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  দানের খাত নির্বাচন করুন
+                  {t.donationModal.categoryLabel}
                 </label>
                 <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-600 transition-colors"
+                  value={selectedCategoryId}
+                  onChange={(e) => setSelectedCategoryId(e.target.value)}
+                  className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-600 transition-colors cursor-pointer"
                 >
-                  <option value="সাধারণ সদকা ও দান">সাধারণ সদকা ও দান (General Sadaqah)</option>
-                  <option value="যাকাত তহবিল">যাকাত তহবিল (Zakat Fund - Shariah Compliant)</option>
-                  <option value="খাদ্য সহায়তা প্রকল্প">হতদরিদ্র পরিবারের খাদ্য সহায়তা (Food Relief)</option>
-                  <option value="এতিম ও দরিদ্র শিক্ষা সহায়তা">এতিম ও শিক্ষার্থীদের শিক্ষা উপকরণ (Education)</option>
-                  <option value="সুপেয় পানির নলকূপ স্থাপন">সুপেয় পানির গভীর নলকূপ স্থাপন (Clean Water)</option>
-                  <option value="ফ্রি চিকিৎসা ও ঔষধ ফান্ড">ফ্রি মেডিকেল ক্যাম্প ও ঔষধ ফান্ড (Healthcare)</option>
+                  {DONATION_CATEGORIES.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {isEn ? cat.en : cat.bn}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               {/* Amount Selection */}
               <div className="mb-6">
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  দানের পরিমাণ (টাকা)
+                  {t.donationModal.amountLabel}
                 </label>
                 <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-3">
                   {presetAmounts.map((p) => (
@@ -206,7 +221,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                           : 'bg-[#fafcfb] text-slate-700 border-slate-200 hover:border-emerald-400'
                       }`}
                     >
-                      ৳ {p.toLocaleString('bn-BD')}
+                      ৳ {isEn ? p.toLocaleString('en-US') : p.toLocaleString('bn-BD')}
                     </button>
                   ))}
                 </div>
@@ -216,7 +231,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   <input
                     type="number"
                     min="10"
-                    placeholder="অন্য পরিমাণ লিখুন..."
+                    placeholder={t.donationModal.otherAmount}
                     value={customAmountStr}
                     onChange={handleCustomAmountChange}
                     className="w-full pl-9 pr-4 py-3 bg-[#fafcfb] border border-slate-200 rounded-xl text-slate-900 font-bold text-base focus:outline-none focus:border-emerald-600 transition-colors"
@@ -227,13 +242,15 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               {/* Summary box */}
               <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-6">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">খাত: <strong className="text-slate-800">{category}</strong></span>
+                  <span className="text-slate-600">
+                    {t.donationModal.summaryCategory} <strong className="text-slate-800">{currentCategoryName}</strong>
+                  </span>
                   <span className="font-bold text-emerald-800 text-lg font-mono tabular-nums">
-                    ৳ {amount ? amount.toLocaleString('bn-BD') : '০'}
+                    ৳ {amount ? (isEn ? amount.toLocaleString('en-US') : amount.toLocaleString('bn-BD')) : (isEn ? '0' : '০')}
                   </span>
                 </div>
                 <p className="text-[11px] text-emerald-800/80 mt-1">
-                  * আপনার প্রদানকৃত প্রতিটি অর্থ শতভাগ আমানতদারির সাথে বগুড়ার স্থানীয় দুস্থ ও অসচ্ছল পরিবারে ব্যয় করা হয়।
+                  {t.donationModal.summaryNote}
                 </p>
               </div>
 
@@ -243,7 +260,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 onClick={() => setStep(2)}
                 className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
-                <span>পরবর্তী ধাপ: পেমেন্ট তথ্য</span>
+                <span>{t.donationModal.nextBtn}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -254,7 +271,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             <form onSubmit={handleSubmitStep2}>
               <div className="mb-4">
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  পেমেন্ট মাধ্যম বেছে নিন
+                  {t.donationModal.paymentMethodLabel}
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
                   <button
@@ -267,7 +284,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     }`}
                   >
                     <span className="text-sm font-bold">bKash</span>
-                    <span className="text-[10px]">বিকাশ</span>
+                    <span className="text-[10px]">{t.donationModal.bkash}</span>
                   </button>
 
                   <button
@@ -280,7 +297,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     }`}
                   >
                     <span className="text-sm font-bold">Nagad</span>
-                    <span className="text-[10px]">নগদ</span>
+                    <span className="text-[10px]">{t.donationModal.nagad}</span>
                   </button>
 
                   <button
@@ -293,7 +310,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     }`}
                   >
                     <span className="text-sm font-bold">Rocket</span>
-                    <span className="text-[10px]">রকেট</span>
+                    <span className="text-[10px]">{t.donationModal.rocket}</span>
                   </button>
 
                   <button
@@ -306,7 +323,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     }`}
                   >
                     <Building2 className="w-4 h-4" />
-                    <span className="text-[10px]">ব্যাংক</span>
+                    <span className="text-[10px]">{t.donationModal.bank}</span>
                   </button>
                 </div>
               </div>
@@ -316,21 +333,25 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 {paymentMethod === 'bkash' && (
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-xs font-semibold text-slate-600">বিকাশ পার্সোনাল নম্বর:</span>
+                      <span className="text-xs font-semibold text-slate-600">
+                        {isEn ? 'bKash Personal Number:' : 'বিকাশ পার্সোনাল নম্বর:'}
+                      </span>
                       <button
                         type="button"
                         onClick={() => handleCopy('01620500920', 'bkash')}
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'bkash' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedText === 'bkash' ? 'কপি হয়েছে' : 'কপি করুন'}</span>
+                        <span>{copiedText === 'bkash' ? t.donationModal.copied : t.donationModal.copyNumber}</span>
                       </button>
                     </div>
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
                       016 20 500 920
                     </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
-                      * আপনার বিকাশ অ্যাপ থেকে <strong>Send Money</strong> করুন। রেফারেন্সে আপনার নাম বা <strong>ZF</strong> লিখুন।
+                      {isEn 
+                        ? '* Use "Send Money" from your bKash app. Enter your name or ZF in reference.' 
+                        : '* আপনার বিকাশ অ্যাপ থেকে Send Money করুন। রেফারেন্সে আপনার নাম বা ZF লিখুন।'}
                     </p>
                   </div>
                 )}
@@ -338,21 +359,25 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 {paymentMethod === 'nagad' && (
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-xs font-semibold text-slate-600">নগদ পার্সোনাল নম্বর:</span>
+                      <span className="text-xs font-semibold text-slate-600">
+                        {isEn ? 'Nagad Personal Number:' : 'নগদ পার্সোনাল নম্বর:'}
+                      </span>
                       <button
                         type="button"
                         onClick={() => handleCopy('01620500920', 'nagad')}
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'nagad' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedText === 'nagad' ? 'কপি হয়েছে' : 'কপি করুন'}</span>
+                        <span>{copiedText === 'nagad' ? t.donationModal.copied : t.donationModal.copyNumber}</span>
                       </button>
                     </div>
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
                       016 20 500 920
                     </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
-                      * নগদ অ্যাপ বা ইউএসএসডি কোড থেকে <strong>Send Money</strong> করুন।
+                      {isEn 
+                        ? '* Use "Send Money" from your Nagad app or USSD code.' 
+                        : '* নগদ অ্যাপ বা ইউএসএসডি কোড থেকে Send Money করুন।'}
                     </p>
                   </div>
                 )}
@@ -360,30 +385,34 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 {paymentMethod === 'rocket' && (
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-xs font-semibold text-slate-600">রকেট নম্বর:</span>
+                      <span className="text-xs font-semibold text-slate-600">
+                        {isEn ? 'Rocket Number:' : 'রকেট নম্বর:'}
+                      </span>
                       <button
                         type="button"
                         onClick={() => handleCopy('016205009202', 'rocket')}
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'rocket' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedText === 'rocket' ? 'কপি হয়েছে' : 'কপি করুন'}</span>
+                        <span>{copiedText === 'rocket' ? t.donationModal.copied : t.donationModal.copyNumber}</span>
                       </button>
                     </div>
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
                       016 20 500 920-2
                     </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
-                      * রকেট থেকে <strong>Send Money</strong> করুন।
+                      {isEn 
+                        ? '* Use "Send Money" from Rocket.' 
+                        : '* রকেট থেকে Send Money করুন।'}
                     </p>
                   </div>
                 )}
 
                 {paymentMethod === 'bank' && (
                   <div className="space-y-1.5 text-xs text-slate-700">
-                    <p><strong>ব্যাংক:</strong> {FOUNDATION_INFO.bankDetails.bankName}</p>
-                    <p><strong>শাখা:</strong> {FOUNDATION_INFO.bankDetails.branch}</p>
-                    <p><strong>হিসাবের নাম:</strong> {FOUNDATION_INFO.bankDetails.accountName}</p>
+                    <p><strong>{isEn ? 'Bank:' : 'ব্যাংক:'}</strong> {FOUNDATION_INFO.bankDetails.bankName}</p>
+                    <p><strong>{isEn ? 'Branch:' : 'শাখা:'}</strong> {FOUNDATION_INFO.bankDetails.branch}</p>
+                    <p><strong>{isEn ? 'Account Name:' : 'হিসাবের নাম:'}</strong> {FOUNDATION_INFO.bankDetails.accountName}</p>
                     <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200 mt-1">
                       <span className="font-mono font-bold text-slate-900">{FOUNDATION_INFO.bankDetails.accountNumber}</span>
                       <button
@@ -392,7 +421,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                         className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         {copiedText === 'bank' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedText === 'bank' ? 'কপি হয়েছে' : 'কপি'}</span>
+                        <span>{copiedText === 'bank' ? t.donationModal.copied : t.donationModal.copyNumber}</span>
                       </button>
                     </div>
                   </div>
@@ -403,12 +432,12 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               <div className="space-y-3 mb-6">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    আপনার পূর্ণ নাম <span className="text-red-500">*</span>
+                    {t.donationModal.nameLabel} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="উদাঃ মোঃ হাফিজুর রহমান"
+                    placeholder={t.donationModal.namePlaceholder}
                     value={donorName}
                     onChange={(e) => setDonorName(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -418,7 +447,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      মোবাইল নম্বর <span className="text-red-500">*</span>
+                      {t.donationModal.phoneLabel} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="tel"
@@ -432,12 +461,12 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      ট্রানজেকশন আইডি (TrxID) <span className="text-red-500">*</span>
+                      {t.donationModal.trxLabel} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="উদাঃ 9H7B3XK91"
+                      placeholder={t.donationModal.trxPlaceholder}
                       value={trxId}
                       onChange={(e) => setTrxId(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-mono focus:outline-none focus:border-emerald-600"
@@ -447,11 +476,11 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    বিশেষ কোনো দোয়া বা বার্তা (ঐচ্ছিক)
+                    {t.donationModal.msgLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder="মৃত পিতামাতার মাগফিরাত কামনা / নেক হায়াত..."
+                    placeholder={t.donationModal.msgPlaceholder}
                     value={donorMessage}
                     onChange={(e) => setDonorMessage(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-600"
@@ -466,7 +495,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   onClick={() => setStep(1)}
                   className="px-4 py-3 rounded-xl border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 cursor-pointer"
                 >
-                  পূর্ববর্তী
+                  {t.donationModal.prevBtn}
                 </button>
 
                 <button
@@ -477,12 +506,12 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>প্রেরণ করা হচ্ছে...</span>
+                      <span>{t.donationModal.submittingBtn}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>টাকা পাঠানোর তথ্য নিশ্চিত করুন ও ইমেইল পাঠান</span>
+                      <span>{t.donationModal.submitBtn}</span>
                     </>
                   )}
                 </button>
@@ -498,7 +527,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               </div>
 
               <h4 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-2">
-                ধন্যবাদ ও কৃতজ্ঞতা!
+                {t.donationModal.successTitle}
               </h4>
 
               {/* Arabic Blessing */}
@@ -514,7 +543,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               </div>
 
               <p className="text-xs text-slate-600 mb-4 max-w-sm mx-auto">
-                আপনার অনুদান ও সদকা সফলভাবে গ্রহণ করা হয়েছে। মহান আল্লাহ আপনার দানকে কবুল করুন।
+                {t.donationModal.successSub}
               </p>
 
               {/* Email Send Confirmation & Direct Buttons */}
@@ -522,11 +551,11 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 <div className="flex items-center gap-2 mb-1.5">
                   <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
                   <h5 className="font-bold text-xs sm:text-sm text-emerald-950 font-serif-bn">
-                    অফিসিয়াল ইমেইলে তথ্য প্রেরণ (Email Confirmation)
+                    {t.donationModal.emailSectionTitle}
                   </h5>
                 </div>
                 <p className="text-[11px] sm:text-xs text-emerald-800 leading-relaxed mb-3">
-                  আপনার মোবাইল অ্যাপ বা জিমেইলে অনুদানের TrxID ও বিবরণ তৈরি করা হয়েছে। এক ক্লিকে পাঠাতে নিচের যেকোনো অপশন ব্যবহার করুন:
+                  {t.donationModal.emailSectionDesc}
                 </p>
                 <div className="flex flex-wrap items-center gap-2.5">
                   {emailLinks?.gmailUrl && (
@@ -537,7 +566,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition-colors"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>🔴 সরাসরি Gmail দিয়ে পাঠান</span>
+                      <span>{t.donationModal.emailGmailBtn}</span>
                     </a>
                   )}
                   {emailLinks?.mailtoUrl && (
@@ -546,7 +575,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#045332] hover:bg-[#087443] text-white font-bold text-xs shadow-xs transition-colors"
                     >
                       <Mail className="w-3.5 h-3.5" />
-                      <span>📱 মোবাইলের ইমেইল অ্যাপ দিয়ে পাঠান</span>
+                      <span>{t.donationModal.emailAppBtn}</span>
                     </a>
                   )}
                 </div>
@@ -557,39 +586,39 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 <div className="flex items-center justify-between border-b border-emerald-100 pb-3 mb-3">
                   <div>
                     <strong className="block text-sm font-bold text-emerald-900 font-serif-bn">
-                      {FOUNDATION_INFO.name}
+                      {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
                     </strong>
                     <span className="text-[10px] text-slate-500">{FOUNDATION_INFO.address}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-slate-500 uppercase block">রসিদ নম্বর</span>
+                    <span className="text-[10px] text-slate-500 uppercase block">{t.donationModal.receiptNo}</span>
                     <span className="text-xs font-mono font-bold text-emerald-800">{receiptNumber}</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 mb-3">
                   <div>
-                    <span className="text-slate-400 block text-[10px]">দাতা'র নাম:</span>
-                    <strong>{donorName || 'সম্মানিত শুভাকাঙ্ক্ষী'}</strong>
+                    <span className="text-slate-400 block text-[10px]">{t.donationModal.donorName}</span>
+                    <strong>{donorName || (isEn ? 'Respected Well-wisher' : 'সম্মানিত শুভাকাঙ্ক্ষী')}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">তারিখ:</span>
+                    <span className="text-slate-400 block text-[10px]">{t.donationModal.date}</span>
                     <strong>{donationDate}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">দানের খাত:</span>
-                    <strong>{category}</strong>
+                    <span className="text-slate-400 block text-[10px]">{t.donationModal.category}</span>
+                    <strong>{currentCategoryName}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">পেমেন্ট মাধ্যম / TrxID:</span>
+                    <span className="text-slate-400 block text-[10px]">{t.donationModal.methodTrx}</span>
                     <strong className="font-mono">{paymentMethod.toUpperCase()} · {trxId}</strong>
                   </div>
                 </div>
 
                 <div className="bg-emerald-50 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-700">মোট দানের পরিমাণ:</span>
+                  <span className="text-xs font-bold text-slate-700">{t.donationModal.totalDonation}</span>
                   <span className="text-base font-bold text-emerald-800 font-mono tabular-nums">
-                    ৳ {amount.toLocaleString('bn-BD')}
+                    ৳ {isEn ? amount.toLocaleString('en-US') : amount.toLocaleString('bn-BD')}
                   </span>
                 </div>
               </div>
@@ -602,7 +631,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold text-xs cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
-                  <span>রসিদ প্রিন্ট করুন</span>
+                  <span>{t.donationModal.printReceipt}</span>
                 </button>
 
                 <button
@@ -610,7 +639,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   onClick={resetAndClose}
                   className="px-6 py-2.5 rounded-xl bg-[#087443] hover:bg-[#045332] text-white font-bold text-xs shadow-xs cursor-pointer"
                 >
-                  সমাপ্ত করুন
+                  {t.donationModal.finishBtn}
                 </button>
               </div>
 

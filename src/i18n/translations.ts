@@ -69,36 +69,86 @@ export const translations = {
         {
           badge: 'খাদ্য ও আশ্রয়',
           title: 'মানবিক সহায়তা',
-          description: 'সমাজের সবচেয়ে পিছিয়ে পড়া প্রান্তিক মানুষ, অসহায় বিধবা ও এতিম শিশুদের জন্য খাদ্য, পুষ্টি এবং নিরাপদ আশ্রয়ের সুব্যবস্থা করা।'
+          subtitle: 'জরুরি খাদ্য ও পুষ্টি সহায়তা প্রকল্প',
+          description: 'সমাজের সবচেয়ে পিছিয়ে পড়া প্রান্তিক মানুষ, অসহায় বিধবা ও এতিম শিশুদের জন্য খাদ্য, পুষ্টি এবং নিরাপদ আশ্রয়ের সুব্যবস্থা করা। বগুড়ার মোকামতলা ও আশেপাশের এলাকায় নিয়মিত ফুড প্যাক বিতরণ করা হয়।',
+          highlights: [
+            'অসহায় পরিবার ও বিধবাদের মাঝে মাসব্যাপী পুষ্টিকর খাদ্যপণ্য সরবরাহ',
+            'রমজান ও প্রাকৃতিক দুর্যোগে দ্রুত রান্না করা খাবার ও শুকনো রসদ বিতরণ',
+            'মাঠপর্যায়ে ১০০% যাচাইয়ের মাধ্যমে প্রকৃত হকদারদের সরাসরি সহায়তা'
+          ]
         },
         {
           badge: 'ফ্রি চিকিৎসা',
           title: 'স্বাস্থ্যসেবা',
-          description: 'চরম দারিদ্র্যের কারণে উন্নত চিকিৎসা ও দামী ওষুধ ক্রয়ে অক্ষম অসহায় রোগী ও প্রতিবন্ধীদের জন্য দেশের শীর্ষস্থানীয় ভালো মানের চিকিৎসকদের পরামর্শ, প্রয়োজনীয় ওষুধ এবং মানসম্মত চিকিৎসা সেবা নিশ্চিত করা।'
+          subtitle: 'মেডিকেল ক্যাম্প ও প্রয়োজনীয় ওষুধ ফান্ড',
+          description: 'চরম দারিদ্র্যের কারণে উন্নত চিকিৎসা ও দামী ওষুধ ক্রয়ে অক্ষম অসহায় রোগী ও প্রতিবন্ধীদের জন্য দেশের শীর্ষস্থানীয় চিকিৎসকদের পরামর্শ, প্রয়োজনীয় ওষুধ এবং মানসম্মত চিকিৎসা সেবা নিশ্চিত করা।',
+          highlights: [
+            'অভিজ্ঞ চিকিৎসকদের উপস্থিতিতে বিনামূল্যে স্বাস্থ্য পরীক্ষা ও ক্যাম্পেইন',
+            'অসচ্ছল রোগীদের প্রেসক্রিপশন অনুযায়ী প্রয়োজনীয় ওষুধ সম্পূর্ণ ফ্রি প্রদান',
+            'জরুরি চোখের ছানি অপারেশন ও প্রাথমিক ডায়াগনস্টিক পরীক্ষার সহায়তা'
+          ]
         },
         {
           badge: 'লাল ভালোবাসা',
           title: 'রক্তদান',
-          description: 'মুমূর্ষু রোগীদের জরুরি মুহূর্তে জীবন বাঁচানোর তাগিদে বিনামূল্যে রক্তের ব্যবস্থা করা এবং রক্তদানে যুবসমাজকে সচেতন ও উদ্বুদ্ধ করা।'
+          subtitle: 'জরুরি মুহূর্তে বিনামূল্যে রক্তের সংস্থান',
+          description: 'মুমূর্ষু রোগীদের জরুরি মুহূর্তে জীবন বাঁচানোর তাগিদে বিনামূল্যে রক্তের ব্যবস্থা করা এবং রক্তদানে যুবসমাজকে সচেতন ও উদ্বুদ্ধ করা।',
+          highlights: [
+            '২৪ ঘণ্টা জরুরি রক্তের প্রয়োজনে সক্রিয় স্বেচ্ছাসেবক ডোনার নেটওয়ার্ক',
+            'থ্যালাসেমিয়া, প্রসূতি মা ও জরুরি অপারেশন রোগীদের তাৎক্ষণিক রক্ত দান',
+            'তরুণদের মাঝে স্বেচ্ছায় রক্তদানে সচেতনতা সৃষ্টি ও রক্তের গ্রুপ নির্ণয়'
+          ]
         },
         {
           badge: 'দ্বীনি ও সাধারণ',
           title: 'শিক্ষা সহায়তা',
-          description: 'অসচ্ছল মেধাবী শিক্ষার্থী, এতিম ও হাফেজদের পড়াশোনা, কিতাবপত্র, আবাসন এবং সুন্দর ভবিষ্যৎ গঠনের সুব্যবস্থা করা।'
+          subtitle: 'এতিম ও অসচ্ছল শিক্ষার্থীদের শিক্ষা উপকরণ',
+          description: 'অসচ্ছল মেধাবী শিক্ষার্থী, এতিম ও হাফেজদের পড়াশোনা, কিতাবপত্র, আবাসন এবং সুন্দর ভবিষ্যৎ গঠনের সুব্যবস্থা করা।',
+          highlights: [
+            'নতুন শিক্ষাবর্ষে বিনামূল্যে স্কুলব্যাগ, পাঠ্যবই, খাতা ও জ্যামিতি বক্স উপহার',
+            'মেধাবী এতিম ও অস্বচ্ছল শিক্ষার্থীদের জন্য নিয়মিত মাসিক শিক্ষা উপবৃত্তি',
+            'সহীহ কুরআন তিলাওয়াত ও নৈতিক মূল্যবোধ শিক্ষার বিশেষ পাঠশালা'
+          ]
         },
         {
           badge: 'স্বাবলম্বিতা',
           title: 'আত্মকর্মসংস্থান',
-          description: 'কর্মক্ষম বেকার যুবক ও দুস্থ অসহায় মানুষদের স্বাবলম্বী করে তুলতে ক্ষুদ্র উদ্যোগ, প্রশিক্ষণ ও কর্মসংস্থানের সুযোগ সৃষ্টির মাধ্যমে নিজের পায়ে দাঁড়ানোর ব্যবস্থা করা।'
+          subtitle: 'যুব প্রশিক্ষণ ও ক্ষুদ্র উদ্যোক্তা পুনর্বাসন',
+          description: 'কর্মক্ষম বেকার যুবক ও দুস্থ অসহায় মানুষদের স্বাবলম্বী করে তুলতে ক্ষুদ্র উদ্যোগ, প্রশিক্ষণ ও কর্মসংস্থানের সুযোগ সৃষ্টির মাধ্যমে নিজের পায়ে দাঁড়ানোর ব্যবস্থা করা।',
+          highlights: [
+            'দরিদ্র নারীদের স্বাবলম্বী করতে সেলাই মেশিন ও কারিগরি প্রশিক্ষণ প্রদান',
+            'কর্মক্ষম যুবকদের ভ্যান-রিকশা বা ক্ষুদ্র ব্যবসা পরিচালনার পুঁজিপত্র সহায়তা',
+            'দীর্ঘমেয়াদে একটি অসহায় পরিবারকে স্বনির্ভর করতে নিবিড় তত্ত্বাবধান'
+          ]
         },
         {
           badge: 'পানি ও বৃক্ষ',
           title: 'সদকা-ই-জারিয়া',
-          description: 'কেয়ামত পর্যন্ত সওয়াব জারি থাকার নিয়তে তীব্র সংকটপূর্ণ এলাকায় সুপেয় পানির জন্য গভীর নলকূপ স্থাপন এবং পরিবেশ রক্ষায় বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন।'
+          subtitle: 'সুপেয় পানির গভীর নলকূপ ও বৃক্ষরোপণ',
+          description: 'কেয়ামত পর্যন্ত সওয়াব জারি থাকার নিয়তে তীব্র সংকটপূর্ণ এলাকায় সুপেয় পানির জন্য গভীর নলকূপ স্থাপন এবং পরিবেশ রক্ষায় বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন।',
+          highlights: [
+            'আর্সেনিকমুক্ত বিশুদ্ধ খাবার পানির জন্য দীর্ঘস্থায়ী গভীর নলকূপ স্থাপন',
+            'পরিবেশের ভারসাম্য রক্ষায় ফলদ, বনজ ও ঔষধি গাছের চারা রোপণ ও বিতরণ',
+            'চিরস্থায়ী কল্যাণে সদকায়ে জারিয়াহর অফুরন্ত সাওয়াব অর্জনের মোক্ষম সুযোগ'
+          ]
+        },
+        {
+          badge: 'শরী‘আহ ভিত্তিক বণ্টন',
+          title: 'যাকাত তহবিল',
+          subtitle: 'হকদারদের মাঝে শতভাগ বিতরণ',
+          description: 'পবিত্র কুরআন ও সুন্নাহর বিধান অনুযায়ী নির্ধারিত আটটি খাতে শতভাগ আমানতদারিতা ও স্বচ্ছতার সাথে যাকাত বণ্টন এবং প্রান্তিক পরিবারের দীর্ঘমেয়াদী পুনর্বাসন।',
+          highlights: [
+            'পবিত্র কুরআনের সূরা আত-তাওবাহ্ (৬০) অনুযায়ী ৮টি হকদার খাতে যাকাত বণ্টন',
+            'যাকাত তহবিলের জন্য স্বতন্ত্র ব্যাংক হিসাব ও পূর্ণাঙ্গ আর্থিক স্বচ্ছতা',
+            'যাকাত প্রদানের মাধ্যমে অসহায় পরিবারের টেকসই ও স্থায়ী পুনর্বাসন'
+          ]
         }
       ],
       modalClose: 'বন্ধ করুন',
       modalDonate: 'সহযোগিতা করুন',
+      modalKeyHighlights: 'কার্যক্রম ও সেবাসমূহ:',
+      modalTrustBadge: '১০০% আমানতদারিতা ও সরাসরি মাঠপর্যায়ে যাচাইকৃত',
+      modalImageTemplateTag: 'ব্যানার ছবি / টেমপ্লেট',
     },
     services: {
       badge: 'সেবামূলক প্রকল্প',
@@ -201,8 +251,15 @@ export const translations = {
       developerCredit: 'ডেভেলপমেন্ট ও পরিচালনায়: জিকরুল্লাহ ফাউন্ডেশন আইটি সেল',
     },
     donationModal: {
-      title: 'সহযোগিতা ও অনুদান',
-      subtitle: 'আপনার দান পৌঁছে যাবে প্রকৃত হকদারদের কাছে',
+      title: 'মানবতার খেদমতে শরীক হোন',
+      subtitle: 'কুরআন-সুন্নাহর আলোকে, উম্মাহর খেদমতে',
+      categoryLabel: 'দানের খাত নির্বাচন করুন',
+      amountLabel: 'দানের পরিমাণ (টাকা)',
+      otherAmount: 'অন্য পরিমাণ লিখুন...',
+      summaryCategory: 'খাত:',
+      summaryNote: '* আপনার প্রদানকৃত প্রতিটি অর্থ শতভাগ আমানতদারির সাথে বগুড়ার স্থানীয় দুস্থ ও অসচ্ছল পরিবারে ব্যয় করা হয়।',
+      nextBtn: 'পরবর্তী ধাপ: পেমেন্ট তথ্য',
+      paymentMethodLabel: 'পেমেন্ট মাধ্যম বেছে নিন',
       bkash: 'বিকাশ',
       nagad: 'নগদ',
       rocket: 'রকেট',
@@ -210,6 +267,31 @@ export const translations = {
       personal: 'পার্সোনাল',
       copyNumber: 'নম্বর কপি করুন',
       copied: 'কপি হয়েছে!',
+      nameLabel: 'আপনার পূর্ণ নাম',
+      namePlaceholder: 'উদাঃ মোঃ হাফিজুর রহমান',
+      phoneLabel: 'মোবাইল নম্বর',
+      trxLabel: 'ট্রানজেকশন আইডি (TrxID)',
+      trxPlaceholder: 'উদাঃ 9H7B3XK91',
+      msgLabel: 'বিশেষ কোনো দোয়া বা বার্তা (ঐচ্ছিক)',
+      msgPlaceholder: 'মৃত পিতামাতার মাগফিরাত কামনা / নেক হায়াত...',
+      prevBtn: 'পূর্ববর্তী',
+      submitBtn: 'টাকা পাঠানোর তথ্য নিশ্চিত করুন ও ইমেইল পাঠান',
+      submittingBtn: 'প্রেরণ করা হচ্ছে...',
+      successTitle: 'ধন্যবাদ ও কৃতজ্ঞতা!',
+      successSub: 'আপনার অনুদান ও সদকা সফলভাবে গ্রহণ করা হয়েছে। মহান আল্লাহ আপনার দানকে কবুল করুন।',
+      emailSectionTitle: 'অফিসিয়াল ইমেইলে তথ্য প্রেরণ (Email Confirmation)',
+      emailSectionDesc: 'আপনার মোবাইল অ্যাপ বা জিমেইলে অনুদানের TrxID ও বিবরণ তৈরি করা হয়েছে। এক ক্লিকে পাঠাতে নিচের যেকোনো অপশন ব্যবহার করুন:',
+      emailGmailBtn: '🔴 সরাসরি Gmail দিয়ে পাঠান',
+      emailAppBtn: '📱 মোবাইলের ইমেইল অ্যাপ দিয়ে পাঠান',
+      receiptTitle: 'ডিজিটাল মানি রসিদ',
+      receiptNo: 'রসিদ নম্বর',
+      donorName: "দাতা'র নাম:",
+      date: 'তারিখ:',
+      category: 'দানের খাত:',
+      methodTrx: 'পেমেন্ট মাধ্যম / TrxID:',
+      totalDonation: 'মোট দানের পরিমাণ:',
+      printReceipt: 'রসিদ প্রিন্ট করুন',
+      finishBtn: 'সমাপ্ত করুন',
       close: 'বন্ধ করুন',
     }
   },
@@ -282,36 +364,86 @@ export const translations = {
         {
           badge: 'Food & Shelter',
           title: 'Humanitarian Aid',
-          description: 'Providing food security, essential nutrition, and safe shelter for the most marginalized, helpless widows, and vulnerable orphans.'
+          subtitle: 'Emergency Food & Nutrition Relief',
+          description: 'Providing food security, essential nutrition, and safe shelter for the most marginalized, helpless widows, and vulnerable orphans across rural Bogura.',
+          highlights: [
+            'Monthly nutritional food packages for impoverished widows and families',
+            'Emergency cooked food and dry rations during floods and Ramadan',
+            '100% field verification ensuring direct delivery to rightful recipients'
+          ]
         },
         {
           badge: 'Free Healthcare',
           title: 'Medical Aid',
-          description: 'Ensuring top doctor consultations, essential medicines, and quality diagnostic care for disabled individuals and impoverished patients unable to afford treatment.'
+          subtitle: 'Medical Camps & Prescription Medicine Fund',
+          description: 'Ensuring top doctor consultations, essential medicines, and quality diagnostic care for disabled individuals and impoverished patients unable to afford treatment.',
+          highlights: [
+            'Free medical camps conducted by experienced healthcare specialists',
+            'Complete coverage of prescription medicines for needy patients',
+            'Eye cataract surgeries and diagnostic support for the elderly'
+          ]
         },
         {
           badge: 'Red Love',
           title: 'Blood Donation',
-          description: 'Arranging free emergency blood to save critically ill patients and inspiring proactive youth voluntary blood donor networks.'
+          subtitle: 'Emergency Blood Support in Critical Moments',
+          description: 'Arranging free emergency blood to save critically ill patients and inspiring proactive youth voluntary blood donor networks.',
+          highlights: [
+            '24/7 active volunteer blood donor registry for emergency requirements',
+            'Free blood supply for thalassemia, maternal care, and emergency surgeries',
+            'Youth awareness campaigns and free community blood grouping drives'
+          ]
         },
         {
           badge: 'Islamic & General',
           title: 'Education Aid',
-          description: 'Supplying study materials, accommodation, educational stipends, and mentorship for underprivileged students, orphans, and Quran memorizers.'
+          subtitle: 'Study Materials & Stipends for Orphans',
+          description: 'Supplying study materials, accommodation, educational stipends, and mentorship for underprivileged students, orphans, and Quran memorizers.',
+          highlights: [
+            'Free school bags, textbooks, notebooks, and geometry boxes at year start',
+            'Regular monthly educational stipends for destitute orphan students',
+            'Quranic recitation, moral ethics, and foundational life skills classes'
+          ]
         },
         {
           badge: 'Self-Reliance',
           title: 'Self-Employment',
-          description: 'Empowering unemployed youths and destitute families with micro-initiatives, vocational tools, and training to stand independently.'
+          subtitle: 'Vocational Training & Micro-Enterprise Grants',
+          description: 'Empowering unemployed youths and destitute families with micro-initiatives, vocational tools, and training to stand independently.',
+          highlights: [
+            'Sewing machines and tailoring training for widows and vulnerable women',
+            'Rickshaw-vans and micro-enterprise seed capital for unemployed youths',
+            'Continuous mentorship transforming dependent families into self-reliant homes'
+          ]
         },
         {
           badge: 'Water & Trees',
           title: 'Sadaqah Jariyah',
-          description: 'Installing deep tube wells for pure safe drinking water in acute crisis zones and conducting tree plantation drives for perpetual reward until the Last Day.'
+          subtitle: 'Deep Tube-wells & Tree Plantation Drives',
+          description: 'Installing deep tube wells for pure safe drinking water in acute crisis zones and conducting tree plantation drives for perpetual reward until the Last Day.',
+          highlights: [
+            'Arsenic-free deep tube-wells installed in drought and water-crisis areas',
+            'Planting fruit-bearing, forestry, and medicinal trees for ecological balance',
+            'Perpetual Sadaqah Jariyah rewards continuing even beyond this earthly life'
+          ]
+        },
+        {
+          badge: 'Shariah-Based Distribution',
+          title: 'Zakat Fund',
+          subtitle: '100% Direct Delivery to the Deserving',
+          description: '100% transparent and Shariah-compliant distribution of Zakat to the designated rightful beneficiaries for sustainable poverty alleviation.',
+          highlights: [
+            'Strict adherence to the 8 categories of recipients in Surah At-Tawbah (60)',
+            'Dedicated separate bank account with comprehensive audit transparency',
+            'Strategic rehabilitation turning Zakat recipients into self-reliant givers'
+          ]
         }
       ],
       modalClose: 'Close',
       modalDonate: 'Support This Cause',
+      modalKeyHighlights: 'Key Services & Highlights:',
+      modalTrustBadge: '100% Transparency & Direct Field Verification',
+      modalImageTemplateTag: 'Banner Image / Template',
     },
     services: {
       badge: 'Welfare Projects',
@@ -414,8 +546,15 @@ export const translations = {
       developerCredit: 'Developed & Maintained by Zikrullah Foundation IT Cell',
     },
     donationModal: {
-      title: 'Support & Donation',
-      subtitle: 'Your donation reaches the truly deserving individuals with 100% honesty',
+      title: 'Join the Cause of Humanity',
+      subtitle: 'In the Light of Quran & Sunnah, in Service of the Ummah',
+      categoryLabel: 'Select Donation Fund / Category',
+      amountLabel: 'Donation Amount (BDT)',
+      otherAmount: 'Enter other amount...',
+      summaryCategory: 'Fund / Category:',
+      summaryNote: '* Every penny of your donation is disbursed with 100% integrity, transparency, and grassroots field verification.',
+      nextBtn: 'Next: Payment Details',
+      paymentMethodLabel: 'Select Payment Method',
       bkash: 'bKash',
       nagad: 'Nagad',
       rocket: 'Rocket',
@@ -423,6 +562,31 @@ export const translations = {
       personal: 'Personal',
       copyNumber: 'Copy Number',
       copied: 'Copied!',
+      nameLabel: 'Your Full Name',
+      namePlaceholder: 'e.g. Md. Hafizur Rahman',
+      phoneLabel: 'Phone / Mobile Number',
+      trxLabel: 'Transaction ID (TrxID)',
+      trxPlaceholder: 'e.g. 9H7B3XK91',
+      msgLabel: 'Special Prayer or Message (Optional)',
+      msgPlaceholder: 'Prayer for departed parents / good health...',
+      prevBtn: 'Back',
+      submitBtn: 'Confirm Payment Details & Send Email',
+      submittingBtn: 'Submitting...',
+      successTitle: 'Thank You & Gratitude!',
+      successSub: 'Your donation and sadaqah have been successfully recorded. May Allah accept your contribution.',
+      emailSectionTitle: 'Official Email Notification (Email Confirmation)',
+      emailSectionDesc: 'Your donation receipt and transaction details have been pre-filled. Choose an option below to dispatch:',
+      emailGmailBtn: '🔴 Send via Web Gmail',
+      emailAppBtn: '📱 Send via Mobile Email App',
+      receiptTitle: 'Digital Donation Receipt',
+      receiptNo: 'Receipt No',
+      donorName: "Donor's Name:",
+      date: 'Date:',
+      category: 'Donation Fund:',
+      methodTrx: 'Payment Method / TrxID:',
+      totalDonation: 'Total Donation Amount:',
+      printReceipt: 'Print Receipt',
+      finishBtn: 'Finish',
       close: 'Close',
     }
   }

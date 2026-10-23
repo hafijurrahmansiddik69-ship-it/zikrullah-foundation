@@ -27,7 +27,7 @@ function MainApp() {
   });
 
   const [isDonationOpen, setIsDonationOpen] = useState(false);
-  const [donationCategory, setDonationCategory] = useState<string>('সাধারণ সদকা ও দান');
+  const [donationCategory, setDonationCategory] = useState<string>('general-sadaqah');
   const [donationAmount, setDonationAmount] = useState<number>(1000);
 
   const [isVolunteerOpen, setIsVolunteerOpen] = useState(false);

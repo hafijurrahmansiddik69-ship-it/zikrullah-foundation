@@ -481,7 +481,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 {/* Attractive Call-to-Action Button */}
                 <div className="w-full sm:w-auto">
                   <button
-                    onClick={() => onOpenDonation('সাধারণ সদকা ও দান')}
+                    onClick={() => onOpenDonation('general-sadaqah')}
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#087443] to-[#034e2c] hover:from-[#0a8c51] hover:to-[#056338] active:scale-95 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-950/25 transition-all duration-300 cursor-pointer group min-h-[44px]"
                   >
                     <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white group-hover:scale-110 transition-transform duration-300" />
@@ -534,7 +534,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={() => onOpenDonation('সাধারণ সদকা ও দান')}
+              onClick={() => onOpenDonation('general-sadaqah')}
               className="px-6 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
             >
               {t.common.donateNow}
