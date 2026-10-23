@@ -38,7 +38,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#ff7e5f]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(255,126,95,0.4)]',
     accentText: 'text-[#ff7e5f]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg'
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763626/ylatsvcdpurnpitu1hnt.jpg'
   },
   // 2. Free Healthcare & Medical Aid
   {
@@ -49,7 +49,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#00c6ff]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(0,198,255,0.4)]',
     accentText: 'text-[#00c6ff]',
-    bannerImage: medImg
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763708/bypdm2hw3hqqcem4ohv5.jpg'
   },
   // 3. Blood Donation
   {
@@ -71,7 +71,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#f6d365]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(246,211,101,0.4)]',
     accentText: 'text-[#f6d365]',
-    bannerImage: eduImg
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763851/uhoy2dhdewkxkbqpf6hs.jpg'
   },
   // 5. Self-Reliance & Youth Employment
   {
@@ -82,7 +82,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#a855f7]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(168,85,247,0.4)]',
     accentText: 'text-[#a855f7]',
-    bannerImage: selfRelianceImg
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763774/zwnrunrscvxecmhnm1zk.jpg'
   },
   // 6. Tube-wells & Tree Plantation (Sadaqah Jariyah)
   {
@@ -93,7 +93,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#38ef7d]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(56,239,125,0.4)]',
     accentText: 'text-[#38ef7d]',
-    bannerImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1200&q=80'
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792764025/zlscwxoft986d0ud4wi7.jpg'
   },
   // 7. Zakat Fund (Shariah Compliant)
   {
@@ -213,7 +213,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 }}
               />
               {/* Gradient Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/50 to-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/70 to-black/50" />
 
               {/* Floating Badge (Top Left) */}
               <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
