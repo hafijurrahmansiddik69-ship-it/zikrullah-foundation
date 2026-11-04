@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Users, HeartHandshake, CheckCircle2, Sparkles, Send, Loader2, Mail, ExternalLink } from 'lucide-react';
-import { adminDataService, ADMIN_DATA_EVENT, VolunteerRecord } from '../services/adminDataService';
+import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
@@ -29,16 +29,6 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
   const [bloodGroup, setBloodGroup] = useState('A+');
   const [interest, setInterest] = useState(t.volunteer.interestDefault);
   const [message, setMessage] = useState('');
-  const [volunteersList, setVolunteersList] = useState<VolunteerRecord[]>([]);
-
-  useEffect(() => {
-    const fetchVolunteers = () => {
-      setVolunteersList(adminDataService.getVolunteers());
-    };
-    fetchVolunteers();
-    window.addEventListener(ADMIN_DATA_EVENT, fetchVolunteers);
-    return () => window.removeEventListener(ADMIN_DATA_EVENT, fetchVolunteers);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -365,49 +355,6 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
                 </button>
               </form>
             )}
-
-            {/* Recent Registered Volunteers Panel (Below Form, showing ~3 items at a time and scrollable) */}
-            <div className="mt-6 pt-6 border-t border-slate-100">
-              <div className="flex items-center justify-between mb-3">
-                <h5 className="font-serif-bn font-bold text-sm text-[#045332] flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-emerald-600" />
-                  <span>{isEn ? 'Recent Registered Volunteers' : 'সাম্প্রতিক নিবন্ধিত স্বেচ্ছাসেবকগণ'}</span>
-                </h5>
-                <span className="text-[11px] bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full font-semibold">
-                  {volunteersList.length} {isEn ? 'Total' : 'জন'}
-                </span>
-              </div>
-              
-              <div className="max-h-[220px] overflow-y-auto space-y-2.5 pr-1" style={{ scrollbarWidth: 'thin' }}>
-                {volunteersList.length === 0 ? (
-                  <p className="text-xs text-slate-400 text-center py-3">
-                    {isEn ? 'No volunteers registered yet.' : 'এখনো কোনো স্বেচ্ছাসেবক নিবন্ধিত হননি।'}
-                  </p>
-                ) : (
-                  volunteersList.map((vol, vIdx) => (
-                    <div 
-                      key={vol.id || vIdx}
-                      className="bg-[#fafcfb] border border-slate-200/90 rounded-xl p-3 flex items-center justify-between gap-3 text-xs sm:text-sm hover:border-emerald-300 transition-colors shadow-2xs"
-                    >
-                      <div className="min-w-0">
-                        <strong className="block font-bold text-slate-900 truncate font-serif-bn">
-                          {vol.name}
-                        </strong>
-                        <span className="text-[11px] text-slate-500 block truncate">
-                          {vol.upazila || (isEn ? 'Bogura' : 'বগুড়া')} · <span className="text-emerald-700 font-semibold">{vol.bloodGroup}</span>
-                        </span>
-                      </div>
-                      <div className="shrink-0 font-mono font-bold text-xs text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200/60">
-                        {vol.phone}
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-              <p className="text-[11px] text-slate-400 text-center mt-2">
-                {isEn ? 'Scroll to view more registered volunteers' : 'আরও স্বেচ্ছাসেবক দেখতে উপর-নিচ স্ক্রোল করুন'}
-              </p>
-            </div>
           </div>
 
         </div>
