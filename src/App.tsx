@@ -14,7 +14,6 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { DonationModal } from './components/DonationModal';
 import { VolunteerModal } from './components/VolunteerModal';
-import { InstallPwaBanner } from './components/InstallPwaBanner';
 import { AboutPage } from './pages/AboutPage';
 import { Project } from './types';
 import { Heart } from 'lucide-react';
@@ -175,9 +174,6 @@ function MainApp() {
         isOpen={isVolunteerOpen}
         onClose={() => setIsVolunteerOpen(false)}
       />
-
-      {/* PWA Install Banner */}
-      <InstallPwaBanner />
 
     </div>
   );
