@@ -25,7 +25,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [upazila, setUpazila] = useState(t.volunteer.areaDefault);
+  const [upazila, setUpazila] = useState('');
   const [bloodGroup, setBloodGroup] = useState('A+');
   const [interest, setInterest] = useState(t.volunteer.interestDefault);
   const [message, setMessage] = useState('');
@@ -288,6 +288,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
                     </label>
                     <input
                       type="text"
+                      placeholder={isEn ? "e.g. Shibganj, Bogura" : "উদাঃ শিবগঞ্জ, বগুড়া"}
                       value={upazila}
                       onChange={(e) => setUpazila(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"

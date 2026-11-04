@@ -111,10 +111,8 @@ export const Header: React.FC<HeaderProps> = ({
               <img
                 src={FOUNDATION_INFO.logoUrl}
                 alt={FOUNDATION_INFO.name}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-contain"
-                onError={(e) => {
-                  (e.currentTarget as HTMLElement).style.display = 'none';
-                }}
               />
             </div>
             <div className="flex flex-col min-w-0">

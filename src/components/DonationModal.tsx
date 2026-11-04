@@ -60,7 +60,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const presetAmounts = [500, 1000, 2000, 5000, 10000];
+  const presetAmounts = [20, 50, 100, 500, 1000];
 
   const handleSelectPreset = (val: number) => {
     setAmount(val);
@@ -409,21 +409,12 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 )}
 
                 {paymentMethod === 'bank' && (
-                  <div className="space-y-1.5 text-xs text-slate-700">
-                    <p><strong>{isEn ? 'Bank:' : 'ব্যাংক:'}</strong> {FOUNDATION_INFO.bankDetails.bankName}</p>
-                    <p><strong>{isEn ? 'Branch:' : 'শাখা:'}</strong> {FOUNDATION_INFO.bankDetails.branch}</p>
-                    <p><strong>{isEn ? 'Account Name:' : 'হিসাবের নাম:'}</strong> {FOUNDATION_INFO.bankDetails.accountName}</p>
-                    <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200 mt-1">
-                      <span className="font-mono font-bold text-slate-900">{FOUNDATION_INFO.bankDetails.accountNumber}</span>
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(FOUNDATION_INFO.bankDetails.accountNumber, 'bank')}
-                        className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1 cursor-pointer"
-                      >
-                        {copiedText === 'bank' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedText === 'bank' ? t.donationModal.copied : t.donationModal.copyNumber}</span>
-                      </button>
-                    </div>
+                  <div className="text-center py-6 text-slate-600 bg-white p-4 rounded-xl border border-slate-200">
+                    <Building2 className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+                    <p className="font-bold text-sm text-slate-800">Coming soon ...</p>
+                    <p className="text-xs text-slate-500 mt-1">
+                      {isEn ? 'Bank transfer option will be available soon.' : 'ব্যাংক ট্রান্সফার সুবিধা খুব শীঘ্রই আসছে।'}
+                    </p>
                   </div>
                 )}
               </div>

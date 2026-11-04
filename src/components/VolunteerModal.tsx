@@ -15,7 +15,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   const [name, setName] = useState('');
   const [submittedName, setSubmittedName] = useState('');
   const [phone, setPhone] = useState('');
-  const [upazila, setUpazila] = useState('গুজিয়া, মোকামতলা, বগুড়া');
+  const [upazila, setUpazila] = useState('');
   const [bloodGroup, setBloodGroup] = useState('A+');
   const [interest, setInterest] = useState('ত্রাণ ও খাদ্য সহায়তা বিতরণ');
   const [message, setMessage] = useState('');
@@ -274,6 +274,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                   </label>
                   <input
                     type="text"
+                    placeholder="উদাঃ শিবগঞ্জ, বগুড়া"
                     value={upazila}
                     onChange={(e) => setUpazila(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
