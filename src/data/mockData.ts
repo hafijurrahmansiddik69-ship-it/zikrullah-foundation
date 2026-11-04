@@ -295,7 +295,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "বিনামূল্যে বিশেষজ্ঞ চিকিৎসা ক্যাম্প",
     category: "স্বাস্থ্যসেবা",
     location: "গুজিয়া, বগুড়া",
-    imageUrl: medImg,
     date: "জুলাই ২০২৬"
   },
   {

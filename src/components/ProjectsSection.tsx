@@ -49,7 +49,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#00c6ff]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(0,198,255,0.4)]',
     accentText: 'text-[#00c6ff]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763708/bypdm2hw3hqqcem4ohv5.jpg'
+    bannerImage: ''
   },
   // 3. Blood Donation
   {
@@ -201,42 +201,54 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             className="bg-[#0f1422] rounded-3xl max-w-lg w-full relative border border-slate-700/80 shadow-2xl overflow-hidden my-auto text-slate-100 animate-in zoom-in-95 duration-200" 
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Banner with Image / Placeholder Template */}
-            <div className="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden group">
-              <img 
-                src={activeConfig.bannerImage} 
-                alt={selectedCard.title} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                onError={(e) => {
-                  // Fallback placeholder if image load fails
-                  (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80';
-                }}
-              />
-              {/* Gradient Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/70 to-black/50" />
+            {/* Top Banner with Image / Placeholder Template (if available) */}
+            {activeConfig.bannerImage ? (
+              <div className="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden group">
+                <img 
+                  src={activeConfig.bannerImage} 
+                  alt={selectedCard.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    // Fallback placeholder if image load fails
+                    (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80';
+                  }}
+                />
+                {/* Gradient Scrim */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/70 to-black/50" />
 
-              {/* Floating Badge (Top Left) */}
-              <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20 shadow-md">
-                  {selectedCard.badge}
-                </span>
+                {/* Floating Badge (Top Left) */}
+                <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20 shadow-md">
+                    {selectedCard.badge}
+                  </span>
+                </div>
+
+                {/* Editable Template Indicator (Bottom Left) */}
+                <div className="absolute bottom-3 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xs text-[11px] text-slate-300 border border-white/10">
+                  <Camera className="w-3 h-3 text-emerald-400" />
+                  <span>{t.projects.modalImageTemplateTag}</span>
+                </div>
+
+                {/* Close Button (Top Right) */}
+                <button 
+                  onClick={() => setSelectedIndex(null)} 
+                  className="absolute top-3.5 right-3.5 text-slate-300 hover:text-white cursor-pointer z-20 p-2 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 transition-all active:scale-95 shadow-md"
+                  aria-label={t.projects.modalClose}
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-
-              {/* Editable Template Indicator (Bottom Left) */}
-              <div className="absolute bottom-3 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xs text-[11px] text-slate-300 border border-white/10">
-                <Camera className="w-3 h-3 text-emerald-400" />
-                <span>{t.projects.modalImageTemplateTag}</span>
+            ) : (
+              <div className="absolute top-4 right-4 z-30">
+                <button 
+                  onClick={() => setSelectedIndex(null)} 
+                  className="text-slate-400 hover:text-white cursor-pointer p-2 rounded-full bg-slate-800/80 hover:bg-slate-700 backdrop-blur-md border border-slate-600 transition-all active:scale-95 shadow-md"
+                  aria-label={t.projects.modalClose}
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-
-              {/* Close Button (Top Right) */}
-              <button 
-                onClick={() => setSelectedIndex(null)} 
-                className="absolute top-3.5 right-3.5 text-slate-300 hover:text-white cursor-pointer z-20 p-2 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 transition-all active:scale-95 shadow-md"
-                aria-label={t.projects.modalClose}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            )}
 
             {/* Modal Body Content */}
             <div className="p-5 sm:p-7 max-h-[60vh] overflow-y-auto space-y-4">
