@@ -111,7 +111,10 @@ export const Header: React.FC<HeaderProps> = ({
               <img
                 src={FOUNDATION_INFO.logoUrl}
                 alt={FOUNDATION_INFO.name}
-                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/logo.svg';
+                }}
                 className="w-full h-full object-contain"
               />
             </div>
@@ -262,7 +265,15 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="p-4 border-b border-gray-100 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-white p-0.5 border border-emerald-200/90 flex items-center justify-center shadow-xs">
-                  <img src={FOUNDATION_INFO.logoUrl} alt={FOUNDATION_INFO.name} className="w-full h-full object-contain" />
+                  <img
+                    src={FOUNDATION_INFO.logoUrl}
+                    alt={FOUNDATION_INFO.name}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/logo.svg';
+                    }}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <h4 className="font-serif-bn font-bold text-sm text-[#045332] leading-tight">

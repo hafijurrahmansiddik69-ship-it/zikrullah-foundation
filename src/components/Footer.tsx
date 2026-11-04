@@ -47,7 +47,10 @@ export const Footer: React.FC<FooterProps> = ({
                 <img
                   src={FOUNDATION_INFO.logoUrl}
                   alt={FOUNDATION_INFO.name}
-                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/logo.svg';
+                  }}
                   className="w-full h-full object-contain"
                 />
               </div>
