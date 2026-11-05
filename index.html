@@ -8,18 +8,52 @@
     <meta name="description" content="কুরআন সুন্নাহর আলোকে, উম্মাহর খেদমতে। Founder & Chairman Hafizur Rahman Siddik (Bogura)।" />
     <meta property="og:title" content="জিকরুল্লাহ ফাউন্ডেশন | Zikrullah Foundation" />
     <meta property="og:description" content="কুরআন সুন্নাহর আলোকে, উম্মাহর খেদমতে। Founder & Chairman Hafizur Rahman Siddik (Bogura)।" />
-    <meta property="og:image" content="/images/logo.svg" />
+    <meta property="og:image" content="https://res.cloudinary.com/dlklqihg6/image/upload/v1793842875/qu97ohhq3uyobfguxnkn.jpg" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <link rel="apple-touch-icon" href="/logo.svg" />
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+    <link rel="apple-touch-icon" href="/logo.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Serif+Bengali:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.maateen.me/solaiman-lipi/font.css">
     <link href="https://fonts.cdnfonts.com/css/armwrestler" rel="stylesheet">
+    <script>
+      // 1. Immediately clean up any stale PWA Service Workers that cause blank/white screens
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (var i = 0; i < registrations.length; i++) {
+            registrations[i].unregister();
+          }
+        }).catch(function() {});
+      }
+      // 2. Clear old caches from previous PWA installations
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (var i = 0; i < names.length; i++) {
+            caches.delete(names[i]);
+          }
+        }).catch(function() {});
+      }
+      // 3. Auto-recover if a new deployment changed module hashes (prevent ChunkLoadError white screen)
+      window.addEventListener('error', function(e) {
+        var msg = (e && e.message) ? e.message.toLowerCase() : '';
+        if (msg.indexOf('dynamically imported module') > -1 || msg.indexOf('loading chunk') > -1) {
+          if (!sessionStorage.getItem('zk_chunk_reloaded')) {
+            sessionStorage.setItem('zk_chunk_reloaded', '1');
+            window.location.reload();
+          }
+        }
+      });
+    </script>
   </head>
   <body class="bg-[#fcfdfa] text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+    <noscript>
+      <div style="padding:2rem;text-align:center;font-family:sans-serif;color:#045332;">
+        <h2>জিকরুল্লাহ ফাউন্ডেশন | Zikrullah Foundation</h2>
+        <p>ওয়েবসাইটটি সঠিকভাবে দেখার জন্য আপনার ব্রাউজারে JavaScript সক্রিয় করুন।</p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

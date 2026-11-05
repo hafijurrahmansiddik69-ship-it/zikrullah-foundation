@@ -56,7 +56,7 @@ export const EXECUTIVE_MEMBERS = [
 export const FOUNDATION_INFO = {
   name: "জিকরুল্লাহ ফাউন্ডেশন",
   englishName: "ZIKRULLAH FOUNDATION",
-  logoUrl: "/images/logo.svg",
+  logoUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1793842875/qu97ohhq3uyobfguxnkn.jpg",
   homeBackgroundUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg",
   aboutImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg",
   founderImageUrl: "https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg",

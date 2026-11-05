@@ -22,7 +22,17 @@ import { LanguageProvider, useLanguage } from './context/LanguageContext';
 function MainApp() {
   const { t, isEn } = useLanguage();
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>(() => {
-    if (typeof window !== 'undefined' && window.location.hash === '#about-page') return 'about';
+    if (typeof window !== 'undefined') {
+      try {
+        const hash = window.location.hash;
+        const path = window.location.pathname.toLowerCase();
+        if (hash === '#about-page' || path === '/about' || path === '/about/' || path === '/about-page') {
+          return 'about';
+        }
+      } catch {
+        // fallback to home
+      }
+    }
     return 'home';
   });
 
@@ -34,27 +44,40 @@ function MainApp() {
 
   useEffect(() => {
     const handleHash = () => {
-      if (window.location.hash === '#about-page') {
-        setCurrentPage('about');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        setCurrentPage('home');
-        if (window.location.hash === '#projects') {
-          setTimeout(() => {
-            const el = document.getElementById('projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 100);
+      try {
+        const hash = window.location.hash;
+        const path = window.location.pathname.toLowerCase();
+        if (hash === '#about-page' || path === '/about' || path === '/about/' || path === '/about-page') {
+          setCurrentPage('about');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          setCurrentPage('home');
+          if (hash && hash !== '#' && hash !== '#home') {
+            const cleanHash = hash.replace('#', '');
+            setTimeout(() => {
+              const el = document.getElementById(cleanHash);
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+          }
         }
+      } catch (err) {
+        console.warn('Navigation hash handler error:', err);
       }
     };
+
     window.addEventListener('hashchange', handleHash);
     
-    // Check initial hash for #projects
-    if (window.location.hash === '#projects') {
-      setTimeout(() => {
-        const el = document.getElementById('projects');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
+    // Check initial hash on page load
+    try {
+      if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#about-page') {
+        const cleanHash = window.location.hash.replace('#', '');
+        setTimeout(() => {
+          const el = document.getElementById(cleanHash);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      }
+    } catch {
+      // ignore
     }
 
     return () => window.removeEventListener('hashchange', handleHash);

@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({
                   alt={FOUNDATION_INFO.name}
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/logo.svg';
+                    e.currentTarget.src = '/logo.jpg';
                   }}
                   className="w-full h-full object-contain"
                 />

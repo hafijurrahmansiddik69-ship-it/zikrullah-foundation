@@ -122,7 +122,11 @@ export const adminDataService = {
       adminNote: record.adminNote || 'অনলাইন এন্ট্রি'
     };
     const updated = [newRecord, ...list];
-    localStorage.setItem(DONATIONS_STORAGE_KEY, JSON.stringify(updated));
+    try {
+      localStorage.setItem(DONATIONS_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // ignore storage quota error
+    }
     notifyUpdate();
     return newRecord;
   },
@@ -154,7 +158,11 @@ export const adminDataService = {
       adminNote: record.adminNote || 'নতুন স্বেচ্ছাসেবক আবেদন'
     };
     const updated = [newRecord, ...list];
-    localStorage.setItem(VOLUNTEERS_STORAGE_KEY, JSON.stringify(updated));
+    try {
+      localStorage.setItem(VOLUNTEERS_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // ignore storage quota error
+    }
     notifyUpdate();
     return newRecord;
   },
@@ -183,7 +191,11 @@ export const adminDataService = {
       status: 'নতুন'
     };
     const updated = [newRecord, ...list];
-    localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(updated));
+    try {
+      localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // ignore storage quota error
+    }
     notifyUpdate();
     return newRecord;
   }

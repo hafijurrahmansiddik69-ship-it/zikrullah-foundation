@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
                 alt={FOUNDATION_INFO.name}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/logo.svg';
+                  e.currentTarget.src = '/logo.jpg';
                 }}
                 className="w-full h-full object-contain"
               />
@@ -270,7 +270,7 @@ export const Header: React.FC<HeaderProps> = ({
                     alt={FOUNDATION_INFO.name}
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = '/logo.svg';
+                      e.currentTarget.src = '/logo.jpg';
                     }}
                     className="w-full h-full object-contain"
                   />
