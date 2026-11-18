@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>জিকরুল্লাহ ফাউন্ডেশন | Zikrullah Foundation</title>
+    <script>
+      (function () {
+        try {
+          var path = (window.location.pathname || '/').toLowerCase();
+          var target = '/';
+          if (path.indexOf('about') > -1) {
+            target = '/#about-page';
+          } else if (path.indexOf('projects') > -1) {
+            target = '/#projects';
+          } else if (path.indexOf('services') > -1) {
+            target = '/#services';
+          } else if (path.indexOf('volunteer') > -1) {
+            target = '/#volunteer';
+          } else if (path.indexOf('contact') > -1) {
+            target = '/#contact';
+          } else if (path.indexOf('news') > -1) {
+            target = '/#news';
+          } else if (path.indexOf('gallery') > -1) {
+            target = '/#gallery';
+          }
+          window.location.replace(window.location.origin + target);
+        } catch (e) {
+          window.location.replace('/');
+        }
+      })();
+    </script>
+  </head>
+  <body style="font-family:system-ui,sans-serif;text-align:center;padding:3rem;color:#045332;background:#fcfdfa;">
+    <h2>জিকরুল্লাহ ফাউন্ডেশন</h2>
+    <p>মূল পাতায় নিয়ে যাওয়া হচ্ছে... যদি স্বয়ংক্রিয়ভাবে না যায়, <a href="/" style="color:#087443;font-weight:bold;">এখানে ক্লিক করুন</a>।</p>
+  </body>
+</html>
