@@ -298,11 +298,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <HeartHandshake className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
             </div>
             <div>
-              <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
-                {isEn ? 'Core Purpose' : 'Our Mission'}
-              </span>
+              {isEn && (
+                <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
+                  Our Mission
+                </span>
+              )}
               <h2 className="font-serif-bn font-bold text-xl sm:text-3xl text-slate-900">
-                {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য (Mission)'}
+                {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য'}
               </h2>
             </div>
           </div>
@@ -395,11 +397,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
             </div>
             <div>
-              <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
-                {isEn ? 'Future Outlook' : 'Our Vision'}
-              </span>
+              {isEn && (
+                <span className="text-[11px] sm:text-xs font-bold text-amber-700 tracking-wider uppercase block font-sans">
+                  Our Vision
+                </span>
+              )}
               <h2 className="font-serif-bn font-bold text-xl sm:text-3xl text-slate-900">
-                {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য (Vision)'}
+                {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য'}
               </h2>
             </div>
           </div>
@@ -553,12 +557,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     <span>{isEn ? "Founder & Chairman's Message" : 'প্রতিষ্ঠাতা ও চেয়ারম্যানের বার্তা'}</span>
                   </div>
-                  <h3 className="font-bold text-slate-900 text-xl sm:text-3xl lg:text-4xl tracking-wide mb-2 font-armwrestler">
-                    Hafizur Rahman Siddik (Bogura)
+                  <h3 className={`font-bold text-slate-900 text-xl sm:text-3xl lg:text-4xl tracking-wide mb-2 ${isEn ? 'font-armwrestler' : 'font-serif-bn'}`}>
+                    {isEn ? 'Hafizur Rahman Siddik (Bogura)' : 'হাফিজুর রহমান সিদ্দিক (বগুড়া)'}
                   </h3>
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-2.5">
                     <span className="px-3.5 py-1 rounded-full bg-emerald-700 text-white text-xs font-bold tracking-wider uppercase shadow-2xs font-solaiman">
-                      Founder & Chairman
+                      {isEn ? 'Founder & Chairman' : 'প্রতিষ্ঠাতা ও চেয়ারম্যান'}
                     </span>
                     <span className="text-xs sm:text-sm text-slate-600 font-solaiman font-semibold">
                       {isEn ? 'Zikrullah Foundation' : 'জিকরুল্লাহ ফাউন্ডেশন'}
@@ -696,10 +700,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     />
                   </div>
                   <h3 className="font-serif-bn font-bold text-slate-900 text-base sm:text-lg mb-1 tracking-tight">
-                    {member.name}
+                    {isEn ? member.name : (member.nameBn || member.name)}
                   </h3>
                   <span className="text-xs sm:text-[13px] text-slate-500 font-medium font-sans-bn block">
-                    {member.role}
+                    {isEn ? member.role : (member.roleBn || member.role)}
                   </span>
                 </div>
               ))}

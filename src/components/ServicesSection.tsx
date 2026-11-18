@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Compass,
-  Sparkles,
   HeartHandshake,
   ArrowRight,
   HandHeart,
@@ -150,11 +149,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     <HeartHandshake className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold text-emerald-700 tracking-wider uppercase block font-sans">
-                      {isEn ? 'Core Purpose' : 'Our Mission'}
-                    </span>
+                    {isEn && (
+                      <span className="text-[11px] font-bold text-emerald-700 tracking-wider uppercase block font-sans">
+                        Our Mission
+                      </span>
+                    )}
                     <h3 className="font-serif-bn font-bold text-xl sm:text-3xl text-slate-900 leading-tight">
-                      {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য (Mission)'}
+                      {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য'}
                     </h3>
                   </div>
                 </div>
@@ -272,11 +273,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold text-amber-700 tracking-wider uppercase block font-sans">
-                      {isEn ? 'Future Outlook' : 'Our Vision'}
-                    </span>
+                    {isEn && (
+                      <span className="text-[11px] font-bold text-amber-700 tracking-wider uppercase block font-sans">
+                        Our Vision
+                      </span>
+                    )}
                     <h3 className="font-serif-bn font-bold text-xl sm:text-3xl text-slate-900 leading-tight">
-                      {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য (Vision)'}
+                      {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য'}
                     </h3>
                   </div>
                 </div>
@@ -374,47 +377,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   );
                 })}
               </div>
-
-              {/* Bottom Quranic Inspiration Ribbon */}
-              <div className="mt-7 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#034a2c] to-[#045332] text-white shadow-md border border-emerald-800/40">
-                <div className="flex items-start gap-3 sm:gap-3.5">
-                  <HeartHandshake className="w-5 h-5 text-amber-300 shrink-0 mt-1" />
-                  <div className="space-y-2 flex-1">
-                    <p dir="rtl" className="font-times font-bold text-white text-sm sm:text-[15px] lg:text-base leading-[2.05] tracking-normal text-right">
-                      {isEn
-                        ? 'مَّن ذَا الَّذِي يُقْرِضُ اللَّهَ قَرْضًا حَسَنًا فَيُضَاعِفَهُ لَهُ أَضْعَافًا كَثِيرَةً ۚ وَاللَّهُ يَقْبِضُ وَيَبْسُطُ وَإِلَيْهِ تُرْجَعُونَ'
-                        : 'الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ'}
-                    </p>
-                    <p className="font-solaiman text-emerald-50 text-xs sm:text-[13.5px] leading-relaxed">
-                      {isEn
-                        ? '“Who is it that would loan Allah a goodly loan so He may multiply it for him many times over? And it is Allah who withholds and grants abundance, and to Him you will be returned.”'
-                        : '“যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”'}
-                    </p>
-                    <div className="pt-1 flex items-center justify-between sm:justify-start gap-2">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-900/90 text-[11px] sm:text-xs text-amber-300 font-sans-bn font-medium border border-emerald-700/60">
-                        <Sparkles className="w-3 h-3 text-amber-300" />
-                        {isEn ? 'Surah Al-Baqarah : 245' : 'সূরা আল-বাক্বারাহ্ : ২৭৪'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-
-            {onSelectServiceDonation && (
-              <div className="mt-8 pt-6 border-t border-emerald-100/80 flex items-center justify-between">
-                <span className="text-xs text-slate-500 font-medium">
-                  {isEn ? 'Contribute to our Sadaqah Jariyah Fund' : 'সাদাকায়ে জারিয়াহ ফান্ডে অংশগ্রহণ করুন'}
-                </span>
-                <button
-                  onClick={() => onSelectServiceDonation('সাদাকায়ে জারিয়াহ তহবিল')}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline cursor-pointer shrink-0 ml-2"
-                >
-                  <span>{isEn ? 'Give Sadaqah' : 'সাদাকাহ দিন'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
           </div>
 
         </div>
