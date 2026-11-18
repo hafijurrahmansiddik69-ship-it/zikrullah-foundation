@@ -35,6 +35,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = lang;
+      document.title =
+        lang === 'en'
+          ? 'Zikrullah Foundation | In the Light of Qur’an & Sunnah'
+          : 'জিকরুল্লাহ ফাউন্ডেশন | Zikrullah Foundation';
       if (lang === 'en') {
         document.body.classList.add('lang-en');
         document.body.classList.remove('lang-bn');

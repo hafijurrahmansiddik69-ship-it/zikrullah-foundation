@@ -74,24 +74,34 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </div>
 
             <h1 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-[1.2] mb-2 sm:mb-3 text-center">
-              {FOUNDATION_INFO.name}
+              {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
               <span className="block text-emerald-300 font-solaiman text-base sm:text-2xl lg:text-3xl mt-2 sm:mt-2.5 font-medium tracking-wide text-center">
-                কুরআন-সুন্নাহর আলোকে, উম্মাহর খেদমতে।
+                {t.common.slogan}
               </span>
             </h1>
             <p className="text-emerald-100 text-xs sm:text-base lg:text-lg font-solaiman font-normal leading-relaxed mb-5 sm:mb-6 max-w-2xl text-center">
-              শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।
+              {isEn
+                ? "A non-political humanitarian and welfare organization dedicated to education, Da'wah, and serving humanity."
+                : 'শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
             </p>
 
             {/* Quick Metadata Badges */}
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-sm text-emerald-100">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-400/20 shadow-xs">
                 <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 shrink-0" />
-                <span><strong>উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
+                {isEn ? (
+                  <span><strong>Founder &amp; Initiative:</strong> Hafizur Rahman Siddik (Bogura)</span>
+                ) : (
+                  <span><strong>উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
+                )}
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-400/20">
                 <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
-                <span><strong>প্রতিষ্ঠাকাল:</strong> ১লা জানুয়ারি ২০২৩</span>
+                {isEn ? (
+                  <span><strong>Established:</strong> January 1, 2023</span>
+                ) : (
+                  <span><strong>প্রতিষ্ঠাকাল:</strong> ১লা জানুয়ারি ২০২৩</span>
+                )}
               </span>
             </div>
           </div>
@@ -101,14 +111,16 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="bg-emerald-50/80 border-l-4 border-[#087443] rounded-2xl p-6 sm:p-8 mb-12 shadow-sm space-y-5">
           <div className="text-center pb-2 border-b border-emerald-200/60">
             <h3 className="font-fiona text-2xl sm:text-3xl lg:text-4xl text-[#045332] font-bold tracking-normal inline-block">
-              আমাদের প্রেরণা
+              {isEn ? 'Our Inspiration' : 'আমাদের প্রেরণা'}
             </h3>
           </div>
           <p className="font-solaiman text-slate-800 text-lg sm:text-xl lg:text-2xl leading-relaxed font-normal">
-            “আমাদের চারপাশের অসহায় মানুষের নীরব হাহাকার মুমিনের অন্তরে গভীর তোলপাড় সৃষ্টি করে। একমাত্র রবের সন্তুষ্টির আশায় তাঁদের মুখে একটু হাসি ফোটানো এবং খাদ্য, চিকিৎসা ও দ্বীনি শিক্ষার পথ সুগম করা দুনিয়াতে সুখময় জীবন এবং আখেরাতে নাজাতের উসীলা হবে, ইনশাআল্লাহ।”
+            {t.hero.quote}
           </p>
           <p className="font-solaiman text-slate-800 text-lg sm:text-xl lg:text-2xl leading-relaxed font-normal pt-3 border-t border-emerald-200/60">
-            উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।
+            {isEn
+              ? "Treating compassionate service as sincere worship during this critical hour for the Ummah, and guided by a deep sense of humanitarian duty, 'Zikrullah Foundation' was established on January 1, 2023 CE through the initiative of “Hafizur Rahman Siddik (Bogura)”—a non-political charitable institution dedicated to education, Da'wah, and the welfare of humanity."
+              : 'উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
           </p>
         </div>
 
@@ -120,10 +132,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </div>
             <div>
               <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
-                Our Mission
+                {isEn ? 'Core Purpose' : 'Our Mission'}
               </span>
               <h2 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900">
-                আমাদের লক্ষ্য (Mission)
+                {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য (Mission)'}
               </h2>
             </div>
           </div>
@@ -131,7 +143,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           {/* Mission Core Quote */}
           <div className="bg-[#f6faf8] border-l-4 border-emerald-600 rounded-r-2xl p-5 mb-8">
             <p className="font-solaiman text-slate-900 text-base sm:text-lg leading-relaxed font-medium">
-              “রাসূলুল্লাহ (ﷺ)-এর অনুকম্পা ও সুন্নাহর চিরায়ত আলোকে পাথেয় করে—অসহায় উম্মাহর মুখে হাসি ফোটানো, ইলমে দ্বীনের আলো ছড়ানো এবং একটি স্থায়ী স্বাবলম্বী সমাজ বিনির্মাণে আমরা মাঠপর্যায়ে নিবেদিত।”
+              {isEn
+                ? '“Guided by the compassion of Rasulullah (ﷺ) and the timeless light of the Sunnah—we are dedicated at the grassroots level to bringing smiles to the faces of the distressed Ummah, spreading Islamic knowledge, and building a permanently self-reliant society.”'
+                : '“রাসূলুল্লাহ (ﷺ)-এর অনুকম্পা ও সুন্নাহর চিরায়ত আলোকে পাথেয় করে—অসহায় উম্মাহর মুখে হাসি ফোটানো, ইলমে দ্বীনের আলো ছড়ানো এবং একটি স্থায়ী স্বাবলম্বী সমাজ বিনির্মাণে আমরা মাঠপর্যায়ে নিবেদিত।”'}
             </p>
           </div>
 
@@ -144,10 +158,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 01
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ১
+                  {isEn ? '1' : '১'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <HandHeart className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -157,11 +171,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া</span>
+                  <span>{isEn ? 'Food & Clothing Aid in Light of the Sunnah' : 'সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।
+                  {isEn
+                    ? 'Delivering nourishing food to destitute, orphaned, poor, and widowed families, and gifting new clothes and winter garments to those in need.'
+                    : 'অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।'}
                 </p>
               </div>
             </div>
@@ -173,10 +189,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 02
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ২
+                  {isEn ? '2' : '২'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <Stethoscope className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -186,11 +202,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>বিনামূল্যে জরুরি চিকিৎসা ও স্বাস্থ্যসেবা</span>
+                  <span>{isEn ? 'Free Emergency Medical & Healthcare Services' : 'বিনামূল্যে জরুরি চিকিৎসা ও স্বাস্থ্যসেবা'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  দুর্গম ও অবহেলিত অঞ্চলের অসচ্ছল মানুষের কাছে বিশেষজ্ঞ চিকিৎসকের পরামর্শ, প্রয়োজনীয় ওষুধ ও জরুরি সেবা সহজে পৌঁছে দেওয়া।
+                  {isEn
+                    ? 'Providing specialist doctor consultations, essential medicines, and urgent medical care to underprivileged people in remote and neglected areas.'
+                    : 'দুর্গম ও অবহেলিত অঞ্চলের অসচ্ছল মানুষের কাছে বিশেষজ্ঞ চিকিৎসকের পরামর্শ, প্রয়োজনীয় ওষুধ ও জরুরি সেবা সহজে পৌঁছে দেওয়া।'}
                 </p>
               </div>
             </div>
@@ -202,10 +220,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 03
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ৩
+                  {isEn ? '3' : '৩'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <HeartPulse className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -215,11 +233,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>জরুরি রক্তদান</span>
+                  <span>{isEn ? 'Emergency Blood Donation' : 'জরুরি রক্তদান'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।
+                  {isEn
+                    ? 'Ensuring completely free, timely blood arrangement through voluntary donors for the urgent medical treatment of critical patients.'
+                    : 'মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।'}
                 </p>
               </div>
             </div>
@@ -231,10 +251,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 04
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ৪
+                  {isEn ? '4' : '৪'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <BookOpen className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -244,11 +264,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>দ্বীনি ও আদর্শ শিক্ষা বিস্তার</span>
+                  <span>{isEn ? 'Islamic & Moral Education' : 'দ্বীনি ও আদর্শ শিক্ষা বিস্তার'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।
+                  {isEn
+                    ? "Establishing sustainable facilities for pure Qur'an recitation, knowledge of Qur'an and Hadith, modern education, study materials, and madrasa uniforms for orphaned and underprivileged meritorious students."
+                    : 'এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।'}
                 </p>
               </div>
             </div>
@@ -260,10 +282,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 05
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ৫
+                  {isEn ? '5' : '৫'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <Sprout className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -273,11 +295,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>স্থায়ী আত্মনির্ভরশীলতা প্রকল্প</span>
+                  <span>{isEn ? 'Sustainable Self-Reliance Project' : 'স্থায়ী আত্মনির্ভরশীলতা প্রকল্প'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  অসহায় ও অসচ্ছল পরিবারগুলোর দারিদ্র্য বিমোচনে গবাদিপশু বিতরণ, ক্ষুদ্র ব্যবসা ফান্ড ও প্রয়োজনীয় কারিগরি উপকরণ প্রদানের মাধ্যমে স্থায়ীভাবে স্বাবলম্বী করে তোলা।
+                  {isEn
+                    ? 'Alleviating poverty among distressed families by providing livestock, small business capital, and essential technical tools to help them become permanently self-reliant.'
+                    : 'অসহায় ও অসচ্ছল পরিবারগুলোর দারিদ্র্য বিমোচনে গবাদিপশু বিতরণ, ক্ষুদ্র ব্যবসা ফান্ড ও প্রয়োজনীয় কারিগরি উপকরণ প্রদানের মাধ্যমে স্থায়ীভাবে স্বাবলম্বী করে তোলা।'}
                 </p>
               </div>
             </div>
@@ -289,10 +313,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 06
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ৬
+                  {isEn ? '6' : '৬'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <Trees className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -302,11 +326,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা</span>
+                  <span>{isEn ? 'Sadaqah Jariyah & Environmental Care' : 'সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।
+                  {isEn
+                    ? 'Installing deep tube wells to solve clean drinking water crises and conducting widespread tree plantation programs for a greener environment.'
+                    : 'বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।'}
                 </p>
               </div>
             </div>
@@ -318,10 +344,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 07
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ৭
+                  {isEn ? '7' : '৭'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <Scale className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -331,11 +357,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>শরী&apos;আহ ভিত্তিক যাকাত বণ্টন</span>
+                  <span>{isEn ? "Shari'ah-Compliant Zakat Distribution" : "শরী'আহ ভিত্তিক যাকাত বণ্টন"}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  ইসলামী শরী&apos;আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।
+                  {isEn
+                    ? "Distributing Zakat funds with 100% trustworthiness to rightful recipients through proper verification in accordance with Islamic Shari'ah."
+                    : "ইসলামী শরী'আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।"}
                 </p>
               </div>
             </div>
@@ -350,10 +378,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </div>
             <div>
               <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
-                Our Vision
+                {isEn ? 'Future Outlook' : 'Our Vision'}
               </span>
               <h2 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900">
-                আমাদের উদ্দেশ্য (Vision)
+                {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য (Vision)'}
               </h2>
             </div>
           </div>
@@ -361,7 +389,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           {/* Vision Core Quote */}
           <div className="bg-gradient-to-r from-emerald-50/80 to-amber-50/50 border-l-4 border-amber-600 rounded-r-2xl p-5 mb-8">
             <p className="font-solaiman text-slate-900 text-base sm:text-lg leading-relaxed font-medium">
-              “রাসূলুল্লাহ (ﷺ)-এর চিরন্তন জীবনাদর্শকে বুকে ধারণ করে নিঃস্বার্থ মানবসেবার মাধ্যমে মহান রবের সন্তুষ্টি অর্জন করা; এবং একটি নৈতিক, ইনসাফভিত্তিক ও ঈমানী আলোয় আলোকিত সমাজ বিনির্মাণ করা।”
+              {isEn
+                ? '“Embracing the timeless life ideal of Rasulullah (ﷺ) to earn the pleasure of the Almighty through selfless service to humanity, and building an ethical, justice-based society illuminated by the light of Iman.”'
+                : '“রাসূলুল্লাহ (ﷺ)-এর চিরন্তন জীবনাদর্শকে বুকে ধারণ করে নিঃস্বার্থ মানবসেবার মাধ্যমে মহান রবের সন্তুষ্টি অর্জন করা; এবং একটি নৈতিক, ইনসাফভিত্তিক ও ঈমানী আলোয় আলোকিত সমাজ বিনির্মাণ করা।”'}
             </p>
           </div>
 
@@ -374,10 +404,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 01
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#d97706] via-[#b45309] to-[#92400e] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-amber-950/20 font-serif-bn ring-4 ring-amber-50 group-hover:ring-amber-100 transition-all">
-                  ১
+                  {isEn ? '1' : '১'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-50/80 border border-amber-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-amber-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <Sun className="w-5 h-5 text-amber-600" strokeWidth={1.8} />
@@ -387,11 +417,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>তরুণ প্রজন্মের ঈমানী জাগরণ</span>
+                  <span>{isEn ? 'Spiritual Awakening of the Youth' : 'তরুণ প্রজন্মের ঈমানী জাগরণ'}</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-amber-400/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  প্রজ্ঞাপূর্ণ দাওয়াহ, বুদ্ধিবৃত্তিক আলোচনা ও দরদি দিকনির্দেশনার মাধ্যমে যুবসমাজকে ডিজিটাল ফিতনা ও নৈতিক অবক্ষয় থেকে রক্ষা করে কুরআন-সুন্নাহর দীপ্ত আদর্শে গড়ে তোলা।
+                  {isEn
+                    ? "Protecting the youth from digital fitnah and moral decay through wise Da'wah, intellectual discussions, and compassionate guidance to nurture them in the light of the Qur'an and Sunnah."
+                    : 'প্রজ্ঞাপূর্ণ দাওয়াহ, বুদ্ধিবৃত্তিক আলোচনা ও দরদি দিকনির্দেশনার মাধ্যমে যুবসমাজকে ডিজিটাল ফিতনা ও নৈতিক অবক্ষয় থেকে রক্ষা করে কুরআন-সুন্নাহর দীপ্ত আদর্শে গড়ে তোলা।'}
                 </p>
               </div>
             </div>
@@ -403,10 +435,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 02
               </span>
 
-              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              {/* Badges */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  ২
+                  {isEn ? '2' : '২'}
                 </div>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
                   <Landmark className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -417,7 +449,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <div className="flex-1 relative z-10">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <h3 className="font-bold text-slate-900 text-lg sm:text-xl font-serif-bn tracking-tight">
-                    আখেরাতের সঞ্চয়
+                    {isEn ? 'Provision for the Hereafter (Sadaqah Jariyah)' : 'আখেরাতের সঞ্চয়'}
                   </h3>
                   <span className="px-2.5 py-0.5 text-xs font-serif-bn rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">
                     صدقة جارية
@@ -425,25 +457,35 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-400/80 rounded-full"></span>
                 </div>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  লোক দেখানো মোহ ছেড়ে ইখলাসের সাথে <strong className="text-emerald-800 font-semibold">'সাদাকায়ে জারিয়াহ'</strong>র অংশীদার হওয়া—যা দুনিয়ায় দেবে আত্মিক প্রশান্তি, আর মৃত্যুর পর অন্ধকার কবরে উপহার দেবে অবিরাম সাওয়াব; যেন মহান রবের সন্তুষ্টিতে চূড়ান্ত ঠিকানা হয় জান্নাত। ইনশাআল্লাহ।
+                  {isEn ? (
+                    <>
+                      Participating in <strong className="text-emerald-800 font-semibold">&apos;Sadaqah Jariyah&apos;</strong> with sincerity, free from show-off—bringing inner peace in this world and continuous rewards in the grave, so that Jannah becomes our ultimate destination by the pleasure of Allah, Insha&apos;Allah.
+                    </>
+                  ) : (
+                    <>
+                      লোক দেখানো মোহ ছেড়ে ইখলাসের সাথে <strong className="text-emerald-800 font-semibold">&apos;সাদাকায়ে জারিয়াহ&apos;</strong>র অংশীদার হওয়া—যা দুনিয়ায় দেবে আত্মিক প্রশান্তি, আর মৃত্যুর পর অন্ধকার কবরে উপহার দেবে অবিরাম সাওয়াব; যেন মহান রবের সন্তুষ্টিতে চূড়ান্ত ঠিকানা হয় জান্নাত। ইনশাআল্লাহ।
+                    </>
+                  )}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Leadership & Executive Board Section (Matched to requested design) */}
+        {/* Leadership & Executive Board Section */}
         <div className="mb-14">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold mb-3">
               <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-              <span>নেতৃত্ব ও পরিচালনা</span>
+              <span>{isEn ? 'Leadership & Governance' : 'নেতৃত্ব ও পরিচালনা'}</span>
             </div>
             <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl text-slate-900 mb-3 tracking-tight">
-              আমাদের কার্যনির্বাহী পরিষদ
+              {isEn ? 'Our Executive Committee' : 'আমাদের কার্যনির্বাহী পরিষদ'}
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              সততা, স্বচ্ছতা ও দক্ষতার সাথে জিকরুল্লাহ ফাউন্ডেশনের কার্যক্রম পরিচালনায় আমাদের নিবেদিত কার্যনির্বাহী পরিষদ।
+              {isEn
+                ? 'Our dedicated Executive Committee steering the mission of Zikrullah Foundation with integrity, transparency, and excellence.'
+                : 'সততা, স্বচ্ছতা ও দক্ষতার সাথে জিকরুল্লাহ ফাউন্ডেশনের কার্যক্রম পরিচালনায় আমাদের নিবেদিত কার্যনির্বাহী পরিষদ।'}
             </p>
           </div>
 
@@ -483,7 +525,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="flex-1">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-2 font-solaiman">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                    <span>প্রতিষ্ঠাতা ও চেয়ারম্যানের বার্তা</span>
+                    <span>{isEn ? "Founder & Chairman's Message" : 'প্রতিষ্ঠাতা ও চেয়ারম্যানের বার্তা'}</span>
                   </div>
                   <h3 className="font-bold text-slate-900 text-xl sm:text-3xl lg:text-4xl tracking-wide mb-2 font-armwrestler">
                     Hafizur Rahman Siddik (Bogura)
@@ -493,17 +535,25 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                       Founder & Chairman
                     </span>
                     <span className="text-xs sm:text-sm text-slate-600 font-solaiman font-semibold">
-                      জিকরুল্লাহ ফাউন্ডেশন
+                      {isEn ? 'Zikrullah Foundation' : 'জিকরুল্লাহ ফাউন্ডেশন'}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* 2. Message Body (Official, elegant paragraphs in SolaimanLipi) */}
+              {/* 2. Message Body */}
               <div className="py-6 sm:py-8 space-y-5 sm:space-y-6 font-solaiman text-slate-700 text-sm sm:text-[17.5px] leading-[1.8] relative z-10 text-left">
                 {/* Paragraph 1: Founder's Deep Feeling & Inception */}
                 <p className="text-slate-800 font-normal">
-                  অসহায় মানুষের নীরব কান্না আর হাহাকার দেখলে আমার কলিজায় রক্তক্ষরণ হয়। সেই দরদি তাগিদ থেকেই আত্মপ্রকাশ করেছে <strong className="text-emerald-900 font-semibold">‘জিকরুল্লাহ ফাউন্ডেশন’</strong>। এই ক্ষণস্থায়ী দুনিয়ায় টাকা-পয়সা আজ আছে, কাল নেই—এটাই সম্পদের বাস্তবতা। আসল সফলতা তো লুকিয়ে আছে আল্লাহর সন্তুষ্টির উদ্দেশ্যে অসহায় মানুষের কল্যাণে তা ব্যয় করার মাঝে।
+                  {isEn ? (
+                    <>
+                      My heart aches deeply whenever I witness the silent cries and distress of the helpless around us. It was out of that profound sense of compassion that <strong className="text-emerald-900 font-semibold">‘Zikrullah Foundation’</strong> emerged. In this fleeting world, wealth is here today and gone tomorrow—such is the transient reality of worldly possessions. True, lasting success lies in spending it for the welfare of distressed humanity solely to earn the pleasure of Almighty Allah.
+                    </>
+                  ) : (
+                    <>
+                      অসহায় মানুষের নীরব কান্না আর হাহাকার দেখলে আমার কলিজায় রক্তক্ষরণ হয়। সেই দরদি তাগিদ থেকেই আত্মপ্রকাশ করেছে <strong className="text-emerald-900 font-semibold">‘জিকরুল্লাহ ফাউন্ডেশন’</strong>। এই ক্ষণস্থায়ী দুনিয়ায় টাকা-পয়সা আজ আছে, কাল নেই—এটাই সম্পদের বাস্তবতা। আসল সফলতা তো লুকিয়ে আছে আল্লাহর সন্তুষ্টির উদ্দেশ্যে অসহায় মানুষের কল্যাণে তা ব্যয় করার মাঝে।
+                    </>
+                  )}
                 </p>
 
                 {/* Quranic Verse Box (Soft Emerald Accent) */}
@@ -512,9 +562,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
                   </p>
                   <blockquote className="text-emerald-950 font-normal text-sm sm:text-base leading-relaxed font-solaiman">
-                    “যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”
+                    {isEn
+                      ? "“Those who spend their wealth [in Allah's way] by night and by day, secretly and publicly - they will have their reward with their Lord. And no fear will there be concerning them, nor will they grieve.”"
+                      : '“যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”'}
                     <span className="not-italic block mt-1.5 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
-                      — সূরা আল-বাক্বারাহ্ : ২৭৪
+                      {isEn ? '— Surah Al-Baqarah : 274' : '— সূরা আল-বাক্বারাহ্ : ২৭৪'}
                     </span>
                   </blockquote>
                 </div>
@@ -522,24 +574,50 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 {/* Prophetic Hadith Box: Blessing & Angels' Prayer */}
                 <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-4 text-xs sm:text-[16.5px]">
                   <p className="text-slate-800 leading-relaxed font-solaiman">
-                    রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
+                    {isEn ? (
+                      <>
+                        The Messenger of Allah (ﷺ) said— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> “Charity does not decrease wealth in the slightest” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih Muslim: 2588)</span>. Whenever you spend seeking the pleasure of Allah, the angels in the heavens supplicate— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> “O Allah, grant the one who spends in charity a blessed compensation” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih al-Bukhari: 1442)</span>.
+                      </>
+                    ) : (
+                      <>
+                        রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
+                      </>
+                    )}
                   </p>
 
                   <p className="text-slate-800 leading-relaxed border-t border-emerald-100/80 pt-3.5 font-solaiman">
-                    দান হলো মুমিনের জীবনের বহুমুখী রহমত। কারণ— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> ‘সদকা হলো ঈমানের অকাট্য দলিল’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ৪২২)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> ‘সদকা গুনাহসমূহকে এভাবে মিটিয়ে দেয়, যেমন পানি আগুনকে নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(জামে আত-তিরমিজি: ২৬১৬)</span>, এবং <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> ‘নিশ্চয়ই সদকা দানকারীর কবরের উত্তাপ নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সিলসিলাতুস সহীহাহ: ৩৪৮৪)</span>।
+                    {isEn ? (
+                      <>
+                        Charity brings abundant mercy into a believer&apos;s life. Indeed— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> “Charity is clear proof (of faith)” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih Muslim: 223 / 422)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> “Charity extinguishes sin just as water extinguishes fire” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Jami` at-Tirmidhi: 2616)</span>, and <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> “Verily, charity extinguishes the heat of the grave for those who give it” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Al-Silsilah al-Sahihah: 3484)</span>.
+                      </>
+                    ) : (
+                      <>
+                        দান হলো মুমিনের জীবনের বহুমুখী রহমত। কারণ— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> ‘সদকা হলো ঈমানের অকাট্য দলিল’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ৪২২)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> ‘সদকা গুনাহসমূহকে এভাবে মিটিয়ে দেয়, যেমন পানি আগুনকে নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(জামে আত-তিরমিজি: ২৬১৬)</span>, এবং <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> ‘নিশ্চয়ই সদকা দানকারীর কবরের উত্তাপ নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সিলসিলাতুস সহীহাহ: ৩৪৮৪)</span>।
+                      </>
+                    )}
                   </p>
                 </div>
 
                 {/* Medical Hadith Inset Box (Amber Accent) */}
                 <div className="bg-[#fffdf7] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200/80 border-l-4 border-l-amber-500 shadow-2xs">
                   <p className="text-slate-800 text-sm sm:text-[16.5px] leading-relaxed font-solaiman">
-                    এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
+                    {isEn ? (
+                      <>
+                        Our beloved Prophet (ﷺ) even advised— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> “Treat your sick ones by giving charity” <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(Sahih al-Jami`: 3358)</span>.
+                      </>
+                    ) : (
+                      <>
+                        এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
+                      </>
+                    )}
                   </p>
                 </div>
 
                 {/* Paragraph 3: Warm Institutional Invitation */}
                 <p className="text-slate-800 font-normal pt-1 font-solaiman">
-                  আমরা অনুগ্রহপ্রার্থী হয়ে কারো দ্বারে কিছু চাই না; আমাদের আদর্শের সাথে আপনার মনের টান মিললেই স্বতঃস্ফূর্তভাবে এই খেদমতে যুক্ত হতে পারেন। আপনার সামান্য সহানুভূতিই হতে পারে কারো মুখে এক চিলতে হাসি ফোটানোর উসিলা। পরকালের চিরস্থায়ী কল্যাণ অর্জনে—‘জিকরুল্লাহ ফাউন্ডেশন’ পরিবারে আপনাকে উষ্ণ স্বাগতম।
+                  {isEn
+                    ? "We never knock on anyone's door seeking personal favors; whenever your heart resonates with our noble mission, you are most welcome to join this compassionate service willingly. Even a small gesture of kindness from you can become the means of bringing a precious smile to someone's face. To earn enduring eternal rewards in the Hereafter—we warmly welcome you to the ‘Zikrullah Foundation’ family."
+                    : 'আমরা অনুগ্রহপ্রার্থী হয়ে কারো দ্বারে কিছু চাই না; আমাদের আদর্শের সাথে আপনার মনের টান মিললেই স্বতঃস্ফূর্তভাবে এই খেদমতে যুক্ত হতে পারেন। আপনার সামান্য সহানুভূতিই হতে পারে কারো মুখে এক চিলতে হাসি ফোটানোর উসিলা। পরকালের চিরস্থায়ী কল্যাণ অর্জনে—‘জিকরুল্লাহ ফাউন্ডেশন’ পরিবারে আপনাকে উষ্ণ স্বাগতম।'}
                 </p>
               </div>
 
@@ -550,15 +628,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   <div className="mb-2 flex items-center justify-center sm:justify-start">
                     <img
                       src="https://res.cloudinary.com/dlklqihg6/image/upload/v1791661214/vtbxogwfkuzaajs4ptv2.png"
-                      alt="স্বাক্ষর — হাফিজুর রহমান সিদ্দিক"
+                      alt={isEn ? 'Signature — Hafizur Rahman Siddik' : 'স্বাক্ষর — হাফিজুর রহমান সিদ্দিক'}
                       className="h-10 sm:h-12 md:h-13 w-auto max-w-[140px] sm:max-w-[160px] object-contain select-none transition-transform hover:scale-105 duration-300"
                     />
                   </div>
                   <div className="text-base sm:text-lg font-bold text-slate-900 font-solaiman">
-                    হাফিজুর রহমান সিদ্দিক (বগুড়া)
+                    {isEn ? 'Hafizur Rahman Siddik (Bogura)' : 'হাফিজুর রহমান সিদ্দিক (বগুড়া)'}
                   </div>
                   <div className="text-xs sm:text-sm text-emerald-700 font-semibold font-solaiman mt-0.5">
-                    প্রতিষ্ঠাতা ও চেয়ারম্যান, জিকরুল্লাহ ফাউন্ডেশন
+                    {isEn ? 'Founder & Chairman, Zikrullah Foundation' : 'প্রতিষ্ঠাতা ও চেয়ারম্যান, জিকরুল্লাহ ফাউন্ডেশন'}
                   </div>
                 </div>
 
@@ -569,7 +647,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#087443] to-[#034e2c] hover:from-[#0a8c51] hover:to-[#056338] active:scale-95 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-950/25 transition-all duration-300 cursor-pointer group min-h-[44px]"
                   >
                     <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white group-hover:scale-110 transition-transform duration-300" />
-                    <span>খেদমতে শরীক হোন</span>
+                    <span>{t.common.donateNow}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>

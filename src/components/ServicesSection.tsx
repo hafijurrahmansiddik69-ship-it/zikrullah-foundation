@@ -14,12 +14,15 @@ import {
   Sun,
   Landmark
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ServicesSectionProps {
   onSelectServiceDonation?: (serviceTitle: string) => void;
 }
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServiceDonation }) => {
+  const { isEn } = useLanguage();
+
   return (
     <section id="services" className="py-20 sm:py-24 bg-gradient-to-b from-[#f8faf9] via-white to-[#f4f8f6] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -28,13 +31,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs sm:text-sm font-semibold mb-3.5">
             <Compass className="w-4 h-4 text-emerald-600" />
-            <span>আমাদের প্রোগ্রাম ও সেবা পরিকল্পনা</span>
+            <span>{isEn ? 'Our Programs & Services' : 'আমাদের প্রোগ্রাম ও সেবা পরিকল্পনা'}</span>
           </div>
           <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl lg:text-5xl text-[#045332] tracking-tight leading-tight mb-4">
-            আমাদের প্রোগ্রাম ও সেবা (লক্ষ্য ও উদ্দেশ্য)
+            {isEn ? 'Our Mission & Vision' : 'আমাদের প্রোগ্রাম ও সেবা (লক্ষ্য ও উদ্দেশ্য)'}
           </h2>
           <p className="text-slate-600 font-solaiman text-base sm:text-lg leading-relaxed">
-            কুরআন-সুন্নাহর সঠিক নির্দেশনা অনুযায়ী মানবতার নিঃস্বার্থ খেদমত এবং আখিরাতের সঞ্চয় গড়ে তোলার পবিত্র অঙ্গীকার।
+            {isEn
+              ? "A sacred commitment to selfless humanitarian service and building eternal rewards for the Hereafter in light of the Qur'an and Sunnah."
+              : 'কুরআন-সুন্নাহর সঠিক নির্দেশনা অনুযায়ী মানবতার নিঃস্বার্থ খেদমত এবং আখিরাতের সঞ্চয় গড়ে তোলার পবিত্র অঙ্গীকার।'}
           </p>
         </div>
 
@@ -55,10 +60,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   </div>
                   <div>
                     <span className="text-[11px] font-bold text-emerald-700 tracking-wider uppercase block font-sans">
-                      Our Mission
+                      {isEn ? 'Core Purpose' : 'Our Mission'}
                     </span>
                     <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900 leading-tight">
-                      আমাদের লক্ষ্য (Mission)
+                      {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য (Mission)'}
                     </h3>
                   </div>
                 </div>
@@ -67,7 +72,9 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
               {/* Mission Main Statement */}
               <div className="bg-[#f6faf8] border-l-4 border-emerald-600 rounded-r-2xl p-4 sm:p-5 mb-7">
                 <p className="font-solaiman text-slate-900 text-base sm:text-[17px] leading-relaxed font-medium">
-                  “রাসূলুল্লাহ (ﷺ)-এর অনুকম্পা ও সুন্নাহর চিরায়ত আলোকে পাথেয় করে—অসহায় উম্মাহর মুখে হাসি ফোটানো, ইলমে দ্বীনের আলো ছড়ানো এবং একটি স্থায়ী স্বাবলম্বী সমাজ বিনির্মাণে আমরা মাঠপর্যায়ে নিবেদিত।”
+                  {isEn
+                    ? '“Guided by the compassion of Rasulullah (ﷺ) and the timeless light of the Sunnah—we are dedicated at the grassroots level to bringing smiles to the faces of the distressed Ummah, spreading Islamic knowledge, and building a permanently self-reliant society.”'
+                    : '“রাসূলুল্লাহ (ﷺ)-এর অনুকম্পা ও সুন্নাহর চিরায়ত আলোকে পাথেয় করে—অসহায় উম্মাহর মুখে হাসি ফোটানো, ইলমে দ্বীনের আলো ছড়ানো এবং একটি স্থায়ী স্বাবলম্বী সমাজ বিনির্মাণে আমরা মাঠপর্যায়ে নিবেদিত।”'}
                 </p>
               </div>
 
@@ -80,10 +87,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     01
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ১
+                      {isEn ? '1' : '১'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <HandHeart className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -93,11 +100,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া</span>
+                      <span>{isEn ? 'Food & Clothing Aid in Light of the Sunnah' : 'সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।
+                      {isEn
+                        ? 'Delivering nourishing food to destitute, orphaned, poor, and widowed families, and gifting new clothes and winter garments to those in need.'
+                        : 'অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।'}
                     </p>
                   </div>
                 </div>
@@ -109,10 +118,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     02
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ২
+                      {isEn ? '2' : '২'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <Stethoscope className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -122,11 +131,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>বিনামূল্যে জরুরি চিকিৎসা ও স্বাস্থ্যসেবা</span>
+                      <span>{isEn ? 'Free Emergency Medical & Healthcare Services' : 'বিনামূল্যে জরুরি চিকিৎসা ও স্বাস্থ্যসেবা'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      দুর্গম ও অবহেলিত অঞ্চলের অসচ্ছল মানুষের কাছে বিশেষজ্ঞ চিকিৎসকের পরামর্শ, প্রয়োজনীয় ওষুধ ও জরুরি সেবা সহজে পৌঁছে দেওয়া।
+                      {isEn
+                        ? 'Providing specialist doctor consultations, essential medicines, and urgent medical care to underprivileged people in remote and neglected areas.'
+                        : 'দুর্গম ও অবহেলিত অঞ্চলের অসচ্ছল মানুষের কাছে বিশেষজ্ঞ চিকিৎসকের পরামর্শ, প্রয়োজনীয় ওষুধ ও জরুরি সেবা সহজে পৌঁছে দেওয়া।'}
                     </p>
                   </div>
                 </div>
@@ -138,10 +149,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     03
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ৩
+                      {isEn ? '3' : '৩'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <HeartPulse className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -151,11 +162,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>জরুরি রক্তদান</span>
+                      <span>{isEn ? 'Emergency Blood Donation' : 'জরুরি রক্তদান'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।
+                      {isEn
+                        ? 'Ensuring completely free, timely blood arrangement through voluntary donors for the urgent medical treatment of critical patients.'
+                        : 'মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।'}
                     </p>
                   </div>
                 </div>
@@ -167,10 +180,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     04
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ৪
+                      {isEn ? '4' : '৪'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <BookOpen className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -180,11 +193,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>দ্বীনি ও আদর্শ শিক্ষা বিস্তার</span>
+                      <span>{isEn ? 'Islamic & Moral Education' : 'দ্বীনি ও আদর্শ শিক্ষা বিস্তার'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।
+                      {isEn
+                        ? "Establishing sustainable facilities for pure Qur'an recitation, knowledge of Qur'an and Hadith, modern education, study materials, and madrasa uniforms for orphaned and underprivileged meritorious students."
+                        : 'এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।'}
                     </p>
                   </div>
                 </div>
@@ -196,10 +211,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     05
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ৫
+                      {isEn ? '5' : '৫'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <Sprout className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -209,11 +224,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>স্থায়ী আত্মনির্ভরশীলতা প্রকল্প</span>
+                      <span>{isEn ? 'Sustainable Self-Reliance Project' : 'স্থায়ী আত্মনির্ভরশীলতা প্রকল্প'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      অসহায় ও অসচ্ছল পরিবারগুলোর দারিদ্র্য বিমোচনে গবাদিপশু বিতরণ, ক্ষুদ্র ব্যবসা ফান্ড ও প্রয়োজনীয় কারিগরি উপকরণ প্রদানের মাধ্যমে স্থায়ীভাবে স্বাবলম্বী করে তোলা।
+                      {isEn
+                        ? 'Alleviating poverty among distressed families by providing livestock, small business capital, and essential technical tools to help them become permanently self-reliant.'
+                        : 'অসহায় ও অসচ্ছল পরিবারগুলোর দারিদ্র্য বিমোচনে গবাদিপশু বিতরণ, ক্ষুদ্র ব্যবসা ফান্ড ও প্রয়োজনীয় কারিগরি উপকরণ প্রদানের মাধ্যমে স্থায়ীভাবে স্বাবলম্বী করে তোলা।'}
                     </p>
                   </div>
                 </div>
@@ -225,10 +242,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     06
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ৬
+                      {isEn ? '6' : '৬'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <Trees className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -238,11 +255,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা</span>
+                      <span>{isEn ? 'Sadaqah Jariyah & Environmental Care' : 'সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।
+                      {isEn
+                        ? 'Installing deep tube wells to solve clean drinking water crises and conducting widespread tree plantation programs for a greener environment.'
+                        : 'বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।'}
                     </p>
                   </div>
                 </div>
@@ -254,10 +273,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     07
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ৭
+                      {isEn ? '7' : '৭'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <Scale className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -267,11 +286,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>শরী&apos;আহ ভিত্তিক যাকাত বণ্টন</span>
+                      <span>{isEn ? "Shari'ah-Compliant Zakat Distribution" : "শরী'আহ ভিত্তিক যাকাত বণ্টন"}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-300/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      ইসলামী শরী&apos;আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।
+                      {isEn
+                        ? "Distributing Zakat funds with 100% trustworthiness to rightful recipients through proper verification in accordance with Islamic Shari'ah."
+                        : "ইসলামী শরী'আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।"}
                     </p>
                   </div>
                 </div>
@@ -281,13 +302,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
             {onSelectServiceDonation && (
               <div className="mt-8 pt-6 border-t border-emerald-100/80 flex items-center justify-between">
                 <span className="text-xs text-slate-500 font-medium">
-                  মাঠপর্যায়ে এই কাজগুলো বাস্তবায়নে আপনিও শরিক হতে পারেন
+                  {isEn
+                    ? 'You can also partner with us to implement these grassroots initiatives'
+                    : 'মাঠপর্যায়ে এই কাজগুলো বাস্তবায়নে আপনিও শরিক হতে পারেন'}
                 </span>
                 <button
                   onClick={() => onSelectServiceDonation('সাধারণ দান ও সেবা ফান্ড')}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline cursor-pointer shrink-0 ml-2"
                 >
-                  <span>সহযোগিতা করুন</span>
+                  <span>{isEn ? 'Contribute' : 'সহযোগিতা করুন'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -308,10 +331,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   </div>
                   <div>
                     <span className="text-[11px] font-bold text-amber-700 tracking-wider uppercase block font-sans">
-                      Our Vision
+                      {isEn ? 'Future Outlook' : 'Our Vision'}
                     </span>
                     <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900 leading-tight">
-                      আমাদের উদ্দেশ্য (Vision)
+                      {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য (Vision)'}
                     </h3>
                   </div>
                 </div>
@@ -320,7 +343,9 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
               {/* Vision Main Statement */}
               <div className="bg-gradient-to-r from-emerald-50/80 to-amber-50/50 border-l-4 border-amber-600 rounded-r-2xl p-4 sm:p-5 mb-7">
                 <p className="font-solaiman text-slate-900 text-base sm:text-[17px] leading-relaxed font-medium">
-                  “রাসূলুল্লাহ (ﷺ)-এর চিরন্তন জীবনাদর্শকে বুকে ধারণ করে নিঃস্বার্থ মানবসেবার মাধ্যমে মহান রবের সন্তুষ্টি অর্জন করা; এবং একটি নৈতিক, ইনসাফভিত্তিক ও ঈমানী আলোয় আলোকিত সমাজ বিনির্মাণ করা।”
+                  {isEn
+                    ? '“Embracing the timeless life ideal of Rasulullah (ﷺ) to earn the pleasure of the Almighty through selfless service to humanity, and building an ethical, justice-based society illuminated by the light of Iman.”'
+                    : '“রাসূলুল্লাহ (ﷺ)-এর চিরন্তন জীবনাদর্শকে বুকে ধারণ করে নিঃস্বার্থ মানবসেবার মাধ্যমে মহান রবের সন্তুষ্টি অর্জন করা; এবং একটি নৈতিক, ইনসাফভিত্তিক ও ঈমানী আলোয় আলোকিত সমাজ বিনির্মাণ করা।”'}
                 </p>
               </div>
 
@@ -333,10 +358,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     01
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#d97706] via-[#b45309] to-[#92400e] text-white font-bold text-base flex items-center justify-center shadow-md shadow-amber-950/20 font-serif-bn ring-4 ring-amber-50 group-hover/card:ring-amber-100 transition-all">
-                      ১
+                      {isEn ? '1' : '১'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-50/80 border border-amber-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-amber-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <Sun className="w-5 h-5 text-amber-600" strokeWidth={1.8} />
@@ -346,11 +371,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   {/* Content */}
                   <div className="flex-1 relative z-10">
                     <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1.5 font-serif-bn tracking-tight flex items-center gap-2">
-                      <span>তরুণ প্রজন্মের ঈমানী জাগরণ</span>
+                      <span>{isEn ? 'Spiritual Awakening of the Youth' : 'তরুণ প্রজন্মের ঈমানী জাগরণ'}</span>
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-amber-400/80 rounded-full"></span>
                     </h4>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      প্রজ্ঞাপূর্ণ দাওয়াহ, বুদ্ধিবৃত্তিক আলোচনা ও দরদি দিকনির্দেশনার মাধ্যমে যুবসমাজকে ডিজিটাল ফিতনা ও নৈতিক অবক্ষয় থেকে রক্ষা করে কুরআন-সুন্নাহর দীপ্ত আদর্শে গড়ে তোলা।
+                      {isEn
+                        ? "Protecting the youth from digital fitnah and moral decay through wise Da'wah, intellectual discussions, and compassionate guidance to nurture them in the light of the Qur'an and Sunnah."
+                        : 'প্রজ্ঞাপূর্ণ দাওয়াহ, বুদ্ধিবৃত্তিক আলোচনা ও দরদি দিকনির্দেশনার মাধ্যমে যুবসমাজকে ডিজিটাল ফিতনা ও নৈতিক অবক্ষয় থেকে রক্ষা করে কুরআন-সুন্নাহর দীপ্ত আদর্শে গড়ে তোলা।'}
                     </p>
                   </div>
                 </div>
@@ -362,10 +389,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     02
                   </span>
 
-                  {/* Number Badge + 3D Colorful Vector Icon */}
+                  {/* Number Badge + Minimal Vector Icon */}
                   <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover/card:ring-emerald-100 transition-all">
-                      ২
+                      {isEn ? '2' : '২'}
                     </div>
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover/card:scale-105 group-hover/card:border-emerald-300 group-hover/card:shadow-md transition-all duration-300 shrink-0">
                       <Landmark className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
@@ -376,7 +403,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   <div className="flex-1 relative z-10">
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
                       <h4 className="font-bold text-slate-900 text-base sm:text-lg font-serif-bn tracking-tight">
-                        আখেরাতের সঞ্চয়
+                        {isEn ? 'Provision for the Hereafter (Sadaqah Jariyah)' : 'আখেরাতের সঞ্চয়'}
                       </h4>
                       <span className="px-2.5 py-0.5 text-xs font-serif-bn rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">
                         صدقة جارية
@@ -384,27 +411,39 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                       <span className="hidden sm:inline-block w-6 h-[2px] bg-emerald-400/80 rounded-full"></span>
                     </div>
                     <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-solaiman font-normal">
-                      লোক দেখানো মোহ ছেড়ে ইখলাসের সাথে <strong className="text-emerald-800 font-semibold">'সাদাকায়ে জারিয়াহ'</strong>র অংশীদার হওয়া—যা দুনিয়ায় দেবে আত্মিক প্রশান্তি, আর মৃত্যুর পর অন্ধকার কবরে উপহার দেবে অবিরাম সাওয়াব; যেন মহান রবের সন্তুষ্টিতে চূড়ান্ত ঠিকানা হয় জান্নাত। ইনশাআল্লাহ।
+                      {isEn ? (
+                        <>
+                          Participating in <strong className="text-emerald-800 font-semibold">&apos;Sadaqah Jariyah&apos;</strong> with sincerity, free from show-off—bringing inner peace in this world and continuous rewards in the grave, so that Jannah becomes our ultimate destination by the pleasure of Allah, Insha&apos;Allah.
+                        </>
+                      ) : (
+                        <>
+                          লোক দেখানো মোহ ছেড়ে ইখলাসের সাথে <strong className="text-emerald-800 font-semibold">&apos;সাদাকায়ে জারিয়াহ&apos;</strong>র অংশীদার হওয়া—যা দুনিয়ায় দেবে আত্মিক প্রশান্তি, আর মৃত্যুর পর অন্ধকার কবরে উপহার দেবে অবিরাম সাওয়াব; যেন মহান রবের সন্তুষ্টিতে চূড়ান্ত ঠিকানা হয় জান্নাত। ইনশাআল্লাহ।
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Quranic Inspiration Ribbon (Surah Al-Baqarah: 274) */}
+              {/* Bottom Quranic Inspiration Ribbon */}
               <div className="mt-7 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#034a2c] to-[#045332] text-white shadow-md border border-emerald-800/40">
                 <div className="flex items-start gap-3 sm:gap-3.5">
                   <HeartHandshake className="w-5 h-5 text-amber-300 shrink-0 mt-1" />
                   <div className="space-y-2 flex-1">
                     <p dir="rtl" className="font-times font-bold text-white text-sm sm:text-[15px] lg:text-base leading-[2.05] tracking-normal text-right">
-                      الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
+                      {isEn
+                        ? 'مَّن ذَا الَّذِي يُقْرِضُ اللَّهَ قَرْضًا حَسَنًا فَيُضَاعِفَهُ لَهُ أَضْعَافًا كَثِيرَةً ۚ وَاللَّهُ يَقْبِضُ وَيَبْسُطُ وَإِلَيْهِ تُرْجَعُونَ'
+                        : 'الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ'}
                     </p>
                     <p className="font-solaiman text-emerald-50 text-xs sm:text-[13.5px] leading-relaxed">
-                      “যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”
+                      {isEn
+                        ? '“Who is it that would loan Allah a goodly loan so He may multiply it for him many times over? And it is Allah who withholds and grants abundance, and to Him you will be returned.”'
+                        : '“যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”'}
                     </p>
                     <div className="pt-1 flex items-center justify-between sm:justify-start gap-2">
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-900/90 text-[11px] sm:text-xs text-amber-300 font-sans-bn font-medium border border-emerald-700/60">
                         <Sparkles className="w-3 h-3 text-amber-300" />
-                        সূরা আল-বাক্বারাহ্ : ২৭৪
+                        {isEn ? 'Surah Al-Baqarah : 245' : 'সূরা আল-বাক্বারাহ্ : ২৭৪'}
                       </span>
                     </div>
                   </div>
@@ -415,13 +454,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
             {onSelectServiceDonation && (
               <div className="mt-8 pt-6 border-t border-emerald-100/80 flex items-center justify-between">
                 <span className="text-xs text-slate-500 font-medium">
-                  সাদাকায়ে জারিয়াহ ফান্ডে অংশগ্রহণ করুন
+                  {isEn ? 'Contribute to our Sadaqah Jariyah Fund' : 'সাদাকায়ে জারিয়াহ ফান্ডে অংশগ্রহণ করুন'}
                 </span>
                 <button
                   onClick={() => onSelectServiceDonation('সাদাকায়ে জারিয়াহ তহবিল')}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline cursor-pointer shrink-0 ml-2"
                 >
-                  <span>সাদাকাহ দিন</span>
+                  <span>{isEn ? 'Give Sadaqah' : 'সাদাকাহ দিন'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -434,3 +473,4 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
     </section>
   );
 };
+

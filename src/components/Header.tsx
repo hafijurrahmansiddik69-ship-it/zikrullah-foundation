@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white border border-emerald-200/90 p-0.5 sm:p-1 flex items-center justify-center shadow-xs overflow-hidden group-hover:scale-105 transition-all duration-300 shrink-0">
               <img
                 src={FOUNDATION_INFO.logoUrl}
-                alt={FOUNDATION_INFO.name}
+                alt={isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = '/logo.jpg';
@@ -210,7 +210,7 @@ export const Header: React.FC<HeaderProps> = ({
                     ? 'bg-[#10b981] text-white shadow-[0_0_12px_rgba(16,185,129,0.6)] font-extrabold'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
-                title="বাংলা ভাষায় দেখুন"
+                title={isEn ? 'Switch to Bangla' : 'বাংলা ভাষায় দেখুন'}
               >
                 <span>বাং</span>
               </button>
@@ -241,7 +241,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               className="p-2 sm:p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center text-slate-700 hover:text-emerald-700 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 lg:hidden cursor-pointer"
-              aria-label="মেনু খুলুন"
+              aria-label={isEn ? 'Open menu' : 'মেনু খুলুন'}
             >
               {mobileMenuOpen ? <X className="w-6 h-6 text-emerald-800" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -267,7 +267,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="w-9 h-9 rounded-xl bg-white p-0.5 border border-emerald-200/90 flex items-center justify-center shadow-xs">
                   <img
                     src={FOUNDATION_INFO.logoUrl}
-                    alt={FOUNDATION_INFO.name}
+                    alt={isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
                     onError={(e) => {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = '/logo.jpg';

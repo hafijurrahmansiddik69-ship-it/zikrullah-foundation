@@ -45,6 +45,15 @@ export class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
+      let isEn = false;
+      try {
+        isEn =
+          typeof document !== 'undefined' &&
+          (document.documentElement.lang === 'en' || localStorage.getItem('selectedLang') === 'en');
+      } catch {
+        isEn = false;
+      }
+
       return (
         <div className="min-h-screen bg-[#fafcfb] flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 border border-emerald-100 shadow-xl text-center space-y-5">
@@ -54,10 +63,12 @@ export class ErrorBoundary extends Component<Props, State> {
 
             <div className="space-y-2">
               <h2 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332]">
-                জিকরুল্লাহ ফাউন্ডেশন
+                {isEn ? 'Zikrullah Foundation' : 'জিকরুল্লাহ ফাউন্ডেশন'}
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-solaiman">
-                পৃষ্ঠাটি লোড হতে কিছুটা সমস্যা হয়েছে। অনুগ্রহ করে পেজটি রিফ্রেশ বা রিলোড করুন।
+                {isEn
+                  ? 'Something went wrong while loading this page. Please refresh or reload the page.'
+                  : 'পৃষ্ঠাটি লোড হতে কিছুটা সমস্যা হয়েছে। অনুগ্রহ করে পেজটি রিফ্রেশ বা রিলোড করুন।'}
               </p>
             </div>
 
@@ -66,7 +77,7 @@ export class ErrorBoundary extends Component<Props, State> {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-sm shadow-md transition-all cursor-pointer w-full"
             >
               <RotateCw className="w-4 h-4" />
-              <span>পেজ রিলোড করুন (Reload)</span>
+              <span>{isEn ? 'Reload Page' : 'পেজ রিলোড করুন (Reload)'}</span>
             </button>
           </div>
         </div>

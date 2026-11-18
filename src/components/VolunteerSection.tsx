@@ -23,12 +23,23 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
     gmailUrl: string;
   } | null>(null);
 
+  const interestOptions = [
+    { id: 'relief', bn: 'ত্রাণ ও খাদ্য সহায়তা বিতরণ', en: 'Relief & Emergency Food Aid' },
+    { id: 'medical', bn: 'ফ্রি মেডিকেল ক্যাম্প পরিচালনা', en: 'Free Medical Camp & Care' },
+    { id: 'education', bn: 'মক্তব ও শিক্ষা কার্যক্রম', en: 'Maktab & Education Programs' },
+    { id: 'media', bn: 'আইটি, গ্রাফিক্স ও প্রচার', en: 'IT, Media & Communications' },
+    { id: 'other', bn: 'অন্যান্য সামাজিক কাজ', en: 'General Social Welfare' },
+  ];
+
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [upazila, setUpazila] = useState('');
   const [bloodGroup, setBloodGroup] = useState('A+');
-  const [interest, setInterest] = useState(t.volunteer.interestDefault);
+  const [interestId, setInterestId] = useState('relief');
   const [message, setMessage] = useState('');
+
+  const selectedInterestObj = interestOptions.find((o) => o.id === interestId) || interestOptions[0];
+  const resolvedInterest = isEn ? selectedInterestObj.en : selectedInterestObj.bn;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +54,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
       phone: cleanPhone,
       upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || t.volunteer.interestDefault,
+      interest: resolvedInterest,
       message: message.trim() || ''
     };
 
@@ -53,7 +64,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
       phone: cleanPhone,
       upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || t.volunteer.interestDefault,
+      interest: resolvedInterest,
       message: message.trim() || '',
       status: 'অপেক্ষমাণ',
       adminNote: 'Web Registration Form'
@@ -78,7 +89,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
       phone: cleanPhone,
       upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || t.volunteer.interestDefault,
+      interest: resolvedInterest,
       mailtoUrl,
       gmailUrl
     });
@@ -300,25 +311,15 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
                       {t.volunteer.interestLabel}
                     </label>
                     <select
-                      value={interest}
-                      onChange={(e) => setInterest(e.target.value)}
+                      value={interestId}
+                      onChange={(e) => setInterestId(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 cursor-pointer"
                     >
-                      <option value={isEn ? "Relief & Emergency Food Aid" : "ত্রাণ ও খাদ্য সহায়তা বিতরণ"}>
-                        {isEn ? "Relief & Emergency Food Aid" : "ত্রাণ ও খাদ্য সহায়তা বিতরণ"}
-                      </option>
-                      <option value={isEn ? "Free Medical Camp & Care" : "ফ্রি মেডিকেল ক্যাম্প পরিচালনা"}>
-                        {isEn ? "Free Medical Camp & Care" : "ফ্রি মেডিকেল ক্যাম্প পরিচালনা"}
-                      </option>
-                      <option value={isEn ? "Maktab & Education Programs" : "মক্তব ও শিক্ষা কার্যক্রম"}>
-                        {isEn ? "Maktab & Education Programs" : "মক্তব ও শিক্ষা কার্যক্রম"}
-                      </option>
-                      <option value={isEn ? "IT, Media & Communications" : "আইটি, গ্রাফিক্স ও সোশ্যাল মিডিয়া"}>
-                        {isEn ? "IT, Media & Communications" : "আইটি, গ্রাফিক্স ও প্রচার"}
-                      </option>
-                      <option value={isEn ? "General Social Welfare" : "অন্যান্য সামাজিক কাজ"}>
-                        {isEn ? "General Social Welfare" : "অন্যান্য সামাজিক কাজ"}
-                      </option>
+                      {interestOptions.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {isEn ? opt.en : opt.bn}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src={FOUNDATION_INFO.homeBackgroundUrl || heroImg}
-          alt="জিকরুল্লাহ ফাউন্ডেশন ব্যাকগ্রাউন্ড"
+          alt={isEn ? 'Zikrullah Foundation Background' : 'জিকরুল্লাহ ফাউন্ডেশন ব্যাকগ্রাউন্ড'}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center scale-105"
         />
@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="w-12 h-12 rounded-2xl bg-white/10 border border-emerald-500/30 p-1 flex items-center justify-center shadow-inner overflow-hidden">
                 <img
                   src={FOUNDATION_INFO.logoUrl}
-                  alt={FOUNDATION_INFO.name}
+                  alt={isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = '/logo.jpg';

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Calculator, HelpCircle, ArrowRight, ShieldAlert, Sparkles } from 'lucide-react';
+import { X, Calculator, ArrowRight, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ZakatCalculatorModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
   onClose,
   onProceedToDonate
 }) => {
+  const { isEn } = useLanguage();
   const [cash, setCash] = useState<number>(0);
   const [gold, setGold] = useState<number>(0);
   const [silver, setSilver] = useState<number>(0);
@@ -28,6 +30,7 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
   const netZakatable = Math.max(0, totalAssets - debts);
   const isEligible = netZakatable >= NISAB_THRESHOLD;
   const zakatPayable = isEligible ? Math.round(netZakatable * 0.025) : 0;
+  const locale = isEn ? 'en-US' : 'bn-BD';
 
   const handleDonateZakat = () => {
     onProceedToDonate(zakatPayable > 0 ? zakatPayable : 1000);
@@ -47,17 +50,17 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif-bn font-bold text-xl leading-tight">
-                শরী‘আহসম্মত যাকাত ক্যালকুলেটর
+                {isEn ? "Shari'ah-Compliant Zakat Calculator" : 'শরী‘আহসম্মত যাকাত ক্যালকুলেটর'}
               </h3>
               <p className="text-xs text-emerald-200 font-light">
-                আপনার বার্ষিক যাকাতের সঠিক হিসাব বের করুন (২.৫%)
+                {isEn ? 'Calculate your accurate annual Zakat due (2.5%)' : 'আপনার বার্ষিক যাকাতের সঠিক হিসাব বের করুন (২.৫%)'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
             className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
-            aria-label="বন্ধ করুন"
+            aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
           >
             <X className="w-5 h-5" />
           </button>
@@ -70,21 +73,29 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
           <div className="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-4 mb-5 flex items-start gap-3 text-xs text-emerald-900">
             <Sparkles className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
             <div>
-              <strong>নেসাব সংক্রান্ত নির্দেশনা:</strong> রূপার নেসাব (৫২.৫ তোলা) অনুযায়ী বর্তমানে প্রায় <strong>৳ ৯০,০০০</strong> বা তদূর্ধ্ব পরিমাণ সম্পদ এক বছর স্থায়ী থাকলে ২.৫% হারে যাকাত প্রদান ফরজ।
+              {isEn ? (
+                <>
+                  <strong>Nisab Guidance:</strong> Based on the silver Nisab (52.5 tola), currently around <strong>৳ 90,000</strong> or more held for one full lunar year obligates 2.5% Zakat.
+                </>
+              ) : (
+                <>
+                  <strong>নেসাব সংক্রান্ত নির্দেশনা:</strong> রূপার নেসাব (৫২.৫ তোলা) অনুযায়ী বর্তমানে প্রায় <strong>৳ ৯০,০০০</strong> বা তদূর্ধ্ব পরিমাণ সম্পদ এক বছর স্থায়ী থাকলে ২.৫% হারে যাকাত প্রদান ফরজ।
+                </>
+              )}
             </div>
           </div>
 
           <div className="space-y-3.5 mb-6">
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                ১. নগদ টাকা ও ব্যাংক ব্যালেন্স (হাতে, একাউন্টে বা ডিপিএস)
+                {isEn ? '1. Cash & Bank Balances (Cash in hand, accounts, or DPS)' : '১. নগদ টাকা ও ব্যাংক ব্যালেন্স (হাতে, একাউন্টে বা ডিপিএস)'}
               </label>
               <div className="relative">
                 <span className="absolute left-3.5 top-2.5 text-slate-400 font-bold text-sm">৳</span>
                 <input
                   type="number"
                   min="0"
-                  placeholder="০"
+                  placeholder={isEn ? '0' : '০'}
                   value={cash || ''}
                   onChange={(e) => setCash(Number(e.target.value))}
                   className="w-full pl-8 pr-3 py-2 bg-[#fafcfb] border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-emerald-600"
@@ -95,14 +106,14 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  ২. স্বর্ণের বর্তমান মূল্য (টাকায়)
+                  {isEn ? '2. Current Value of Gold (in BDT)' : '২. স্বর্ণের বর্তমান মূল্য (টাকায়)'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-2.5 text-slate-400 font-bold text-sm">৳</span>
                   <input
                     type="number"
                     min="0"
-                    placeholder="০"
+                    placeholder={isEn ? '0' : '০'}
                     value={gold || ''}
                     onChange={(e) => setGold(Number(e.target.value))}
                     className="w-full pl-8 pr-3 py-2 bg-[#fafcfb] border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-emerald-600"
@@ -112,14 +123,14 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  ৩. রূপার বর্তমান মূল্য (টাকায়)
+                  {isEn ? '3. Current Value of Silver (in BDT)' : '৩. রূপার বর্তমান মূল্য (টাকায়)'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-2.5 text-slate-400 font-bold text-sm">৳</span>
                   <input
                     type="number"
                     min="0"
-                    placeholder="০"
+                    placeholder={isEn ? '0' : '০'}
                     value={silver || ''}
                     onChange={(e) => setSilver(Number(e.target.value))}
                     className="w-full pl-8 pr-3 py-2 bg-[#fafcfb] border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-emerald-600"
@@ -131,14 +142,14 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  ৪. ব্যবসায়ী মালামাল ও মজুদ পণ্যের মূল্য
+                  {isEn ? '4. Business Goods & Inventory Value' : '৪. ব্যবসায়ী মালামাল ও মজুদ পণ্যের মূল্য'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-2.5 text-slate-400 font-bold text-sm">৳</span>
                   <input
                     type="number"
                     min="0"
-                    placeholder="০"
+                    placeholder={isEn ? '0' : '০'}
                     value={businessStock || ''}
                     onChange={(e) => setBusinessStock(Number(e.target.value))}
                     className="w-full pl-8 pr-3 py-2 bg-[#fafcfb] border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-emerald-600"
@@ -148,14 +159,14 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  ৫. পাওনা টাকা (উদ্ধারযোগ্য)
+                  {isEn ? '5. Receivables (Recoverable)' : '৫. পাওনা টাকা (উদ্ধারযোগ্য)'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-2.5 text-slate-400 font-bold text-sm">৳</span>
                   <input
                     type="number"
                     min="0"
-                    placeholder="০"
+                    placeholder={isEn ? '0' : '০'}
                     value={receivables || ''}
                     onChange={(e) => setReceivables(Number(e.target.value))}
                     className="w-full pl-8 pr-3 py-2 bg-[#fafcfb] border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-emerald-600"
@@ -166,14 +177,14 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-rose-700 mb-1">
-                ৬. বাদ যাবে: তাৎক্ষণিক প্রদেয় ঋণ বা দেনা
+                {isEn ? '6. Deductible: Immediate Payable Debts or Liabilities' : '৬. বাদ যাবে: তাৎক্ষণিক প্রদেয় ঋণ বা দেনা'}
               </label>
               <div className="relative">
                 <span className="absolute left-3.5 top-2.5 text-rose-400 font-bold text-sm">৳</span>
                 <input
                   type="number"
                   min="0"
-                  placeholder="০"
+                  placeholder={isEn ? '0' : '০'}
                   value={debts || ''}
                   onChange={(e) => setDebts(Number(e.target.value))}
                   className="w-full pl-8 pr-3 py-2 bg-rose-50/30 border border-rose-200 rounded-xl text-sm font-mono focus:outline-none focus:border-rose-500"
@@ -185,29 +196,31 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
           {/* Results Box */}
           <div className="bg-[#f7fbf8] border border-emerald-200 rounded-2xl p-5 mb-5">
             <div className="flex items-center justify-between text-xs text-slate-600 mb-1.5">
-              <span>মোট সম্পদ:</span>
-              <span className="font-mono tabular-nums font-semibold">৳ {totalAssets.toLocaleString('bn-BD')}</span>
+              <span>{isEn ? 'Total Assets:' : 'মোট সম্পদ:'}</span>
+              <span className="font-mono tabular-nums font-semibold">৳ {totalAssets.toLocaleString(locale)}</span>
             </div>
             <div className="flex items-center justify-between text-xs text-slate-600 mb-2 pb-2 border-b border-emerald-100">
-              <span>কর্তনযোগ্য ঋণ:</span>
-              <span className="font-mono tabular-nums font-semibold text-rose-600">- ৳ {debts.toLocaleString('bn-BD')}</span>
+              <span>{isEn ? 'Deductible Debts:' : 'কর্তনযোগ্য ঋণ:'}</span>
+              <span className="font-mono tabular-nums font-semibold text-rose-600">- ৳ {debts.toLocaleString(locale)}</span>
             </div>
             <div className="flex items-center justify-between text-xs text-slate-800 mb-2">
-              <span className="font-semibold">যাকাতযোগ্য নিট সম্পদ:</span>
-              <span className="font-mono tabular-nums font-bold text-sm">৳ {netZakatable.toLocaleString('bn-BD')}</span>
+              <span className="font-semibold">{isEn ? 'Net Zakatable Wealth:' : 'যাকাতযোগ্য নিট সম্পদ:'}</span>
+              <span className="font-mono tabular-nums font-bold text-sm">৳ {netZakatable.toLocaleString(locale)}</span>
             </div>
 
             <div className="pt-2 border-t border-emerald-200 flex items-center justify-between">
               <div>
                 <span className="block text-xs font-bold text-[#045332]">
-                  ফরজ যাকাতের পরিমাণ (২.৫%):
+                  {isEn ? 'Obligatory Zakat Payable (2.5%):' : 'ফরজ যাকাতের পরিমাণ (২.৫%):'}
                 </span>
                 <span className="text-[11px] text-slate-500">
-                  {isEligible ? 'নেসাব পূর্ণ হয়েছে' : 'নেসাব স্পর্শ করেনি'}
+                  {isEligible
+                    ? (isEn ? 'Nisab threshold reached' : 'নেসাব পূর্ণ হয়েছে')
+                    : (isEn ? 'Below Nisab threshold' : 'নেসাব স্পর্শ করেনি')}
                 </span>
               </div>
               <span className="font-mono tabular-nums font-bold text-2xl text-[#087443]">
-                ৳ {zakatPayable.toLocaleString('bn-BD')}
+                ৳ {zakatPayable.toLocaleString(locale)}
               </span>
             </div>
           </div>
@@ -218,7 +231,7 @@ export const ZakatCalculatorModal: React.FC<ZakatCalculatorModalProps> = ({
             onClick={handleDonateZakat}
             className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
           >
-            <span>এই যাকাত ফাউন্ডেশনে দান করুন</span>
+            <span>{isEn ? 'Donate This Zakat to the Foundation' : 'এই যাকাত ফাউন্ডেশনে দান করুন'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 

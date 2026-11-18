@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
-import { X, Users, CheckCircle, HeartHandshake, Loader2, Mail, ExternalLink, Send } from 'lucide-react';
+import { X, Users, CheckCircle, Loader2, Mail, ExternalLink, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface VolunteerModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const BLOOD_GROUPS = [
+  { value: 'A+', bn: 'A+ (পজিটিভ)', en: 'A+ (Positive)' },
+  { value: 'A-', bn: 'A- (নেগেটিভ)', en: 'A- (Negative)' },
+  { value: 'B+', bn: 'B+ (পজিটিভ)', en: 'B+ (Positive)' },
+  { value: 'B-', bn: 'B- (নেগেটিভ)', en: 'B- (Negative)' },
+  { value: 'O+', bn: 'O+ (পজিটিভ)', en: 'O+ (Positive)' },
+  { value: 'O-', bn: 'O- (নেগেটিভ)', en: 'O- (Negative)' },
+  { value: 'AB+', bn: 'AB+ (পজিটিভ)', en: 'AB+ (Positive)' },
+  { value: 'AB-', bn: 'AB- (নেগেটিভ)', en: 'AB- (Negative)' },
+];
+
+const INTEREST_OPTIONS = [
+  { id: 'relief', bn: 'ত্রাণ ও খাদ্য সহায়তা বিতরণ', en: 'Relief & Emergency Food Aid' },
+  { id: 'medical', bn: 'ফ্রি মেডিকেল ক্যাম্প পরিচালনা', en: 'Free Medical Camp Management' },
+  { id: 'education', bn: 'মক্তব ও শিক্ষা কার্যক্রম', en: 'Maktab & Education Programs' },
+  { id: 'media', bn: 'আইটি, গ্রাফিক্স ও প্রচার', en: 'IT, Graphics & Communications' },
+  { id: 'other', bn: 'অন্যান্য সামাজিক কাজ', en: 'General Social Work' },
+];
+
 export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose }) => {
+  const { isEn } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [name, setName] = useState('');
@@ -17,12 +38,14 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   const [phone, setPhone] = useState('');
   const [upazila, setUpazila] = useState('');
   const [bloodGroup, setBloodGroup] = useState('A+');
-  const [interest, setInterest] = useState('ত্রাণ ও খাদ্য সহায়তা বিতরণ');
+  const [interestId, setInterestId] = useState(INTEREST_OPTIONS[0].id);
   const [message, setMessage] = useState('');
   const [mailtoUrl, setMailtoUrl] = useState('');
   const [gmailUrl, setGmailUrl] = useState('');
 
   if (!isOpen) return null;
+
+  const selectedInterestObj = INTEREST_OPTIONS.find((opt) => opt.id === interestId) || INTEREST_OPTIONS[0];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,22 +56,24 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     setSubmittedName(cleanName);
     setIsSubmitting(true);
 
+    const interestLabel = isEn ? selectedInterestObj.en : selectedInterestObj.bn;
+
     const submissionPayload = {
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || 'বগুড়া',
+      upazila: upazila.trim() || (isEn ? 'Bogura' : 'বগুড়া'),
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      interest: interestLabel,
       message: message.trim() || ''
     };
 
     // 1. Save to local admin database
     adminDataService.addVolunteer({
-      name: cleanName || 'সম্মানিত ভাই/বোন',
-      phone: cleanPhone || 'অনুল্লেখিত',
-      upazila: upazila || 'বগুড়া',
+      name: cleanName || (isEn ? 'Respected Brother/Sister' : 'সম্মানিত ভাই/বোন'),
+      phone: cleanPhone || (isEn ? 'Not provided' : 'অনুল্লেখিত'),
+      upazila: upazila.trim() || 'বগুড়া',
       bloodGroup: bloodGroup || 'A+',
-      interest: interest || 'ত্রাণ ও খাদ্য সহায়তা বিতরণ',
+      interest: selectedInterestObj.bn,
       message: message.trim() || '',
       status: 'অপেক্ষমাণ',
       adminNote: 'মডাল আবেদন ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
@@ -60,7 +85,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     setGmailUrl(directGmail);
     setMailtoUrl(directMailto);
 
-    // 3. ডাইরেক্ট জিমেইল ওপেন করার কল (Directly open their Gmail with compose window pre-filled)
+    // 3. Directly open their Gmail with compose window pre-filled
     triggerDirectGmail(submissionPayload);
 
     // 4. Background email service notification
@@ -79,18 +104,20 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     setName('');
     setSubmittedName('');
     setPhone('');
+    setUpazila('');
+    setInterestId(INTEREST_OPTIONS[0].id);
     setMessage('');
     setGmailUrl('');
     setMailtoUrl('');
     onClose();
   };
 
-  const displayName = submittedName || name.trim() || 'সম্মানিত ভাই/বোন';
+  const displayName = submittedName || name.trim() || (isEn ? 'Respected Brother/Sister' : 'সম্মানিত ভাই/বোন');
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
       {submitted ? (
-        /* SUCCESS POPUP (স্বেচ্ছাসেবক নিবন্ধনের সফল পপআপ মডাল) */
+        /* SUCCESS POPUP */
         <div
           className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800 animate-in zoom-in-95 duration-200"
           onClick={(e) => e.stopPropagation()}
@@ -102,7 +129,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
           <button
             onClick={resetAndClose}
             className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer z-10"
-            aria-label="বন্ধ করুন"
+            aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
           >
             <X className="w-5 h-5" />
           </button>
@@ -115,7 +142,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
 
             {/* 1. Main Title (Dynamic User Name) */}
             <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-2 tracking-tight leading-snug">
-              ধন্যবাদ, {displayName}!
+              {isEn ? `Thank You, ${displayName}!` : `ধন্যবাদ, ${displayName}!`}
             </h3>
 
             {/* 2. Arabic Supplication / Blessing Badge */}
@@ -138,10 +165,18 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                 </div>
                 <div>
                   <strong className="text-red-900 block text-xs sm:text-sm mb-0.5">
-                    আপনার Gmail ওপেন করা হয়েছে:
+                    {isEn ? 'Your Gmail Draft Has Been Prepared:' : 'আপনার Gmail ওপেন করা হয়েছে:'}
                   </strong>
                   <p className="text-slate-600 text-[11px] sm:text-xs">
-                    আপনার তথ্য দিয়ে <strong>{FOUNDATION_INFO.email}</strong> ঠিকানায় জিমেইল খসড়া প্রস্তুত হয়েছে। সরাসরি সেন্ড করতে নিচের লাল বাটনে চাপুন।
+                    {isEn ? (
+                      <>
+                        A Gmail draft addressed to <strong>{FOUNDATION_INFO.email}</strong> has been prepared with your details. Click the red button below to send directly.
+                      </>
+                    ) : (
+                      <>
+                        আপনার তথ্য দিয়ে <strong>{FOUNDATION_INFO.email}</strong> ঠিকানায় জিমেইল খসড়া প্রস্তুত হয়েছে। সরাসরি সেন্ড করতে নিচের লাল বাটনে চাপুন।
+                      </>
+                    )}
                   </p>
                 </div>
               </div>
@@ -159,7 +194,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
                   </svg>
-                  <span>সরাসরি জিমেইল (Gmail)-এ পাঠান</span>
+                  <span>{isEn ? 'Send Directly via Gmail' : 'সরাসরি জিমেইল (Gmail)-এ পাঠান'}</span>
                   <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                 </a>
               )}
@@ -171,7 +206,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                     className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>অন্যান্য ইমেইল অ্যাপ</span>
+                    <span>{isEn ? 'Other Email Apps' : 'অন্যান্য ইমেইল অ্যাপ'}</span>
                   </a>
                 )}
                 <button
@@ -179,14 +214,14 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                   onClick={resetAndClose}
                   className="flex-1 inline-flex items-center justify-center py-2.5 px-3 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-sans-bn font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
                 >
-                  ঠিক আছে
+                  {isEn ? 'Done' : 'ঠিক আছে'}
                 </button>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        /* REGISTRATION FORM (স্বেচ্ছাসেবক নিবন্ধন ফর্ম) */
+        /* REGISTRATION FORM */
         <div
           className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
           onClick={(e) => e.stopPropagation()}
@@ -199,17 +234,17 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
               </div>
               <div className="min-w-0">
                 <h3 className="font-serif-bn font-bold text-lg sm:text-xl leading-tight truncate">
-                  স্বেচ্ছাসেবক নিবন্ধন
+                  {isEn ? 'Volunteer Registration' : 'স্বেচ্ছাসেবক নিবন্ধন'}
                 </h3>
                 <p className="text-[11px] sm:text-xs text-emerald-200 font-light truncate">
-                  মানবতার সেবায় আমাদের সহযাত্রী হোন
+                  {isEn ? 'Join us in the service of humanity' : 'মানবতার সেবায় আমাদের সহযাত্রী হোন'}
                 </p>
               </div>
             </div>
             <button
               onClick={resetAndClose}
               className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
-              aria-label="বন্ধ করুন"
+              aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
             >
               <X className="w-5 h-5" />
             </button>
@@ -219,12 +254,12 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  আপনার পূর্ণ নাম <span className="text-red-500">*</span>
+                  {isEn ? 'Your Full Name' : 'আপনার পূর্ণ নাম'} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="উদাঃ মোঃ আব্দুল্লাহ"
+                  placeholder={isEn ? 'e.g. Md. Abdullah' : 'উদাঃ মোঃ আব্দুল্লাহ'}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -234,7 +269,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    মোবাইল নম্বর <span className="text-red-500">*</span>
+                    {isEn ? 'Mobile Number' : 'মোবাইল নম্বর'} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -248,21 +283,18 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    রক্তের গ্রুপ
+                    {isEn ? 'Blood Group' : 'রক্তের গ্রুপ'}
                   </label>
                   <select
                     value={bloodGroup}
                     onChange={(e) => setBloodGroup(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
                   >
-                    <option value="A+">A+ (পজিটিভ)</option>
-                    <option value="A-">A- (নেগেটিভ)</option>
-                    <option value="B+">B+ (পজিটিভ)</option>
-                    <option value="B-">B- (নেগেটিভ)</option>
-                    <option value="O+">O+ (পজিটিভ)</option>
-                    <option value="O-">O- (নেগেটিভ)</option>
-                    <option value="AB+">AB+ (পজিটিভ)</option>
-                    <option value="AB-">AB- (নেগেটিভ)</option>
+                    {BLOOD_GROUPS.map((bg) => (
+                      <option key={bg.value} value={bg.value}>
+                        {isEn ? bg.en : bg.bn}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -270,11 +302,11 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    উপজেলা / এলাকা
+                    {isEn ? 'Upazila / Area' : 'উপজেলা / এলাকা'}
                   </label>
                   <input
                     type="text"
-                    placeholder="উদাঃ শিবগঞ্জ, বগুড়া"
+                    placeholder={isEn ? 'e.g. Shibganj, Bogura' : 'উদাঃ শিবগঞ্জ, বগুড়া'}
                     value={upazila}
                     onChange={(e) => setUpazila(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -283,29 +315,29 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    কাজের ক্ষেত্র
+                    {isEn ? 'Area of Interest' : 'কাজের ক্ষেত্র'}
                   </label>
                   <select
-                    value={interest}
-                    onChange={(e) => setInterest(e.target.value)}
+                    value={interestId}
+                    onChange={(e) => setInterestId(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
                   >
-                    <option value="ত্রাণ ও খাদ্য সহায়তা বিতরণ">ত্রাণ ও খাদ্য সহায়তা বিতরণ</option>
-                    <option value="ফ্রি মেডিকেল ক্যাম্প পরিচালনা">ফ্রি মেডিকেল ক্যাম্প পরিচালনা</option>
-                    <option value="মক্তব ও শিক্ষা কার্যক্রম">মক্তব ও শিক্ষা কার্যক্রম</option>
-                    <option value="আইটি, গ্রাফিক্স ও সোশ্যাল মিডিয়া">আইটি, গ্রাফিক্স ও প্রচার</option>
-                    <option value="অন্যান্য সামাজিক কাজ">অন্যান্য সামাজিক কাজ</option>
+                    {INTEREST_OPTIONS.map((opt) => (
+                      <option key={opt.id} value={opt.id}>
+                        {isEn ? opt.en : opt.bn}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  সংক্ষিপ্ত পরিচয় বা বার্তা (ঐচ্ছিক)
+                  {isEn ? 'Short Bio or Message (Optional)' : 'সংক্ষিপ্ত পরিচয় বা বার্তা (ঐচ্ছিক)'}
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="আপনার পেশা, পড়াশোনা বা ফাউন্ডেশনে কাজের ইচ্ছা সম্পর্কে লিখুন..."
+                  placeholder={isEn ? 'Tell us about your profession, studies, or how you wish to volunteer...' : 'আপনার পেশা, পড়াশোনা বা ফাউন্ডেশনে কাজের ইচ্ছা সম্পর্কে লিখুন...'}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-600"
@@ -320,12 +352,12 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>ইমেইলে পাঠানো হচ্ছে...</span>
+                    <span>{isEn ? 'Preparing email...' : 'ইমেইলে পাঠানো হচ্ছে...'}</span>
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>নিবন্ধন সম্পন্ন করুন</span>
+                    <span>{isEn ? 'Complete Registration' : 'নিবন্ধন সম্পন্ন করুন'}</span>
                   </>
                 )}
               </button>

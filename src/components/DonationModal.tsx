@@ -579,7 +579,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     <strong className="block text-sm font-bold text-emerald-900 font-serif-bn">
                       {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
                     </strong>
-                    <span className="text-[10px] text-slate-500">{FOUNDATION_INFO.address}</span>
+                    <span className="text-[10px] text-slate-500">{isEn ? FOUNDATION_INFO.addressEn : FOUNDATION_INFO.address}</span>
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] text-slate-500 uppercase block">{t.donationModal.receiptNo}</span>

@@ -8,6 +8,7 @@ import {
   getMailtoUrlForNeedyInfo,
 } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface NeedyInfoModalProps {
   isOpen: boolean;
@@ -15,15 +16,16 @@ interface NeedyInfoModalProps {
 }
 
 const HELP_TYPES = [
-  'ফ্রি চিকিৎসা ও ওষুধ',
-  'জরুরি খাদ্য সহায়তা',
-  'জরুরি রক্তের প্রয়োজন',
-  'শিক্ষা সহায়তা',
-  'আত্মকর্মসংস্থান',
-  'অন্যান্য',
+  { id: 'medical', bn: 'ফ্রি চিকিৎসা ও ওষুধ', en: 'Free Medical & Medicine' },
+  { id: 'food', bn: 'জরুরি খাদ্য সহায়তা', en: 'Emergency Food Aid' },
+  { id: 'blood', bn: 'জরুরি রক্তের প্রয়োজন', en: 'Urgent Blood Needed' },
+  { id: 'education', bn: 'শিক্ষা সহায়তা', en: 'Education Support' },
+  { id: 'self-reliance', bn: 'আত্মকর্মসংস্থান', en: 'Self-Employment' },
+  { id: 'others', bn: 'অন্যান্য', en: 'Others' },
 ];
 
 export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose }) => {
+  const { isEn } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -33,12 +35,14 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
   const [needyName, setNeedyName] = useState('');
   const [needyPhone, setNeedyPhone] = useState('');
   const [fullAddress, setFullAddress] = useState('');
-  const [helpType, setHelpType] = useState(HELP_TYPES[0]);
+  const [helpTypeId, setHelpTypeId] = useState(HELP_TYPES[0].id);
   const [description, setDescription] = useState('');
   const [mailtoUrl, setMailtoUrl] = useState('');
   const [gmailUrl, setGmailUrl] = useState('');
 
   if (!isOpen) return null;
+
+  const selectedHelpType = HELP_TYPES.find((item) => item.id === helpTypeId) || HELP_TYPES[0];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,13 +56,15 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     setSubmittedInformerName(cleanInformerName);
     setIsSubmitting(true);
 
+    const helpTypeLabel = selectedHelpType.bn;
+
     const submissionPayload = {
       informerName: cleanInformerName,
       informerPhone: cleanInformerPhone,
       needyName: cleanNeedyName,
       needyPhone: needyPhone.trim() || '',
       fullAddress: cleanAddress,
-      helpType,
+      helpType: isEn ? `${selectedHelpType.en} (${selectedHelpType.bn})` : helpTypeLabel,
       description: description.trim() || '',
     };
 
@@ -66,7 +72,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
       `অসহায় ব্যক্তির নাম: ${cleanNeedyName}`,
       `অসহায় ব্যক্তির মোবাইল: ${needyPhone.trim() || 'উল্লেখ করা হয়নি'}`,
       `পূর্ণ ঠিকানা: ${cleanAddress}`,
-      `সহযোগিতার ধরন: ${helpType}`,
+      `সহযোগিতার ধরন: ${helpTypeLabel}`,
       `সংক্ষিপ্ত বিবরণ: ${description.trim() || 'উল্লেখ করা হয়নি'}`,
     ].join('\n');
 
@@ -84,7 +90,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     setGmailUrl(directGmail);
     setMailtoUrl(directMailto);
 
-    // 3. ডাইরেক্ট জিমেইল ওপেন করার কল (Directly open Gmail compose window pre-filled)
+    // 3. Directly open Gmail compose window pre-filled
     triggerDirectGmailForNeedyInfo(submissionPayload);
 
     // 4. Background email service notification
@@ -106,14 +112,14 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     setNeedyName('');
     setNeedyPhone('');
     setFullAddress('');
-    setHelpType(HELP_TYPES[0]);
+    setHelpTypeId(HELP_TYPES[0].id);
     setDescription('');
     setGmailUrl('');
     setMailtoUrl('');
     onClose();
   };
 
-  const displayName = submittedInformerName || informerName.trim() || 'সম্মানিত শুভাকাঙ্ক্ষী';
+  const displayName = submittedInformerName || informerName.trim() || (isEn ? 'Respected Well-Wisher' : 'সম্মানিত শুভাকাঙ্ক্ষী');
 
   return (
     <div
@@ -131,7 +137,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
             type="button"
             onClick={resetAndClose}
             className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer z-10"
-            aria-label="বন্ধ করুন"
+            aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
           >
             <X className="w-5 h-5" />
           </button>
@@ -142,7 +148,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
             </div>
 
             <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-2 tracking-tight leading-snug">
-              জাযাকাল্লাহু খাইরান, {displayName}!
+              {isEn ? `Jazakallahu Khairan, ${displayName}!` : `জাযাকাল্লাহু খাইরান, ${displayName}!`}
             </h3>
 
             <div className="mb-4 inline-flex items-center justify-center px-5 py-1.5 sm:px-6 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
@@ -157,7 +163,9 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
             </div>
 
             <p className="font-solaiman text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
-              আপনার প্রদত্ত অসহায় মানুষটির তথ্য আমরা আন্তরিকতার সাথে গ্রহণ করেছি। আমাদের মাঠপর্যায়ের টিম দ্রুত যাচাই-বাছাই করে তাঁর পাশে দাঁড়ানোর সর্বোচ্চ চেষ্টা করবে, ইনশাআল্লাহ।
+              {isEn
+                ? 'We have received the information about the person in need with sincere gratitude. Our field team will verify the details promptly and make every effort to stand beside them, InshaAllah.'
+                : 'আপনার প্রদত্ত অসহায় মানুষটির তথ্য আমরা আন্তরিকতার সাথে গ্রহণ করেছি। আমাদের মাঠপর্যায়ের টিম দ্রুত যাচাই-বাছাই করে তাঁর পাশে দাঁড়ানোর সর্বোচ্চ চেষ্টা করবে, ইনশাআল্লাহ।'}
             </p>
 
             {/* Direct Gmail Notification Box */}
@@ -168,10 +176,18 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
                 </div>
                 <div>
                   <strong className="text-red-900 block text-xs sm:text-sm mb-0.5">
-                    আপনার Gmail ওপেন করা হয়েছে:
+                    {isEn ? 'Your Gmail Draft Has Been Prepared:' : 'আপনার Gmail ওপেন করা হয়েছে:'}
                   </strong>
                   <p className="text-slate-600 text-[11px] sm:text-xs">
-                    আপনার তথ্য দিয়ে <strong>{FOUNDATION_INFO.email}</strong> ঠিকানায় জিমেইল খসড়া প্রস্তুত হয়েছে। সরাসরি সেন্ড করতে নিচের লাল বাটনে চাপুন।
+                    {isEn ? (
+                      <>
+                        A Gmail draft addressed to <strong>{FOUNDATION_INFO.email}</strong> has been prepared with the submitted information. Click the red button below to send directly.
+                      </>
+                    ) : (
+                      <>
+                        আপনার তথ্য দিয়ে <strong>{FOUNDATION_INFO.email}</strong> ঠিকানায় জিমেইল খসড়া প্রস্তুত হয়েছে। সরাসরি সেন্ড করতে নিচের লাল বাটনে চাপুন।
+                      </>
+                    )}
                   </p>
                 </div>
               </div>
@@ -189,7 +205,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
                   </svg>
-                  <span>সরাসরি জিমেইল (Gmail)-এ পাঠান</span>
+                  <span>{isEn ? 'Send Directly via Gmail' : 'সরাসরি জিমেইল (Gmail)-এ পাঠান'}</span>
                   <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                 </a>
               )}
@@ -201,7 +217,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
                     className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>অন্যান্য ইমেইল অ্যাপ</span>
+                    <span>{isEn ? 'Other Email Apps' : 'অন্যান্য ইমেইল অ্যাপ'}</span>
                   </a>
                 )}
                 <button
@@ -209,7 +225,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
                   onClick={resetAndClose}
                   className="flex-1 inline-flex items-center justify-center py-2.5 px-3 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-sans-bn font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
                 >
-                  ঠিক আছে
+                  {isEn ? 'Done' : 'ঠিক আছে'}
                 </button>
               </div>
             </div>
@@ -228,10 +244,12 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
               </div>
               <div className="min-w-0">
                 <h3 className="font-serif-bn font-bold text-lg sm:text-xl leading-snug">
-                  আপনার গ্রামের অসহায় মানুষের তথ্য দিন
+                  {isEn ? 'Share Info on Needy People in Your Village' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}
                 </h3>
                 <p className="text-[11px] sm:text-xs text-emerald-200 font-light leading-relaxed mt-0.5">
-                  আপনার গ্রাম, মহল্লা বা এলাকার অসহায় মানুষের ঠিকানা দিন—আমাদের সামান্য চেষ্টায় হয়তো তাঁর মুখে হাসি ফুটবে, ইনশাআল্লাহ।
+                  {isEn
+                    ? 'Share the details of a distressed person in your village, neighborhood, or area — with our humble effort, we may bring a smile to their face, InshaAllah.'
+                    : 'আপনার গ্রাম, মহল্লা বা এলাকার অসহায় মানুষের ঠিকানা দিন—আমাদের সামান্য চেষ্টায় হয়তো তাঁর মুখে হাসি ফুটবে, ইনশাআল্লাহ।'}
                 </p>
               </div>
             </div>
@@ -239,7 +257,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
               type="button"
               onClick={resetAndClose}
               className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0"
-              aria-label="বন্ধ করুন"
+              aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
             >
               <X className="w-5 h-5" />
             </button>
@@ -250,12 +268,12 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    তথ্যদাতার নাম (আপনার নাম) <span className="text-red-500">*</span>
+                    {isEn ? 'Informer Name (Your Name)' : 'তথ্যদাতার নাম (আপনার নাম)'} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="উদাঃ মোঃ আব্দুল্লাহ"
+                    placeholder={isEn ? 'e.g. Md. Abdullah' : 'উদাঃ মোঃ আব্দুল্লাহ'}
                     value={informerName}
                     onChange={(e) => setInformerName(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -264,7 +282,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    আপনার মোবাইল নম্বর <span className="text-red-500">*</span>
+                    {isEn ? 'Your Mobile Number' : 'আপনার মোবাইল নম্বর'} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -280,12 +298,12 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    অসহায় ব্যক্তির নাম <span className="text-red-500">*</span>
+                    {isEn ? 'Name of the Needy Person' : 'অসহায় ব্যক্তির নাম'} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="অসহায় ব্যক্তির পূর্ণ নাম"
+                    placeholder={isEn ? 'Full name of the needy person' : 'অসহায় ব্যক্তির পূর্ণ নাম'}
                     value={needyName}
                     onChange={(e) => setNeedyName(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -294,11 +312,11 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    অসহায় ব্যক্তির মোবাইল নম্বর (যদি থাকে)
+                    {isEn ? "Needy Person's Mobile (If any)" : 'অসহায় ব্যক্তির মোবাইল নম্বর (যদি থাকে)'}
                   </label>
                   <input
                     type="tel"
-                    placeholder="01XXXXXXXXX (ঐচ্ছিক)"
+                    placeholder={isEn ? '01XXXXXXXXX (Optional)' : '01XXXXXXXXX (ঐচ্ছিক)'}
                     value={needyPhone}
                     onChange={(e) => setNeedyPhone(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -308,12 +326,12 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  পূর্ণ ঠিকানা (গ্রাম/এলাকা, থানা, জেলা) <span className="text-red-500">*</span>
+                  {isEn ? 'Full Address (Village/Area, Upazila, District)' : 'পূর্ণ ঠিকানা (গ্রাম/এলাকা, থানা, জেলা)'} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="উদাঃ গ্রাম: গুজিয়া, থানা: শিবগঞ্জ, জেলা: বগুড়া"
+                  placeholder={isEn ? 'e.g. Village: Gujia, Upazila: Shibganj, District: Bogura' : 'উদাঃ গ্রাম: গুজিয়া, থানা: শিবগঞ্জ, জেলা: বগুড়া'}
                   value={fullAddress}
                   onChange={(e) => setFullAddress(e.target.value)}
                   className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
@@ -322,16 +340,16 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  কী ধরনের সহযোগিতা প্রয়োজন? <span className="text-red-500">*</span>
+                  {isEn ? 'What kind of support is needed?' : 'কী ধরনের সহযোগিতা প্রয়োজন?'} <span className="text-red-500">*</span>
                 </label>
                 <select
-                  value={helpType}
-                  onChange={(e) => setHelpType(e.target.value)}
+                  value={helpTypeId}
+                  onChange={(e) => setHelpTypeId(e.target.value)}
                   className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"
                 >
                   {HELP_TYPES.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                    <option key={type.id} value={type.id}>
+                      {isEn ? type.en : type.bn}
                     </option>
                   ))}
                 </select>
@@ -339,11 +357,11 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  সংক্ষিপ্ত বিবরণ
+                  {isEn ? 'Brief Description' : 'সংক্ষিপ্ত বিবরণ'}
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="তাঁর বর্তমান অবস্থা ও প্রয়োজন সম্পর্কে সংক্ষেপে লিখুন..."
+                  placeholder={isEn ? 'Briefly describe their current condition and urgent needs...' : 'তাঁর বর্তমান অবস্থা ও প্রয়োজন সম্পর্কে সংক্ষেপে লিখুন...'}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 resize-none"
@@ -358,12 +376,12 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>জমা দেওয়া হচ্ছে...</span>
+                    <span>{isEn ? 'Submitting...' : 'জমা দেওয়া হচ্ছে...'}</span>
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>তথ্য জমা দিন</span>
+                    <span>{isEn ? 'Submit Information' : 'তথ্য জমা দিন'}</span>
                   </>
                 )}
               </button>

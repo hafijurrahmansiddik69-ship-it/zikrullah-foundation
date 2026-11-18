@@ -27,7 +27,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Rich forest green backdrop and photo with warm lighting */}
             <img
               src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg"
-              alt="জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম"
+              alt={isEn ? 'Zikrullah Foundation Humanitarian Work' : 'জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম'}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
             />

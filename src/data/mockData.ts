@@ -65,10 +65,12 @@ export const FOUNDATION_INFO = {
   founder: "হাফিজুর রহমান সিদ্দিক (বগুড়া)",
   established: "১লা জানুয়ারি ২০২৩",
   address: "গুজিয়া, মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ",
+  addressEn: "Gujia, Mokamtala & Shibganj, Bogura, Bangladesh",
   email: "zikrullahfd@gmail.com",
   phone: "016 20 500 920",
   altPhone: "+880 16 20 500 920",
   officeHours: "শনিবার – বৃহস্পতিবার: সকাল ৯টা – সন্ধ্যা ৬টা",
+  officeHoursEn: "Saturday – Thursday: 9:00 AM – 6:00 PM",
   bkashNumber: "016 20 500 920 (পার্সোনাল)",
   nagadNumber: "016 20 500 920 (পার্সোনাল)",
   rocketNumber: "016 20 500 920-2",
@@ -251,26 +253,41 @@ export const NEWS_LIST: NewsItem[] = [
   {
     id: "news-1",
     title: "নতুন শিক্ষাবর্ষে ১২০ শিক্ষার্থীর মাঝে শিক্ষা উপকরণ বিতরণ সম্পন্ন",
+    titleEn: "Educational Materials Distributed to 120 Students for the New Academic Year",
     date: "২৮ সেপ্টেম্বর ২০২৬",
+    dateEn: "28 September 2026",
     category: "শিক্ষা প্রকল্প",
+    categoryEn: "Education Project",
     summary: "মোকামতলা ইউনিয়নের গুজিয়া অঞ্চলের অস্বচ্ছল পরিবারের কোমলমতি শিক্ষার্থীদের মাঝে ব্যাগ, খাতা ও জ্যামিতি বক্স তুলে দেওয়া হয়েছে।",
-    content: "জিকিরুল্লাহ ফাউন্ডেশনের নিয়মিত শিক্ষা সহায়তা প্রকল্পের অংশ হিসেবে আজ স্থানীয় গুজিয়া কেন্দ্রে এক অনাড়ম্বর অনুষ্ঠানের মাধ্যমে ১২০ জন এতিম ও দরিদ্র শিক্ষার্থীর হাতে নতুন বই-খাতা, ব্যাগ ও পোশাক বিতরণ করা হয়েছে। অনুষ্ঠানের সার্বিক তত্ত্বাবধানে ছিলেন ফাউন্ডেশনের সম্মানিত উপদেষ্টা ও এলাকার গুণী ব্যক্তিবর্গ।"
+    summaryEn: "School bags, notebooks, and geometry boxes were gifted to underprivileged young students in Gujia, Mokamtala Union.",
+    content: "জিকিরুল্লাহ ফাউন্ডেশনের নিয়মিত শিক্ষা সহায়তা প্রকল্পের অংশ হিসেবে আজ স্থানীয় গুজিয়া কেন্দ্রে এক অনাড়ম্বর অনুষ্ঠানের মাধ্যমে ১২০ জন এতিম ও দরিদ্র শিক্ষার্থীর হাতে নতুন বই-খাতা, ব্যাগ ও পোশাক বিতরণ করা হয়েছে। অনুষ্ঠানের সার্বিক তত্ত্বাবধানে ছিলেন ফাউন্ডেশনের সম্মানিত উপদেষ্টা ও এলাকার গুণী ব্যক্তিবর্গ।",
+    contentEn: "As part of Zikrullah Foundation's regular education support program, new textbooks, notebooks, school bags, and uniforms were distributed to 120 orphaned and underprivileged students at our local Gujia center. The program was overseen by respected foundation advisors and local community leaders."
   },
   {
     id: "news-2",
     title: "জরুরি খাদ্য সহায়তা: বন্যায় ক্ষতিগ্রস্ত ১০০ পরিবারের পাশে ফাউন্ডেশন",
+    titleEn: "Emergency Food Relief: Foundation Stands Beside 100 Flood-Affected Families",
     date: "২৫ সেপ্টেম্বর ২০২৬",
+    dateEn: "25 September 2026",
     category: "ত্রাণ কার্যক্রম",
+    categoryEn: "Relief Operations",
     summary: "সম্প্রতি আকস্মিক বন্যায় ক্ষতিগ্রস্থ চরাঞ্চলের পরিবারগুলোর মাঝে ১৫ দিনের শুকনো খাবার ও শুকনো রসদ বিতরণ।",
-    content: "দুর্যোগের এই কঠিন মুহূর্তে বগুড়ার স্থানীয় মোকামতলা ও চরাঞ্চলে পানিবন্দি ১০০ পরিবারের মাঝে ফাউন্ডেশনের স্বেচ্ছাসেবক দল চাল, ডাল, চিঁড়া, গুড় ও স্যালাইন নিয়ে সরাসরি উপস্থিত হয়। স্থানীয় প্রশাসনের সহযোগিতায় সুষ্ঠুভাবে ত্রাণ সামগ্রী বণ্টন সম্পন্ন হয়েছে।"
+    summaryEn: "Fifteen-day dry food packs and essential rations distributed to river-island families affected by recent flash floods.",
+    content: "দুর্যোগের এই কঠিন মুহূর্তে বগুড়ার স্থানীয় মোকামতলা ও চরাঞ্চলে পানিবন্দি ১০০ পরিবারের মাঝে ফাউন্ডেশনের স্বেচ্ছাসেবক দল চাল, ডাল, চিঁড়া, গুড় ও স্যালাইন নিয়ে সরাসরি উপস্থিত হয়। স্থানীয় প্রশাসনের সহযোগিতায় সুষ্ঠুভাবে ত্রাণ সামগ্রী বণ্টন সম্পন্ন হয়েছে।",
+    contentEn: "During this challenging crisis, the Foundation's volunteer team directly reached 100 marooned families in Mokamtala and nearby river-island areas of Bogura with rice, lentils, flattened rice, jaggery, and oral saline. The relief distribution was completed smoothly in coordination with local elders."
   },
   {
     id: "news-3",
     title: "মাসিক ফ্রি মেডিকেল ক্যাম্প ও চক্ষু পরীক্ষা অনুষ্ঠিত",
+    titleEn: "Monthly Free Medical Camp & Eye Screening Successfully Held",
     date: "২০ সেপ্টেম্বর ২০২৬",
+    dateEn: "20 September 2026",
     category: "স্বাস্থ্যসেবা",
+    categoryEn: "Healthcare",
     summary: "বগুড়ার গুজিয়া সরকারি প্রাথমিক বিদ্যালয় প্রাঙ্গণে ৩ শতাধিক গ্রামবাসীর ফ্রি স্বাস্থ্য পরীক্ষা ও বিনামূল্যে ওষুধ সরবরাহ।",
-    content: "ফাউন্ডেশনের উদ্যোগে এবং বগুড়া শহীদ জিয়াউর রহমান মেডিকেল কলেজের স্বেচ্ছাসেবী ডাক্তারদের আন্তরিক অংশগ্রহণে দিনব্যাপী ফ্রি মেডিকেল ক্যাম্প সম্পন্ন হয়েছে। এতে বিশেষ করে নারী, শিশু ও বৃদ্ধ রোগীরা জরুরি চিকিৎসা সুবিধা লাভ করেন।"
+    summaryEn: "Free medical check-ups and essential medicines provided to over 300 villagers at Gujia Government Primary School premises.",
+    content: "ফাউন্ডেশনের উদ্যোগে এবং বগুড়া শহীদ জিয়াউর রহমান মেডিকেল কলেজের স্বেচ্ছাসেবী ডাক্তারদের আন্তরিক অংশগ্রহণে দিনব্যাপী ফ্রি মেডিকেল ক্যাম্প সম্পন্ন হয়েছে। এতে বিশেষ করে নারী, শিশু ও বৃদ্ধ রোগীরা জরুরি চিকিৎসা সুবিধা লাভ করেন।",
+    contentEn: "Through Zikrullah Foundation's initiative and the dedicated participation of volunteer doctors from Shaheed Ziaur Rahman Medical College, Bogura, a day-long free medical camp was conducted. Women, children, and elderly patients received vital healthcare and free prescription medicines."
   }
 ];
 
@@ -278,32 +295,48 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: "g1",
     title: "মানবসেবা ও ত্রাণ বিতরণ কার্যক্রম",
+    titleEn: "Humanitarian Service & Relief Distribution",
     category: "খাদ্য সহায়তা",
+    categoryEn: "Food Aid",
     location: "গুজিয়া, মোকামতলা",
+    locationEn: "Gujia, Mokamtala",
     imageUrl: foodImg,
-    date: "সেপ্টেম্বর ২০২৬"
+    date: "সেপ্টেম্বর ২০২৬",
+    dateEn: "September 2026"
   },
   {
     id: "g2",
     title: "শিক্ষার্থীদের মাঝে পাঠ্যবই ও ব্যাগ উপহার",
+    titleEn: "Gifting Textbooks & School Bags to Students",
     category: "শিক্ষা সহায়তা",
+    categoryEn: "Education Aid",
     location: "মোকামতলা, বগুড়া",
-    date: "আগস্ট ২০২৬"
+    locationEn: "Mokamtala, Bogura",
+    date: "আগস্ট ২০২৬",
+    dateEn: "August 2026"
   },
   {
     id: "g3",
     title: "বিনামূল্যে বিশেষজ্ঞ চিকিৎসা ক্যাম্প",
+    titleEn: "Free Specialist Medical Camp",
     category: "স্বাস্থ্যসেবা",
+    categoryEn: "Healthcare",
     location: "গুজিয়া, বগুড়া",
-    date: "জুলাই ২০২৬"
+    locationEn: "Gujia, Bogura",
+    date: "জুলাই ২০২৬",
+    dateEn: "July 2026"
   },
   {
     id: "g4",
     title: "স্বেচ্ছাসেবীদের মানবিক উদ্যোগ সমাবেশ",
+    titleEn: "Volunteers' Humanitarian Initiative Gathering",
     category: "সামাজিক সমাবেশ",
+    categoryEn: "Community Gathering",
     location: "বগুড়া কার্যালয়",
+    locationEn: "Bogura Office",
     imageUrl: heroImg,
-    date: "মে ২০২৬"
+    date: "মে ২০২৬",
+    dateEn: "May 2026"
   }
 ];
 

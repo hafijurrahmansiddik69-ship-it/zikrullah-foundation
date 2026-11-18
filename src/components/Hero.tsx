@@ -17,7 +17,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToAbout }) => {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg"
-          alt="জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম"
+          alt={isEn ? 'Zikrullah Foundation Humanitarian Work' : 'জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম'}
           className="w-full h-full object-cover object-right sm:object-[75%_center] filter brightness-[0.95] contrast-[1.05]"
         />
 

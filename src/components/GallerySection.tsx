@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import { Maximize2, X, MapPin, Calendar } from 'lucide-react';
 import { GALLERY_ITEMS } from '../data/mockData';
 import { GalleryItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 export const GallerySection: React.FC = () => {
+  const { isEn } = useLanguage();
   const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('সকল');
+  const [activeCategoryKey, setActiveCategoryKey] = useState<string>('all');
 
-  const categories = ['সকল', 'খাদ্য সহায়তা', 'শিক্ষা সহায়তা', 'স্বাস্থ্যসেবা', 'সামাজিক সমাবেশ'];
+  const categories = [
+    { key: 'all', bn: 'সকল', en: 'All Photos' },
+    { key: 'খাদ্য সহায়তা', bn: 'খাদ্য সহায়তা', en: 'Food Aid' },
+    { key: 'শিক্ষা সহায়তা', bn: 'শিক্ষা সহায়তা', en: 'Education Aid' },
+    { key: 'স্বাস্থ্যসেবা', bn: 'স্বাস্থ্যসেবা', en: 'Healthcare' },
+    { key: 'সামাজিক সমাবেশ', bn: 'সামাজিক সমাবেশ', en: 'Community Gathering' },
+  ];
 
-  const filteredPhotos = activeCategory === 'সকল'
+  const filteredPhotos = activeCategoryKey === 'all'
     ? GALLERY_ITEMS
-    : GALLERY_ITEMS.filter((g) => g.category === activeCategory);
+    : GALLERY_ITEMS.filter((g) => g.category === activeCategoryKey);
 
   return (
     <section id="gallery" className="py-20 bg-white border-b border-emerald-100/60">
@@ -21,14 +29,16 @@ export const GallerySection: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
             <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block mb-2">
-              মাঠপর্যায়ের স্মৃতি ও চিত্র
+              {isEn ? 'Field Memories & Moments' : 'মাঠপর্যায়ের স্মৃতি ও চিত্র'}
             </span>
             <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl text-[#045332] leading-tight">
-              কার্যক্রমের ছবির গ্যালারি
+              {isEn ? 'Photo Gallery of Our Activities' : 'কার্যক্রমের ছবির গ্যালারি'}
             </h2>
           </div>
           <p className="text-slate-600 text-sm sm:text-base max-w-md">
-            গুজিয়া, মোকামতলা ও বগুড়ার প্রত্যন্ত অঞ্চলে মানুষের সহযোগিতায় জিকিরুল্লাহ ফাউন্ডেশনের গৃহীত বিভিন্ন উদ্যোগের স্থিরচিত্র।
+            {isEn
+              ? 'Photographic glimpses of diverse humanitarian initiatives undertaken by Zikrullah Foundation across Gujia, Mokamtala, and remote regions of Bogura.'
+              : 'গুজিয়া, মোকামতলা ও বগুড়ার প্রত্যন্ত অঞ্চলে মানুষের সহযোগিতায় জিকিরুল্লাহ ফাউন্ডেশনের গৃহীত বিভিন্ন উদ্যোগের স্থিরচিত্র।'}
           </p>
         </div>
 
@@ -36,59 +46,66 @@ export const GallerySection: React.FC = () => {
         <div className="flex items-center gap-1.5 sm:gap-2 mb-8 sm:mb-10 p-1.5 bg-emerald-50/70 border border-emerald-100 rounded-xl max-w-full overflow-x-auto">
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
+              key={cat.key}
+              onClick={() => setActiveCategoryKey(cat.key)}
               className={`px-3 sm:px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap shrink-0 ${
-                activeCategory === cat
+                activeCategoryKey === cat.key
                   ? 'bg-[#087443] text-white shadow-xs'
                   : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-100/50'
               }`}
             >
-              {cat}
+              {isEn ? cat.en : cat.bn}
             </button>
           ))}
         </div>
 
         {/* Photos Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredPhotos.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => setSelectedPhoto(item)}
-              className="group relative rounded-2xl overflow-hidden border border-emerald-100/80 bg-slate-100 aspect-4/3 cursor-pointer shadow-xs hover:shadow-xl transition-all duration-300"
-            >
-              {item.imageUrl ? (
-                <img
-                  src={item.imageUrl}
-                  alt={item.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-emerald-950 via-[#034a2c] to-emerald-900" />
-              )}
-              
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+          {filteredPhotos.map((item) => {
+            const title = isEn && item.titleEn ? item.titleEn : item.title;
+            const category = isEn && item.categoryEn ? item.categoryEn : item.category;
+            const location = isEn && item.locationEn ? item.locationEn : item.location;
+            const date = isEn && item.dateEn ? item.dateEn : item.date;
 
-              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                <Maximize2 className="w-4 h-4" />
-              </div>
+            return (
+              <div
+                key={item.id}
+                onClick={() => setSelectedPhoto(item)}
+                className="group relative rounded-2xl overflow-hidden border border-emerald-100/80 bg-slate-100 aspect-4/3 cursor-pointer shadow-xs hover:shadow-xl transition-all duration-300"
+              >
+                {item.imageUrl ? (
+                  <img
+                    src={item.imageUrl}
+                    alt={title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-emerald-950 via-[#034a2c] to-emerald-900" />
+                )}
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
 
-              <div className="absolute bottom-3 left-3 right-3 text-white">
-                <span className="text-[10px] font-bold text-emerald-300 block mb-1">
-                  {item.category}
-                </span>
-                <h4 className="font-serif-bn font-bold text-sm leading-snug line-clamp-2">
-                  {item.title}
-                </h4>
-                <div className="flex items-center gap-3 text-[11px] text-slate-300 mt-1">
-                  <span>{item.location}</span>
-                  <span>·</span>
-                  <span>{item.date}</span>
+                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-4 h-4" />
+                </div>
+
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <span className="text-[10px] font-bold text-emerald-300 block mb-1">
+                    {category}
+                  </span>
+                  <h4 className="font-serif-bn font-bold text-sm leading-snug line-clamp-2">
+                    {title}
+                  </h4>
+                  <div className="flex items-center gap-3 text-[11px] text-slate-300 mt-1">
+                    <span>{location}</span>
+                    <span>·</span>
+                    <span>{date}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>
@@ -106,7 +123,7 @@ export const GallerySection: React.FC = () => {
             <button
               onClick={() => setSelectedPhoto(null)}
               className="absolute top-3 right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-900/70 text-white flex items-center justify-center hover:bg-slate-900 transition-colors cursor-pointer"
-              aria-label="বন্ধ করুন"
+              aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
             >
               <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
@@ -115,13 +132,13 @@ export const GallerySection: React.FC = () => {
               {selectedPhoto.imageUrl ? (
                 <img
                   src={selectedPhoto.imageUrl}
-                  alt={selectedPhoto.title}
+                  alt={isEn && selectedPhoto.titleEn ? selectedPhoto.titleEn : selectedPhoto.title}
                   referrerPolicy="no-referrer"
                   className="w-full h-auto max-h-[60vh] sm:max-h-[65vh] object-contain"
                 />
               ) : (
                 <div className="w-full h-48 sm:h-64 bg-gradient-to-br from-emerald-950 via-[#034a2c] to-emerald-900 flex items-center justify-center text-emerald-200 text-sm font-solaiman">
-                  এই ইভেন্টের কোনো ছবি নেই
+                  {isEn ? 'No photo available for this event' : 'এই ইভেন্টের কোনো ছবি নেই'}
                 </div>
               )}
             </div>
@@ -129,23 +146,23 @@ export const GallerySection: React.FC = () => {
             <div className="p-4 sm:p-6 bg-white">
               <div className="flex items-center justify-between gap-4 mb-2">
                 <span className="text-xs font-bold text-emerald-700 uppercase">
-                  {selectedPhoto.category}
+                  {isEn && selectedPhoto.categoryEn ? selectedPhoto.categoryEn : selectedPhoto.category}
                 </span>
                 <div className="flex items-center gap-3 text-xs text-slate-500">
                   <span className="flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5" />
-                    <span>{selectedPhoto.location}</span>
+                    <span>{isEn && selectedPhoto.locationEn ? selectedPhoto.locationEn : selectedPhoto.location}</span>
                   </span>
                   <span>·</span>
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{selectedPhoto.date}</span>
+                    <span>{isEn && selectedPhoto.dateEn ? selectedPhoto.dateEn : selectedPhoto.date}</span>
                   </span>
                 </div>
               </div>
 
               <h3 className="font-serif-bn font-bold text-xl text-slate-800">
-                {selectedPhoto.title}
+                {isEn && selectedPhoto.titleEn ? selectedPhoto.titleEn : selectedPhoto.title}
               </h3>
             </div>
           </div>

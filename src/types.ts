@@ -26,19 +26,28 @@ export interface ServiceItem {
 export interface NewsItem {
   id: string;
   title: string;
+  titleEn?: string;
   date: string;
+  dateEn?: string;
   category: string;
+  categoryEn?: string;
   summary: string;
+  summaryEn?: string;
   content: string;
+  contentEn?: string;
 }
 
 export interface GalleryItem {
   id: string;
   title: string;
+  titleEn?: string;
   category: string;
+  categoryEn?: string;
   location: string;
+  locationEn?: string;
   imageUrl?: string;
   date: string;
+  dateEn?: string;
 }
 
 export interface DonationData {

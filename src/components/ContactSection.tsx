@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, MessageSquare, ExternalLink, Loader2, RotateCcw } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, ExternalLink, Loader2, RotateCcw } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   triggerDirectEmailForContact, 
   sendContactMessageEmail, 
@@ -11,6 +12,7 @@ import {
 } from '../services/emailService';
 
 export const ContactSection: React.FC = () => {
+  const { isEn } = useLanguage();
   const [name, setName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [subject, setSubject] = useState('');
@@ -40,7 +42,7 @@ export const ContactSection: React.FC = () => {
     const contactData: ContactMessageSubmissionData = {
       name: name.trim(),
       contactInfo: contactInfo.trim(),
-      subject: subject.trim() || 'সাধারণ অনুসন্ধান',
+      subject: subject.trim() || (isEn ? 'General Inquiry' : 'সাধারণ অনুসন্ধান'),
       message: message.trim()
     };
 
@@ -48,7 +50,7 @@ export const ContactSection: React.FC = () => {
     adminDataService.addContactMessage({
       name: contactData.name,
       contactInfo: contactData.contactInfo,
-      subject: contactData.subject || 'সাধারণ যোগাযোগ',
+      subject: contactData.subject || (isEn ? 'General Contact' : 'সাধারণ যোগাযোগ'),
       message: contactData.message
     });
 
@@ -83,13 +85,15 @@ export const ContactSection: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-2xl mb-14">
           <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block mb-2">
-            যোগাযোগ ও অবস্থান
+            {isEn ? 'Contact & Location' : 'যোগাযোগ ও অবস্থান'}
           </span>
           <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl text-[#045332] leading-tight mb-4">
-            আমাদের সাথে যোগাযোগ করুন
+            {isEn ? 'Get In Touch With Us' : 'আমাদের সাথে যোগাযোগ করুন'}
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            ফাউন্ডেশনের যেকোনো কার্যক্রম, সরাসরি অনুদান, ভলান্টিয়ারিং কিংবা পরামর্শের জন্য আমাদের সাথে যেকোনো সময় যোগাযোগ করতে পারেন।
+            {isEn
+              ? 'Feel free to contact us anytime regarding any foundation activity, direct donations, volunteering, or valuable suggestions.'
+              : 'ফাউন্ডেশনের যেকোনো কার্যক্রম, সরাসরি অনুদান, ভলান্টিয়ারিং কিংবা পরামর্শের জন্য আমাদের সাথে যেকোনো সময় যোগাযোগ করতে পারেন।'}
           </p>
         </div>
 
@@ -99,7 +103,7 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-5 bg-[#fafcfb] rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-emerald-100 shadow-sm flex flex-col justify-between">
             <div>
               <h3 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-5 sm:mb-6">
-                প্রধান কার্যালয় ও তথ্য
+                {isEn ? 'Head Office & Details' : 'প্রধান কার্যালয় ও তথ্য'}
               </h3>
 
               <div className="space-y-6">
@@ -110,13 +114,13 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <strong className="block text-slate-800 text-sm font-semibold mb-0.5">
-                      ঠিকানা
+                      {isEn ? 'Address' : 'ঠিকানা'}
                     </strong>
                     <span className="text-slate-600 text-sm leading-relaxed block">
-                      {FOUNDATION_INFO.address}
+                      {isEn ? FOUNDATION_INFO.addressEn : FOUNDATION_INFO.address}
                     </span>
                     <span className="text-xs text-emerald-700 mt-1 block">
-                      (মোকামতলা বাজার সংলগ্ন, গুজিয়া, বগুড়া)
+                      {isEn ? '(Adjacent to Mokamtala Bazar, Gujia, Bogura)' : '(মোকামতলা বাজার সংলগ্ন, গুজিয়া, বগুড়া)'}
                     </span>
                   </div>
                 </div>
@@ -127,7 +131,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <strong className="block text-slate-800 text-sm font-semibold mb-0.5">
-                      অফিসিয়াল ইমেইল
+                      {isEn ? 'Official Email' : 'অফিসিয়াল ইমেইল'}
                     </strong>
                     <a
                       href={`mailto:${FOUNDATION_INFO.email}`}
@@ -144,7 +148,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <strong className="block text-slate-800 text-sm font-semibold mb-0.5">
-                      মোবাইল ও হোয়াটসঅ্যাপ
+                      {isEn ? 'Mobile & WhatsApp' : 'মোবাইল ও হোয়াটসঅ্যাপ'}
                     </strong>
                     <div className="space-y-0.5 font-sans text-sm">
                       <a
@@ -169,13 +173,13 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <strong className="block text-slate-800 text-sm font-semibold mb-0.5">
-                      অফিস সময়সূচি
+                      {isEn ? 'Office Hours' : 'অফিস সময়সূচি'}
                     </strong>
                     <span className="text-slate-600 text-sm block">
-                      {FOUNDATION_INFO.officeHours}
+                      {isEn ? FOUNDATION_INFO.officeHoursEn : FOUNDATION_INFO.officeHours}
                     </span>
                     <span className="text-xs text-slate-500 block">
-                      (জরুরি ত্রাণ কার্যক্রমে ২৪/৭ সচল)
+                      {isEn ? '(Active 24/7 during emergency relief operations)' : '(জরুরি ত্রাণ কার্যক্রমে ২৪/৭ সচল)'}
                     </span>
                   </div>
                 </div>
@@ -190,7 +194,7 @@ export const ContactSection: React.FC = () => {
                 className="flex-1 py-3 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs text-center shadow-xs transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
               >
                 <Phone className="w-3.5 h-3.5" />
-                <span>সরাসরি কল</span>
+                <span>{isEn ? 'Direct Call' : 'সরাসরি কল'}</span>
               </a>
 
               <a
@@ -198,7 +202,7 @@ export const ContactSection: React.FC = () => {
                 className="flex-1 py-3 px-3 rounded-xl bg-white border border-emerald-200 text-emerald-800 hover:bg-emerald-50 font-bold text-xs text-center transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
               >
                 <Mail className="w-3.5 h-3.5" />
-                <span>ইমেইল পাঠান</span>
+                <span>{isEn ? 'Send Email' : 'ইমেইল পাঠান'}</span>
               </a>
             </div>
 
@@ -207,20 +211,24 @@ export const ContactSection: React.FC = () => {
           {/* Contact Form (7 cols) */}
           <div className="lg:col-span-7 bg-[#fafcfb] rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-emerald-100 shadow-sm">
             <h3 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-1.5 sm:mb-2">
-              সরাসরি বার্তা পাঠান
+              {isEn ? 'Send Us a Direct Message' : 'সরাসরি বার্তা পাঠান'}
             </h3>
             <p className="text-xs text-slate-500 mb-6">
-              আপনার মতামত, প্রশ্ন বা অনুসন্ধানের বার্তা লিখুন। আমরা দ্রুত উত্তর দেব ইনশাআল্লাহ।
+              {isEn
+                ? "Write your feedback, questions, or inquiries below. We will reply promptly, Insha'Allah."
+                : 'আপনার মতামত, প্রশ্ন বা অনুসন্ধানের বার্তা লিখুন। আমরা দ্রুত উত্তর দেব ইনশাআল্লাহ।'}
             </p>
 
             {submitted ? (
               <div className="p-6 sm:p-8 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-center animate-in fade-in">
                 <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-2.5" />
                 <h4 className="font-serif-bn font-bold text-xl sm:text-2xl text-emerald-900 mb-1.5">
-                  আপনার বার্তা সফলভাবে প্রস্তুত হয়েছে!
+                  {isEn ? 'Your Message Is Ready!' : 'আপনার বার্তা সফলভাবে প্রস্তুত হয়েছে!'}
                 </h4>
                 <p className="text-xs sm:text-sm text-emerald-700 max-w-md mx-auto mb-5 leading-relaxed">
-                  আপনার মোবাইল অ্যাপ বা জিমেইল স্বয়ংক্রিয়ভাবে ওপেন করা হয়েছে। সরাসরি আমাদের কাছে পৌঁছাতে নিচের যেকোনো মাধ্যমে এখনই সেন্ড করুন:
+                  {isEn
+                    ? 'Your email app or Gmail has been opened automatically. Use either option below to dispatch your message directly to our team:'
+                    : 'আপনার মোবাইল অ্যাপ বা জিমেইল স্বয়ংক্রিয়ভাবে ওপেন করা হয়েছে। সরাসরি আমাদের কাছে পৌঁছাতে নিচের যেকোনো মাধ্যমে এখনই সেন্ড করুন:'}
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
@@ -232,7 +240,7 @@ export const ContactSection: React.FC = () => {
                       className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-xs transition-colors"
                     >
                       <ExternalLink className="w-4 h-4" />
-                      <span>🔴 সরাসরি Gmail দিয়ে পাঠান</span>
+                      <span>{isEn ? '🔴 Send via Web Gmail' : '🔴 সরাসরি Gmail দিয়ে পাঠান'}</span>
                     </a>
                   )}
 
@@ -242,7 +250,7 @@ export const ContactSection: React.FC = () => {
                       className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#045332] hover:bg-[#087443] text-white font-bold text-xs sm:text-sm shadow-xs transition-colors"
                     >
                       <Mail className="w-4 h-4" />
-                      <span>📱 মোবাইলের ইমেইল অ্যাপ দিয়ে পাঠান</span>
+                      <span>{isEn ? '📱 Send via Email App' : '📱 মোবাইলের ইমেইল অ্যাপ দিয়ে পাঠান'}</span>
                     </a>
                   )}
                 </div>
@@ -254,7 +262,7 @@ export const ContactSection: React.FC = () => {
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-emerald-800 transition-colors cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
-                    <span>আরেকটি নতুন বার্তা পাঠান</span>
+                    <span>{isEn ? 'Send Another Message' : 'আরেকটি নতুন বার্তা পাঠান'}</span>
                   </button>
                 </div>
               </div>
@@ -263,12 +271,12 @@ export const ContactSection: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      আপনার নাম <span className="text-red-500">*</span>
+                      {isEn ? 'Your Name' : 'আপনার নাম'} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="মোঃ আব্দুল হামিদ"
+                      placeholder={isEn ? 'e.g. Md. Abdul Hamid' : 'মোঃ আব্দুল হামিদ'}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-600 transition-colors"
@@ -277,12 +285,12 @@ export const ContactSection: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      মোবাইল বা ইমেইল <span className="text-red-500">*</span>
+                      {isEn ? 'Mobile Number or Email' : 'মোবাইল বা ইমেইল'} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="01XXXXXXXXX বা email@example.com"
+                      placeholder={isEn ? '01XXXXXXXXX or email@example.com' : '01XXXXXXXXX বা email@example.com'}
                       value={contactInfo}
                       onChange={(e) => setContactInfo(e.target.value)}
                       className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-600 transition-colors"
@@ -292,11 +300,11 @@ export const ContactSection: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    বার্তার বিষয়
+                    {isEn ? 'Message Subject' : 'বার্তার বিষয়'}
                   </label>
                   <input
                     type="text"
-                    placeholder="উদাঃ খাদ্য সহায়তা প্রকল্পে সহযোগিতা করতে চাই"
+                    placeholder={isEn ? 'e.g. Want to contribute to the food relief project' : 'উদাঃ খাদ্য সহায়তা প্রকল্পে সহযোগিতা করতে চাই'}
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-600 transition-colors"
@@ -305,12 +313,12 @@ export const ContactSection: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    বিস্তারিত বার্তা <span className="text-red-500">*</span>
+                    {isEn ? 'Detailed Message' : 'বিস্তারিত বার্তা'} <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     rows={4}
                     required
-                    placeholder="আপনার বার্তা বিস্তারিত লিখুন..."
+                    placeholder={isEn ? 'Write your message in detail...' : 'আপনার বার্তা বিস্তারিত লিখুন...'}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition-colors resize-none"
@@ -325,12 +333,12 @@ export const ContactSection: React.FC = () => {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>বার্তা প্রস্তুত হচ্ছে...</span>
+                      <span>{isEn ? 'Preparing message...' : 'বার্তা প্রস্তুত হচ্ছে...'}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>বার্তা পাঠান (ইমেইল সিস্টেম)</span>
+                      <span>{isEn ? 'Send Message (Email System)' : 'বার্তা পাঠান (ইমেইল সিস্টেম)'}</span>
                     </>
                   )}
                 </button>
