@@ -80,7 +80,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     adminDataService.addContactMessage({
       name: cleanInformerName,
       contactInfo: cleanInformerPhone,
-      subject: 'নতুন অসহায় মানুষের তথ্য - জিকরুল্লাহ ফাউন্ডেশন',
+      subject: `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${cleanAddress}`,
       message: formattedDetails,
     });
 

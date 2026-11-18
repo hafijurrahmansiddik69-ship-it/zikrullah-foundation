@@ -424,7 +424,8 @@ export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
     hour12: true
   });
 
-  const subject = 'নতুন অসহায় মানুষের তথ্য - জিকরুল্লাহ ফাউন্ডেশন';
+  const areaLabel = data.fullAddress?.trim() || 'উল্লেখ করা হয়নি';
+  const subject = `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${areaLabel}`;
 
   const body = `বিসমিল্লাহির রাহমানির রাহীম
 
@@ -432,21 +433,25 @@ export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
 অফিসিয়াল ইমেইল: ${recipientEmail}
 
 সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
-আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিচের তথ্যগুলো প্রেরণ করা হলো:
+আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:
 
-১. তথ্যদাতার নাম (আপনার নাম): ${data.informerName}
-২. আপনার মোবাইল নম্বর: ${data.informerPhone}
-৩. অসহায় ব্যক্তির নাম: ${data.needyName}
-৪. অসহায় ব্যক্তির মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
-৫. পূর্ণ ঠিকানা (গ্রাম/এলাকা, থানা, জেলা): ${data.fullAddress}
-৬. কী ধরনের সহযোগিতা প্রয়োজন?: ${data.helpType}
-৭. সংক্ষিপ্ত বিবরণ: ${data.description || 'উল্লেখ করা হয়নি'}
+[ সহায়তা প্রার্থীর তথ্য ]
+• অসহায় ব্যক্তির নাম: ${data.needyName}
+• কী ধরনের সহযোগিতা প্রয়োজন: ★ **${data.helpType}**
+• অসহায় ব্যক্তির মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
+• পূর্ণ ঠিকানা: ${areaLabel}
+• সংক্ষিপ্ত বিবরণ: ${data.description || 'উল্লেখ করা হয়নি'}
 
-তথ্য প্রেরণের সময়: ${submissionTime}
-ওয়েবসাইট: https://zikrullahfoundation.org
+━━━━━━━━━━━━━━━━━━━━━━
 
-জাজাকাল্লাহু খাইরান।
-${data.informerName}`;
+[ তথ্যদাতার বিবরণ ]
+• নাম ও যোগাযোগ: ${data.informerName} (${data.informerPhone})
+• তথ্য প্রেরণের সময়: ${submissionTime}
+
+জাযাকাল্লাহু খাইরান।
+${data.informerName}
+
+ওয়েবসাইট: https://www.zikrullahfoundation.com`;
 
   return { recipientEmail, ccEmail, subject, body };
 }
@@ -476,7 +481,14 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   const { recipientEmail, ccEmail, subject } = generateNeedyInfoEmailContent(data);
   const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
   const mailtoUrl = getMailtoUrlForNeedyInfo(data);
-  const submissionTime = new Date().toLocaleString('bn-BD');
+  const submissionTime = new Date().toLocaleString('bn-BD', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  });
 
   try {
     await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
@@ -490,14 +502,14 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
         _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
-        'তথ্যদাতার নাম': data.informerName,
-        'তথ্যদাতার মোবাইল নম্বর': data.informerPhone,
         'অসহায় ব্যক্তির নাম': data.needyName,
+        'কী ধরনের সহযোগিতা প্রয়োজন': data.helpType,
         'অসহায় ব্যক্তির মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
         'পূর্ণ ঠিকানা': data.fullAddress,
-        'সহযোগিতার ধরন': data.helpType,
         'সংক্ষিপ্ত বিবরণ': data.description || 'উল্লেখ করা হয়নি',
-        'জমার সময়': submissionTime
+        'নাম ও যোগাযোগ (তথ্যদাতা)': `${data.informerName} (${data.informerPhone})`,
+        'তথ্য প্রেরণের সময়': submissionTime,
+        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
       })
     }).catch(() => null);
   } catch (err) {
