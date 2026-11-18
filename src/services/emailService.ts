@@ -407,6 +407,37 @@ export interface NeedyInfoSubmissionData {
   description?: string;
 }
 
+function formatBengaliDateTimeWithAmPm(date: Date): string {
+  const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  const toBnNum = (val: number | string) =>
+    String(val).replace(/\d/g, (d) => bnDigits[Number(d)]);
+  const bnMonths = [
+    'জানুয়ারি',
+    'ফেব্রুয়ারি',
+    'মার্চ',
+    'এপ্রিল',
+    'মে',
+    'জুন',
+    'জুলাই',
+    'আগস্ট',
+    'সেপ্টেম্বর',
+    'অক্টোবর',
+    'নভেম্বর',
+    'ডিসেম্বর',
+  ];
+
+  const day = toBnNum(date.getDate());
+  const month = bnMonths[date.getMonth()];
+  const year = toBnNum(date.getFullYear());
+
+  const hours24 = date.getHours();
+  const ampm = hours24 >= 12 ? 'PM' : 'AM';
+  const hours12 = toBnNum(hours24 % 12 || 12);
+  const minutes = toBnNum(String(date.getMinutes()).padStart(2, '0'));
+
+  return `${day} ${month}, ${year} — ${hours12}:${minutes} ${ampm}`;
+}
+
 export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
   recipientEmail: string;
   ccEmail: string;
@@ -415,43 +446,36 @@ export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
 } {
   const recipientEmail = RECIPIENT_EMAIL;
   const ccEmail = CC_EMAIL;
-  const submissionTime = new Date().toLocaleString('bn-BD', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
-  });
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
 
   const areaLabel = data.fullAddress?.trim() || 'উল্লেখ করা হয়নি';
   const subject = `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${areaLabel}`;
 
-  const body = `বিসমিল্লাহির রাহমানির রাহীম
+  const body = `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
 
 জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
-অফিসিয়াল ইমেইল: ${recipientEmail}
+Official Email: ${recipientEmail}
 
-সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
-আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:
+সম্মানিত ফাউন্ডেশন টিম,
+একজন অসহায় মানুষের সহযোগিতার লক্ষ্যে নিচের তথ্যগুলো পাঠানো হলো:
 
-[ সহায়তা প্রার্থীর তথ্য ]
-• অসহায় ব্যক্তির নাম: ${data.needyName}
-• কী ধরনের সহযোগিতা প্রয়োজন: ★ **${data.helpType}**
-• অসহায় ব্যক্তির মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
+[ মূল তথ্য ]
+• নাম: ${data.needyName}
+• সহযোগিতার ধরন: ★ ${data.helpType}
+• মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
 • পূর্ণ ঠিকানা: ${areaLabel}
 • সংক্ষিপ্ত বিবরণ: ${data.description || 'উল্লেখ করা হয়নি'}
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
-[ তথ্যদাতার বিবরণ ]
+[ তথ্যদাতা ]
 • নাম ও যোগাযোগ: ${data.informerName} (${data.informerPhone})
-• তথ্য প্রেরণের সময়: ${submissionTime}
+• প্রেরণের সময়: ${submissionTime}
 
-জাযাকাল্লাহু খাইরান।
+جَزَاكَ اللَّهُ خَيْرًا
 ${data.informerName}
 
-ওয়েবসাইট: https://www.zikrullahfoundation.com`;
+ওয়েবসাইট: https://www.zikrullahfoundation.com`;
 
   return { recipientEmail, ccEmail, subject, body };
 }
@@ -481,14 +505,7 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   const { recipientEmail, ccEmail, subject } = generateNeedyInfoEmailContent(data);
   const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
   const mailtoUrl = getMailtoUrlForNeedyInfo(data);
-  const submissionTime = new Date().toLocaleString('bn-BD', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
-  });
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
 
   try {
     await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
@@ -502,14 +519,14 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
         _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
-        'অসহায় ব্যক্তির নাম': data.needyName,
-        'কী ধরনের সহযোগিতা প্রয়োজন': data.helpType,
-        'অসহায় ব্যক্তির মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
+        'নাম': data.needyName,
+        'সহযোগিতার ধরন': `★ ${data.helpType}`,
+        'মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
         'পূর্ণ ঠিকানা': data.fullAddress,
         'সংক্ষিপ্ত বিবরণ': data.description || 'উল্লেখ করা হয়নি',
-        'নাম ও যোগাযোগ (তথ্যদাতা)': `${data.informerName} (${data.informerPhone})`,
-        'তথ্য প্রেরণের সময়': submissionTime,
-        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
+        'নাম ও যোগাযোগ': `${data.informerName} (${data.informerPhone})`,
+        'প্রেরণের সময়': submissionTime,
+        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
       })
     }).catch(() => null);
   } catch (err) {
