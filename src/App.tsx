@@ -4,10 +4,6 @@ import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
-import { StatsSection } from './components/StatsSection';
-import { PrayerTimesBogura } from './components/PrayerTimesBogura';
-import { CallToActionBanner } from './components/CallToActionBanner';
-import { VolunteerSection } from './components/VolunteerSection';
 import { GallerySection } from './components/GallerySection';
 import { NewsSection } from './components/NewsSection';
 import { ContactSection } from './components/ContactSection';
@@ -17,7 +13,6 @@ import { VolunteerModal } from './components/VolunteerModal';
 import { NeedyInfoModal } from './components/NeedyInfoModal';
 import { DirectContactModal } from './components/DirectContactModal';
 import { AboutPage } from './pages/AboutPage';
-import { Project } from './types';
 import { Heart } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
@@ -152,14 +147,6 @@ function MainApp() {
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}
             />
-
-            <StatsSection />
-
-            <PrayerTimesBogura />
-
-            <CallToActionBanner onOpenDonation={() => handleOpenDonation()} />
-
-            <VolunteerSection onOpenModal={() => setIsVolunteerOpen(true)} />
 
             <GallerySection />
 

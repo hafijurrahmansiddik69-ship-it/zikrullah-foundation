@@ -127,17 +127,6 @@ export const Footer: React.FC<FooterProps> = ({
                   {t.nav.services}
                 </a>
               </li>
-              <li>
-                <a
-                  href="#prayer"
-                  onClick={() => {
-                    if (onNavigateHome) onNavigateHome();
-                  }}
-                  className="hover:text-white transition-colors"
-                >
-                  {t.nav.prayer}
-                </a>
-              </li>
             </ul>
           </div>
 

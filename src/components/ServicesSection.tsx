@@ -114,25 +114,9 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
   ];
 
   return (
-    <section id="services" className="py-20 sm:py-24 bg-gradient-to-b from-[#f8faf9] via-white to-[#f4f8f6] relative">
+    <section id="services" className="py-12 sm:py-16 bg-gradient-to-b from-[#f8faf9] via-white to-[#f4f8f6] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs sm:text-sm font-semibold mb-3.5">
-            <Compass className="w-4 h-4 text-emerald-600" />
-            <span>{isEn ? 'Our Programs & Services' : 'আমাদের প্রোগ্রাম ও সেবা পরিকল্পনা'}</span>
-          </div>
-          <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl lg:text-5xl text-[#045332] tracking-tight leading-tight mb-4">
-            {isEn ? 'Our Mission & Vision' : 'আমাদের প্রোগ্রাম ও সেবা (লক্ষ্য ও উদ্দেশ্য)'}
-          </h2>
-          <p className="text-slate-600 font-solaiman text-base sm:text-lg leading-relaxed">
-            {isEn
-              ? "A sacred commitment to selfless humanitarian service and building eternal rewards for the Hereafter in light of the Qur'an and Sunnah."
-              : 'কুরআন-সুন্নাহর সঠিক নির্দেশনা অনুযায়ী মানবতার নিঃস্বার্থ খেদমত এবং আখিরাতের সঞ্চয় গড়ে তোলার পবিত্র অঙ্গীকার।'}
-          </p>
-        </div>
-
         {/* 2 Main Columns: Mission & Vision */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           

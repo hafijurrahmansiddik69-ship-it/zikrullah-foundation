@@ -169,13 +169,6 @@ export const Header: React.FC<HeaderProps> = ({
               {t.nav.services}
             </a>
             <a
-              href="#prayer"
-              onClick={(e) => handleNavToSection(e, 'prayer')}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
-            >
-              {t.nav.prayer}
-            </a>
-            <a
               href="#gallery"
               onClick={(e) => handleNavToSection(e, 'gallery')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
@@ -348,9 +341,9 @@ export const Header: React.FC<HeaderProps> = ({
               </a>
 
               {/* 5. Get Involved */}
-              <a
-                href="#volunteer"
-                onClick={(e) => {
+              <button
+                type="button"
+                onClick={() => {
                   closeMobileMenu();
                   onOpenVolunteer();
                 }}
@@ -358,7 +351,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <span>{t.nav.getInvolved}</span>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
-              </a>
+              </button>
 
               {/* 6. Blogs */}
               <a
