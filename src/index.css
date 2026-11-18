@@ -104,6 +104,51 @@ body.lang-en .font-solaiman {
   font-family: 'Times New Roman', Times, 'Traditional Arabic', 'Noto Naskh Arabic', serif;
 }
 
+/* Custom 5-pointed star polygon clip path */
+.clip-star {
+  clip-path: polygon(
+    50% 0%, 
+    61% 35% , 
+    98% 35%, 
+    68% 57%, 
+    79% 91%, 
+    50% 70%, 
+    21% 91%, 
+    32% 57%, 
+    2% 35%, 
+    39% 35%
+  );
+}
+
+/* Twinkling & Glowing Animation Effect */
+@keyframes twirlGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.6)) brightness(1);
+    transform: scale(1) rotate(45deg);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(253, 224, 71, 0.95)) brightness(1.15);
+    transform: scale(1.04) rotate(45deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(252, 211, 77, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(252, 211, 77, 0.85);
+  }
+}
+
+.animate-twinkle {
+  animation: twirlGlow 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
 /* প্রকল্পের পটভূমি ও তহবিল মডিউল স্টাইল */
 .project-container {
   background: #ffffff;
@@ -281,5 +326,3 @@ body.lang-en .font-solaiman {
 .sidebar-drawer.active {
   transform: translateX(0);
 }
-
-

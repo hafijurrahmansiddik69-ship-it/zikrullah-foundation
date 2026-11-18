@@ -36,6 +36,16 @@ export const DONATION_CATEGORIES: DonationCategoryItem[] = [
     en: 'Tube-well & Tree Plantation'
   },
   {
+    id: 'winter-relief',
+    bn: 'শীতবস্ত্র বিতরণ কর্মসূচি',
+    en: 'Winter Clothing Relief'
+  },
+  {
+    id: 'orphan-care',
+    bn: 'এতিম লালন-পালন ও কাফালত',
+    en: 'Orphan Care & Support'
+  },
+  {
     id: 'zakat-fund',
     bn: 'যাকাত তহবিল',
     en: 'Zakat Fund'
@@ -50,11 +60,19 @@ export function resolveDonationCategoryId(input?: string): string {
   const directMatch = DONATION_CATEGORIES.find((c) => c.id === input || c.bn === input || c.en === input);
   if (directMatch) return directMatch.id;
 
-  // 7. Zakat Fund (always checks explicitly)
+  // Winter Relief
+  if (clean.includes('শীত') || clean.includes('বস্ত্র') || clean.includes('winter') || clean.includes('blanket')) {
+    return 'winter-relief';
+  }
+  // Orphan Care
+  if (clean.includes('এতিম') || clean.includes('orphan') || clean.includes('কাফালত')) {
+    return 'orphan-care';
+  }
+  // Zakat Fund
   if (clean.includes('যাকাত') || clean.includes('zakat')) {
     return 'zakat-fund';
   }
-  // 2. Healthcare & Medical Camp
+  // Healthcare & Medical Camp
   if (
     clean.includes('মেডিকেল') ||
     clean.includes('চিকিৎসা') ||
@@ -65,25 +83,25 @@ export function resolveDonationCategoryId(input?: string): string {
   ) {
     return 'healthcare-medical-camp';
   }
-  // 3. Food Relief for Needy Families
+  // Food Relief for Needy Families
   if (
     clean.includes('খাদ্য') ||
+    clean.includes('খাবার') ||
     clean.includes('food') ||
     clean.includes('ত্রাণ') ||
     clean.includes('হতদরিদ্র')
   ) {
     return 'food-relief';
   }
-  // 4. Education Support for Orphans
+  // Education Support
   if (
     clean.includes('শিক্ষা') ||
-    clean.includes('এতিম') ||
     clean.includes('education') ||
-    clean.includes('orphan')
+    clean.includes('স্কুল')
   ) {
     return 'education-support';
   }
-  // 5. Youth Training & Self-Employment
+  // Youth Training & Self-Employment
   if (
     clean.includes('যুব') ||
     clean.includes('প্রশিক্ষণ') ||
@@ -95,7 +113,7 @@ export function resolveDonationCategoryId(input?: string): string {
   ) {
     return 'youth-training';
   }
-  // 6. Tube-well & Tree Plantation / Sadaqah Jariyah
+  // Tube-well & Tree Plantation / Sadaqah Jariyah
   if (
     clean.includes('নলকূপ') ||
     clean.includes('বৃক্ষ') ||
@@ -103,6 +121,7 @@ export function resolveDonationCategoryId(input?: string): string {
     clean.includes('পানি') ||
     clean.includes('সাদাকায়ে জারিয়াহ') ||
     clean.includes('সদকা-ই-জারিয়া') ||
+    clean.includes('সদকায়ে জারিয়া') ||
     clean.includes('tube-well') ||
     clean.includes('tubewell') ||
     clean.includes('tree') ||
@@ -110,6 +129,6 @@ export function resolveDonationCategoryId(input?: string): string {
   ) {
     return 'tubewell-tree-plantation';
   }
-  // 1. General Sadaqah
+  // General Sadaqah
   return 'general-sadaqah';
 }

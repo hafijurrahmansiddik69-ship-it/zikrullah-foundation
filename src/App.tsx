@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
+import { OngoingActivitiesSection } from './components/OngoingActivitiesSection';
 import { GallerySection } from './components/GallerySection';
 import { NewsSection } from './components/NewsSection';
 import { ContactSection } from './components/ContactSection';
@@ -146,6 +147,11 @@ function MainApp() {
 
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}
+            />
+
+            {/* চলমান কার্যক্রমসমূহ (আস-সুন্নাহ ট্রাস্ট ডিজাইনের ৭টি প্রজেক্ট কার্ড) */}
+            <OngoingActivitiesSection
+              onOpenDonation={(cat, amt) => handleOpenDonation(cat, amt)}
             />
 
             <GallerySection />

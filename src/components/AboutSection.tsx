@@ -77,43 +77,45 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           </div>
         </div>
 
-        {/* Three Sleek Single-Line Pill Buttons Right Below the Quranic Verse Card */}
-        <div className="mt-8 sm:mt-10 w-full flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap items-stretch md:items-center justify-center gap-3.5 sm:gap-4 font-solaiman">
-          {/* Button 1 (Primary Emerald Pill) */}
+        {/* Three Action Cards with Glowing & Twinkling Animation Effect */}
+        <div className="mt-8 sm:mt-10 w-full flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap items-stretch md:items-center justify-center gap-3.5 sm:gap-5 font-solaiman">
+          
+          {/* Card 1: Rich Green (গাঢ় সবুজ) background, white icon, white text */}
           <button
             type="button"
             onClick={onOpenVolunteer}
-            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/25 rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(6,78,59,0.45)] hover:shadow-[0_0_30px_rgba(6,78,59,0.7)] border-2 border-emerald-300/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
           >
-            <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-            <span>{isEn ? 'Join as a Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
+            <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-white" />
+            <span className="text-white">{isEn ? 'Join as a Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
           </button>
 
-          {/* Button 2 (Highlighted Warm Pill) */}
+          {/* Card 2: Deep Navy Blue (গাঢ় নেভি ব্লু) background, orange/gold icon, white text */}
           <button
             type="button"
             onClick={onOpenNeedyInfo}
-            className="inline-flex items-center justify-center gap-2.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border-2 border-amber-400/70 shadow-md shadow-amber-500/15 rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(15,23,42,0.45)] hover:shadow-[0_0_30px_rgba(30,41,59,0.7)] border-2 border-amber-400/90 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
           >
             <span className="relative inline-flex items-center justify-center shrink-0">
-              <HandHeart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-700" />
+              <HandHeart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
               <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-600" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
               </span>
             </span>
-            <span>{isEn ? 'Share Info on Needy People in Your Village' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
+            <span className="text-white">{isEn ? 'Share Info on Needy People in Your Village' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
           </button>
 
-          {/* Button 3 (Clean Secondary Pill) */}
+          {/* Card 3: Clean White (শুভ্র সাদা) background, dark icon, dark text */}
           <button
             type="button"
             onClick={onOpenContactModal}
-            className="inline-flex items-center justify-center gap-2.5 bg-white hover:bg-emerald-50 text-slate-800 border border-slate-300 hover:border-emerald-500 hover:text-emerald-700 shadow-sm rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2.5 bg-white text-slate-900 rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] border-2 border-emerald-500/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
           >
-            <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-            <span>{isEn ? 'Contact Us Directly' : 'সরাসরি যোগাযোগ করুন'}</span>
+            <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-emerald-700" />
+            <span className="text-slate-900">{isEn ? 'Contact Us Directly' : 'সরাসরি যোগাযোগ করুন'}</span>
           </button>
+
         </div>
       </div>
     </section>
