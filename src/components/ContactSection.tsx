@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, MessageSquare, ExternalLink, Loader2, RotateCcw } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
@@ -18,6 +18,18 @@ export const ContactSection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [emailLinks, setEmailLinks] = useState<{ gmailUrl: string; mailtoUrl: string } | null>(null);
+
+  useEffect(() => {
+    const handlePrefill = (e: Event) => {
+      const customEvent = e as CustomEvent<{ subject?: string }>;
+      if (customEvent.detail?.subject) {
+        setSubject(customEvent.detail.subject);
+        setSubmitted(false);
+      }
+    };
+    window.addEventListener('zikrullah_prefill_contact', handlePrefill);
+    return () => window.removeEventListener('zikrullah_prefill_contact', handlePrefill);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

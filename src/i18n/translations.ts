@@ -67,9 +67,9 @@ export const translations = {
       subtitle: 'প্রতিটি বাটনে ক্লিক করে বিস্তারিত কার্যক্রম জেনে নিন',
       cards: [
         {
-          badge: 'খাদ্য ও আশ্রয়',
+          badge: 'খাদ্য ও বস্ত্র',
           title: 'মানবিক সহায়তা',
-          subtitle: 'জরুরি খাদ্য ও পুষ্টি সহায়তা প্রকল্প',
+          subtitle: 'জরুরি খাদ্য, পুষ্টি ও বস্ত্র সহায়তা প্রকল্প',
           description: 'সমাজের সবচেয়ে পিছিয়ে পড়া প্রান্তিক মানুষ, অসহায় বিধবা ও এতিম শিশুদের জন্য খাদ্য, পুষ্টি এবং নিরাপদ আশ্রয়ের সুব্যবস্থা করা। বগুড়ার মোকামতলা ও আশেপাশের এলাকায় নিয়মিত ফুড প্যাক বিতরণ করা হয়।',
           highlights: [
             'অসহায় পরিবার ও বিধবাদের মাঝে মাসব্যাপী পুষ্টিকর খাদ্যপণ্য সরবরাহ',
@@ -362,9 +362,9 @@ export const translations = {
       subtitle: 'Click each button to learn about our detailed initiatives',
       cards: [
         {
-          badge: 'Food & Shelter',
+          badge: 'Food & Clothing',
           title: 'Humanitarian Aid',
-          subtitle: 'Emergency Food & Nutrition Relief',
+          subtitle: 'Emergency Food, Nutrition & Clothing Relief',
           description: 'Providing food security, essential nutrition, and safe shelter for the most marginalized, helpless widows, and vulnerable orphans across rural Bogura.',
           highlights: [
             'Monthly nutritional food packages for impoverished widows and families',

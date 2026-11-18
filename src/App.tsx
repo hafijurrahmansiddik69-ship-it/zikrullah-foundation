@@ -14,6 +14,8 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { DonationModal } from './components/DonationModal';
 import { VolunteerModal } from './components/VolunteerModal';
+import { NeedyInfoModal } from './components/NeedyInfoModal';
+import { DirectContactModal } from './components/DirectContactModal';
 import { AboutPage } from './pages/AboutPage';
 import { Project } from './types';
 import { Heart } from 'lucide-react';
@@ -41,6 +43,8 @@ function MainApp() {
   const [donationAmount, setDonationAmount] = useState<number>(1000);
 
   const [isVolunteerOpen, setIsVolunteerOpen] = useState(false);
+  const [isNeedyInfoOpen, setIsNeedyInfoOpen] = useState(false);
+  const [isDirectContactOpen, setIsDirectContactOpen] = useState(false);
 
   useEffect(() => {
     const handleHash = () => {
@@ -136,7 +140,9 @@ function MainApp() {
 
             <AboutSection 
               onNavigateToAbout={() => navigateTo('about')}
-              onOpenVolunteer={() => setIsVolunteerOpen(true)} 
+              onOpenVolunteer={() => setIsVolunteerOpen(true)}
+              onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+              onOpenContactModal={() => setIsDirectContactOpen(true)}
               onOpenDonation={() => handleOpenDonation()}
             />
 
@@ -196,6 +202,18 @@ function MainApp() {
       <VolunteerModal
         isOpen={isVolunteerOpen}
         onClose={() => setIsVolunteerOpen(false)}
+      />
+
+      {/* Needy Info Submission Modal */}
+      <NeedyInfoModal
+        isOpen={isNeedyInfoOpen}
+        onClose={() => setIsNeedyInfoOpen(false)}
+      />
+
+      {/* Direct Contact Modal */}
+      <DirectContactModal
+        isOpen={isDirectContactOpen}
+        onClose={() => setIsDirectContactOpen(false)}
       />
 
     </div>

@@ -11,18 +11,18 @@ import {
   Phone,
   BookOpen,
   ArrowRight,
-  Heart
+  Heart,
+  HeartHandshake,
+  Compass,
+  HandHeart,
+  Stethoscope,
+  HeartPulse,
+  Sprout,
+  Trees,
+  Scale,
+  Sun,
+  Landmark
 } from 'lucide-react';
-import { 
-  FoodIllustration, 
-  MedicalIllustration, 
-  EducationIllustration, 
-  SelfRelianceIllustration,
-  YouthAwakeningIllustration,
-  SadaqahJariyahIllustration,
-  VisionIllustration,
-  MissionIllustration
-} from '../components/MissionIcons';
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { ProjectsSection } from '../components/ProjectsSection';
@@ -115,7 +115,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         {/* Section 1: আমাদের লক্ষ্য (Mission) */}
         <div className="bg-white rounded-3xl p-6 sm:p-10 border border-emerald-100 shadow-md mb-10">
           <div className="flex items-center gap-3.5 mb-6">
-            <MissionIllustration className="w-13 h-13 sm:w-14 sm:h-14 shrink-0 shadow-md shadow-emerald-950/20 transition-transform duration-300 hover:scale-105" />
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shadow-md shadow-emerald-900/15 shrink-0">
+              <HeartHandshake className="w-7 h-7 text-white" strokeWidth={1.8} />
+            </div>
             <div>
               <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
                 Our Mission
@@ -133,7 +135,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </p>
           </div>
 
-          {/* 4 Points in Modern Redesigned Cards */}
+          {/* 7 Points in Modern Redesigned Cards */}
           <div className="space-y-5">
             {/* Point 1 */}
             <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
@@ -147,19 +149,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
                   ১
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
-                  <FoodIllustration className="w-full h-full" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <HandHeart className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
                 </div>
               </div>
 
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>সুন্নাহর অনুসরণে খাদ্য-হাদিয়া</span>
+                  <span>সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  অসহায়, এতিম, মিসকিন, বিধবা ও প্রয়োজনগ্রস্ত পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া।
+                  অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।
                 </p>
               </div>
             </div>
@@ -173,18 +175,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
               {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
               <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center gap-1 shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  <span className="leading-none">২</span>
-                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 shrink-0" aria-label="Compass icon">
-                    <circle cx="8" cy="8" r="6.8" stroke="#fbbf24" strokeWidth="1.2" fill="#045332" />
-                    <circle cx="8" cy="8" r="5" stroke="#34d399" strokeWidth="0.6" strokeDasharray="1 1" />
-                    <polygon points="8,2.8 9.6,8 8,7.2 6.4,8" fill="#fcd34d" />
-                    <polygon points="8,13.2 9.6,8 8,8.8 6.4,8" fill="#10b981" />
-                    <circle cx="8" cy="8" r="1.3" fill="#ffffff" stroke="#f59e0b" strokeWidth="0.6" />
-                  </svg>
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
+                  ২
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
-                  <MedicalIllustration className="w-full h-full" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <Stethoscope className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
                 </div>
               </div>
 
@@ -212,19 +207,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
                   ৩
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
-                  <EducationIllustration className="w-full h-full" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <HeartPulse className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
                 </div>
               </div>
 
               {/* Content */}
               <div className="flex-1 relative z-10">
                 <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>দ্বীনি ও আদর্শ শিক্ষা বিস্তার</span>
+                  <span>জরুরি রক্তদান</span>
                   <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
                 </h3>
                 <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন হাদীসের ইলম এবং যুগোপযোগী উচ্চ শিক্ষা ও উন্নত নৈতিকতার স্থায়ী ব্যবস্থা গড়ে তোলা।
+                  মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।
                 </p>
               </div>
             </div>
@@ -241,8 +236,37 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
                   ৪
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-white to-amber-50/60 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
-                  <SelfRelianceIllustration className="w-full h-full" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <BookOpen className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 relative z-10">
+                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
+                  <span>দ্বীনি ও আদর্শ শিক্ষা বিস্তার</span>
+                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
+                </h3>
+                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
+                  এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।
+                </p>
+              </div>
+            </div>
+
+            {/* Point 5 */}
+            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
+              {/* Large Translucent Watermark Number */}
+              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
+                05
+              </span>
+
+              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
+                  ৫
+                </div>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <Sprout className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
                 </div>
               </div>
 
@@ -257,13 +281,73 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </p>
               </div>
             </div>
+
+            {/* Point 6 */}
+            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
+              {/* Large Translucent Watermark Number */}
+              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
+                06
+              </span>
+
+              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
+                  ৬
+                </div>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <Trees className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 relative z-10">
+                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
+                  <span>সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা</span>
+                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
+                </h3>
+                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
+                  বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।
+                </p>
+              </div>
+            </div>
+
+            {/* Point 7 */}
+            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
+              {/* Large Translucent Watermark Number */}
+              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
+                07
+              </span>
+
+              {/* Badges: Gradient Circular Badge + Colorful Illustrative Vector Icon */}
+              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
+                  ৭
+                </div>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <Scale className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 relative z-10">
+                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
+                  <span>শরী&apos;আহ ভিত্তিক যাকাত বণ্টন</span>
+                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
+                </h3>
+                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
+                  ইসলামী শরী&apos;আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Section 2: আমাদের উদ্দেশ্য (Vision) */}
         <div className="bg-white rounded-3xl p-6 sm:p-10 border border-emerald-100 shadow-md mb-12">
           <div className="flex items-center gap-3.5 mb-6">
-            <VisionIllustration className="w-13 h-13 sm:w-14 sm:h-14 shrink-0 shadow-md shadow-emerald-950/20 transition-transform duration-300 hover:scale-105" />
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-900/15 shrink-0">
+              <Compass className="w-7 h-7 text-white" strokeWidth={1.8} />
+            </div>
             <div>
               <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
                 Our Vision
@@ -295,8 +379,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#d97706] via-[#b45309] to-[#92400e] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-amber-950/20 font-serif-bn ring-4 ring-amber-50 group-hover:ring-amber-100 transition-all">
                   ১
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-50/90 via-white to-emerald-50/60 flex items-center justify-center border border-amber-200/90 shadow-2xs group-hover:scale-105 group-hover:border-amber-300 group-hover:shadow-md transition-all duration-300 p-1.5 shrink-0">
-                  <YouthAwakeningIllustration className="w-full h-full" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-50/80 border border-amber-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-amber-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <Sun className="w-5 h-5 text-amber-600" strokeWidth={1.8} />
                 </div>
               </div>
 
@@ -324,8 +408,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
                   ২
                 </div>
-                <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-emerald-50 via-white to-amber-50/80 flex items-center justify-center border border-emerald-200/90 shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 p-1 shrink-0">
-                  <SadaqahJariyahIllustration className="w-full h-full drop-shadow-xs" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
+                  <Landmark className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
                 </div>
               </div>
 

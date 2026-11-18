@@ -392,3 +392,123 @@ export async function sendContactMessageEmail(data: ContactMessageSubmissionData
     gmailUrl
   };
 }
+
+/* ==========================================================================
+   4. NEEDY PERSON INFO SUBMISSION (অসহায় মানুষের তথ্য)
+   ========================================================================== */
+
+export interface NeedyInfoSubmissionData {
+  informerName: string;
+  informerPhone: string;
+  needyName: string;
+  needyPhone?: string;
+  fullAddress: string;
+  helpType: string;
+  description?: string;
+}
+
+export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
+  recipientEmail: string;
+  ccEmail: string;
+  subject: string;
+  body: string;
+} {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const ccEmail = CC_EMAIL;
+  const submissionTime = new Date().toLocaleString('bn-BD', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  });
+
+  const subject = 'নতুন অসহায় মানুষের তথ্য - জিকরুল্লাহ ফাউন্ডেশন';
+
+  const body = `বিসমিল্লাহির রাহমানির রাহীম
+
+জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
+অফিসিয়াল ইমেইল: ${recipientEmail}
+
+সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
+আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিচের তথ্যগুলো প্রেরণ করা হলো:
+
+১. তথ্যদাতার নাম (আপনার নাম): ${data.informerName}
+২. আপনার মোবাইল নম্বর: ${data.informerPhone}
+৩. অসহায় ব্যক্তির নাম: ${data.needyName}
+৪. অসহায় ব্যক্তির মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
+৫. পূর্ণ ঠিকানা (গ্রাম/এলাকা, থানা, জেলা): ${data.fullAddress}
+৬. কী ধরনের সহযোগিতা প্রয়োজন?: ${data.helpType}
+৭. সংক্ষিপ্ত বিবরণ: ${data.description || 'উল্লেখ করা হয়নি'}
+
+তথ্য প্রেরণের সময়: ${submissionTime}
+ওয়েবসাইট: https://zikrullahfoundation.org
+
+জাজাকাল্লাহু খাইরান।
+${data.informerName}`;
+
+  return { recipientEmail, ccEmail, subject, body };
+}
+
+export function getDirectGmailUrlForNeedyInfo(data: NeedyInfoSubmissionData): string {
+  const { recipientEmail, subject, body } = generateNeedyInfoEmailContent(data);
+  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+export function getMailtoUrlForNeedyInfo(data: NeedyInfoSubmissionData): string {
+  const { recipientEmail, ccEmail, subject, body } = generateNeedyInfoEmailContent(data);
+  return `mailto:${recipientEmail}?cc=${encodeURIComponent(ccEmail)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+export function triggerDirectGmailForNeedyInfo(data: NeedyInfoSubmissionData): void {
+  const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
+  const mailtoUrl = getMailtoUrlForNeedyInfo(data);
+  triggerSmartEmailOpen(mailtoUrl, gmailUrl);
+}
+
+export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise<{
+  success: boolean;
+  message: string;
+  mailtoUrl: string;
+  gmailUrl: string;
+}> {
+  const { recipientEmail, ccEmail, subject } = generateNeedyInfoEmailContent(data);
+  const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
+  const mailtoUrl = getMailtoUrlForNeedyInfo(data);
+  const submissionTime = new Date().toLocaleString('bn-BD');
+
+  try {
+    await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: subject,
+        _cc: ccEmail,
+        _template: 'table',
+        _captcha: 'false',
+        'তথ্যদাতার নাম': data.informerName,
+        'তথ্যদাতার মোবাইল নম্বর': data.informerPhone,
+        'অসহায় ব্যক্তির নাম': data.needyName,
+        'অসহায় ব্যক্তির মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
+        'পূর্ণ ঠিকানা': data.fullAddress,
+        'সহযোগিতার ধরন': data.helpType,
+        'সংক্ষিপ্ত বিবরণ': data.description || 'উল্লেখ করা হয়নি',
+        'জমার সময়': submissionTime
+      })
+    }).catch(() => null);
+  } catch (err) {
+    console.warn('Needy info background dispatch notice:', err);
+  }
+
+  return {
+    success: true,
+    message: 'অসহায় মানুষের তথ্য সফলভাবে প্রস্তুত হয়েছে।',
+    mailtoUrl,
+    gmailUrl
+  };
+}
+

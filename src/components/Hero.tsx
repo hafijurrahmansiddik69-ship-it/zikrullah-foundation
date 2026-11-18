@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, HeartHandshake, ShieldCheck, Heart, Users } from 'lucide-react';
+import { Calendar, MapPin, Layers, ArrowRight } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -8,7 +8,7 @@ interface HeroProps {
   onNavigateToAbout?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout }) => {
+export const Hero: React.FC<HeroProps> = ({ onNavigateToAbout }) => {
   const { t, isEn } = useLanguage();
 
   return (
@@ -46,19 +46,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
       {/* Main Content Area */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24 text-center text-white flex flex-col items-center">
         {/* Foundation Name */}
-        <h1 className="font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-3 sm:mb-4 drop-shadow-md">
+        <h1 className="font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-6 sm:mb-8 drop-shadow-md">
           {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
           <span className="block text-amber-300 font-solaiman text-lg sm:text-2xl md:text-3xl mt-2 sm:mt-3 font-semibold tracking-wide drop-shadow-sm">
             {t.common.slogan}
           </span>
         </h1>
-
-        {/* English Tagline */}
-        <p 
-          className="mb-6 sm:mb-8 text-center drop-shadow-sm font-armwrestler tracking-[3px] uppercase font-bold text-sm sm:text-base text-white"
-        >
-          {t.common.estTag}
-        </p>
 
         {/* Foundation Inspiring Statement & Establishment Text with Vibrant Blue & Green Accents */}
         <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
@@ -83,43 +76,32 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDonation, onNavigateToAbout })
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full sm:w-auto mb-10 sm:mb-12">
-          {onOpenDonation && (
-            <button
-              onClick={onOpenDonation}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-emerald-500 to-[#10b981] hover:from-emerald-600 hover:to-emerald-500 active:scale-95 text-white font-bold text-base sm:text-lg shadow-[0_0_25px_rgba(16,185,129,0.5)] hover:shadow-[0_0_35px_rgba(16,185,129,0.7)] border border-emerald-300/40 transition-all duration-300 cursor-pointer min-h-[48px] group"
-            >
-              <HeartHandshake className="w-5 h-5 sm:w-6 sm:h-6 stroke-white fill-white/20 group-hover:scale-110 transition-transform duration-300" />
-              <span>{t.hero.btnDonate}</span>
-            </button>
-          )}
-
-          {onNavigateToAbout && (
-            <button
-              onClick={onNavigateToAbout}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-md active:scale-95 text-white font-semibold text-sm sm:text-base border border-white/25 hover:border-white/40 transition-all cursor-pointer min-h-[48px]"
-            >
-              <span>{t.hero.btnAbout}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          )}
+        {/* Informational Highlights */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-4xl pt-6 border-t border-emerald-500/20 text-xs sm:text-sm text-emerald-50 font-solaiman">
+          <div className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
+            <Calendar className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>{isEn ? 'Established: January 1, 2023' : 'প্রতিষ্ঠা: ১লা জানুয়ারি ২০২৩'}</span>
+          </div>
+          <div className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
+            <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>{isEn ? 'Headquarters: Gujia, Mokamtala, Bogura' : 'প্রধান কার্যালয়: গুজিয়া, মোকামতলা, বগুড়া'}</span>
+          </div>
+          <div className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
+            <Layers className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>{isEn ? '7 Permanent Welfare Projects' : '৭টি স্থায়ী সেবামূলক প্রকল্প'}</span>
+          </div>
         </div>
 
-        {/* Trust Badges / Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-3xl pt-6 border-t border-emerald-500/20 text-xs sm:text-sm text-emerald-100/90 font-solaiman">
-          <div className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-black/45 backdrop-blur-sm border border-white/15 shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>{t.hero.badgeAmanat}</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-black/45 backdrop-blur-sm border border-white/15 shadow-sm">
-            <Heart className="w-4 h-4 text-emerald-400 shrink-0 fill-emerald-400/20" />
-            <span>{isEn ? 'Direct Field Relief & Care' : 'সরাসরি মাঠপর্যায়ে অসহায়দের সেবা'}</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-black/45 backdrop-blur-sm border border-white/15 shadow-sm">
-            <Users className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>{isEn ? 'Unity & Welfare of the Ummah' : 'উম্মাহর সার্বিক কল্যাণ ও ঐক্য'}</span>
-          </div>
+        {/* Sleek Amber/Gold Glassmorphism Pill Action Button -> About Page */}
+        <div className="mt-6 flex justify-center">
+          <button
+            type="button"
+            onClick={() => onNavigateToAbout?.()}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-amber-400/10 backdrop-blur-md active:scale-95 text-amber-300 hover:text-amber-200 font-sans-bn font-bold text-xs sm:text-sm border border-amber-400/50 hover:border-amber-300/80 shadow-md shadow-black/30 hover:shadow-[0_0_24px_rgba(251,191,36,0.28)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+          >
+            <span>{isEn ? 'Learn About Us' : 'আমাদের সম্পর্কে জানুন'}</span>
+            <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
+          </button>
         </div>
 
       </div>

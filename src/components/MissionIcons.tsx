@@ -708,3 +708,121 @@ export const MissionIllustration: React.FC<{ className?: string }> = ({ classNam
     <path d="M47 15 L52 10 M52 10 H47.5 M52 10 V14.5" stroke="url(#misGoldPure)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+/**
+ * 9. রক্তদান (Blood Donation): Compassionate hands cradling a life-saving blood drop with medical cross
+ */
+export const BloodDonationIllustration: React.FC<{ className?: string }> = ({ className = "w-11 h-11" }) => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <defs>
+      <linearGradient id="bloodRuby" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#ef4444" />
+        <stop offset="100%" stopColor="#b91c1c" />
+      </linearGradient>
+      <linearGradient id="bloodEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#087443" />
+        <stop offset="100%" stopColor="#024a2c" />
+      </linearGradient>
+      <linearGradient id="bloodGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#f59e0b" />
+        <stop offset="100%" stopColor="#d97706" />
+      </linearGradient>
+    </defs>
+
+    {/* Life-Saving Blood Drop */}
+    <path
+      d="M24 5 C24 5 13 17.5 13 25 C13 31.1 17.9 36 24 36 C30.1 36 35 31.1 35 25 C35 17.5 24 5 24 5 Z"
+      fill="url(#bloodRuby)"
+    />
+    {/* Soft Inner Highlight */}
+    <path d="M18.5 20 C17 22.5 17 26.5 18.5 29" stroke="#fecaca" strokeWidth="1.8" strokeLinecap="round" opacity="0.7" />
+    {/* White Medical Cross inside Drop */}
+    <path d="M24 20 V29 M19.5 24.5 H28.5" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" />
+
+    {/* Supportive Emerald & Gold Hands Below */}
+    <path d="M6 34 C9.5 32 13.5 33.5 16.5 36.5 L20 39.5 C21.5 40.8 20.5 42.8 18.5 43 C14.5 43.2 10 40.5 6 37 Z" fill="url(#bloodGold)" />
+    <path d="M42 34 C38.5 32 34.5 33.5 31.5 36.5 L28 39.5 C26.5 40.8 27.5 42.8 29.5 43 C33.5 43.2 38 40.5 42 37 Z" fill="url(#bloodGold)" />
+    <path d="M14 40.5 L24 45 L34 40.5" stroke="url(#bloodEmerald)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+/**
+ * 10. সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা (Water & Tree Plantation): Pure water droplet & flourishing green tree
+ */
+export const WaterTreesIllustration: React.FC<{ className?: string }> = ({ className = "w-11 h-11" }) => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <defs>
+      <linearGradient id="wtEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#10b981" />
+        <stop offset="100%" stopColor="#045332" />
+      </linearGradient>
+      <linearGradient id="wtWater" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#38bdf8" />
+        <stop offset="100%" stopColor="#0284c7" />
+      </linearGradient>
+      <linearGradient id="wtGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#fbbf24" />
+        <stop offset="100%" stopColor="#d97706" />
+      </linearGradient>
+    </defs>
+
+    {/* Pure Water Drop on Left */}
+    <path
+      d="M15.5 7 C15.5 7 8 16 8 21.5 C8 25.6 11.4 29 15.5 29 C19.6 29 23 25.6 23 21.5 C23 16 15.5 7 15.5 7 Z"
+      fill="url(#wtWater)"
+    />
+    <path d="M12 19 C11 21 11.2 23.5 12.8 25" stroke="#e0f2fe" strokeWidth="1.6" strokeLinecap="round" />
+
+    {/* Flourishing Green Tree Canopy on Right */}
+    <circle cx="32" cy="18" r="9.5" fill="url(#wtEmerald)" />
+    <circle cx="27" cy="21" r="6" fill="#087443" />
+    <circle cx="37" cy="21" r="6" fill="#087443" />
+    {/* Tree Trunk & Branches */}
+    <path d="M32 20 V38 M32 26 L28 22 M32 24 L36 20" stroke="url(#wtGold)" strokeWidth="2.6" strokeLinecap="round" />
+
+    {/* Earth / Water Ripple Horizon */}
+    <path d="M7 39 C15 36.5 33 36.5 41 39" stroke="url(#wtEmerald)" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M12 42.5 C19 41 29 41 36 42.5" stroke="url(#wtGold)" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
+/**
+ * 11. শরী'আহ ভিত্তিক যাকাত বণ্টন (Zakat Fund): Shariah balance scales & golden coins
+ */
+export const ZakatIllustration: React.FC<{ className?: string }> = ({ className = "w-11 h-11" }) => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <defs>
+      <linearGradient id="zkEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#087443" />
+        <stop offset="100%" stopColor="#024a2c" />
+      </linearGradient>
+      <linearGradient id="zkGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#fde047" />
+        <stop offset="50%" stopColor="#f59e0b" />
+        <stop offset="100%" stopColor="#b45309" />
+      </linearGradient>
+    </defs>
+
+    {/* Crescent Finial at Top */}
+    <circle cx="24" cy="7.5" r="2.8" fill="url(#zkGold)" />
+
+    {/* Balance Scale Pillar & Base */}
+    <path d="M24 10 V39" stroke="url(#zkEmerald)" strokeWidth="3" strokeLinecap="round" />
+    <path d="M15 40.5 H33" stroke="url(#zkEmerald)" strokeWidth="3.2" strokeLinecap="round" />
+    <path d="M18 38 H30" stroke="url(#zkGold)" strokeWidth="1.8" strokeLinecap="round" />
+
+    {/* Crossbar */}
+    <path d="M9 14.5 H39" stroke="url(#zkGold)" strokeWidth="2.6" strokeLinecap="round" />
+
+    {/* Left Pan & Coins */}
+    <path d="M11 14.5 L6.5 27 H15.5 Z" stroke="url(#zkEmerald)" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+    <path d="M5.5 27 C5.5 30.5 16.5 30.5 16.5 27 Z" fill="url(#zkEmerald)" />
+    <circle cx="11" cy="25" r="2.5" fill="url(#zkGold)" />
+
+    {/* Right Pan & Coins */}
+    <path d="M37 14.5 L32.5 27 H41.5 Z" stroke="url(#zkEmerald)" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+    <path d="M31.5 27 C31.5 30.5 42.5 30.5 42.5 27 Z" fill="url(#zkEmerald)" />
+    <circle cx="37" cy="25" r="2.5" fill="url(#zkGold)" />
+  </svg>
+);
+
