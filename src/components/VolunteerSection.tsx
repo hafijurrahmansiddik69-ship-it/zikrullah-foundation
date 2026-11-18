@@ -49,10 +49,12 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
 
     setIsSubmitting(true);
 
+    const cleanAddress = upazila.trim();
+
     const submissionPayload = {
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
+      upazila: cleanAddress,
       bloodGroup: bloodGroup || 'A+',
       interest: resolvedInterest,
       message: message.trim() || ''
@@ -62,7 +64,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
     adminDataService.addVolunteer({
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
+      upazila: cleanAddress || (isEn ? 'Not provided' : 'উল্লেখ করা হয়নি'),
       bloodGroup: bloodGroup || 'A+',
       interest: resolvedInterest,
       message: message.trim() || '',
@@ -87,7 +89,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
     setSubmittedData({
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila || (isEn ? 'Bogura' : 'বগুড়া'),
+      upazila: cleanAddress || (isEn ? 'Not provided' : 'উল্লেখ করা হয়নি'),
       bloodGroup: bloodGroup || 'A+',
       interest: resolvedInterest,
       mailtoUrl,
@@ -98,6 +100,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
     setSubmitted(true);
     setName('');
     setPhone('');
+    setUpazila('');
     setMessage('');
   };
 
@@ -299,7 +302,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder={isEn ? "e.g. Shibganj, Bogura" : "উদাঃ শিবগঞ্জ, বগুড়া"}
+                      placeholder={isEn ? 'e.g. Village: Gujia, Upazila: Shibganj, District: Bogura' : 'উদাঃ গ্রাম: গুজিয়া, উপজেলা: শিবগঞ্জ, জেলা: বগুড়া'}
                       value={upazila}
                       onChange={(e) => setUpazila(e.target.value)}
                       className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"

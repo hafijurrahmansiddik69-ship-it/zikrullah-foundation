@@ -61,7 +61,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     const submissionPayload = {
       name: cleanName,
       phone: cleanPhone,
-      upazila: upazila.trim() || (isEn ? 'Bogura' : 'বগুড়া'),
+      upazila: upazila.trim() || '',
       bloodGroup: bloodGroup || 'A+',
       interest: interestLabel,
       message: message.trim() || ''
@@ -71,7 +71,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
     adminDataService.addVolunteer({
       name: cleanName || (isEn ? 'Respected Brother/Sister' : 'সম্মানিত ভাই/বোন'),
       phone: cleanPhone || (isEn ? 'Not provided' : 'অনুল্লেখিত'),
-      upazila: upazila.trim() || 'বগুড়া',
+      upazila: upazila.trim() || 'উল্লেখ করা হয়নি',
       bloodGroup: bloodGroup || 'A+',
       interest: selectedInterestObj.bn,
       message: message.trim() || '',
@@ -302,11 +302,11 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    {isEn ? 'Upazila / Area' : 'উপজেলা / এলাকা'}
+                    {isEn ? 'Full Address (Village/Area, Upazila, District)' : 'পূর্ণ ঠিকানা (গ্রাম/এলাকা, উপজেলা, জেলা)'}
                   </label>
                   <input
                     type="text"
-                    placeholder={isEn ? 'e.g. Shibganj, Bogura' : 'উদাঃ শিবগঞ্জ, বগুড়া'}
+                    placeholder={isEn ? 'e.g. Village: Gujia, Upazila: Shibganj, District: Bogura' : 'উদাঃ গ্রাম: গুজিয়া, উপজেলা: শিবগঞ্জ, জেলা: বগুড়া'}
                     value={upazila}
                     onChange={(e) => setUpazila(e.target.value)}
                     className="w-full bg-[#fafcfb] border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-600"

@@ -52,6 +52,37 @@ export interface VolunteerSubmissionData {
   message?: string;
 }
 
+function formatBengaliDateTimeWithAmPm(date: Date): string {
+  const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  const toBnNum = (val: number | string) =>
+    String(val).replace(/\d/g, (d) => bnDigits[Number(d)]);
+  const bnMonths = [
+    'জানুয়ারি',
+    'ফেব্রুয়ারি',
+    'মার্চ',
+    'এপ্রিল',
+    'মে',
+    'জুন',
+    'জুলাই',
+    'আগস্ট',
+    'সেপ্টেম্বর',
+    'অক্টোবর',
+    'নভেম্বর',
+    'ডিসেম্বর',
+  ];
+
+  const day = toBnNum(date.getDate());
+  const month = bnMonths[date.getMonth()];
+  const year = toBnNum(date.getFullYear());
+
+  const hours24 = date.getHours();
+  const ampm = hours24 >= 12 ? 'PM' : 'AM';
+  const hours12 = toBnNum(hours24 % 12 || 12);
+  const minutes = toBnNum(String(date.getMinutes()).padStart(2, '0'));
+
+  return `${day} ${month}, ${year} — ${hours12}:${minutes} ${ampm}`;
+}
+
 export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
   recipientEmail: string;
   ccEmail: string;
@@ -60,37 +91,33 @@ export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
 } {
   const recipientEmail = RECIPIENT_EMAIL;
   const ccEmail = CC_EMAIL;
-  const submissionTime = new Date().toLocaleString('bn-BD', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
-  });
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
 
-  const subject = `[নতুন স্বেচ্ছাসেবক নিবন্ধন] - ${data.name} (${data.phone})`;
+  const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
+  const subject = `[স্বেচ্ছাসেবক আবেদন] ${data.name} — ${addressLabel}`;
 
-  const body = `বিসমিল্লাহির রাহমানির রাহীম
+  const body = `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
 
 জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
-অফিসিয়াল ইমেইল: ${recipientEmail}
+Official Email: ${recipientEmail}
 
-সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
-আমি স্বেচ্ছাসেবী হিসেবে জিকরুল্লাহ ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী। আমার বিস্তারিত তথ্য নিচে প্রদান করা হলো:
+সম্মানিত ফাউন্ডেশন টিম,
+স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:
 
-১. নাম: ${data.name}
-২. মোবাইল নম্বর: ${data.phone}
-৩. রক্তের গ্রুপ: ${data.bloodGroup || 'অনুল্লেখিত'}
-৪. উপজেলা / এলাকা: ${data.upazila || 'বগুড়া'}
-৫. আগ্রহের কাজের ক্ষেত্র: ${data.interest}
-৬. পরিচয় / বিশেষ বার্তা: ${data.message || 'কোনো বিশেষ বার্তা নেই'}
+[ আবেদনকারীর তথ্য ]
+• নাম ও যোগাযোগ: ${data.name} (${data.phone})
+• রক্তের গ্রুপ: ${data.bloodGroup || 'অনুল্লেখিত'}
+• কাজের ক্ষেত্র: ★ ${data.interest} ★
+• পূর্ণ ঠিকানা (গ্রাম/এলাকা, উপজেলা, জেলা): ${addressLabel}
+• পরিচয় / বিশেষ বার্তা: ${data.message || 'কোনো বিশেষ বার্তা নেই'}
 
-আবেদনের সময়: ${submissionTime}
-ওয়েবসাইট: https://zikrullahfoundation.org
+━━━━━━━━━━━━━━━━━━━━━━
+• আবেদনের সময়: ${submissionTime}
 
-জাজাকাল্লাহু খাইরান।
-${data.name}`;
+جَزَاكَ اللَّهُ خَيْرًا
+${data.name}
+
+ওয়েবসাইট: https://www.zikrullahfoundation.com`;
 
   return { recipientEmail, ccEmail, subject, body };
 }
@@ -120,7 +147,8 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
   const { recipientEmail, ccEmail, subject } = generateVolunteerEmailContent(data);
   const gmailUrl = getDirectGmailUrl(data);
   const mailtoUrl = getMailtoUrl(data);
-  const submissionTime = new Date().toLocaleString('bn-BD');
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+  const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
 
   try {
     await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
@@ -134,13 +162,13 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
         _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
-        'আবেদনকারীর নাম': data.name,
-        'মোবাইল নম্বর': data.phone,
-        'রক্তের গ্রুপ': data.bloodGroup,
-        'উপজেলা / এলাকা': data.upazila,
-        'কাজের ক্ষেত্র': data.interest,
-        'বার্তা বা পরিচয়': data.message || 'অনুল্লেখিত',
-        'জমার সময়': submissionTime
+        'নাম ও যোগাযোগ': `${data.name} (${data.phone})`,
+        'রক্তের গ্রুপ': data.bloodGroup || 'অনুল্লেখিত',
+        'কাজের ক্ষেত্র': `★ ${data.interest} ★`,
+        'পূর্ণ ঠিকানা (গ্রাম/এলাকা, উপজেলা, জেলা)': addressLabel,
+        'পরিচয় / বিশেষ বার্তা': data.message || 'কোনো বিশেষ বার্তা নেই',
+        'আবেদনের সময়': submissionTime,
+        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
       })
     }).catch(() => null);
   } catch (err) {
@@ -407,36 +435,6 @@ export interface NeedyInfoSubmissionData {
   description?: string;
 }
 
-function formatBengaliDateTimeWithAmPm(date: Date): string {
-  const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-  const toBnNum = (val: number | string) =>
-    String(val).replace(/\d/g, (d) => bnDigits[Number(d)]);
-  const bnMonths = [
-    'জানুয়ারি',
-    'ফেব্রুয়ারি',
-    'মার্চ',
-    'এপ্রিল',
-    'মে',
-    'জুন',
-    'জুলাই',
-    'আগস্ট',
-    'সেপ্টেম্বর',
-    'অক্টোবর',
-    'নভেম্বর',
-    'ডিসেম্বর',
-  ];
-
-  const day = toBnNum(date.getDate());
-  const month = bnMonths[date.getMonth()];
-  const year = toBnNum(date.getFullYear());
-
-  const hours24 = date.getHours();
-  const ampm = hours24 >= 12 ? 'PM' : 'AM';
-  const hours12 = toBnNum(hours24 % 12 || 12);
-  const minutes = toBnNum(String(date.getMinutes()).padStart(2, '0'));
-
-  return `${day} ${month}, ${year} — ${hours12}:${minutes} ${ampm}`;
-}
 
 export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
   recipientEmail: string;

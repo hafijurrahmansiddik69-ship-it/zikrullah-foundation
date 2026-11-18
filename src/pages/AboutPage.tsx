@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ArrowLeft, 
   Target, 
@@ -21,7 +21,8 @@ import {
   Trees,
   Scale,
   Sun,
-  Landmark
+  Landmark,
+  ChevronDown
 } from 'lucide-react';
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
@@ -39,6 +40,97 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenDonation
 }) => {
   const { t, isEn } = useLanguage();
+  const [heroImgError, setHeroImgError] = useState(false);
+  const [openMissionIndex, setOpenMissionIndex] = useState<number | null>(null);
+  const [openVisionIndex, setOpenVisionIndex] = useState<number | null>(null);
+
+  const missionPoints = [
+    {
+      num: isEn ? '1' : '১',
+      icon: HandHeart,
+      title: isEn ? 'Food & Clothing Aid in Light of the Sunnah' : 'সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া',
+      description: isEn
+        ? 'Delivering nourishing food to destitute, orphaned, poor, and widowed families, and gifting new clothes and winter garments to those in need.'
+        : 'অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।',
+    },
+    {
+      num: isEn ? '2' : '২',
+      icon: Stethoscope,
+      title: isEn ? 'Free Emergency Medical & Healthcare Services' : 'বিনামূল্যে জরুরি চিকিৎসা ও স্বাস্থ্যসেবা',
+      description: isEn
+        ? 'Providing specialist doctor consultations, essential medicines, and urgent medical care to underprivileged people in remote and neglected areas.'
+        : 'দুর্গম ও অবহেলিত অঞ্চলের অসচ্ছল মানুষের কাছে বিশেষজ্ঞ চিকিৎসকের পরামর্শ, প্রয়োজনীয় ওষুধ ও জরুরি সেবা সহজে পৌঁছে দেওয়া।',
+    },
+    {
+      num: isEn ? '3' : '৩',
+      icon: HeartPulse,
+      title: isEn ? 'Emergency Blood Donation' : 'জরুরি রক্তদান',
+      description: isEn
+        ? 'Ensuring completely free, timely blood arrangement through voluntary donors for the urgent medical treatment of critical patients.'
+        : 'মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।',
+    },
+    {
+      num: isEn ? '4' : '৪',
+      icon: BookOpen,
+      title: isEn ? 'Islamic & Moral Education' : 'দ্বীনি ও আদর্শ শিক্ষা বিস্তার',
+      description: isEn
+        ? "Establishing sustainable facilities for pure Qur'an recitation, knowledge of Qur'an and Hadith, modern education, study materials, and madrasa uniforms for orphaned and underprivileged meritorious students."
+        : 'এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।',
+    },
+    {
+      num: isEn ? '5' : '৫',
+      icon: Sprout,
+      title: isEn ? 'Sustainable Self-Reliance Project' : 'স্থায়ী আত্মনির্ভরশীলতা প্রকল্প',
+      description: isEn
+        ? 'Alleviating poverty among distressed families by providing livestock, small business capital, and essential technical tools to help them become permanently self-reliant.'
+        : 'অসহায় ও অসচ্ছল পরিবারগুলোর দারিদ্র্য বিমোচনে গবাদিপশু বিতরণ, ক্ষুদ্র ব্যবসা ফান্ড ও প্রয়োজনীয় কারিগরি উপকরণ প্রদানের মাধ্যমে স্থায়ীভাবে স্বাবলম্বী করে তোলা।',
+    },
+    {
+      num: isEn ? '6' : '৬',
+      icon: Trees,
+      title: isEn ? 'Sadaqah Jariyah & Environmental Care' : 'সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা',
+      description: isEn
+        ? 'Installing deep tube wells to solve clean drinking water crises and conducting widespread tree plantation programs for a greener environment.'
+        : 'বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।',
+    },
+    {
+      num: isEn ? '7' : '৭',
+      icon: Scale,
+      title: isEn ? "Shari'ah-Compliant Zakat Distribution" : "শরী'আহ ভিত্তিক যাকাত বণ্টন",
+      description: isEn
+        ? "Distributing Zakat funds with 100% trustworthiness to rightful recipients through proper verification in accordance with Islamic Shari'ah."
+        : "ইসলামী শরী'আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।",
+    },
+  ];
+
+  const visionPoints = [
+    {
+      num: isEn ? '1' : '১',
+      icon: Sun,
+      title: isEn ? 'Spiritual Awakening of the Youth' : 'তরুণ প্রজন্মের ঈমানী জাগরণ',
+      badge: null,
+      accentBorder: 'border-l-amber-500',
+      description: isEn
+        ? "Protecting the youth from digital fitnah and moral decay through wise Da'wah, intellectual discussions, and compassionate guidance to nurture them in the light of the Qur'an and Sunnah."
+        : 'প্রজ্ঞাপূর্ণ দাওয়াহ, বুদ্ধিবৃত্তিক আলোচনা ও দরদি দিকনির্দেশনার মাধ্যমে যুবসমাজকে ডিজিটাল ফিতনা ও নৈতিক অবক্ষয় থেকে রক্ষা করে কুরআন-সুন্নাহর দীপ্ত আদর্শে গড়ে তোলা।',
+    },
+    {
+      num: isEn ? '2' : '২',
+      icon: Landmark,
+      title: isEn ? 'Provision for the Hereafter (Sadaqah Jariyah)' : 'আখেরাতের সঞ্চয়',
+      badge: 'صدقة جارية',
+      accentBorder: 'border-l-[#087443]',
+      description: isEn ? (
+        <>
+          Participating in <strong className="text-emerald-800 font-semibold">&apos;Sadaqah Jariyah&apos;</strong> with sincerity, free from show-off—bringing inner peace in this world and continuous rewards in the grave, so that Jannah becomes our ultimate destination by the pleasure of Allah, Insha&apos;Allah.
+        </>
+      ) : (
+        <>
+          লোক দেখানো মোহ ছেড়ে ইখলাসের সাথে <strong className="text-emerald-800 font-semibold">&apos;সাদাকায়ে জারিয়াহ&apos;</strong>র অংশীদার হওয়া—যা দুনিয়ায় দেবে আত্মিক প্রশান্তি, আর মৃত্যুর পর অন্ধকার কবরে উপহার দেবে অবিরাম সাওয়াব; যেন মহান রবের সন্তুষ্টিতে চূড়ান্ত ঠিকানা হয় জান্নাত। ইনশাআল্লাহ।
+        </>
+      ),
+    },
+  ];
 
   return (
     <div className="bg-[#fcfdfc] min-h-screen py-10 sm:py-14 text-slate-800">
@@ -64,411 +156,345 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Hero Banner Header of About Page */}
-        <div className="bg-gradient-to-br from-[#024a2c] via-[#045332] to-[#087443] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 mb-8 sm:mb-12 shadow-xl shadow-emerald-950/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-          
-          <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center text-center">
-            {/* Arabic Bismillah */}
-            <div className="inline-flex items-center justify-center gap-2 mb-3.5 sm:mb-4 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-900/60 border border-emerald-400/30 text-emerald-200 text-xs sm:text-sm font-serif-bn">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#022918] via-[#044729] to-[#03361f] text-white rounded-2xl sm:rounded-3xl px-4 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-9 mb-6 sm:mb-9 border border-emerald-400/40 shadow-[0_18px_44px_-14px_rgba(2,41,24,0.75)]">
+          {/* Background Photo */}
+          {!heroImgError && (
+            <img
+              src="https://res.cloudinary.com/dlklqihg6/image/upload/v1795019097/anhrbuenahvwv92cldza.png"
+              alt={isEn ? 'Zikrullah Foundation' : 'জিকরুল্লাহ ফাউন্ডেশন'}
+              referrerPolicy="no-referrer"
+              onError={() => setHeroImgError(true)}
+              className="absolute inset-0 w-full h-full object-cover object-center scale-[1.03] select-none pointer-events-none"
+            />
+          )}
+
+          {/* Deep Emerald Semi-Transparent Overlay */}
+          <div
+            className="absolute inset-0 bg-[linear-gradient(155deg,rgba(2,41,24,0.62)_0%,rgba(4,71,41,0.68)_50%,rgba(3,54,31,0.76)_100%)]"
+            aria-hidden="true"
+          />
+
+          {/* Subtle Deep Emerald Ambient Highlight */}
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.14),transparent_65%)] pointer-events-none"
+            aria-hidden="true"
+          />
+
+          {/* Subtle Inner Emerald Hairline Frame */}
+          <div
+            className="pointer-events-none absolute inset-1.5 sm:inset-2 rounded-[14px] sm:rounded-[20px] border border-emerald-300/20"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center text-center [text-shadow:0_2px_6px_rgba(0,0,0,0.6)]">
+            {/* Arabic Bismillah Glass Pill */}
+            <div className="inline-flex items-center justify-center mb-3 px-4 py-1 sm:py-1.5 rounded-full bg-[#032618]/65 backdrop-blur-md border border-emerald-300/55 text-emerald-200 text-xs sm:text-sm font-serif-bn font-medium shadow-md [text-shadow:0_2px_6px_rgba(0,0,0,0.6)]">
               <span>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
             </div>
 
-            <h1 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-[1.2] mb-2 sm:mb-3 text-center">
+            <h1 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-[42px] text-white tracking-tight leading-[1.2] mb-2 text-center text-balance [text-shadow:0_2px_6px_rgba(0,0,0,0.6)]">
               {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
-              <span className="block text-emerald-300 font-solaiman text-base sm:text-2xl lg:text-3xl mt-2 sm:mt-2.5 font-medium tracking-wide text-center">
+              <span className="block text-amber-400 font-solaiman text-base sm:text-xl lg:text-2xl mt-1.5 sm:mt-2 font-semibold tracking-wide text-center [text-shadow:0_2px_6px_rgba(0,0,0,0.6)]">
                 {t.common.slogan}
               </span>
             </h1>
-            <p className="text-emerald-100 text-xs sm:text-base lg:text-lg font-solaiman font-normal leading-relaxed mb-5 sm:mb-6 max-w-2xl text-center">
+
+            <p className="text-white/95 text-xs sm:text-base font-solaiman font-normal leading-relaxed mb-4 sm:mb-5 max-w-2xl text-center [text-shadow:0_2px_6px_rgba(0,0,0,0.6)]">
               {isEn
                 ? "A non-political humanitarian and welfare organization dedicated to education, Da'wah, and serving humanity."
                 : 'শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
             </p>
 
-            {/* Quick Metadata Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-sm text-emerald-100">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-400/20 shadow-xs">
+            {/* Compact Horizontal Metadata Glass Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 font-solaiman text-xs sm:text-sm font-medium text-white antialiased [text-shadow:0_1px_4px_rgba(0,0,0,0.75)]">
+              <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#032618]/75 backdrop-blur-md border border-emerald-300/45 shadow-xs text-white">
                 <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 shrink-0" />
                 {isEn ? (
-                  <span><strong>Founder &amp; Initiative:</strong> Hafizur Rahman Siddik (Bogura)</span>
+                  <span className="text-white"><strong className="font-bold text-white">Founder &amp; Initiative:</strong> Hafizur Rahman Siddik (Bogura)</span>
                 ) : (
-                  <span><strong>উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
+                  <span className="text-white"><strong className="font-bold text-white">উদ্যোগ ও প্রতিষ্ঠাতা:</strong> হাফিজুর রহমান সিদ্দিক (বগুড়া)</span>
                 )}
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-400/20">
-                <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
+              <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#032618]/75 backdrop-blur-md border border-emerald-300/45 shadow-xs text-white">
+                <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 shrink-0" />
                 {isEn ? (
-                  <span><strong>Established:</strong> January 1, 2023</span>
+                  <span className="text-white"><strong className="font-bold text-white">Established:</strong> January 1, 2023</span>
                 ) : (
-                  <span><strong>প্রতিষ্ঠাকাল:</strong> ১লা জানুয়ারি ২০২৩</span>
+                  <span className="text-white"><strong className="font-bold text-white">প্রতিষ্ঠাকাল:</strong> ১লা জানুয়ারি ২০২৩</span>
                 )}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Core Heartfelt Statement */}
-        <div className="bg-emerald-50/80 border-l-4 border-[#087443] rounded-2xl p-6 sm:p-8 mb-12 shadow-sm space-y-5">
-          <div className="text-center pb-2 border-b border-emerald-200/60">
-            <h3 className="font-fiona text-2xl sm:text-3xl lg:text-4xl text-[#045332] font-bold tracking-normal inline-block">
-              {isEn ? 'Our Inspiration' : 'আমাদের প্রেরণা'}
-            </h3>
+        {/* Core Heartfelt Statement (আমাদের প্রেরণা) */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#fcfdfb] via-[#f5faf7] to-emerald-50/75 border border-emerald-200/80 rounded-2xl sm:rounded-3xl p-5 sm:p-7 mb-9 shadow-[0_12px_32px_-12px_rgba(4,83,50,0.10)]">
+          {/* Subtle Islamic Geometric SVG Watermark Pattern */}
+          <svg
+            className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.04] text-[#083E28]"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <pattern id="islamic-inspiration-geo" width="48" height="48" patternUnits="userSpaceOnUse">
+                <path
+                  d="M24 2 L29.5 14.5 L42 12 L34 22.5 L46 24 L34 25.5 L42 36 L29.5 33.5 L24 46 L18.5 33.5 L6 36 L14 25.5 L2 24 L14 22.5 L6 12 L18.5 14.5 Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <circle cx="24" cy="24" r="3.5" fill="none" stroke="currentColor" strokeWidth="0.9" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#islamic-inspiration-geo)" />
+          </svg>
+
+          <div className="relative z-10">
+            <div className="text-center mb-4 sm:mb-5">
+              <h3 className="font-fiona text-2xl sm:text-3xl text-[#045332] font-bold tracking-normal inline-block">
+                {isEn ? 'Our Inspiration' : 'আমাদের প্রেরণা'}
+              </h3>
+              <div className="mt-1.5 mx-auto w-20 h-0.5 rounded-full bg-gradient-to-r from-transparent via-amber-500/70 to-transparent" />
+            </div>
+
+            {/* Highlighted Glass Quotation Box with Green-to-Gold Left Border */}
+            <div className="relative overflow-hidden bg-white/80 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-5 pl-5 sm:pl-6 border border-emerald-200/75 shadow-xs">
+              <span
+                className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-[#087443] via-emerald-500 to-amber-400"
+                aria-hidden="true"
+              />
+              <span
+                className="pointer-events-none select-none absolute top-2 right-3.5 sm:top-2.5 sm:right-5 text-3xl sm:text-4xl leading-none font-serif text-emerald-800/15"
+                aria-hidden="true"
+              >
+                ❝
+              </span>
+              <p className="relative z-10 font-solaiman text-slate-800 text-base sm:text-lg lg:text-xl leading-relaxed font-normal pr-6 sm:pr-8">
+                {t.hero.quote}
+              </p>
+            </div>
+
+            {/* Refined Islamic Ornamental Divider */}
+            <div className="flex items-center justify-center gap-3 my-4 sm:my-5" aria-hidden="true">
+              <span className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-emerald-400/50" />
+              <svg className="w-4 h-4 text-amber-600/80 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 1l2.8 6.2L21 10l-6.2 2.8L12 19l-2.8-6.2L3 10l6.2-2.8L12 1z" />
+              </svg>
+              <span className="h-px flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-emerald-400/50" />
+            </div>
+
+            <p className="font-solaiman text-slate-700 text-base sm:text-lg lg:text-xl leading-relaxed font-normal">
+              {isEn
+                ? "Treating compassionate service as sincere worship during this critical hour for the Ummah, and guided by a deep sense of humanitarian duty, 'Zikrullah Foundation' was established on January 1, 2023 CE through the initiative of “Hafizur Rahman Siddik (Bogura)”—a non-political charitable institution dedicated to education, Da'wah, and the welfare of humanity."
+                : 'উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
+            </p>
           </div>
-          <p className="font-solaiman text-slate-800 text-lg sm:text-xl lg:text-2xl leading-relaxed font-normal">
-            {t.hero.quote}
-          </p>
-          <p className="font-solaiman text-slate-800 text-lg sm:text-xl lg:text-2xl leading-relaxed font-normal pt-3 border-t border-emerald-200/60">
-            {isEn
-              ? "Treating compassionate service as sincere worship during this critical hour for the Ummah, and guided by a deep sense of humanitarian duty, 'Zikrullah Foundation' was established on January 1, 2023 CE through the initiative of “Hafizur Rahman Siddik (Bogura)”—a non-political charitable institution dedicated to education, Da'wah, and the welfare of humanity."
-              : 'উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
-          </p>
         </div>
 
         {/* Section 1: আমাদের লক্ষ্য (Mission) */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-emerald-100 shadow-md mb-10">
-          <div className="flex items-center gap-3.5 mb-6">
-            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shadow-md shadow-emerald-900/15 shrink-0">
-              <HeartHandshake className="w-7 h-7 text-white" strokeWidth={1.8} />
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-7 sm:mb-9">
+          <div className="flex items-center gap-3 mb-4 sm:mb-5">
+            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shadow-md shadow-emerald-900/15 shrink-0">
+              <HeartHandshake className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
             </div>
             <div>
-              <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
+              <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
                 {isEn ? 'Core Purpose' : 'Our Mission'}
               </span>
-              <h2 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900">
+              <h2 className="font-serif-bn font-bold text-xl sm:text-3xl text-slate-900">
                 {isEn ? 'Our Mission' : 'আমাদের লক্ষ্য (Mission)'}
               </h2>
             </div>
           </div>
 
           {/* Mission Core Quote */}
-          <div className="bg-[#f6faf8] border-l-4 border-emerald-600 rounded-r-2xl p-5 mb-8">
-            <p className="font-solaiman text-slate-900 text-base sm:text-lg leading-relaxed font-medium">
+          <div className="bg-[#f6faf8] border-l-4 border-emerald-600 rounded-r-2xl p-3.5 sm:p-5 mb-5 sm:mb-6">
+            <p className="font-solaiman text-slate-900 text-sm sm:text-lg leading-relaxed font-medium">
               {isEn
                 ? '“Guided by the compassion of Rasulullah (ﷺ) and the timeless light of the Sunnah—we are dedicated at the grassroots level to bringing smiles to the faces of the distressed Ummah, spreading Islamic knowledge, and building a permanently self-reliant society.”'
                 : '“রাসূলুল্লাহ (ﷺ)-এর অনুকম্পা ও সুন্নাহর চিরায়ত আলোকে পাথেয় করে—অসহায় উম্মাহর মুখে হাসি ফোটানো, ইলমে দ্বীনের আলো ছড়ানো এবং একটি স্থায়ী স্বাবলম্বী সমাজ বিনির্মাণে আমরা মাঠপর্যায়ে নিবেদিত।”'}
             </p>
           </div>
 
-          {/* 7 Points in Modern Redesigned Cards */}
-          <div className="space-y-5">
-            {/* Point 1 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                01
-              </span>
+          {/* 7 Points in Compact Interactive Accordion */}
+          <div className="space-y-2.5 sm:space-y-3">
+            {missionPoints.map((item, idx) => {
+              const Icon = item.icon;
+              const isOpen = openMissionIndex === idx;
+              return (
+                <div
+                  key={item.num}
+                  className={`rounded-xl sm:rounded-2xl border border-l-4 border-l-[#087443] transition-all duration-300 overflow-hidden ${
+                    isOpen
+                      ? 'bg-white border-emerald-300 shadow-md shadow-emerald-950/5'
+                      : 'bg-white border-slate-200/85 shadow-2xs hover:border-emerald-200 hover:shadow-sm'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenMissionIndex((prev) => (prev === idx ? null : idx))}
+                    className="w-full flex items-center justify-between gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 sm:py-3.5 text-left cursor-pointer select-none group"
+                  >
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                      <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-xs sm:text-sm flex items-center justify-center shadow-xs font-serif-bn ring-2 ring-emerald-50 shrink-0">
+                        {item.num}
+                      </span>
+                      <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-50 border border-emerald-200/70 flex items-center justify-center shrink-0 group-hover:bg-emerald-100/70 transition-colors">
+                        <Icon className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-emerald-700" strokeWidth={1.8} />
+                      </span>
+                      <h3 className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg font-serif-bn tracking-tight leading-snug">
+                        {item.title}
+                      </h3>
+                    </div>
 
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '1' : '১'}
+                    <span
+                      className={`relative shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-colors ${
+                        isOpen
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-slate-50 text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-700'
+                      }`}
+                    >
+                      <ChevronDown
+                        className={`w-4 h-4 sm:w-[18px] sm:h-[18px] transition-transform duration-300 ${
+                          isOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
+                      />
+                      {!isOpen && (
+                        <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5" aria-hidden="true">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-85" />
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.75)]" />
+                        </span>
+                      )}
+                    </span>
+                  </button>
+
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-3.5 sm:px-5 pb-3.5 sm:pb-4 pt-2 border-t border-emerald-100/80 bg-emerald-50/20">
+                        <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-solaiman font-normal pl-0 sm:pl-1">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <HandHeart className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Food & Clothing Aid in Light of the Sunnah' : 'সুন্নাহর অনুসরণে খাদ্য ও বস্ত্র হাদিয়া'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? 'Delivering nourishing food to destitute, orphaned, poor, and widowed families, and gifting new clothes and winter garments to those in need.'
-                    : 'অসহায়, এতিম, মিসকিন ও বিধবা পরিবারের দ্বারে ভালোবাসার খাবার পৌঁছে দেওয়া এবং শীতার্ত ও বস্ত্রহীন মানুষের মাঝে নতুন পোশাক ও শীতবস্ত্র হাদিয়া প্রদান।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 2 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                02
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '2' : '২'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <Stethoscope className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Free Emergency Medical & Healthcare Services' : 'বিনামূল্যে জরুরি চিকিৎসা ও স্বাস্থ্যসেবা'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? 'Providing specialist doctor consultations, essential medicines, and urgent medical care to underprivileged people in remote and neglected areas.'
-                    : 'দুর্গম ও অবহেলিত অঞ্চলের অসচ্ছল মানুষের কাছে বিশেষজ্ঞ চিকিৎসকের পরামর্শ, প্রয়োজনীয় ওষুধ ও জরুরি সেবা সহজে পৌঁছে দেওয়া।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 3 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                03
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '3' : '৩'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <HeartPulse className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Emergency Blood Donation' : 'জরুরি রক্তদান'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? 'Ensuring completely free, timely blood arrangement through voluntary donors for the urgent medical treatment of critical patients.'
-                    : 'মুমূর্ষু রোগীদের জরুরি চিকিৎসার প্রয়োজনে স্বেচ্ছাসেবী রক্তদাতাদের মাধ্যমে সম্পূর্ণ বিনামূল্যে রক্তের সংস্থান নিশ্চিত করা।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 4 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                04
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '4' : '৪'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <BookOpen className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Islamic & Moral Education' : 'দ্বীনি ও আদর্শ শিক্ষা বিস্তার'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? "Establishing sustainable facilities for pure Qur'an recitation, knowledge of Qur'an and Hadith, modern education, study materials, and madrasa uniforms for orphaned and underprivileged meritorious students."
-                    : 'এতিম ও অসচ্ছল মেধাবী শিক্ষার্থীদের জন্য বিশুদ্ধ কুরআন তিলাওয়াত, কুরআন-হাদীসের ইলম ও যুগোপযোগী শিক্ষার পাশাপাশি নিয়মিত শিক্ষা উপকরণ ও মাদ্রাসার পোশাক প্রদানের স্থায়ী ব্যবস্থা গড়ে তোলা।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 5 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                05
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '5' : '৫'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <Sprout className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Sustainable Self-Reliance Project' : 'স্থায়ী আত্মনির্ভরশীলতা প্রকল্প'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? 'Alleviating poverty among distressed families by providing livestock, small business capital, and essential technical tools to help them become permanently self-reliant.'
-                    : 'অসহায় ও অসচ্ছল পরিবারগুলোর দারিদ্র্য বিমোচনে গবাদিপশু বিতরণ, ক্ষুদ্র ব্যবসা ফান্ড ও প্রয়োজনীয় কারিগরি উপকরণ প্রদানের মাধ্যমে স্থায়ীভাবে স্বাবলম্বী করে তোলা।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 6 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                06
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '6' : '৬'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <Trees className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Sadaqah Jariyah & Environmental Care' : 'সদকা-ই-জারিয়াহ ও পরিবেশ সুরক্ষা'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? 'Installing deep tube wells to solve clean drinking water crises and conducting widespread tree plantation programs for a greener environment.'
-                    : 'বিশুদ্ধ সুপেয় পানির সংকট নিরসনে গভীর নলকূপ স্থাপন এবং সবুজ পরিবেশ বিনির্মাণে ব্যাপক বৃক্ষরোপণ কর্মসূচি বাস্তবায়ন করা।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 7 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                07
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '7' : '৭'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <Scale className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? "Shari'ah-Compliant Zakat Distribution" : "শরী'আহ ভিত্তিক যাকাত বণ্টন"}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-300/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? "Distributing Zakat funds with 100% trustworthiness to rightful recipients through proper verification in accordance with Islamic Shari'ah."
-                    : "ইসলামী শরী'আহ অনুযায়ী সুষ্ঠু যাচাই-বাছাইয়ের মাধ্যমে প্রকৃত হকদারদের মাঝে শতভাগ আমানতদারিতার সাথে যাকাতের অর্থ বণ্টন করা।"}
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Section 2: আমাদের উদ্দেশ্য (Vision) */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-emerald-100 shadow-md mb-12">
-          <div className="flex items-center gap-3.5 mb-6">
-            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-900/15 shrink-0">
-              <Compass className="w-7 h-7 text-white" strokeWidth={1.8} />
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-10">
+          <div className="flex items-center gap-3 mb-4 sm:mb-5">
+            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-900/15 shrink-0">
+              <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
             </div>
             <div>
-              <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
+              <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase block font-sans">
                 {isEn ? 'Future Outlook' : 'Our Vision'}
               </span>
-              <h2 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900">
+              <h2 className="font-serif-bn font-bold text-xl sm:text-3xl text-slate-900">
                 {isEn ? 'Our Vision' : 'আমাদের উদ্দেশ্য (Vision)'}
               </h2>
             </div>
           </div>
 
           {/* Vision Core Quote */}
-          <div className="bg-gradient-to-r from-emerald-50/80 to-amber-50/50 border-l-4 border-amber-600 rounded-r-2xl p-5 mb-8">
-            <p className="font-solaiman text-slate-900 text-base sm:text-lg leading-relaxed font-medium">
+          <div className="bg-gradient-to-r from-emerald-50/80 to-amber-50/50 border-l-4 border-amber-600 rounded-r-2xl p-3.5 sm:p-5 mb-5 sm:mb-6">
+            <p className="font-solaiman text-slate-900 text-sm sm:text-lg leading-relaxed font-medium">
               {isEn
                 ? '“Embracing the timeless life ideal of Rasulullah (ﷺ) to earn the pleasure of the Almighty through selfless service to humanity, and building an ethical, justice-based society illuminated by the light of Iman.”'
                 : '“রাসূলুল্লাহ (ﷺ)-এর চিরন্তন জীবনাদর্শকে বুকে ধারণ করে নিঃস্বার্থ মানবসেবার মাধ্যমে মহান রবের সন্তুষ্টি অর্জন করা; এবং একটি নৈতিক, ইনসাফভিত্তিক ও ঈমানী আলোয় আলোকিত সমাজ বিনির্মাণ করা।”'}
             </p>
           </div>
 
-          {/* 2 Points in Modern Redesigned Cards */}
-          <div className="space-y-5">
-            {/* Point 1 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-amber-500 shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-amber-300 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-amber-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                01
-              </span>
+          {/* 2 Points in Compact Interactive Accordion */}
+          <div className="space-y-2.5 sm:space-y-3">
+            {visionPoints.map((item, idx) => {
+              const Icon = item.icon;
+              const isOpen = openVisionIndex === idx;
+              return (
+                <div
+                  key={item.num}
+                  className={`rounded-xl sm:rounded-2xl border border-l-4 ${item.accentBorder} transition-all duration-300 overflow-hidden ${
+                    isOpen
+                      ? 'bg-white border-emerald-300 shadow-md shadow-emerald-950/5'
+                      : 'bg-white border-slate-200/85 shadow-2xs hover:border-emerald-200 hover:shadow-sm'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenVisionIndex((prev) => (prev === idx ? null : idx))}
+                    className="w-full flex items-center justify-between gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 sm:py-3.5 text-left cursor-pointer select-none group"
+                  >
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                      <span
+                        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-white font-bold text-xs sm:text-sm flex items-center justify-center shadow-xs font-serif-bn shrink-0 ${
+                          idx === 0
+                            ? 'bg-gradient-to-br from-[#d97706] via-[#b45309] to-[#92400e] ring-2 ring-amber-50'
+                            : 'bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] ring-2 ring-emerald-50'
+                        }`}
+                      >
+                        {item.num}
+                      </span>
+                      <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-50 border border-emerald-200/70 flex items-center justify-center shrink-0 group-hover:bg-emerald-100/70 transition-colors">
+                        <Icon className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-emerald-700" strokeWidth={1.8} />
+                      </span>
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 min-w-0">
+                        <h3 className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg font-serif-bn tracking-tight leading-snug">
+                          {item.title}
+                        </h3>
+                        {item.badge && (
+                          <span className="px-2 py-0.5 text-[11px] sm:text-xs font-serif-bn rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200 shrink-0">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#d97706] via-[#b45309] to-[#92400e] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-amber-950/20 font-serif-bn ring-4 ring-amber-50 group-hover:ring-amber-100 transition-all">
-                  {isEn ? '1' : '১'}
-                </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-50/80 border border-amber-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-amber-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <Sun className="w-5 h-5 text-amber-600" strokeWidth={1.8} />
-                </div>
-              </div>
+                    <span
+                      className={`relative shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-colors ${
+                        isOpen
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-slate-50 text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-700'
+                      }`}
+                    >
+                      <ChevronDown
+                        className={`w-4 h-4 sm:w-[18px] sm:h-[18px] transition-transform duration-300 ${
+                          isOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
+                      />
+                      {!isOpen && (
+                        <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5" aria-hidden="true">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-85" />
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.75)]" />
+                        </span>
+                      )}
+                    </span>
+                  </button>
 
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl mb-2 font-serif-bn tracking-tight flex items-center gap-2">
-                  <span>{isEn ? 'Spiritual Awakening of the Youth' : 'তরুণ প্রজন্মের ঈমানী জাগরণ'}</span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-amber-400/80 rounded-full"></span>
-                </h3>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn
-                    ? "Protecting the youth from digital fitnah and moral decay through wise Da'wah, intellectual discussions, and compassionate guidance to nurture them in the light of the Qur'an and Sunnah."
-                    : 'প্রজ্ঞাপূর্ণ দাওয়াহ, বুদ্ধিবৃত্তিক আলোচনা ও দরদি দিকনির্দেশনার মাধ্যমে যুবসমাজকে ডিজিটাল ফিতনা ও নৈতিক অবক্ষয় থেকে রক্ষা করে কুরআন-সুন্নাহর দীপ্ত আদর্শে গড়ে তোলা।'}
-                </p>
-              </div>
-            </div>
-
-            {/* Point 2 */}
-            <div className="relative overflow-hidden flex flex-col sm:flex-row items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 border-l-4 border-l-[#087443] shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group">
-              {/* Large Translucent Watermark Number */}
-              <span className="absolute right-4 -bottom-4 text-7xl sm:text-8xl font-black text-slate-900/[0.04] font-serif select-none pointer-events-none group-hover:text-emerald-950/[0.07] group-hover:scale-105 transition-all duration-300 tracking-tighter">
-                02
-              </span>
-
-              {/* Badges */}
-              <div className="flex items-center sm:flex-col gap-2.5 shrink-0 z-10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#087443] via-[#045332] to-[#023e24] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-md shadow-emerald-900/20 font-serif-bn ring-4 ring-emerald-50 group-hover:ring-emerald-100 transition-all">
-                  {isEn ? '2' : '২'}
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-3.5 sm:px-5 pb-3.5 sm:pb-4 pt-2 border-t border-emerald-100/80 bg-emerald-50/20">
+                        <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-solaiman font-normal pl-0 sm:pl-1">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:border-emerald-300 group-hover:shadow-md transition-all duration-300 shrink-0">
-                  <Landmark className="w-5 h-5 text-emerald-700" strokeWidth={1.8} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 relative z-10">
-                <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <h3 className="font-bold text-slate-900 text-lg sm:text-xl font-serif-bn tracking-tight">
-                    {isEn ? 'Provision for the Hereafter (Sadaqah Jariyah)' : 'আখেরাতের সঞ্চয়'}
-                  </h3>
-                  <span className="px-2.5 py-0.5 text-xs font-serif-bn rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">
-                    صدقة جارية
-                  </span>
-                  <span className="hidden sm:inline-block w-8 h-[2px] bg-emerald-400/80 rounded-full"></span>
-                </div>
-                <p className="text-slate-600 text-base sm:text-[17px] leading-relaxed font-solaiman font-normal">
-                  {isEn ? (
-                    <>
-                      Participating in <strong className="text-emerald-800 font-semibold">&apos;Sadaqah Jariyah&apos;</strong> with sincerity, free from show-off—bringing inner peace in this world and continuous rewards in the grave, so that Jannah becomes our ultimate destination by the pleasure of Allah, Insha&apos;Allah.
-                    </>
-                  ) : (
-                    <>
-                      লোক দেখানো মোহ ছেড়ে ইখলাসের সাথে <strong className="text-emerald-800 font-semibold">&apos;সাদাকায়ে জারিয়াহ&apos;</strong>র অংশীদার হওয়া—যা দুনিয়ায় দেবে আত্মিক প্রশান্তি, আর মৃত্যুর পর অন্ধকার কবরে উপহার দেবে অবিরাম সাওয়াব; যেন মহান রবের সন্তুষ্টিতে চূড়ান্ত ঠিকানা হয় জান্নাত। ইনশাআল্লাহ।
-                    </>
-                  )}
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
 
