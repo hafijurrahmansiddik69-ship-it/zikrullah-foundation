@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart, MapPin, Mail, Phone, Users } from 'lucide-react';
 import { FOUNDATION_INFO, heroImg } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
+import { ScrollReveal } from './ScrollReveal';
 
 interface FooterProps {
   onOpenDonation: () => void;
@@ -52,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-emerald-400/25">
           
           {/* Brand Col (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <ScrollReveal direction="left" className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white/10 border border-emerald-500/30 p-1 flex items-center justify-center shadow-inner overflow-hidden">
                 <img
@@ -89,10 +90,10 @@ export const Footer: React.FC<FooterProps> = ({
                 <span>{t.common.donateNow}</span>
               </button>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Quick Links (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
+          <ScrollReveal direction="up" delay={100} className="lg:col-span-2 space-y-3">
             <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-400/25 pb-2">
               {t.footer.quickLinks}
             </h4>
@@ -140,10 +141,10 @@ export const Footer: React.FC<FooterProps> = ({
                 </a>
               </li>
             </ul>
-          </div>
+          </ScrollReveal>
 
           {/* Special Programs (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
+          <ScrollReveal direction="up" delay={200} className="lg:col-span-2 space-y-3">
             <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-400/25 pb-2">
               {t.services.badge}
             </h4>
@@ -189,10 +190,10 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
             </ul>
-          </div>
+          </ScrollReveal>
 
           {/* Contact & Banking (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
+          <ScrollReveal direction="right" delay={300} className="lg:col-span-3 space-y-3">
             <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-400/25 pb-2">
               {t.footer.contactInfo}
             </h4>
@@ -249,12 +250,12 @@ export const Footer: React.FC<FooterProps> = ({
                 </span>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-emerald-400/80">
+        <ScrollReveal direction="up" delay={150} className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-emerald-400/80">
           <div>
             © {new Date().getFullYear()} {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}. {t.footer.copyright}
           </div>
@@ -263,7 +264,7 @@ export const Footer: React.FC<FooterProps> = ({
             <span className="hidden sm:inline">·</span>
             <span>{isEn ? 'Bogura, Bangladesh' : 'বগুড়া, বাংলাদেশ'}</span>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
     </footer>

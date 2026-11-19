@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserPlus, HandHeart, PhoneCall } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { ScrollReveal } from './ScrollReveal';
 
 interface AboutSectionProps {
   onOpenVolunteer: () => void;
@@ -19,10 +20,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   const { t, isEn } = useLanguage();
 
   return (
-    <section id="about" className="py-16 sm:py-20 bg-[#fafcfb] border-b border-emerald-100/60">
+    <section id="about" className="py-16 sm:py-20 bg-[#fafcfb] border-b border-emerald-100/60 overflow-x-clip">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center">
         {/* Visual Showcase & Quranic Verse Card */}
-        <div className="w-full max-w-md sm:max-w-lg relative">
+        <ScrollReveal direction="up" className="w-full max-w-md sm:max-w-lg relative">
           <div className="relative rounded-3xl overflow-hidden border-2 border-emerald-800/20 shadow-2xl shadow-emerald-950/20 aspect-4/5 bg-[#012213] group">
             {/* Rich forest green backdrop and photo with warm lighting */}
             <img
@@ -75,46 +76,52 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               )}
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Three Action Cards with Glowing & Twinkling Animation Effect */}
         <div className="mt-8 sm:mt-10 w-full flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap items-stretch md:items-center justify-center gap-3.5 sm:gap-5 font-solaiman">
           
           {/* Card 1: Rich Green (গাঢ় সবুজ) background, white icon, white text */}
-          <button
-            type="button"
-            onClick={onOpenVolunteer}
-            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(6,78,59,0.45)] hover:shadow-[0_0_30px_rgba(6,78,59,0.7)] border-2 border-emerald-300/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
-          >
-            <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-white" />
-            <span className="text-white">{isEn ? 'Join as a Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
-          </button>
+          <ScrollReveal direction="left" delay={100} className="flex justify-center">
+            <button
+              type="button"
+              onClick={onOpenVolunteer}
+              className="w-full md:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(6,78,59,0.45)] hover:shadow-[0_0_30px_rgba(6,78,59,0.7)] border-2 border-emerald-300/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            >
+              <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-white" />
+              <span className="text-white">{isEn ? 'Join as a Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
+            </button>
+          </ScrollReveal>
 
           {/* Card 2: Deep Navy Blue (গাঢ় নেভি ব্লু) background, orange/gold icon, white text */}
-          <button
-            type="button"
-            onClick={onOpenNeedyInfo}
-            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(14,165,233,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.7)] border-2 border-cyan-400/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
-          >
-            <span className="relative inline-flex items-center justify-center shrink-0">
-              <HandHeart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-              <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+          <ScrollReveal direction="up" delay={200} className="flex justify-center">
+            <button
+              type="button"
+              onClick={onOpenNeedyInfo}
+              className="w-full md:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(14,165,233,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.7)] border-2 border-cyan-400/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            >
+              <span className="relative inline-flex items-center justify-center shrink-0">
+                <HandHeart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+                <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+                </span>
               </span>
-            </span>
-            <span className="text-white">{isEn ? 'Share Info on Needy People in Your Village' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
-          </button>
+              <span className="text-white">{isEn ? 'Share Info on Needy People in Your Village' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
+            </button>
+          </ScrollReveal>
 
           {/* Card 3: Clean White (শুভ্র সাদা) background, dark icon, dark text */}
-          <button
-            type="button"
-            onClick={onOpenContactModal}
-            className="inline-flex items-center justify-center gap-2.5 bg-white text-slate-900 rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] border-2 border-emerald-500/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
-          >
-            <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-emerald-700" />
-            <span className="text-slate-900">{isEn ? 'Contact Us Directly' : 'সরাসরি যোগাযোগ করুন'}</span>
-          </button>
+          <ScrollReveal direction="right" delay={300} className="flex justify-center">
+            <button
+              type="button"
+              onClick={onOpenContactModal}
+              className="w-full md:w-auto inline-flex items-center justify-center gap-2.5 bg-white text-slate-900 rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] border-2 border-emerald-500/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            >
+              <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-emerald-700" />
+              <span className="text-slate-900">{isEn ? 'Contact Us Directly' : 'সরাসরি যোগাযোগ করুন'}</span>
+            </button>
+          </ScrollReveal>
 
         </div>
       </div>

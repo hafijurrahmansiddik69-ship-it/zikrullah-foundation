@@ -27,6 +27,7 @@ import {
 import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { ProjectsSection } from '../components/ProjectsSection';
+import { ScrollReveal, RevealDirection, RevealDelay } from '../components/ScrollReveal';
 
 interface AboutPageProps {
   onBackToHome: () => void;
@@ -133,11 +134,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   ];
 
   return (
-    <div className="bg-[#fcfdfc] min-h-screen py-10 sm:py-14 text-slate-800">
+    <div className="bg-[#fcfdfc] min-h-screen py-10 sm:py-14 text-slate-800 overflow-x-clip">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
         {/* Top Navigation & Breadcrumb */}
-        <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-emerald-100">
+        <div className="hero-reveal-up flex items-center justify-between gap-4 mb-8 pb-4 border-b border-emerald-100">
           <button
             onClick={onBackToHome}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-sm transition-all shadow-xs cursor-pointer active:scale-95"
@@ -156,7 +157,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Hero Banner Header of About Page */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#022918] via-[#044729] to-[#03361f] text-white rounded-2xl sm:rounded-3xl px-4 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-9 mb-6 sm:mb-9 border border-emerald-400/40 shadow-[0_18px_44px_-14px_rgba(2,41,24,0.75)]">
+        <div className="hero-reveal-up hero-delay-100 relative overflow-hidden bg-gradient-to-br from-[#022918] via-[#044729] to-[#03361f] text-white rounded-2xl sm:rounded-3xl px-4 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-9 mb-6 sm:mb-9 border border-emerald-400/40 shadow-[0_18px_44px_-14px_rgba(2,41,24,0.75)]">
           {/* Background Photo */}
           {!heroImgError && (
             <img
@@ -228,7 +229,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Core Heartfelt Statement (আমাদের প্রেরণা) */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#fcfdfb] via-[#f5faf7] to-emerald-50/75 border border-emerald-200/80 rounded-2xl sm:rounded-3xl p-5 sm:p-7 mb-9 shadow-[0_12px_32px_-12px_rgba(4,83,50,0.10)]">
+        <ScrollReveal direction="up">
+          <div className="relative overflow-hidden bg-gradient-to-br from-[#fcfdfb] via-[#f5faf7] to-emerald-50/75 border border-emerald-200/80 rounded-2xl sm:rounded-3xl p-5 sm:p-7 mb-9 shadow-[0_12px_32px_-12px_rgba(4,83,50,0.10)]">
           {/* Subtle Islamic Geometric SVG Watermark Pattern */}
           <svg
             className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.04] text-[#083E28]"
@@ -289,10 +291,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 : 'উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে “হাফিজুর রহমান সিদ্দিক (বগুড়া)”-এর উদ্যোগে প্রতিষ্ঠিত হয় ‘জিকরুল্লাহ ফাউন্ডেশন’—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
             </p>
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* Section 1: আমাদের লক্ষ্য (Mission) */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-7 sm:mb-9">
+        <ScrollReveal direction="left">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-7 sm:mb-9">
           <div className="flex items-center gap-3 mb-4 sm:mb-5">
             <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shadow-md shadow-emerald-900/15 shrink-0">
               <HeartHandshake className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
@@ -388,10 +392,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               );
             })}
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* Section 2: আমাদের উদ্দেশ্য (Vision) */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-10">
+        <ScrollReveal direction="right">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-10">
           <div className="flex items-center gap-3 mb-4 sm:mb-5">
             <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-900/15 shrink-0">
               <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
@@ -500,11 +506,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               );
             })}
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* Leadership & Executive Board Section */}
         <div className="mb-14">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold mb-3">
               <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
               <span>{isEn ? 'Leadership & Governance' : 'নেতৃত্ব ও পরিচালনা'}</span>
@@ -517,11 +524,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 ? 'Our dedicated Executive Committee steering the mission of Zikrullah Foundation with integrity, transparency, and excellence.'
                 : 'সততা, স্বচ্ছতা ও দক্ষতার সাথে জিকরুল্লাহ ফাউন্ডেশনের কার্যক্রম পরিচালনায় আমাদের নিবেদিত কার্যনির্বাহী পরিষদ।'}
             </p>
-          </div>
+          </ScrollReveal>
 
           <div className="space-y-6">
             {/* Single Unified Professional Message Card */}
-            <div className="relative overflow-hidden bg-gradient-to-b from-white via-[#fafdfb] to-[#f4f8f5] rounded-2xl sm:rounded-[36px] p-5 sm:p-10 lg:p-12 border border-emerald-100 shadow-xl shadow-emerald-950/5">
+            <ScrollReveal direction="up">
+              <div className="relative overflow-hidden bg-gradient-to-b from-white via-[#fafdfb] to-[#f4f8f5] rounded-2xl sm:rounded-[36px] p-5 sm:p-10 lg:p-12 border border-emerald-100 shadow-xl shadow-emerald-950/5">
               
               {/* Background Watermark Quote Symbol */}
               <div className="absolute top-4 right-8 text-emerald-900/[0.04] text-7xl sm:text-9xl font-serif select-none pointer-events-none leading-none">
@@ -683,30 +691,39 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </div>
               </div>
 
-            </div>
+              </div>
+            </ScrollReveal>
 
             {/* Executive Committee & Trustee Members Grid (Matched to screenshot ssss.jpg) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-              {EXECUTIVE_MEMBERS.map((member) => (
-                <div
-                  key={member.id}
-                  className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all text-center flex flex-col items-center justify-center group"
-                >
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-3 border-emerald-100/90 shadow-sm mb-4 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </div>
-                  <h3 className="font-serif-bn font-bold text-slate-900 text-base sm:text-lg mb-1 tracking-tight">
-                    {isEn ? member.name : (member.nameBn || member.name)}
-                  </h3>
-                  <span className="text-xs sm:text-[13px] text-slate-500 font-medium font-sans-bn block">
-                    {isEn ? member.role : (member.roleBn || member.role)}
-                  </span>
-                </div>
-              ))}
+              {EXECUTIVE_MEMBERS.map((member, idx) => {
+                const dirs: RevealDirection[] = ['left', 'up', 'right'];
+                const delays: RevealDelay[] = [0, 100, 200];
+                return (
+                  <ScrollReveal
+                    key={member.id}
+                    direction={dirs[idx % 3]}
+                    delay={delays[idx % 3]}
+                    className="flex"
+                  >
+                    <div className="w-full h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all text-center flex flex-col items-center justify-center group">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-3 border-emerald-100/90 shadow-sm mb-4 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                      <h3 className="font-serif-bn font-bold text-slate-900 text-base sm:text-lg mb-1 tracking-tight">
+                        {isEn ? member.name : (member.nameBn || member.name)}
+                      </h3>
+                      <span className="text-xs sm:text-[13px] text-slate-500 font-medium font-sans-bn block">
+                        {isEn ? member.role : (member.roleBn || member.role)}
+                      </span>
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -717,34 +734,36 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Bottom CTA Box */}
-        <div className="bg-gradient-to-r from-emerald-900 to-[#045332] text-white rounded-3xl p-8 sm:p-10 text-center shadow-xl">
-          <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl mb-3">
-            {t.ctaBanner.heading}
-          </h3>
-          <p className="text-emerald-100 max-w-xl mx-auto text-sm sm:text-base leading-relaxed mb-6 font-solaiman">
-            {t.ctaBanner.paragraph}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <button
-              onClick={() => onOpenDonation('general-sadaqah')}
-              className="px-6 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
-            >
-              {t.common.donateNow}
-            </button>
-            <button
-              onClick={onOpenVolunteer}
-              className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm transition-all active:scale-95 cursor-pointer"
-            >
-              {t.common.joinVolunteer}
-            </button>
-            <button
-              onClick={onBackToHome}
-              className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-emerald-100 font-semibold text-sm transition-all active:scale-95 cursor-pointer"
-            >
-              ← {t.common.backToHome}
-            </button>
+        <ScrollReveal direction="up">
+          <div className="bg-gradient-to-r from-emerald-900 to-[#045332] text-white rounded-3xl p-8 sm:p-10 text-center shadow-xl">
+            <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl mb-3">
+              {t.ctaBanner.heading}
+            </h3>
+            <p className="text-emerald-100 max-w-xl mx-auto text-sm sm:text-base leading-relaxed mb-6 font-solaiman">
+              {t.ctaBanner.paragraph}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <button
+                onClick={() => onOpenDonation('general-sadaqah')}
+                className="px-6 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+              >
+                {t.common.donateNow}
+              </button>
+              <button
+                onClick={onOpenVolunteer}
+                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm transition-all active:scale-95 cursor-pointer"
+              >
+                {t.common.joinVolunteer}
+              </button>
+              <button
+                onClick={onBackToHome}
+                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-emerald-100 font-semibold text-sm transition-all active:scale-95 cursor-pointer"
+              >
+                ← {t.common.backToHome}
+              </button>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
 
 

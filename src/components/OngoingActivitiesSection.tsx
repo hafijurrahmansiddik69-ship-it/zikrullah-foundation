@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
+import { ScrollReveal, RevealDirection, RevealDelay } from './ScrollReveal';
 
 export interface OngoingProjectItem {
   id: string;
@@ -412,12 +413,12 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
   return (
     <section 
       id="ongoing-activities" 
-      className="py-16 sm:py-24 bg-[#fafcfb] border-b border-emerald-100/70 relative selection:bg-emerald-100 selection:text-emerald-900"
+      className="py-16 sm:py-24 bg-[#fafcfb] border-b border-emerald-100/70 relative overflow-x-clip selection:bg-emerald-100 selection:text-emerald-900"
     >
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
         
         {/* Section Header: Styled strictly to user prompt */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
+        <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           {/* Small green badge: • আমাদের কাজ */}
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/90 text-[#064e3b] text-xs sm:text-sm font-bold mb-3.5 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-[#064e3b] animate-pulse" />
@@ -434,20 +435,29 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
               ? 'You too can join our ongoing initiatives for the welfare of humanity and eternal rewards.'
               : 'মানবতার কল্যাণে ও স্থায়ী সওয়াবের লক্ষ্যে আমাদের চলমান কার্যক্রমে আপনিও যুক্ত হতে পারেন।'}
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Responsive Grid Card Layout: Mobile 2 Cols (matching ThoughtsSection), Tablet 2 Cols, Desktop 3 Cols */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-7 items-stretch">
           {ONGOING_PROJECTS.map((project, idx) => {
             const isLastCard = idx === 6;
+            const dirs: RevealDirection[] = ['left', 'up', 'right'];
+            const delays: RevealDelay[] = [0, 100, 200];
+            const direction: RevealDirection = isLastCard ? 'up' : dirs[idx % 3];
+            const delay: RevealDelay = isLastCard ? 100 : delays[idx % 3];
             return (
-              <div
+              <ScrollReveal
                 key={project.id}
-                onClick={() => handleCardClick(project)}
-                className={`bg-white rounded-xl sm:rounded-2xl md:rounded-3xl border border-slate-200/85 shadow-[0_2px_10px_rgba(15,23,42,0.05)] hover:shadow-xl hover:border-emerald-900/20 active:scale-[0.985] transition-all duration-200 flex flex-col justify-between overflow-hidden group cursor-pointer sm:hover:-translate-y-1 ${
+                direction={direction}
+                delay={delay}
+                className={`flex ${
                   isLastCard ? 'sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none lg:mx-0 w-full' : ''
                 }`}
               >
+                <div
+                  onClick={() => handleCardClick(project)}
+                  className="w-full h-full bg-white rounded-xl sm:rounded-2xl md:rounded-3xl border border-slate-200/85 shadow-[0_2px_10px_rgba(15,23,42,0.05)] hover:shadow-xl hover:border-emerald-900/20 active:scale-[0.985] transition-all duration-200 flex flex-col justify-between overflow-hidden group cursor-pointer sm:hover:-translate-y-1"
+                >
                 <div>
                   {/* Top Image Container */}
                   <div className="relative aspect-[16/10] w-full bg-slate-100 overflow-hidden">
@@ -543,7 +553,8 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                     <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-200 transition-transform group-hover:translate-x-1 shrink-0" />
                   </button>
                 </div>
-              </div>
+                </div>
+              </ScrollReveal>
             );
           })}
         </div>

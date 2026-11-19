@@ -15,6 +15,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { ScrollReveal } from './ScrollReveal';
 
 interface ServicesSectionProps {
   onSelectServiceDonation?: (serviceTitle: string) => void;
@@ -114,14 +115,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
   ];
 
   return (
-    <section id="services" className="py-12 sm:py-16 bg-gradient-to-b from-[#f8faf9] via-white to-[#f4f8f6] relative">
+    <section id="services" className="py-12 sm:py-16 bg-gradient-to-b from-[#f8faf9] via-white to-[#f4f8f6] relative overflow-x-clip">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* 2 Main Columns: Mission & Vision */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           
           {/* Column 1: আমাদের লক্ষ্য (Mission) */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-xl shadow-emerald-950/5 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
+          <ScrollReveal direction="left" className="flex">
+            <div className="w-full bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-xl shadow-emerald-950/5 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
             {/* Ambient Corner Glow */}
             <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
 
@@ -242,10 +244,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                 </button>
               </div>
             )}
-          </div>
+            </div>
+          </ScrollReveal>
 
           {/* Column 2: আমাদের উদ্দেশ্য (Vision) */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-xl shadow-emerald-950/5 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
+          <ScrollReveal direction="right" delay={150} className="flex">
+            <div className="w-full bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-xl shadow-emerald-950/5 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
             {/* Ambient Corner Glow */}
             <div className="absolute top-0 right-0 w-36 h-36 bg-amber-50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
 
@@ -362,7 +366,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                 })}
               </div>
             </div>
-          </div>
+            </div>
+          </ScrollReveal>
 
         </div>
 

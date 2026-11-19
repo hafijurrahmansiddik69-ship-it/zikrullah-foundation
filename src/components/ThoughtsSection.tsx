@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { ARTICLES_DATA, ArticleEntry } from '../data/articlesData';
 import { useLanguage } from '../context/LanguageContext';
+import { ScrollReveal } from './ScrollReveal';
 
 const FacebookIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -190,11 +191,11 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
   return (
     <section
       id="thoughts"
-      className="py-16 sm:py-24 bg-[#f8faf9] border-t border-b border-slate-200/80 selection:bg-emerald-100 selection:text-emerald-950"
+      className="py-16 sm:py-24 bg-[#f8faf9] border-t border-b border-slate-200/80 overflow-x-clip selection:bg-emerald-100 selection:text-emerald-950"
     >
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
         {/* Centered Section Header (No Eyebrow Label Above Heading) */}
-        <div className="text-center max-w-2xl mx-auto mb-7 sm:mb-12 px-1">
+        <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto mb-7 sm:mb-12 px-1">
           <h2 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-[42px] text-[#064E3B] leading-tight tracking-tight mb-2 sm:mb-3 text-balance">
             {isEn ? 'Thoughts & Field Notes' : 'ভাবনা ও কর্মকথা'}
           </h2>
@@ -203,21 +204,26 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
               ? 'Read real field experiences, upcoming roadmaps, and selected reflections.'
               : 'মাঠপর্যায়ের বাস্তব অভিজ্ঞতা, আগামী দিনের পরিকল্পনা ও নির্বাচিত লেখাগুলো পড়ুন।'}
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Side-by-Side 2-Card Grid Across Mobile, Tablet & Desktop */}
         <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-7">
-          {latestTwoArticles.map((article) => {
+          {latestTwoArticles.map((article, idx) => {
             const title = isEn ? article.titleEn : article.titleBn;
             const excerpt = isEn ? article.excerptEn : article.excerptBn;
             const date = isEn ? article.dateEn : article.dateBn;
 
             return (
-              <article
+              <ScrollReveal
                 key={article.id}
-                onClick={() => openArticle(article, 'grid')}
-                className="bg-white rounded-xl sm:rounded-2xl border border-slate-200/85 overflow-hidden shadow-[0_2px_10px_rgba(15,23,42,0.05)] hover:shadow-xl hover:border-emerald-900/20 active:scale-[0.985] transition-all duration-200 sm:hover:-translate-y-1 flex flex-col justify-between cursor-pointer group"
+                direction={idx === 0 ? 'left' : 'right'}
+                delay={idx === 0 ? 0 : 150}
+                className="flex"
               >
+                <article
+                  onClick={() => openArticle(article, 'grid')}
+                  className="w-full h-full bg-white rounded-xl sm:rounded-2xl border border-slate-200/85 overflow-hidden shadow-[0_2px_10px_rgba(15,23,42,0.05)] hover:shadow-xl hover:border-emerald-900/20 active:scale-[0.985] transition-all duration-200 sm:hover:-translate-y-1 flex flex-col justify-between cursor-pointer group"
+                >
                 <div>
                   {/* Top Banner Image */}
                   <div className="aspect-[16/10] w-full bg-slate-100 overflow-hidden">
@@ -261,13 +267,14 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                     <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F59E0B] transition-transform duration-200 group-hover:translate-x-0.5 shrink-0" />
                   </button>
                 </div>
-              </article>
+                </article>
+              </ScrollReveal>
             );
           })}
         </div>
 
         {/* Prominent "সব লেখা দেখুন →" Archive Button */}
-        <div className="mt-10 sm:mt-12 text-center">
+        <ScrollReveal direction="up" delay={150} className="mt-10 sm:mt-12 text-center">
           <button
             type="button"
             onClick={openArchive}
@@ -276,7 +283,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
             <span>{isEn ? 'View All Articles' : 'সব লেখা দেখুন'}</span>
             <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
           </button>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* Full Archive / All Articles View */}

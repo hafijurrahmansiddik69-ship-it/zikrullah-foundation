@@ -15,6 +15,7 @@ import {
   Camera
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { ScrollReveal, RevealDirection, RevealDelay } from './ScrollReveal';
 
 interface CardConfig {
   id: string;
@@ -140,11 +141,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       className={
         isEmbedded 
           ? "py-12 sm:py-16 bg-[#080a0f] rounded-3xl sm:rounded-[36px] border border-slate-800 shadow-2xl overflow-hidden" 
-          : "py-16 bg-[#080a0f]"
+          : "py-16 bg-[#080a0f] overflow-x-clip"
       }
     >
       <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-10">
+        <ScrollReveal direction="up" className="text-center mb-10">
           <span className="inline-block px-3 py-1.5 rounded-full bg-green-500/15 text-green-400 text-xs font-semibold mb-2.5 border border-green-500/20 shadow-sm">
             {t.projects.badge}
           </span>
@@ -154,7 +155,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <p className="text-gray-400 text-xs sm:text-sm mt-2">
             {t.projects.subtitle}
           </p>
-        </div>
+        </ScrollReveal>
         
         {/* Responsive Grid of Cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
@@ -162,29 +163,39 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
             const Icon = config.icon;
             const isLastCard = idx === 6;
+            const dirs: RevealDirection[] = ['left', 'up', 'right'];
+            const delays: RevealDelay[] = [0, 100, 200];
+            const direction: RevealDirection = isLastCard ? 'up' : dirs[idx % 3];
+            const delay: RevealDelay = isLastCard ? 100 : delays[idx % 3];
             return (
-              <div
+              <ScrollReveal
                 key={idx}
-                onClick={() => setSelectedIndex(idx)}
-                className={`w-full max-w-[200px] bg-[#0f131d] border-2 ${config.cardBorderClass} rounded-3xl p-2 shadow-lg transition-all duration-300 cursor-pointer flex flex-col items-center hover:-translate-y-2 ${config.cardHoverShadow} ${
+                direction={direction}
+                delay={delay}
+                className={`w-full max-w-[200px] flex ${
                   isLastCard ? 'col-span-2 md:col-span-1 md:col-start-2 justify-self-center' : ''
                 }`}
               >
-                <div className={`w-full rounded-[18px] py-4 px-2 min-h-[100px] flex flex-col justify-center items-center bg-gradient-to-br ${config.gradientClass} shadow-inner`}>
-                  <span className="text-white font-extrabold text-xs sm:text-sm mb-1 text-center drop-shadow-md leading-tight px-1">
-                    {card.badge}
-                  </span>
-                  <Icon className="w-7 h-7 text-white drop-shadow-md mt-1" />
-                </div>
-                <div className="py-2.5 px-1 w-full flex flex-col items-center justify-center text-center">
-                  <h3 className="font-bold text-[15px] text-white leading-tight">{card.title}</h3>
-                  {'subtitle' in card && card.subtitle && (
-                    <span className="text-[11px] sm:text-xs text-amber-300/90 font-medium tracking-tight mt-1 leading-snug">
-                      {card.subtitle}
+                <div
+                  onClick={() => setSelectedIndex(idx)}
+                  className={`w-full h-full bg-[#0f131d] border-2 ${config.cardBorderClass} rounded-3xl p-2 shadow-lg transition-all duration-300 cursor-pointer flex flex-col items-center hover:-translate-y-2 ${config.cardHoverShadow}`}
+                >
+                  <div className={`w-full rounded-[18px] py-4 px-2 min-h-[100px] flex flex-col justify-center items-center bg-gradient-to-br ${config.gradientClass} shadow-inner`}>
+                    <span className="text-white font-extrabold text-xs sm:text-sm mb-1 text-center drop-shadow-md leading-tight px-1">
+                      {card.badge}
                     </span>
-                  )}
+                    <Icon className="w-7 h-7 text-white drop-shadow-md mt-1" />
+                  </div>
+                  <div className="py-2.5 px-1 w-full flex flex-col items-center justify-center text-center">
+                    <h3 className="font-bold text-[15px] text-white leading-tight">{card.title}</h3>
+                    {'subtitle' in card && card.subtitle && (
+                      <span className="text-[11px] sm:text-xs text-amber-300/90 font-medium tracking-tight mt-1 leading-snug">
+                        {card.subtitle}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>

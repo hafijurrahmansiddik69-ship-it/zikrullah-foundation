@@ -107,7 +107,7 @@ function MainApp() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${isEn ? 'font-sans' : 'font-sans-bn'} selection:bg-emerald-100 selection:text-emerald-900`}>
+    <div className={`min-h-screen flex flex-col overflow-x-clip ${isEn ? 'font-sans' : 'font-sans-bn'} selection:bg-emerald-100 selection:text-emerald-900`}>
       
       {/* Top Header */}
       <Header
@@ -118,7 +118,7 @@ function MainApp() {
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
 
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-clip">
         {currentPage === 'about' ? (
           <AboutPage
             onBackToHome={() => navigateTo('home')}

@@ -390,3 +390,115 @@ body.lang-en .font-solaiman {
   animation: sparkleDrift 2.2s ease-in-out infinite;
 }
 
+/* Smooth Hero Entrance Animations (runs immediately on page load) */
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroFadeLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-32px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroFadeRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(32px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-reveal-up {
+  animation: heroFadeUp 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-reveal-left {
+  animation: heroFadeLeft 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-reveal-right {
+  animation: heroFadeRight 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-delay-100 { animation-delay: 100ms; }
+.hero-delay-150 { animation-delay: 150ms; }
+.hero-delay-250 { animation-delay: 250ms; }
+.hero-delay-350 { animation-delay: 350ms; }
+.hero-delay-450 { animation-delay: 450ms; }
+.hero-delay-550 { animation-delay: 550ms; }
+.hero-delay-600 { animation-delay: 600ms; }
+
+/* Smooth Scroll-Reveal Animations (GPU-accelerated, one-time reveal) */
+.reveal-base {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 0.72s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-up {
+  transform: translate3d(0, 28px, 0);
+}
+
+.reveal-left {
+  transform: translate3d(-32px, 0, 0);
+}
+
+.reveal-right {
+  transform: translate3d(32px, 0, 0);
+}
+
+.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.reveal-delay-0 { transition-delay: 0ms; }
+.reveal-delay-80 { transition-delay: 80ms; }
+.reveal-delay-100 { transition-delay: 100ms; }
+.reveal-delay-150 { transition-delay: 150ms; }
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-250 { transition-delay: 250ms; }
+.reveal-delay-300 { transition-delay: 300ms; }
+.reveal-delay-350 { transition-delay: 350ms; }
+.reveal-delay-400 { transition-delay: 400ms; }
+.reveal-delay-500 { transition-delay: 500ms; }
+.reveal-delay-600 { transition-delay: 600ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal-up,
+  .hero-reveal-left,
+  .hero-reveal-right {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reveal-base {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

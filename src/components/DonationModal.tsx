@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Heart, Check, Copy, Printer, ArrowRight, Building2, Send, Loader2, Sparkles } from 'lucide-react';
+import { X, Heart, Check, Copy, Printer, ArrowRight, Building2, Send, Loader2, Sparkles, Phone } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
 import { DONATION_CATEGORIES, resolveDonationCategoryId } from '../data/donationCategories';
@@ -472,10 +472,20 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
                       016 20 500 920
                     </div>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <a
+                        href="tel:*247%23"
+                        onClick={() => handleCopy('01620500920', 'bkash')}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#D12053] hover:bg-[#b51946] text-white text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        <span>{isEn ? 'Copy & Dial *247#' : 'নম্বর কপি ও *247# ডায়াল করুন'}</span>
+                      </a>
+                    </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
                       {isEn 
-                        ? '* Use "Send Money" from your bKash app. Enter your name or ZF in reference.' 
-                        : '* আপনার বিকাশ অ্যাপ থেকে Send Money করুন। রেফারেন্সে আপনার নাম বা ZF লিখুন।'}
+                        ? `* Tap above to copy the number & dial *247#, or open bKash app → Send Money (৳${amount.toLocaleString('en-US')}) with reference ZF.` 
+                        : `* ওপরের বাটনে ট্যাপ করলে নম্বর কপি হয়ে *247# ডায়াল হবে; অথবা বিকাশ অ্যাপে Send Money (৳${amount.toLocaleString('bn-BD')}) করে রেফারেন্সে ZF লিখুন।`}
                     </p>
                   </div>
                 )}
@@ -498,10 +508,20 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
                       016 20 500 920
                     </div>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <a
+                        href="tel:*167%23"
+                        onClick={() => handleCopy('01620500920', 'nagad')}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#c8700a] hover:bg-[#a95d06] text-white text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        <span>{isEn ? 'Copy & Dial *167#' : 'নম্বর কপি ও *167# ডায়াল করুন'}</span>
+                      </a>
+                    </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
                       {isEn 
-                        ? '* Use "Send Money" from your Nagad app or USSD code.' 
-                        : '* নগদ অ্যাপ বা ইউএসএসডি কোড থেকে Send Money করুন।'}
+                        ? `* Tap above to copy & dial *167#, or use Nagad app → Send Money (৳${amount.toLocaleString('en-US')}).` 
+                        : `* ওপরের বাটনে ট্যাপ করলে নম্বর কপি হয়ে *167# ডায়াল হবে; অথবা নগদ অ্যাপ থেকে Send Money (৳${amount.toLocaleString('bn-BD')}) করুন।`}
                     </p>
                   </div>
                 )}
@@ -524,10 +544,20 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                     <div className="font-mono text-base font-bold text-slate-900 bg-white p-2.5 rounded-lg border border-slate-200 tracking-wider text-center mb-2">
                       016 20 500 920-2
                     </div>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <a
+                        href="tel:*322%23"
+                        onClick={() => handleCopy('016205009202', 'rocket')}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#8B237F] hover:bg-[#721b68] text-white text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        <span>{isEn ? 'Copy & Dial *322#' : 'নম্বর কপি ও *322# ডায়াল করুন'}</span>
+                      </a>
+                    </div>
                     <p className="text-[11px] text-slate-500 leading-tight">
                       {isEn 
-                        ? '* Use "Send Money" from Rocket.' 
-                        : '* রকেট থেকে Send Money করুন।'}
+                        ? `* Tap above to copy & dial *322#, or use Rocket app → Send Money (৳${amount.toLocaleString('en-US')}).` 
+                        : `* ওপরের বাটনে ট্যাপ করলে নম্বর কপি হয়ে *322# ডায়াল হবে; অথবা রকেট অ্যাপ থেকে Send Money (৳${amount.toLocaleString('bn-BD')}) করুন।`}
                     </p>
                   </div>
                 )}
