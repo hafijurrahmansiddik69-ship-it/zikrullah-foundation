@@ -278,9 +278,9 @@ export const ARTICLES_DATA: ArticleEntry[] = [
     locationEn: 'Gujia, Mokamtala, Bogura',
     authorBn: 'হাফিজুর রহমান সিদ্দিক ও কার্যনির্বাহী পরিষদ',
     authorEn: 'Hafizur Rahman Siddik & Executive Committee',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
-    bannerAltBn: 'জিকরুল্লাহ ফাউন্ডেশনের স্বেচ্ছাসেবক ও মাঠপর্যায়ের কার্যক্রম',
-    bannerAltEn: 'Zikrullah Foundation volunteers and grassroots community service',
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795073660/pwijcipvwpgs5eyvgkfx.jpg',
+    bannerAltBn: 'জিকরুল্লাহ ফাউন্ডেশনের প্রতিষ্ঠাতা হাফিজুর রহমান সিদ্দিক — ১লা জানুয়ারি ২০২৩ থেকে মানবতার সেবায় পথচলা',
+    bannerAltEn: 'Hafizur Rahman Siddik, Founder of Zikrullah Foundation — Journey Since January 1, 2023',
     blocks: [
       {
         type: 'paragraph',

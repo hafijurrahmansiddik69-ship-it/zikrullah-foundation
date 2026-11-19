@@ -382,10 +382,10 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
       id="ongoing-activities" 
       className="py-16 sm:py-24 bg-[#fafcfb] border-b border-emerald-100/70 relative selection:bg-emerald-100 selection:text-emerald-900"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6">
         
         {/* Section Header: Styled strictly to user prompt */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           {/* Small green badge: • আমাদের কাজ */}
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/90 text-[#064e3b] text-xs sm:text-sm font-bold mb-3.5 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-[#064e3b] animate-pulse" />
@@ -393,27 +393,26 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
           </div>
 
           {/* Large crisp title: চলমান কার্যক্রমসমূহ */}
-          <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl lg:text-5xl text-[#064e3b] tracking-tight leading-tight mb-3 sm:mb-4">
+          <h2 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-5xl text-[#064e3b] tracking-tight leading-tight mb-2.5 sm:mb-4">
             {isEn ? 'Ongoing Initiatives' : 'চলমান কার্যক্রমসমূহ'}
           </h2>
 
-          <p className="text-slate-600 font-solaiman text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="text-slate-600 font-solaiman text-xs sm:text-base leading-relaxed max-w-2xl mx-auto">
             {isEn 
               ? 'You too can join our ongoing initiatives for the welfare of humanity and eternal rewards.'
               : 'মানবতার কল্যাণে ও স্থায়ী সওয়াবের লক্ষ্যে আমাদের চলমান কার্যক্রমে আপনিও যুক্ত হতে পারেন।'}
           </p>
         </div>
 
-        {/* Responsive Grid Card Layout: 7 Cards in As-Sunnah Trust Style */}
-        {/* Mobile: 1 Col, Tablet: 2 Cols, Desktop: 3 Cols */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 items-stretch">
+        {/* Responsive Grid Card Layout: Mobile 2 Cols (matching ThoughtsSection), Tablet 2 Cols, Desktop 3 Cols */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-7 items-stretch">
           {ONGOING_PROJECTS.map((project, idx) => {
             const isLastCard = idx === 6;
             return (
               <div
                 key={project.id}
                 onClick={() => handleCardClick(project)}
-                className={`bg-white rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-300/80 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer hover:-translate-y-1.5 ${
+                className={`bg-white rounded-xl sm:rounded-2xl md:rounded-3xl border border-slate-200/85 shadow-[0_2px_10px_rgba(15,23,42,0.05)] hover:shadow-xl hover:border-emerald-900/20 active:scale-[0.985] transition-all duration-200 flex flex-col justify-between overflow-hidden group cursor-pointer sm:hover:-translate-y-1 ${
                   isLastCard ? 'sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:max-w-none lg:mx-0 w-full' : ''
                 }`}
               >
@@ -433,15 +432,15 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
 
                     {/* White Pill-shaped Badge on Top Left: প্রজেক্ট */}
-                    <div className="absolute top-3.5 left-3.5 z-10">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-slate-800 text-[11px] sm:text-xs font-bold shadow-md border border-slate-100">
+                    <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 z-10">
+                      <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/95 backdrop-blur-xs text-slate-800 text-[9.5px] sm:text-xs font-bold shadow-sm sm:shadow-md border border-slate-100">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#064e3b]" />
                         <span>{isEn ? 'Project' : 'প্রজেক্ট'}</span>
                       </span>
                     </div>
 
                     {/* Small Circular White Frame with Foundation Logo on Bottom Right */}
-                    <div className="absolute bottom-3 right-3 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white p-0.5 shadow-lg border border-slate-100 flex items-center justify-center overflow-hidden">
+                    <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-10 w-6 h-6 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-white p-0.5 shadow-md sm:shadow-lg border border-slate-100 flex items-center justify-center overflow-hidden">
                       <img
                         src={FOUNDATION_INFO.logoUrl}
                         alt="Zikrullah Foundation"
@@ -451,28 +450,28 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                   </div>
 
                   {/* Card Content Body */}
-                  <div className="p-5 sm:p-6 pb-2">
+                  <div className="p-2.5 sm:p-5 md:p-6 pb-1.5 sm:pb-2">
                     {/* Project Title */}
-                    <h3 className="font-serif-bn font-bold text-lg sm:text-xl text-slate-900 group-hover:text-[#064e3b] transition-colors leading-snug mb-2.5">
+                    <h3 className="font-serif-bn font-bold text-[13px] sm:text-lg md:text-xl text-slate-900 group-hover:text-[#064e3b] transition-colors leading-snug line-clamp-2 mb-1 sm:mb-2.5">
                       {isEn ? project.titleEn : project.titleBn}
                     </h3>
 
                     {/* Short Description */}
-                    <p className="font-solaiman text-slate-600 text-xs sm:text-[13.5px] leading-relaxed line-clamp-3 mb-5 font-normal">
+                    <p className="font-solaiman text-slate-600 text-[11px] sm:text-[13.5px] leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2.5 sm:mb-5 font-normal">
                       {isEn ? project.shortDescEn : project.shortDescBn}
                     </p>
 
                     {/* Fund Progress Bar Section */}
-                    <div className="bg-[#f8faf9] rounded-xl p-3 border border-emerald-900/10 mb-4">
+                    <div className="bg-[#f8faf9] rounded-lg sm:rounded-xl p-2 sm:p-3 border border-emerald-900/10 mb-2 sm:mb-4">
                       {/* Top Stats: Left Collected, Right Target */}
-                      <div className="flex items-center justify-between text-xs sm:text-[13px] font-solaiman mb-2">
-                        <span className="font-semibold text-slate-700">
+                      <div className="flex flex-wrap items-center justify-between gap-x-1.5 gap-y-0.5 text-[10px] sm:text-[13px] font-solaiman mb-1.5 sm:mb-2">
+                        <span className="font-semibold text-slate-700 whitespace-nowrap">
                           {isEn ? 'Raised: ' : 'সংগৃহীত: '}
                           <span className="text-[#064e3b] font-bold font-mono">
                             {isEn ? project.raisedAmountEn : project.raisedAmountBn}
                           </span>
                         </span>
-                        <span className="font-semibold text-slate-700">
+                        <span className="font-semibold text-slate-700 whitespace-nowrap">
                           {isEn ? 'Goal: ' : 'লক্ষ্য: '}
                           <span className="text-slate-900 font-bold font-mono">
                             {isEn ? project.targetAmountEn : project.targetAmountBn}
@@ -481,7 +480,7 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                       </div>
 
                       {/* Dark Green Progress Track & Fill */}
-                      <div className="w-full bg-slate-200/80 rounded-full h-2.5 overflow-hidden relative">
+                      <div className="w-full bg-slate-200/80 rounded-full h-1.5 sm:h-2.5 overflow-hidden relative">
                         <div
                           className="h-full bg-gradient-to-r from-[#064e3b] via-[#087443] to-[#10b981] rounded-full transition-all duration-1000 ease-out"
                           style={{ width: `${Math.min(project.percentage, 100)}%` }}
@@ -489,8 +488,8 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                       </div>
 
                       {/* Percentage indicator */}
-                      <div className="flex justify-end items-center mt-1.5">
-                        <span className="text-[11px] sm:text-xs font-bold text-[#d97706] font-mono">
+                      <div className="flex justify-end items-center mt-1 sm:mt-1.5">
+                        <span className="text-[9.5px] sm:text-xs font-bold text-[#d97706] font-mono">
                           {isEn ? project.percentageEn : project.percentageBn}
                         </span>
                       </div>
@@ -499,17 +498,17 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                 </div>
 
                 {/* Card Footer: 'অংশগ্রহণ করুন' Button Centered */}
-                <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-1">
+                <div className="px-2.5 sm:px-5 md:px-6 pb-2.5 sm:pb-5 md:pb-6 pt-0.5 sm:pt-1">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleCardClick(project);
                     }}
-                    className="w-full py-3 px-4 rounded-xl sm:rounded-2xl bg-[#064e3b] hover:bg-[#043d2e] active:scale-98 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-950/20 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 group-hover:bg-[#043d2e]"
+                    className="w-full py-2 sm:py-3 px-2.5 sm:px-4 rounded-lg sm:rounded-xl md:rounded-2xl bg-[#064e3b] hover:bg-[#043d2e] active:scale-98 text-white font-bold text-[11px] sm:text-sm shadow-sm sm:shadow-md shadow-emerald-950/20 transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 group-hover:bg-[#043d2e] whitespace-nowrap"
                   >
                     <span>{isEn ? 'Participate Now' : 'অংশগ্রহণ করুন'}</span>
-                    <ArrowRight className="w-4 h-4 text-emerald-200 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-200 transition-transform group-hover:translate-x-1 shrink-0" />
                   </button>
                 </div>
               </div>

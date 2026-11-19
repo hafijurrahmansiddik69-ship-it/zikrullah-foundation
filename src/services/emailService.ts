@@ -550,14 +550,14 @@ export async function sendNewsletterSubscriptionEmail(
   success: boolean;
   message: string;
 }> {
-  const recipientEmail = RECIPIENT_EMAIL;
+  const formSubmitToken = 'e683378f5399c9eb0088210959a9ef46';
   const ccEmail = CC_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
   const cleanedEmail = subscriberEmail.trim();
   const subject = `[নতুন সাবস্ক্রাইবার] ${cleanedEmail} — জিকরুল্লাহ ফাউন্ডেশন`;
 
   try {
-    const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+    const response = await fetch(`https://formsubmit.co/ajax/${formSubmitToken}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -385,7 +385,9 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                           src={article.bannerImage}
                           alt={isEn ? article.bannerAltEn : article.bannerAltBn}
                           fallbackTitle={title}
-                          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-500"
+                          className={`w-full h-full object-cover ${
+                            article.id === 'art-journey-since-jan-2023' ? 'object-top' : 'object-center'
+                          } group-hover:scale-103 transition-transform duration-500`}
                         />
                       </div>
 
@@ -491,14 +493,25 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
 
             {/* Large Banner Image */}
             <figure className="mb-8 sm:mb-10">
-              <div className="aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80">
-                <EditorialImage
-                  src={selectedArticle.bannerImage}
-                  alt={isEn ? selectedArticle.bannerAltEn : selectedArticle.bannerAltBn}
-                  fallbackTitle={isEn ? selectedArticle.titleEn : selectedArticle.titleBn}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
+              {selectedArticle.id === 'art-journey-since-jan-2023' ? (
+                <div className="w-full rounded-2xl overflow-hidden bg-gradient-to-b from-emerald-50/70 to-slate-100/80 border border-slate-200/80 flex items-center justify-center p-2 sm:p-4">
+                  <EditorialImage
+                    src={selectedArticle.bannerImage}
+                    alt={isEn ? selectedArticle.bannerAltEn : selectedArticle.bannerAltBn}
+                    fallbackTitle={isEn ? selectedArticle.titleEn : selectedArticle.titleBn}
+                    className="max-h-[460px] sm:max-h-[520px] w-auto max-w-full rounded-xl object-contain shadow-sm"
+                  />
+                </div>
+              ) : (
+                <div className="aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80">
+                  <EditorialImage
+                    src={selectedArticle.bannerImage}
+                    alt={isEn ? selectedArticle.bannerAltEn : selectedArticle.bannerAltBn}
+                    fallbackTitle={isEn ? selectedArticle.titleEn : selectedArticle.titleBn}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              )}
               <figcaption className="text-xs text-slate-500 italic mt-2.5 text-center">
                 {isEn ? selectedArticle.bannerAltEn : selectedArticle.bannerAltBn}
               </figcaption>
