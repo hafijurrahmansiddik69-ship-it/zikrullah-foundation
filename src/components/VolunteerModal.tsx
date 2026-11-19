@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { X, Users, Loader2, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
-import { sendVolunteerRegistrationEmail, triggerDirectGmail } from '../services/emailService';
+import { sendVolunteerRegistrationEmail, triggerDirectGmail, getEmailWebhookUrl } from '../services/emailService';
 import { useLanguage } from '../context/LanguageContext';
 import { CelebrationConfirmationPopup } from './CelebrationConfirmationPopup';
 
@@ -83,11 +83,12 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
         adminNote: 'মডাল আবেদন ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
       });
 
-      // 2. Directly open their Gmail with compose window pre-filled
-      triggerDirectGmail(submissionPayload);
-
-      // 3. Prepare email service result (single email flow)
-      await sendVolunteerRegistrationEmail(submissionPayload);
+      // 2. Single-email dispatch: use custom HTML webhook if configured, otherwise open Gmail/mailto once
+      if (getEmailWebhookUrl()) {
+        await sendVolunteerRegistrationEmail(submissionPayload);
+      } else {
+        triggerDirectGmail(submissionPayload);
+      }
 
       setSubmitted(true);
     } catch (err) {

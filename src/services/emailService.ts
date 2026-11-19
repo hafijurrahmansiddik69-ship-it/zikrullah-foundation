@@ -2,6 +2,45 @@ import { FOUNDATION_INFO } from '../data/mockData';
 
 export const RECIPIENT_EMAIL = FOUNDATION_INFO.email || 'zikrullahfd@gmail.com';
 
+const DEFAULT_EMAIL_WEBHOOK_URL =
+  'https://script.google.com/macros/s/AKfycbxm4Os46dImLGBq-UJ_cX2qFJeBb_VEfoAfMsu4VoU8_QujrrrzXC0dLEcBMPdAEWQy8A/exec';
+
+export function getEmailWebhookUrl(): string {
+  try {
+    const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
+    const envUrl = (env?.VITE_EMAIL_WEBHOOK_URL || '').trim();
+    return envUrl || DEFAULT_EMAIL_WEBHOOK_URL;
+  } catch {
+    return DEFAULT_EMAIL_WEBHOOK_URL;
+  }
+}
+
+async function sendViaCustomHtmlWebhook(payload: {
+  to: string;
+  subject: string;
+  htmlBody: string;
+  textBody: string;
+  formType: 'volunteer' | 'needy-info';
+}): Promise<boolean> {
+  const webhookUrl = getEmailWebhookUrl();
+  if (!webhookUrl) return false;
+
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+      },
+      body: JSON.stringify(payload),
+    });
+    return true;
+  } catch (err) {
+    console.warn('Custom HTML email webhook notice:', err);
+    return false;
+  }
+}
+
 /**
  * Checks if current device is a mobile device (Android, iOS, etc.)
  */
@@ -96,16 +135,16 @@ function buildHtmlTableSection(title: string, rows: Array<[string, string]>): st
     .map(
       ([label, value]) => `
         <tr>
-          <td style="padding: 10px 12px; border: 1px solid #d1d5db; background-color: #f8fafc; color: #334155; font-weight: 400; width: 38%; vertical-align: top;">${escapeHtml(label)}</td>
-          <td style="padding: 10px 12px; border: 1px solid #d1d5db; background-color: #ffffff; color: #0f172a; vertical-align: top;"><b>${escapeHtml(value)}</b></td>
+          <td style="padding: 10px 14px; border: 1px solid #94a3b8; background-color: #f8fafc; color: #334155; font-weight: 400; width: 40%; vertical-align: top; word-break: break-word;">${escapeHtml(label)}</td>
+          <td style="padding: 10px 14px; border: 1px solid #94a3b8; background-color: #ffffff; color: #0f172a; vertical-align: top; word-break: break-word;"><b>${escapeHtml(value)}</b></td>
         </tr>`
     )
     .join('');
 
   return `
-    <div style="margin: 18px 0;">
-      <div style="font-size: 14px; font-weight: 700; color: #064e3b; margin-bottom: 8px;">${escapeHtml(title)}</div>
-      <table cellpadding="0" cellspacing="0" border="1" style="width: 100%; border-collapse: collapse; border: 1px solid #cbd5e1; font-size: 14px; line-height: 1.5;">
+    <div style="margin: 18px 0; page-break-inside: avoid;">
+      <div style="font-size: 14px; font-weight: 700; color: #064e3b; margin-bottom: 8px; border-left: 4px solid #064e3b; padding-left: 8px;">${escapeHtml(title)}</div>
+      <table cellpadding="0" cellspacing="0" border="1" style="width: 100%; border-collapse: collapse; border: 1.5px solid #64748b; font-size: 14px; line-height: 1.55;">
         <tbody>${rowsHtml}
         </tbody>
       </table>
@@ -135,16 +174,18 @@ export function generateVolunteerEmailHtml(
   ]);
 
   return `
-<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
-  <div style="padding: 14px 18px; background-color: #064e3b; color: #ffffff; border-radius: 8px 8px 0 0;">
-    <div style="font-size: 18px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
-    <div style="font-size: 13px; color: #d1fae5; margin-top: 2px;">Official Email: ${escapeHtml(recipientEmail)}</div>
+<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 16px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706;">
+    <div style="font-size: 19px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 3px;">Official Email: ${escapeHtml(recipientEmail)} | স্বেচ্ছাসেবক আবেদন পত্র</div>
   </div>
-  <div style="padding: 18px; border: 1px solid #cbd5e1; border-top: none; border-radius: 0 0 8px 8px; background-color: #ffffff;">
-    <p style="margin: 0 0 12px 0;">সম্মানিত ফাউন্ডেশন টিম,<br/>স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:</p>
+  <div style="padding: 20px; background-color: #ffffff;">
+    <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত ফাউন্ডেশন টিম,<br/>স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:</p>
     ${applicantTable}
     ${metaTable}
-    <p style="margin: 16px 0 0 0; font-size: 13px; color: #475569;">প্রেরক: <b>${escapeHtml(data.name)}</b></p>
+    <div style="margin-top: 20px; padding-top: 12px; border-top: 1px dashed #94a3b8; font-size: 13px; color: #475569;">
+      আবেদনকারী: <b>${escapeHtml(data.name)}</b> • Website: https://www.zikrullahfoundation.com
+    </div>
   </div>
 </div>`.trim();
 }
@@ -163,27 +204,42 @@ export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
 
   const body = `জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
 Official Email: ${recipientEmail}
+========================================
 
 সম্মানিত ফাউন্ডেশন টিম,
 স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:
 
 [ আবেদনকারীর তথ্য ]
-----------------------------------------
-• আবেদনকারীর নাম : ${data.name}
-• মোবাইল নম্বর : ${data.phone}
-• রক্তের গ্রুপ : ${data.bloodGroup || 'অনুল্লেখিত'}
-• কাজের ক্ষেত্র : ${data.interest}
-• পূর্ণ ঠিকানা : ${addressLabel}
-• পরিচয় / বিশেষ বার্তা : ${data.message || 'কোনো বিশেষ বার্তা নেই'}
-----------------------------------------
+────────────────────────────────────────
+১. আবেদনকারীর নাম :
+   ${data.name}
+
+২. মোবাইল নম্বর :
+   ${data.phone}
+
+৩. রক্তের গ্রুপ :
+   ${data.bloodGroup || 'অনুল্লেখিত'}
+
+৪. কাজের ক্ষেত্র :
+   ${data.interest}
+
+৫. পূর্ণ ঠিকানা :
+   ${addressLabel}
+
+৬. পরিচয় / বিশেষ বার্তা :
+   ${data.message || 'কোনো বিশেষ বার্তা নেই'}
+────────────────────────────────────────
 
 [ আবেদনের বিবরণ ]
-----------------------------------------
-• আবেদনের সময় : ${submissionTime}
-• ওয়েবসাইট : https://www.zikrullahfoundation.com
-----------------------------------------
+────────────────────────────────────────
+১. আবেদনের সময় :
+   ${submissionTime}
 
-প্রেরক: ${data.name}`;
+২. ওয়েবসাইট :
+   https://www.zikrullahfoundation.com
+────────────────────────────────────────
+
+আবেদনকারী: ${data.name}`;
 
   const htmlBody = generateVolunteerEmailHtml(data, submissionTime);
 
@@ -211,15 +267,26 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
   message: string;
   mailtoUrl: string;
   gmailUrl: string;
+  sentViaWebhook: boolean;
 }> {
+  const { recipientEmail, subject, body, htmlBody } = generateVolunteerEmailContent(data);
   const gmailUrl = getDirectGmailUrl(data);
   const mailtoUrl = getMailtoUrl(data);
+
+  const sentViaWebhook = await sendViaCustomHtmlWebhook({
+    to: recipientEmail,
+    subject,
+    htmlBody,
+    textBody: body,
+    formType: 'volunteer',
+  });
 
   return {
     success: true,
     message: 'স্বেচ্ছাসেবক নিবন্ধন তথ্য সফলভাবে প্রস্তুত হয়েছে।',
     mailtoUrl,
-    gmailUrl
+    gmailUrl,
+    sentViaWebhook,
   };
 }
 
@@ -493,16 +560,18 @@ export function generateNeedyInfoEmailHtml(
   ]);
 
   return `
-<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
-  <div style="padding: 14px 18px; background-color: #064e3b; color: #ffffff; border-radius: 8px 8px 0 0;">
-    <div style="font-size: 18px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
-    <div style="font-size: 13px; color: #d1fae5; margin-top: 2px;">Official Email: ${escapeHtml(recipientEmail)}</div>
+<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 16px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706;">
+    <div style="font-size: 19px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 3px;">Official Email: ${escapeHtml(recipientEmail)} | সহায়তার আবেদন তথ্য</div>
   </div>
-  <div style="padding: 18px; border: 1px solid #cbd5e1; border-top: none; border-radius: 0 0 8px 8px; background-color: #ffffff;">
-    <p style="margin: 0 0 12px 0;">সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,<br/>আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:</p>
+  <div style="padding: 20px; background-color: #ffffff;">
+    <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,<br/>আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:</p>
     ${needyTable}
     ${informerTable}
-    <p style="margin: 16px 0 0 0; font-size: 13px; color: #475569;">Website: <b>https://www.zikrullahfoundation.com</b></p>
+    <div style="margin-top: 20px; padding-top: 12px; border-top: 1px dashed #94a3b8; font-size: 13px; color: #475569;">
+      তথ্যদাতা: <b>${escapeHtml(data.informerName)}</b> • Website: https://www.zikrullahfoundation.com
+    </div>
   </div>
 </div>`.trim();
 }
@@ -521,25 +590,40 @@ export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
 
   const body = `জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
 Official Email: ${recipientEmail}
+========================================
 
 সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
 আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:
 
 [ সহায়তা প্রার্থীর তথ্য ]
-----------------------------------------
-• অসহায় ব্যক্তির নাম : ${data.needyName}
-• কী ধরনের সহযোগিতা প্রয়োজন : ${data.helpType}
-• অসহায় ব্যক্তির মোবাইল নম্বর : ${data.needyPhone || 'উল্লেখ করা হয়নি'}
-• পূর্ণ ঠিকানা : ${areaLabel}
-• সংক্ষিপ্ত বিবরণ : ${data.description || 'উল্লেখ করা হয়নি'}
-----------------------------------------
+────────────────────────────────────────
+১. অসহায় ব্যক্তির নাম :
+   ${data.needyName}
+
+২. কী ধরনের সহযোগিতা প্রয়োজন :
+   ${data.helpType}
+
+৩. অসহায় ব্যক্তির মোবাইল নম্বর :
+   ${data.needyPhone || 'উল্লেখ করা হয়নি'}
+
+৪. পূর্ণ ঠিকানা :
+   ${areaLabel}
+
+৫. সংক্ষিপ্ত বিবরণ :
+   ${data.description || 'উল্লেখ করা হয়নি'}
+────────────────────────────────────────
 
 [ তথ্যদাতার বিবরণ ]
-----------------------------------------
-• তথ্যদাতার নাম : ${data.informerName}
-• মোবাইল নম্বর : ${data.informerPhone}
-• তথ্য প্রেরণের সময় : ${submissionTime}
-----------------------------------------
+────────────────────────────────────────
+১. তথ্যদাতার নাম :
+   ${data.informerName}
+
+২. মোবাইল নম্বর :
+   ${data.informerPhone}
+
+৩. তথ্য প্রেরণের সময় :
+   ${submissionTime}
+────────────────────────────────────────
 
 Website: https://www.zikrullahfoundation.com`;
 
@@ -569,15 +653,26 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   message: string;
   mailtoUrl: string;
   gmailUrl: string;
+  sentViaWebhook: boolean;
 }> {
+  const { recipientEmail, subject, body, htmlBody } = generateNeedyInfoEmailContent(data);
   const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
   const mailtoUrl = getMailtoUrlForNeedyInfo(data);
+
+  const sentViaWebhook = await sendViaCustomHtmlWebhook({
+    to: recipientEmail,
+    subject,
+    htmlBody,
+    textBody: body,
+    formType: 'needy-info',
+  });
 
   return {
     success: true,
     message: 'অসহায় মানুষের তথ্য সফলভাবে প্রস্তুত হয়েছে।',
     mailtoUrl,
-    gmailUrl
+    gmailUrl,
+    sentViaWebhook,
   };
 }
 

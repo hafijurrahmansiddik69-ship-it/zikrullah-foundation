@@ -4,6 +4,7 @@ import { adminDataService } from '../services/adminDataService';
 import {
   sendNeedyInfoEmail,
   triggerDirectGmailForNeedyInfo,
+  getEmailWebhookUrl,
 } from '../services/emailService';
 import { useLanguage } from '../context/LanguageContext';
 import { CelebrationConfirmationPopup } from './CelebrationConfirmationPopup';
@@ -84,11 +85,12 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
         message: formattedDetails,
       });
 
-      // 2. Directly open Gmail compose window pre-filled
-      triggerDirectGmailForNeedyInfo(submissionPayload);
-
-      // 3. Prepare email service result (single email flow)
-      await sendNeedyInfoEmail(submissionPayload);
+      // 2. Single-email dispatch: use custom HTML webhook if configured, otherwise open Gmail/mailto once
+      if (getEmailWebhookUrl()) {
+        await sendNeedyInfoEmail(submissionPayload);
+      } else {
+        triggerDirectGmailForNeedyInfo(submissionPayload);
+      }
 
       setSubmitted(true);
     } catch (err) {

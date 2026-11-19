@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Users, HeartHandshake, CheckCircle2, Sparkles, Send, Loader2, Mail, ExternalLink } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
-import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
+import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl, getEmailWebhookUrl } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -82,11 +82,12 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
       const gmailUrl = getDirectGmailUrl(submissionPayload);
       const mailtoUrl = getMailtoUrl(submissionPayload);
 
-      // 3. Directly open their Gmail
-      triggerDirectGmail(submissionPayload);
-
-      // 4. Prepare email service result (single email flow)
-      await sendVolunteerRegistrationEmail(submissionPayload);
+      // 3. Single-email dispatch: use custom HTML webhook if configured, otherwise open Gmail/mailto once
+      if (getEmailWebhookUrl()) {
+        await sendVolunteerRegistrationEmail(submissionPayload);
+      } else {
+        triggerDirectGmail(submissionPayload);
+      }
 
       setSubmittedData({
         name: cleanName,
@@ -216,7 +217,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
                 </div>
 
                 <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
-                  {submittedData?.gmailUrl && (
+                  {!getEmailWebhookUrl() && submittedData?.gmailUrl && (
                     <a
                       href={submittedData.gmailUrl}
                       target="_blank"
