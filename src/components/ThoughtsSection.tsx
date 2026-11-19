@@ -624,7 +624,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCloseToAction(onOpenDonation)}
-                    className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-[#E8B855] hover:bg-[#dfa93d] active:scale-[0.99] text-[#0F172A] font-bold text-sm sm:text-base transition-all cursor-pointer text-center"
+                    className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-gradient-to-br from-[#fbbf24] via-[#f59e0b] to-[#b45309] hover:from-[#fcd34d] hover:via-[#f59e0b] hover:to-[#92400e] active:scale-[0.99] text-white font-bold text-sm sm:text-base drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] shadow-lg shadow-amber-950/25 border border-amber-300/40 transition-all cursor-pointer text-center"
                   >
                     {isEn ? 'Join the Cause' : 'খেদমতে শরীক হন'}
                   </button>
@@ -672,11 +672,6 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                       type="hidden"
                       name="_subject"
                       value="[নতুন সাবস্ক্রাইবার] জিকরুল্লাহ ফাউন্ডেশন"
-                    />
-                    <input
-                      type="hidden"
-                      name="_cc"
-                      value="hafijurrahmansiddik69@gmail.com"
                     />
                     <input type="hidden" name="_template" value="table" />
                     <input type="hidden" name="_captcha" value="false" />

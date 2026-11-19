@@ -86,8 +86,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1795062210/xozx5n4eovwro6gsjt4v.jpg',
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1795054479/h2st0b9ide6rjqwlm5m0.jpg'
     ],
-    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ',
-    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   },
 
   // ২ নম্বর কার্ড — মানবতার সেবায় খাবার হাদিয়া
@@ -131,8 +131,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763626/ylatsvcdpurnpitu1hnt.jpg',
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg'
     ],
-    locationBn: 'গুজিয়া ও আশপাশের চরাঞ্চল, বগুড়া',
-    locationEn: 'Gujia and nearby rural areas, Bogura'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   },
 
   // ৩ নম্বর কার্ড — বিনামূল্যে জরুরি চিকিৎসা ও ঔষধ সেবা
@@ -165,8 +165,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg',
       'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80'
     ],
-    locationBn: 'মোকামতলা ও শিবগঞ্জ স্বাস্থ্য কেন্দ্র এলাকা',
-    locationEn: 'Mokamtala & Shibganj Healthcare Reach'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   },
 
   // ৪ নম্বর কার্ড — এতিম লালন-পালন
@@ -211,8 +211,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1795057376/wfzdhfhp8lgu932wghed.png',
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763851/uhoy2dhdewkxkbqpf6hs.jpg'
     ],
-    locationBn: 'গুজিয়া ও শিবগঞ্জ এলাকা, বগুড়া',
-    locationEn: 'Gujia & Shibganj Area, Bogura'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   },
 
   // ৫ নম্বর কার্ড — শিক্ষা সহায়তা
@@ -256,8 +256,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
       'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80',
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg'
     ],
-    locationBn: 'মোকামতলা ও শিবগঞ্জের বিভিন্ন শিক্ষাপ্রতিষ্ঠান',
-    locationEn: 'Schools & Madrasahs across Mokamtala & Shibganj'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   },
 
   // ৬ নম্বর কার্ড — আত্মকর্মসংস্থান
@@ -299,8 +299,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     galleryImages: [
       'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80'
     ],
-    locationBn: 'মোকামতলা ও বগুড়ার বিভিন্ন ইউনিয়ন',
-    locationEn: 'Rural Unions across Mokamtala & Bogura'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   },
 
   // ৭ নম্বর কার্ড — সদকায়ে জারিয়া
@@ -344,8 +344,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
       'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
       'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80'
     ],
-    locationBn: 'বগুড়ার চরাঞ্চল ও গ্রামীণ জনপদ',
-    locationEn: 'River-islands & Rural Communities in Bogura'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ ।',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh.'
   }
 ];
 
@@ -521,7 +521,7 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
 
                       {/* Percentage indicator */}
                       <div className="flex justify-end items-center mt-1 sm:mt-1.5">
-                        <span className="text-[9.5px] sm:text-xs font-bold text-[#d97706] font-mono">
+                        <span className="text-[9.5px] sm:text-xs font-bold text-[#064e3b] font-mono">
                           {isEn ? project.percentageEn : project.percentageBn}
                         </span>
                       </div>
@@ -570,12 +570,13 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30" />
 
               {/* Badges on Top Left */}
-              <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+              <div className="absolute top-3.5 left-3.5 right-14 z-10 flex flex-wrap items-center gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-[#064e3b]/90 backdrop-blur-md border border-emerald-300/30 shadow-md">
                   {isEn ? 'Active Project' : 'চলমান প্রজেক্ট'}
                 </span>
-                <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-black/50 backdrop-blur-md border border-white/20">
-                  {isEn ? selectedProject.locationEn : selectedProject.locationBn}
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-black/55 backdrop-blur-md border border-white/20 shadow-sm">
+                  <MapPin className="w-3.5 h-3.5 text-[#FACC15] shrink-0" />
+                  <span>{isEn ? selectedProject.locationEn : selectedProject.locationBn}</span>
                 </span>
               </div>
 
@@ -706,7 +707,7 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                       <ShieldCheck className="w-3.5 h-3.5 text-[#064e3b]" />
                       <span>{isEn ? '100% Transparent Amanah' : '১০০% বিশ্বস্ত ও স্বচ্ছ পরিচালনা'}</span>
                     </span>
-                    <span className="font-bold text-[#d97706] font-mono text-sm">
+                    <span className="font-bold text-[#064e3b] font-mono text-sm">
                       {isEn ? selectedProject.percentageEn : selectedProject.percentageBn}
                     </span>
                   </div>
@@ -730,7 +731,7 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                     <button
                       type="button"
                       onClick={() => handleDonateNow(selectedProject)}
-                      className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-[#E8B855] hover:bg-[#dfa93d] active:scale-[0.99] text-[#0F172A] font-bold text-sm sm:text-base transition-all cursor-pointer text-center"
+                      className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-gradient-to-br from-[#fbbf24] via-[#f59e0b] to-[#b45309] hover:from-[#fcd34d] hover:via-[#f59e0b] hover:to-[#92400e] active:scale-[0.99] text-white font-bold text-sm sm:text-base drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] shadow-lg shadow-amber-950/25 border border-amber-300/40 transition-all cursor-pointer text-center"
                     >
                       {isEn ? 'Join the Cause' : 'খেদমতে শরীক হন'}
                     </button>
@@ -778,11 +779,6 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                         type="hidden"
                         name="_subject"
                         value="[নতুন সাবস্ক্রাইবার] জিকরুল্লাহ ফাউন্ডেশন"
-                      />
-                      <input
-                        type="hidden"
-                        name="_cc"
-                        value="hafijurrahmansiddik69@gmail.com"
                       />
                       <input type="hidden" name="_template" value="table" />
                       <input type="hidden" name="_captcha" value="false" />

@@ -1,7 +1,6 @@
 import { FOUNDATION_INFO } from '../data/mockData';
 
 export const RECIPIENT_EMAIL = FOUNDATION_INFO.email || 'zikrullahfd@gmail.com';
-export const CC_EMAIL = 'hafijurrahmansiddik69@gmail.com';
 
 /**
  * Checks if current device is a mobile device (Android, iOS, etc.)
@@ -85,12 +84,10 @@ function formatBengaliDateTimeWithAmPm(date: Date): string {
 
 export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
   recipientEmail: string;
-  ccEmail: string;
   subject: string;
   body: string;
 } {
   const recipientEmail = RECIPIENT_EMAIL;
-  const ccEmail = CC_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
 
   const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
@@ -119,7 +116,7 @@ ${data.name}
 
 ওয়েবসাইট: https://www.zikrullahfoundation.com`;
 
-  return { recipientEmail, ccEmail, subject, body };
+  return { recipientEmail, subject, body };
 }
 
 export function getDirectGmailUrl(data: VolunteerSubmissionData): string {
@@ -128,8 +125,8 @@ export function getDirectGmailUrl(data: VolunteerSubmissionData): string {
 }
 
 export function getMailtoUrl(data: VolunteerSubmissionData): string {
-  const { recipientEmail, ccEmail, subject, body } = generateVolunteerEmailContent(data);
-  return `mailto:${recipientEmail}?cc=${encodeURIComponent(ccEmail)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const { recipientEmail, subject, body } = generateVolunteerEmailContent(data);
+  return `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export function triggerDirectGmail(data: VolunteerSubmissionData): void {
@@ -144,7 +141,7 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, ccEmail, subject } = generateVolunteerEmailContent(data);
+  const { recipientEmail, subject } = generateVolunteerEmailContent(data);
   const gmailUrl = getDirectGmailUrl(data);
   const mailtoUrl = getMailtoUrl(data);
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
@@ -159,7 +156,6 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
       },
       body: JSON.stringify({
         _subject: subject,
-        _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
         'নাম ও যোগাযোগ': `${data.name} (${data.phone})`,
@@ -201,12 +197,10 @@ export interface DonationSubmissionData {
 
 export function generateDonationEmailContent(data: DonationSubmissionData): {
   recipientEmail: string;
-  ccEmail: string;
   subject: string;
   body: string;
 } {
   const recipientEmail = RECIPIENT_EMAIL;
-  const ccEmail = CC_EMAIL;
   const submissionTime = new Date().toLocaleString('bn-BD', {
     day: 'numeric',
     month: 'long',
@@ -243,7 +237,7 @@ ${data.donorName || 'সম্মানিত শুভাকাঙ্ক্ষ�
 মোবাইল: ${data.phone || 'অনুল্লেখিত'}
 ওয়েবসাইট: https://zikrullahfoundation.org`;
 
-  return { recipientEmail, ccEmail, subject, body };
+  return { recipientEmail, subject, body };
 }
 
 export function getDirectGmailUrlForDonation(data: DonationSubmissionData): string {
@@ -252,8 +246,8 @@ export function getDirectGmailUrlForDonation(data: DonationSubmissionData): stri
 }
 
 export function getMailtoUrlForDonation(data: DonationSubmissionData): string {
-  const { recipientEmail, ccEmail, subject, body } = generateDonationEmailContent(data);
-  return `mailto:${recipientEmail}?cc=${encodeURIComponent(ccEmail)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const { recipientEmail, subject, body } = generateDonationEmailContent(data);
+  return `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export function triggerDirectEmailForDonation(data: DonationSubmissionData): void {
@@ -268,7 +262,7 @@ export async function sendDonationEmail(data: DonationSubmissionData): Promise<{
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, ccEmail, subject } = generateDonationEmailContent(data);
+  const { recipientEmail, subject } = generateDonationEmailContent(data);
   const gmailUrl = getDirectGmailUrlForDonation(data);
   const mailtoUrl = getMailtoUrlForDonation(data);
   const submissionTime = new Date().toLocaleString('bn-BD');
@@ -282,7 +276,6 @@ export async function sendDonationEmail(data: DonationSubmissionData): Promise<{
       },
       body: JSON.stringify({
         _subject: subject,
-        _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
         'রসিদ নম্বর': data.receiptId,
@@ -321,12 +314,10 @@ export interface ContactMessageSubmissionData {
 
 export function generateContactEmailContent(data: ContactMessageSubmissionData): {
   recipientEmail: string;
-  ccEmail: string;
   subject: string;
   body: string;
 } {
   const recipientEmail = RECIPIENT_EMAIL;
-  const ccEmail = CC_EMAIL;
   const submissionTime = new Date().toLocaleString('bn-BD', {
     day: 'numeric',
     month: 'long',
@@ -360,7 +351,7 @@ ${data.message}
 জাজাকাল্লাহু খাইরান।
 ${data.name}`;
 
-  return { recipientEmail, ccEmail, subject, body };
+  return { recipientEmail, subject, body };
 }
 
 export function getDirectGmailUrlForContact(data: ContactMessageSubmissionData): string {
@@ -369,8 +360,8 @@ export function getDirectGmailUrlForContact(data: ContactMessageSubmissionData):
 }
 
 export function getMailtoUrlForContact(data: ContactMessageSubmissionData): string {
-  const { recipientEmail, ccEmail, subject, body } = generateContactEmailContent(data);
-  return `mailto:${recipientEmail}?cc=${encodeURIComponent(ccEmail)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const { recipientEmail, subject, body } = generateContactEmailContent(data);
+  return `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export function triggerDirectEmailForContact(data: ContactMessageSubmissionData): void {
@@ -385,7 +376,7 @@ export async function sendContactMessageEmail(data: ContactMessageSubmissionData
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, ccEmail, subject } = generateContactEmailContent(data);
+  const { recipientEmail, subject } = generateContactEmailContent(data);
   const gmailUrl = getDirectGmailUrlForContact(data);
   const mailtoUrl = getMailtoUrlForContact(data);
   const submissionTime = new Date().toLocaleString('bn-BD');
@@ -399,7 +390,6 @@ export async function sendContactMessageEmail(data: ContactMessageSubmissionData
       },
       body: JSON.stringify({
         _subject: subject,
-        _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
         'প্রেরকের নাম': data.name,
@@ -438,44 +428,42 @@ export interface NeedyInfoSubmissionData {
 
 export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
   recipientEmail: string;
-  ccEmail: string;
   subject: string;
   body: string;
 } {
   const recipientEmail = RECIPIENT_EMAIL;
-  const ccEmail = CC_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
 
   const areaLabel = data.fullAddress?.trim() || 'উল্লেখ করা হয়নি';
   const subject = `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${areaLabel}`;
 
-  const body = `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+  const body = `বিসমিল্লাহির রাহমানির রাহীম
 
 জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
 Official Email: ${recipientEmail}
 
-সম্মানিত ফাউন্ডেশন টিম,
-একজন অসহায় মানুষের সহযোগিতার লক্ষ্যে নিচের তথ্যগুলো পাঠানো হলো:
+সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
+আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:
 
-[ মূল তথ্য ]
-• নাম: ${data.needyName}
-• সহযোগিতার ধরন: ★ ${data.helpType}
-• মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
+[ সহায়তা প্রার্থীর তথ্য ]
+• অসহায় ব্যক্তির নাম: ${data.needyName}
+• কী ধরনের সহযোগিতা প্রয়োজন: ${data.helpType}
+• অসহায় ব্যক্তির মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
 • পূর্ণ ঠিকানা: ${areaLabel}
 • সংক্ষিপ্ত বিবরণ: ${data.description || 'উল্লেখ করা হয়নি'}
 
-━━━━━━━━━━━━━━━━━━━━━━
+________________________________________
 
-[ তথ্যদাতা ]
+[ তথ্যদাতার বিবরণ ]
 • নাম ও যোগাযোগ: ${data.informerName} (${data.informerPhone})
-• প্রেরণের সময়: ${submissionTime}
+• তথ্য প্রেরণের সময়: ${submissionTime}
 
-جَزَاكَ اللَّهُ خَيْرًا
+جزاك الله خيرا
 ${data.informerName}
 
-ওয়েবসাইট: https://www.zikrullahfoundation.com`;
+Website: https://www.zikrullahfoundation.com`;
 
-  return { recipientEmail, ccEmail, subject, body };
+  return { recipientEmail, subject, body };
 }
 
 export function getDirectGmailUrlForNeedyInfo(data: NeedyInfoSubmissionData): string {
@@ -484,8 +472,8 @@ export function getDirectGmailUrlForNeedyInfo(data: NeedyInfoSubmissionData): st
 }
 
 export function getMailtoUrlForNeedyInfo(data: NeedyInfoSubmissionData): string {
-  const { recipientEmail, ccEmail, subject, body } = generateNeedyInfoEmailContent(data);
-  return `mailto:${recipientEmail}?cc=${encodeURIComponent(ccEmail)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const { recipientEmail, subject, body } = generateNeedyInfoEmailContent(data);
+  return `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export function triggerDirectGmailForNeedyInfo(data: NeedyInfoSubmissionData): void {
@@ -500,7 +488,7 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, ccEmail, subject } = generateNeedyInfoEmailContent(data);
+  const { recipientEmail, subject } = generateNeedyInfoEmailContent(data);
   const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
   const mailtoUrl = getMailtoUrlForNeedyInfo(data);
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
@@ -514,17 +502,16 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
       },
       body: JSON.stringify({
         _subject: subject,
-        _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
-        'নাম': data.needyName,
-        'সহযোগিতার ধরন': `★ ${data.helpType}`,
-        'মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
+        'অসহায় ব্যক্তির নাম': data.needyName,
+        'কী ধরনের সহযোগিতা প্রয়োজন': data.helpType,
+        'অসহায় ব্যক্তির মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
         'পূর্ণ ঠিকানা': data.fullAddress,
         'সংক্ষিপ্ত বিবরণ': data.description || 'উল্লেখ করা হয়নি',
         'নাম ও যোগাযোগ': `${data.informerName} (${data.informerPhone})`,
-        'প্রেরণের সময়': submissionTime,
-        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
+        'তথ্য প্রেরণের সময়': submissionTime,
+        'Website': 'https://www.zikrullahfoundation.com'
       })
     }).catch(() => null);
   } catch (err) {
@@ -551,7 +538,6 @@ export async function sendNewsletterSubscriptionEmail(
   message: string;
 }> {
   const formSubmitToken = 'e683378f5399c9eb0088210959a9ef46';
-  const ccEmail = CC_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
   const cleanedEmail = subscriberEmail.trim();
   const subject = `[নতুন সাবস্ক্রাইবার] ${cleanedEmail} — জিকরুল্লাহ ফাউন্ডেশন`;
@@ -567,7 +553,6 @@ export async function sendNewsletterSubscriptionEmail(
         email: cleanedEmail,
         _replyto: cleanedEmail,
         _subject: subject,
-        _cc: ccEmail,
         _template: 'table',
         _captcha: 'false',
         'সাবস্ক্রাইবারের ইমেইল': cleanedEmail,
