@@ -1,13 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { X, HandHeart, CheckCircle, Loader2, Send, Mail, ExternalLink } from 'lucide-react';
+import { X, HandHeart, CheckCircle, Loader2, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import {
   sendNeedyInfoEmail,
   triggerDirectGmailForNeedyInfo,
-  getDirectGmailUrlForNeedyInfo,
-  getMailtoUrlForNeedyInfo,
 } from '../services/emailService';
-import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
 interface NeedyInfoModalProps {
@@ -37,8 +34,6 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
   const [fullAddress, setFullAddress] = useState('');
   const [helpTypeId, setHelpTypeId] = useState(HELP_TYPES[0].id);
   const [description, setDescription] = useState('');
-  const [mailtoUrl, setMailtoUrl] = useState('');
-  const [gmailUrl, setGmailUrl] = useState('');
   const submitLockRef = useRef(false);
 
   if (!isOpen) return null;
@@ -88,16 +83,10 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
         message: formattedDetails,
       });
 
-      // 2. Compute direct Gmail and Mailto URLs
-      const directGmail = getDirectGmailUrlForNeedyInfo(submissionPayload);
-      const directMailto = getMailtoUrlForNeedyInfo(submissionPayload);
-      setGmailUrl(directGmail);
-      setMailtoUrl(directMailto);
-
-      // 3. Directly open Gmail compose window pre-filled
+      // 2. Directly open Gmail compose window pre-filled
       triggerDirectGmailForNeedyInfo(submissionPayload);
 
-      // 4. Prepare email service result (single email flow)
+      // 3. Prepare email service result (single email flow)
       await sendNeedyInfoEmail(submissionPayload);
 
       setSubmitted(true);
@@ -121,8 +110,6 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     setFullAddress('');
     setHelpTypeId(HELP_TYPES[0].id);
     setDescription('');
-    setGmailUrl('');
-    setMailtoUrl('');
     onClose();
   };
 
@@ -135,10 +122,10 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     >
       {submitted ? (
         <div
-          className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800 animate-in zoom-in-95 duration-200"
+          className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full shadow-2xl shadow-emerald-950/15 border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800 animate-in zoom-in-95 duration-200"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="h-1.5 bg-gradient-to-r from-emerald-500 via-[#087443] to-teal-500" />
+          <div className="h-1.5 bg-gradient-to-r from-[#045332] via-[#087443] to-[#d97706]" />
 
           <button
             type="button"
@@ -149,93 +136,39 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
             <X className="w-5 h-5" />
           </button>
 
-          <div className="p-5 sm:p-8 text-center flex flex-col items-center">
-            <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-emerald-50 border-2 border-emerald-200 text-emerald-600 flex items-center justify-center mb-4 shadow-sm shadow-emerald-900/5">
-              <CheckCircle className="w-9 h-9 sm:w-10 sm:h-10 stroke-[2.2] text-emerald-600" />
+          <div className="p-6 sm:p-8 text-center flex flex-col items-center">
+            <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-emerald-50 border-2 border-amber-300/70 text-emerald-600 flex items-center justify-center mb-4 shadow-sm shadow-emerald-900/10">
+              <CheckCircle className="w-9 h-9 sm:w-10 sm:h-10 stroke-[2.2] text-[#087443]" />
             </div>
 
-            <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-2 tracking-tight leading-snug">
-              {isEn ? `Jazakallahu Khairan, ${displayName}!` : `জাযাকাল্লাহু খাইরান, ${displayName}!`}
+            <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-[#045332] mb-2.5 tracking-tight leading-snug">
+              {isEn ? `Thank You, ${displayName}!` : `ধন্যবাদ, ${displayName}!`}
             </h3>
 
-            <div className="mb-4 inline-flex items-center justify-center px-5 py-1.5 sm:px-6 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
+            <div className="mb-5 inline-flex items-center justify-center px-5 py-1.5 sm:px-6 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-amber-50/70 to-emerald-50/90 border border-amber-300/60 shadow-xs">
               <span
                 dir="rtl"
                 lang="ar"
                 className="font-cairo text-lg sm:text-xl text-[#045332] font-semibold sm:font-bold tracking-normal leading-[1.8] select-text"
                 style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
               >
-                جَزَاكَ ٱللَّٰهُ خَيْرًا
+                جَزَاكَ اللَّهُ خَيْرًا
               </span>
             </div>
 
-            <p className="font-solaiman text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+            <p className="font-solaiman text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
               {isEn
-                ? 'We have received the information about the person in need with sincere gratitude. Our field team will verify the details promptly and make every effort to stand beside them, InshaAllah.'
-                : 'আপনার প্রদত্ত অসহায় মানুষটির তথ্য আমরা আন্তরিকতার সাথে গ্রহণ করেছি। আমাদের মাঠপর্যায়ের টিম দ্রুত যাচাই-বাছাই করে তাঁর পাশে দাঁড়ানোর সর্বোচ্চ চেষ্টা করবে, ইনশাআল্লাহ।'}
+                ? 'Heartfelt gratitude from the bottom of our hearts for your kind heart and valuable information in helping people. Our foundation team will contact you soon, InshaAllah.'
+                : 'মানুষের উপকারে আপনার এই সুন্দর মন ও মূল্যবান তথ্যের জন্য হৃদয়ের গভীর থেকে আন্তরিক কৃতজ্ঞতা। দ্রুত আমাদের ফাউন্ডেশন টিম আপনার সাথে যোগাযোগ করবে ইনশাআল্লাহ।'}
             </p>
 
-            {/* Direct Gmail Notification Box */}
-            <div className="w-full space-y-3 font-solaiman text-xs sm:text-sm leading-relaxed mb-5">
-              <div className="bg-red-50/80 border border-red-200 rounded-xl p-3 text-left text-slate-700 flex items-start gap-2.5">
-                <div className="w-6 h-6 rounded-lg bg-red-600 text-white flex items-center justify-center shrink-0 font-bold text-xs shadow-xs">
-                  M
-                </div>
-                <div>
-                  <strong className="text-red-900 block text-xs sm:text-sm mb-0.5">
-                    {isEn ? 'Your Gmail Draft Has Been Prepared:' : 'আপনার Gmail ওপেন করা হয়েছে:'}
-                  </strong>
-                  <p className="text-slate-600 text-[11px] sm:text-xs">
-                    {isEn ? (
-                      <>
-                        A Gmail draft addressed to <strong>{FOUNDATION_INFO.email}</strong> has been prepared with the submitted information. Click the red button below to send directly.
-                      </>
-                    ) : (
-                      <>
-                        আপনার তথ্য দিয়ে <strong>{FOUNDATION_INFO.email}</strong> ঠিকানায় জিমেইল খসড়া প্রস্তুত হয়েছে। সরাসরি সেন্ড করতে নিচের লাল বাটনে চাপুন।
-                      </>
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-2.5 w-full">
-              {gmailUrl && (
-                <a
-                  href={gmailUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-red-600 hover:bg-red-700 active:scale-98 text-white font-bold text-sm shadow-md shadow-red-600/20 transition-all cursor-pointer"
-                >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
-                  </svg>
-                  <span>{isEn ? 'Send Directly via Gmail' : 'সরাসরি জিমেইল (Gmail)-এ পাঠান'}</span>
-                  <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-                </a>
-              )}
-
-              <div className="flex items-center gap-2 w-full">
-                {mailtoUrl && (
-                  <a
-                    href={mailtoUrl}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
-                  >
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>{isEn ? 'Other Email Apps' : 'অন্যান্য ইমেইল অ্যাপ'}</span>
-                  </a>
-                )}
-                <button
-                  type="button"
-                  onClick={resetAndClose}
-                  className="flex-1 inline-flex items-center justify-center py-2.5 px-3 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-sans-bn font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
-                >
-                  {isEn ? 'Done' : 'ঠিক আছে'}
-                </button>
-              </div>
-            </div>
+            <button
+              type="button"
+              onClick={resetAndClose}
+              className="w-full inline-flex items-center justify-center py-3 px-5 rounded-xl bg-gradient-to-r from-[#045332] to-[#087443] hover:from-[#034227] hover:to-[#045332] active:scale-98 text-white font-sans-bn font-bold text-sm sm:text-base shadow-md shadow-emerald-900/15 border border-amber-400/20 transition-all cursor-pointer"
+            >
+              {isEn ? 'OK' : 'ঠিক আছে'}
+            </button>
           </div>
         </div>
       ) : (
