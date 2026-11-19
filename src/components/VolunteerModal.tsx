@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { X, Users, CheckCircle, Loader2, Send } from 'lucide-react';
+import { X, Users, Loader2, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail, triggerDirectGmail } from '../services/emailService';
 import { useLanguage } from '../context/LanguageContext';
+import { CelebrationConfirmationPopup } from './CelebrationConfirmationPopup';
 
 interface VolunteerModalProps {
   isOpen: boolean;
@@ -115,71 +116,11 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
       {submitted ? (
-        /* SUCCESS POPUP */
-        <div
-          className="bg-white rounded-[28px] w-full max-w-[370px] sm:max-w-[420px] shadow-[0_20px_50px_-12px_rgba(2,44,34,0.28)] border border-emerald-950/10 overflow-hidden relative my-auto text-slate-800 animate-in zoom-in-95 duration-200"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Warm Golden Top Accent Bar */}
-          <div className="h-1.5 bg-gradient-to-r from-[#b7791f] via-[#d97706] to-[#b7791f]" />
-
-          {/* Warm Gold Close X Button */}
-          <button
-            type="button"
-            onClick={resetAndClose}
-            className="absolute top-3.5 right-3.5 p-2 rounded-full text-[#a68033] hover:text-[#7c5d1e] hover:bg-amber-50/70 transition-colors cursor-pointer z-10"
-            aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
-          >
-            <X className="w-5 h-5 stroke-[1.8]" />
-          </button>
-
-          <div className="px-6 pt-8 pb-7 sm:px-8 sm:pt-9 sm:pb-8 text-center flex flex-col items-center">
-            {/* Solid Deep Emerald Checkmark Circle with Gold Border */}
-            <div className="w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-full bg-[#064e3b] border-2 border-[#c89b3c] text-white flex items-center justify-center mb-5 shadow-md shadow-emerald-950/20">
-              <CheckCircle className="w-8 h-8 sm:w-9 sm:h-9 stroke-[2] text-white" />
-            </div>
-
-            {/* 1. Main Title (Dynamic User Name) */}
-            <h3 className="font-serif-bn font-bold text-[22px] sm:text-[26px] text-[#064e3b] mb-4 tracking-tight leading-snug">
-              {isEn ? `Thank You, ${displayName}!` : `ধন্যবাদ, ${displayName}!`}
-            </h3>
-
-            {/* 2. Warm Ivory Arabic Blessing Badge */}
-            <div className="mb-5 inline-flex items-center justify-center px-6 py-2 rounded-2xl bg-[#f7f6ef] border border-[#e6e1ce]">
-              <span
-                dir="rtl"
-                lang="ar"
-                className="font-cairo text-lg sm:text-xl text-[#1e293b] font-semibold tracking-normal leading-[1.75] select-text"
-                style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
-              >
-                جَزَاكَ اللَّهُ خَيْرًا
-              </span>
-            </div>
-
-            {/* 3. Two-Paragraph Clean Gratitude Copy */}
-            <div className="font-solaiman text-[#2b3330] text-[15px] sm:text-base leading-[1.65] max-w-[330px] sm:max-w-[350px] mx-auto space-y-3.5 mb-7">
-              <p>
-                {isEn
-                  ? 'Heartfelt gratitude from the bottom of our hearts for your kind heart and valuable information in helping people.'
-                  : 'মানুষের উপকারে আপনার এই সুন্দর মন ও মূল্যবান তথ্যের জন্য হৃদয়ের গভীর থেকে আন্তরিক কৃতজ্ঞতা।'}
-              </p>
-              <p>
-                {isEn
-                  ? 'Our foundation team will contact you promptly, InshaAllah.'
-                  : 'দ্রুত আমাদের ফাউন্ডেশন টিম আপনার সাথে যোগাযোগ করবে ইনশাআল্লাহ।'}
-              </p>
-            </div>
-
-            {/* 4. Single Pill-Shaped Emerald Action Button */}
-            <button
-              type="button"
-              onClick={resetAndClose}
-              className="w-full max-w-[310px] inline-flex items-center justify-center py-3 sm:py-3.5 px-6 rounded-full bg-[#064e3b] hover:bg-[#053e2f] active:scale-[0.98] text-white font-sans-bn font-bold text-[15px] sm:text-base shadow-md shadow-emerald-950/20 transition-all cursor-pointer"
-            >
-              {isEn ? 'OK' : 'ঠিক আছে'}
-            </button>
-          </div>
-        </div>
+        <CelebrationConfirmationPopup
+          displayName={displayName}
+          isEn={isEn}
+          onClose={resetAndClose}
+        />
       ) : (
         /* REGISTRATION FORM */
         <div
