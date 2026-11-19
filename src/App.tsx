@@ -150,6 +150,7 @@ function MainApp() {
             {/* চলমান কার্যক্রমসমূহ (আস-সুন্নাহ ট্রাস্ট ডিজাইনের ৭টি প্রজেক্ট কার্ড) */}
             <OngoingActivitiesSection
               onOpenDonation={(cat, amt) => handleOpenDonation(cat, amt)}
+              onOpenVolunteer={() => setIsVolunteerOpen(true)}
             />
 
             <ThoughtsSection

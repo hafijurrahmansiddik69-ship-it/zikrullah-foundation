@@ -651,15 +651,15 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                   {/* Centered Heading */}
                   <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-white mb-2.5 leading-snug">
                     {isEn
-                      ? 'Receive Field Notes & Updates'
-                      : 'নতুন লেখা ও কার্যক্রমের আপডেট পান'}
+                      ? 'Stay Connected for Our Latest Updates'
+                      : 'আমাদের সর্বশেষ আপডেট পেতে যুক্ত থাকুন'}
                   </h3>
 
                   {/* Centered Subtitle */}
                   <p className="text-slate-200/90 text-xs sm:text-base leading-relaxed max-w-xl mx-auto mb-6 sm:mb-7">
                     {isEn
-                      ? 'Subscribe with your email to get our latest field reports and humanitarian announcements.'
-                      : 'মাঠপর্যায়ের নতুন প্রতিবেদন, পরিকল্পনা ও মানবিক উদ্যোগের নিয়মিত আপডেট পেতে আপনার ইমেইল যুক্ত করুন।'}
+                      ? 'Subscribe with your mobile number or email to receive regular updates on our charitable activities, field reports, and public welfare initiatives first.'
+                      : 'আমাদের সেবামূলক কার্যক্রম, মাঠপর্যায়ের প্রতিবেদন ও জনকল্যাণমূলক উদ্যোগের নিয়মিত আপডেট সবার আগে পেতে আপনার মোবাইল নাম্বার অথবা ইমেইল দিয়ে সাবস্ক্রাইব করুন।'}
                   </p>
 
                   <form
@@ -702,15 +702,17 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                     <div className="flex-1 flex items-center pl-3 sm:pl-5 min-w-0">
                       <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0" />
                       <input
-                        type="email"
-                        name="email"
+                        type="text"
+                        name={subscribeEmail.includes('@') ? 'email' : 'contact'}
                         required
                         value={subscribeEmail}
                         onChange={(e) => setSubscribeEmail(e.target.value)}
                         placeholder={
-                          isEn ? 'Enter your email address' : 'আপনার ইমেইল ঠিকানা লিখুন'
+                          isEn
+                            ? 'Email or phone number ...'
+                            : 'ইমেইল বা ফোন নাম্বার দিন ...'
                         }
-                        aria-label={isEn ? 'Email address' : 'ইমেইল ঠিকানা'}
+                        aria-label={isEn ? 'Email or phone number' : 'ইমেইল বা ফোন নাম্বার'}
                         className="w-full px-2.5 sm:px-3.5 py-3.5 sm:py-4 text-xs sm:text-base text-slate-800 placeholder:text-slate-400 bg-transparent focus:outline-none min-w-0"
                       />
                     </div>

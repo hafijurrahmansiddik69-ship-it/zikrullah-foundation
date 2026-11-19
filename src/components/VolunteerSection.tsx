@@ -24,18 +24,20 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
   } | null>(null);
 
   const interestOptions = [
-    { id: 'relief', bn: 'ত্রাণ ও খাদ্য সহায়তা বিতরণ', en: 'Relief & Emergency Food Aid' },
-    { id: 'medical', bn: 'ফ্রি মেডিকেল ক্যাম্প পরিচালনা', en: 'Free Medical Camp & Care' },
-    { id: 'education', bn: 'মক্তব ও শিক্ষা কার্যক্রম', en: 'Maktab & Education Programs' },
-    { id: 'media', bn: 'আইটি, গ্রাফিক্স ও প্রচার', en: 'IT, Media & Communications' },
-    { id: 'other', bn: 'অন্যান্য সামাজিক কাজ', en: 'General Social Welfare' },
+    { id: 'medical', bn: 'ফ্রি চিকিৎসা ক্যাম্প', en: 'Free Medical Camp' },
+    { id: 'food', bn: 'খাদ্য সহায়তা', en: 'Food Aid' },
+    { id: 'winter', bn: 'শীত বস্ত্র বিতরণ', en: 'Winter Clothing Distribution' },
+    { id: 'blood', bn: 'জরুরী রক্তদান', en: 'Emergency Blood Donation' },
+    { id: 'education', bn: 'শিক্ষা সহায়তা', en: 'Education Aid' },
+    { id: 'livelihood', bn: 'আত্মকর্মসংস্থান', en: 'Self-Reliance & Livelihood' },
+    { id: 'other', bn: 'অন্যান্য', en: 'Others' },
   ];
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [upazila, setUpazila] = useState('');
   const [bloodGroup, setBloodGroup] = useState('A+');
-  const [interestId, setInterestId] = useState('relief');
+  const [interestId, setInterestId] = useState(interestOptions[0].id);
   const [message, setMessage] = useState('');
 
   const selectedInterestObj = interestOptions.find((o) => o.id === interestId) || interestOptions[0];

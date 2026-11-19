@@ -22,11 +22,13 @@ const BLOOD_GROUPS = [
 ];
 
 const INTEREST_OPTIONS = [
-  { id: 'relief', bn: 'ত্রাণ ও খাদ্য সহায়তা বিতরণ', en: 'Relief & Emergency Food Aid' },
-  { id: 'medical', bn: 'ফ্রি মেডিকেল ক্যাম্প পরিচালনা', en: 'Free Medical Camp Management' },
-  { id: 'education', bn: 'মক্তব ও শিক্ষা কার্যক্রম', en: 'Maktab & Education Programs' },
-  { id: 'media', bn: 'আইটি, গ্রাফিক্স ও প্রচার', en: 'IT, Graphics & Communications' },
-  { id: 'other', bn: 'অন্যান্য সামাজিক কাজ', en: 'General Social Work' },
+  { id: 'medical', bn: 'ফ্রি চিকিৎসা ক্যাম্প', en: 'Free Medical Camp' },
+  { id: 'food', bn: 'খাদ্য সহায়তা', en: 'Food Aid' },
+  { id: 'winter', bn: 'শীত বস্ত্র বিতরণ', en: 'Winter Clothing Distribution' },
+  { id: 'blood', bn: 'জরুরী রক্তদান', en: 'Emergency Blood Donation' },
+  { id: 'education', bn: 'শিক্ষা সহায়তা', en: 'Education Aid' },
+  { id: 'livelihood', bn: 'আত্মকর্মসংস্থান', en: 'Self-Reliance & Livelihood' },
+  { id: 'other', bn: 'অন্যান্য', en: 'Others' },
 ];
 
 export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose }) => {
