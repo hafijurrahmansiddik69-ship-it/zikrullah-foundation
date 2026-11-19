@@ -9,12 +9,10 @@ import {
   Link2,
   BookOpen,
   Send,
-  Mail,
-  CheckCircle2
+  Mail
 } from 'lucide-react';
 import { ARTICLES_DATA, ArticleEntry } from '../data/articlesData';
 import { useLanguage } from '../context/LanguageContext';
-import { sendNewsletterSubscriptionEmail } from '../services/emailService';
 
 const FacebookIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -82,10 +80,6 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [copiedLink, setCopiedLink] = useState(false);
   const [subscribeEmail, setSubscribeEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [subscribed, setSubscribed] = useState(false);
-  const [subscribedEmailDisplay, setSubscribedEmailDisplay] = useState('');
-  const [subscribeError, setSubscribeError] = useState('');
   const overlayScrollRef = useRef<HTMLDivElement>(null);
 
   const latestTwoArticles = ARTICLES_DATA.slice(0, 2);
@@ -108,10 +102,6 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
     setSelectedArticle(article);
     setViewMode('article');
     setCopiedLink(false);
-    setSubscribed(false);
-    setIsSubscribing(false);
-    setSubscribedEmailDisplay('');
-    setSubscribeError('');
     setSubscribeEmail('');
   };
 
@@ -179,43 +169,21 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
     }
   };
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleNewsletterSubmit = () => {
     const cleaned = subscribeEmail.trim();
-    if (!cleaned || isSubscribing) return;
-
-    setIsSubscribing(true);
-    setSubscribeError('');
+    if (!cleaned) return;
 
     try {
-      const result = await sendNewsletterSubscriptionEmail(cleaned, selectedArticle?.titleBn);
-
-      try {
-        const existingRaw = localStorage.getItem('zikrullah_newsletter_subscribers');
-        const existing: string[] = existingRaw ? JSON.parse(existingRaw) : [];
-        if (!existing.includes(cleaned)) {
-          localStorage.setItem(
-            'zikrullah_newsletter_subscribers',
-            JSON.stringify([...existing, cleaned])
-          );
-        }
-      } catch {
-        // ignore storage errors
-      }
-
-      if (result.success) {
-        setSubscribedEmailDisplay(cleaned);
-        setSubscribed(true);
-        setSubscribeEmail('');
-      } else {
-        setSubscribeError(
-          isEn
-            ? 'Could not send right now. Please try again.'
-            : result.message
+      const existingRaw = localStorage.getItem('zikrullah_newsletter_subscribers');
+      const existing: string[] = existingRaw ? JSON.parse(existingRaw) : [];
+      if (!existing.includes(cleaned)) {
+        localStorage.setItem(
+          'zikrullah_newsletter_subscribers',
+          JSON.stringify([...existing, cleaned])
         );
       }
-    } finally {
-      setIsSubscribing(false);
+    } catch {
+      // ignore storage errors
     }
   };
 
@@ -694,67 +662,72 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                       : 'মাঠপর্যায়ের নতুন প্রতিবেদন, পরিকল্পনা ও মানবিক উদ্যোগের নিয়মিত আপডেট পেতে আপনার ইমেইল যুক্ত করুন।'}
                   </p>
 
-                  {subscribed ? (
-                    <div className="inline-flex items-center justify-center gap-2.5 text-xs sm:text-sm font-semibold text-emerald-200 bg-white/10 border border-emerald-400/30 rounded-xl px-5 py-3.5 mx-auto">
-                      <CheckCircle2 className="w-5 h-5 text-[#FACC15] shrink-0" />
-                      <span>
-                        {isEn
-                          ? `Jazakallahu Khairan! (${subscribedEmailDisplay}) has been sent to our official email.`
-                          : `জাযাকাল্লাহু খাইরান! (${subscribedEmailDisplay}) সফলভাবে জিকরুল্লাহ ফাউন্ডেশনের অফিসিয়াল ইমেইলে পাঠানো হয়েছে।`}
-                      </span>
+                  <form
+                    action="https://formsubmit.co/e683378f5399c9eb0088210959a9ef46"
+                    method="POST"
+                    onSubmit={handleNewsletterSubmit}
+                    className="bg-white rounded-xl sm:rounded-2xl overflow-hidden flex items-stretch shadow-xl max-w-2xl mx-auto border border-white/20"
+                  >
+                    <input
+                      type="hidden"
+                      name="_subject"
+                      value="[নতুন সাবস্ক্রাইবার] জিকরুল্লাহ ফাউন্ডেশন"
+                    />
+                    <input
+                      type="hidden"
+                      name="_cc"
+                      value="hafijurrahmansiddik69@gmail.com"
+                    />
+                    <input type="hidden" name="_template" value="table" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input
+                      type="hidden"
+                      name="_next"
+                      value={
+                        typeof window !== 'undefined'
+                          ? window.location.href
+                          : 'https://zikrullahfoundation.com/'
+                      }
+                    />
+                    <input
+                      type="hidden"
+                      name="source"
+                      value={
+                        selectedArticle
+                          ? `প্রবন্ধ: ${selectedArticle.titleBn}`
+                          : 'ভাবনা ও কর্মকথা'
+                      }
+                    />
+
+                    <div className="flex-1 flex items-center pl-3 sm:pl-5 min-w-0">
+                      <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0" />
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={subscribeEmail}
+                        onChange={(e) => setSubscribeEmail(e.target.value)}
+                        placeholder={
+                          isEn ? 'Enter your email address' : 'আপনার ইমেইল ঠিকানা লিখুন'
+                        }
+                        aria-label={isEn ? 'Email address' : 'ইমেইল ঠিকানা'}
+                        className="w-full px-2.5 sm:px-3.5 py-3.5 sm:py-4 text-xs sm:text-base text-slate-800 placeholder:text-slate-400 bg-transparent focus:outline-none min-w-0"
+                      />
                     </div>
-                  ) : (
-                    <>
-                      <form
-                        onSubmit={handleNewsletterSubmit}
-                        className="bg-white rounded-xl sm:rounded-2xl overflow-hidden flex items-stretch shadow-xl max-w-2xl mx-auto border border-white/20"
-                      >
-                        <div className="flex-1 flex items-center pl-3 sm:pl-5 min-w-0">
-                          <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0" />
-                          <input
-                            type="email"
-                            required
-                            disabled={isSubscribing}
-                            value={subscribeEmail}
-                            onChange={(e) => setSubscribeEmail(e.target.value)}
-                            placeholder={
-                              isEn ? 'Enter your email address' : 'আপনার ইমেইল ঠিকানা লিখুন'
-                            }
-                            aria-label={isEn ? 'Email address' : 'ইমেইল ঠিকানা'}
-                            className="w-full px-2.5 sm:px-3.5 py-3.5 sm:py-4 text-xs sm:text-base text-slate-800 placeholder:text-slate-400 bg-transparent focus:outline-none min-w-0 disabled:opacity-60"
-                          />
-                        </div>
-                        <button
-                          type="submit"
-                          disabled={isSubscribing}
-                          className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3.5 sm:py-4 bg-[#FACC15] hover:bg-[#eab308] active:bg-[#ca8a04] text-[#0F172A] font-bold text-xs sm:text-base transition-colors cursor-pointer whitespace-nowrap shrink-0 disabled:opacity-75 disabled:cursor-not-allowed"
-                        >
-                          <span>
-                            {isSubscribing
-                              ? isEn
-                                ? 'Sending...'
-                                : 'পাঠানো হচ্ছে...'
-                              : isEn
-                                ? 'Subscribe'
-                                : 'সাবস্ক্রাইব করুন'}
-                          </span>
-                          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                        </button>
-                      </form>
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3.5 sm:py-4 bg-[#FACC15] hover:bg-[#eab308] active:bg-[#ca8a04] text-[#0F172A] font-bold text-xs sm:text-base transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                    >
+                      <span>{isEn ? 'Subscribe' : 'সাবস্ক্রাইব করুন'}</span>
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </button>
+                  </form>
 
-                      {subscribeError && (
-                        <p className="mt-3 text-xs text-rose-300 font-medium text-center">
-                          {subscribeError}
-                        </p>
-                      )}
-
-                      <p className="mt-4 text-[11px] sm:text-xs text-slate-300/80 text-center">
-                        {isEn
-                          ? '* We are committed to protecting your privacy.'
-                          : '* আমরা আপনার তথ্যের গোপনীয়তা রক্ষায় প্রতিশ্রুতিবদ্ধ।'}
-                      </p>
-                    </>
-                  )}
+                  <p className="mt-4 text-[11px] sm:text-xs text-slate-300/80 text-center">
+                    {isEn
+                      ? '* We are committed to protecting your privacy.'
+                      : '* আমরা আপনার তথ্যের গোপনীয়তা রক্ষায় প্রতিশ্রুতিবদ্ধ।'}
+                  </p>
                 </div>
               </div>
             </div>
