@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Heart, Check, Copy, Printer, ArrowRight, Building2, Mail, ExternalLink, Send, Loader2 } from 'lucide-react';
+import { X, Heart, Check, Copy, Printer, ArrowRight, Building2, Send, Loader2, Sparkles } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { adminDataService } from '../services/adminDataService';
 import { DONATION_CATEGORIES, resolveDonationCategoryId } from '../data/donationCategories';
@@ -7,8 +7,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { 
   triggerDirectEmailForDonation, 
   sendDonationEmail, 
-  getDirectGmailUrlForDonation, 
-  getMailtoUrlForDonation,
   DonationSubmissionData 
 } from '../services/emailService';
 
@@ -39,7 +37,6 @@ export const DonationModal: React.FC<DonationModalProps> = ({
   const [donorMessage, setDonorMessage] = useState('');
   const [copiedText, setCopiedText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [emailLinks, setEmailLinks] = useState<{ gmailUrl: string; mailtoUrl: string } | null>(null);
 
   // Generated receipt
   const [receiptNumber, setReceiptNumber] = useState('');
@@ -127,11 +124,6 @@ export const DonationModal: React.FC<DonationModalProps> = ({
       adminNote: isEn ? 'Submitted via Online Donation Modal' : 'অনলাইন ডোনেশন মডাল থেকে জমাকৃত'
     });
 
-    // Compute direct URLs
-    const gmailUrl = getDirectGmailUrlForDonation(donationData);
-    const mailtoUrl = getMailtoUrlForDonation(donationData);
-    setEmailLinks({ gmailUrl, mailtoUrl });
-
     // Open mobile mail app or Gmail
     triggerDirectEmailForDonation(donationData);
 
@@ -151,8 +143,140 @@ export const DonationModal: React.FC<DonationModalProps> = ({
     onClose();
   };
 
+  const displayDonorName = donorName.trim() || (isEn ? 'Respected Well-wisher' : 'সম্মানিত শুভাকাঙ্ক্ষী');
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200"
+      onClick={step === 3 ? resetAndClose : undefined}
+    >
+      {step === 3 ? (
+        /* STEP 3: Clean Emerald & Gold Confirmation Popup with Compact Receipt */
+        <div
+          className="relative bg-white rounded-[28px] w-full max-w-[390px] sm:max-w-[450px] border-2 border-[#087443]/30 ring-4 ring-emerald-500/10 shadow-[0_22px_55px_-12px_rgba(4,83,50,0.34),0_0_28px_rgba(217,119,6,0.18)] overflow-hidden my-auto text-slate-800 animate-celebration-pop"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Top Emerald & Gold Accent Bar */}
+          <div className="h-2 bg-gradient-to-r from-[#045332] via-[#087443] to-[#d97706]" />
+
+          {/* Subtle Ambient Emerald-Gold Top Glow */}
+          <div className="absolute top-2 inset-x-0 h-28 bg-gradient-to-b from-emerald-50/75 via-amber-50/25 to-transparent pointer-events-none" />
+
+          {/* Close X Button */}
+          <button
+            type="button"
+            onClick={resetAndClose}
+            className="absolute top-4 right-4 p-2 rounded-full text-[#045332]/65 hover:text-[#045332] hover:bg-emerald-50 transition-colors cursor-pointer z-10"
+            aria-label={t.donationModal.close}
+          >
+            <X className="w-5 h-5 stroke-[2]" />
+          </button>
+
+          <div className="relative z-10 px-5 pt-7 pb-6 sm:px-7 sm:pt-8 sm:pb-7 text-center flex flex-col items-center">
+            {/* Emerald Gradient Checkmark Circle with Gold Border & Decorative Sparkles */}
+            <div className="relative mb-4 flex items-center justify-center">
+              <div className="absolute -inset-2 rounded-full bg-emerald-400/20 blur-md animate-pulse pointer-events-none" />
+              <Sparkles className="w-4 h-4 text-[#d97706] absolute -top-1.5 -right-3.5 animate-sparkle-drift pointer-events-none" />
+              <Sparkles
+                className="w-3.5 h-3.5 text-[#10b981] absolute -bottom-1 -left-3.5 animate-sparkle-drift pointer-events-none"
+                style={{ animationDelay: '0.8s' }}
+              />
+              <div className="relative w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-full bg-gradient-to-br from-[#10b981] via-[#087443] to-[#045332] border-2 border-[#e6b84c] text-white flex items-center justify-center shadow-[0_10px_26px_rgba(4,83,50,0.38),0_0_18px_rgba(217,119,6,0.28)]">
+                <Check className="w-8 h-8 sm:w-9 sm:h-9 stroke-[3] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]" />
+              </div>
+            </div>
+
+            {/* Dynamic Thank You Heading */}
+            <h4 className="font-serif-bn font-bold text-[22px] sm:text-[26px] text-[#045332] mb-3.5 tracking-tight leading-snug">
+              {isEn ? `Thank You, ${displayDonorName}!` : `ধন্যবাদ, ${displayDonorName}!`}
+            </h4>
+
+            {/* Soft Gold-Emerald Arabic Blessing Badge */}
+            <div className="mb-4 inline-flex items-center justify-center px-6 py-1.5 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-amber-50/80 to-emerald-50/90 border border-[#d97706]/45 shadow-[0_2px_10px_rgba(217,119,6,0.1)]">
+              <span
+                dir="rtl"
+                lang="ar"
+                className="font-cairo text-lg sm:text-xl text-[#045332] font-semibold tracking-normal leading-[1.75] select-text"
+                style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
+              >
+                جَزَاكَ اللَّهُ خَيْرًا
+              </span>
+            </div>
+
+            {/* Two-Sentence Spacious Gratitude Copy */}
+            <div className="font-solaiman text-[#2b3330] text-[15px] sm:text-base leading-[1.68] max-w-[350px] mx-auto space-y-3 mb-5">
+              <p>
+                {isEn
+                  ? 'Heartfelt gratitude for your noble contribution for the welfare of humanity.'
+                  : 'মানবতার কল্যাণে আপনার এই মহৎ সহযোগিতার জন্য আন্তরিক কৃতজ্ঞতা।'}
+              </p>
+              <p>
+                {isEn
+                  ? 'May Almighty Allah accept your donation and bless you abundantly.'
+                  : 'মহান আল্লাহ আপনার দান কবুল করুন ও বরকত দিন।'}
+              </p>
+            </div>
+
+            {/* Compact Receipt Summary */}
+            <div className="w-full bg-[#fafcf9] border border-emerald-200/90 rounded-2xl p-3.5 sm:p-4 text-left mb-5 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-emerald-100 pb-2.5 mb-2.5 gap-2">
+                <div className="min-w-0">
+                  <strong className="block text-xs sm:text-sm font-bold text-[#045332] font-serif-bn truncate">
+                    {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
+                  </strong>
+                  <span className="text-[10px] text-slate-500 block truncate">
+                    {currentCategoryName}
+                  </span>
+                </div>
+                <div className="text-right shrink-0">
+                  <span className="text-[10px] text-slate-500 block">{t.donationModal.receiptNo}</span>
+                  <span className="text-xs font-mono font-bold text-[#087443]">{receiptNumber}</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5 text-xs text-slate-700 mb-3">
+                <div>
+                  <span className="text-slate-400 block text-[10px]">{t.donationModal.date}</span>
+                  <strong className="font-semibold text-slate-800">{donationDate}</strong>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px]">{t.donationModal.methodTrx}</span>
+                  <strong className="font-mono font-semibold text-slate-800 break-all">
+                    {paymentMethod.toUpperCase()} · {trxId || 'N/A'}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-emerald-50 to-amber-50/70 border border-emerald-200/70 px-3 py-2 rounded-xl flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700">{t.donationModal.totalDonation}</span>
+                <span className="text-base font-bold text-[#045332] font-mono tabular-nums">
+                  ৳ {isEn ? amount.toLocaleString('en-US') : amount.toLocaleString('bn-BD')}
+                </span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5 w-full">
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="sm:flex-1 inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-full border border-emerald-300/90 bg-white hover:bg-emerald-50/70 active:scale-[0.98] text-[#045332] font-sans-bn font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+              >
+                <Printer className="w-4 h-4 text-[#087443]" />
+                <span>{isEn ? 'Print Receipt' : 'রসিদ প্রিন্ট করুন'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={resetAndClose}
+                className="sm:flex-1 inline-flex items-center justify-center py-3 px-6 rounded-full bg-gradient-to-r from-[#045332] via-[#087443] to-[#059669] hover:from-[#034227] hover:via-[#045332] hover:to-[#087443] active:scale-[0.98] text-white font-sans-bn font-bold text-sm shadow-md shadow-emerald-900/20 border border-[#d97706]/30 transition-all cursor-pointer"
+              >
+                {isEn ? 'OK' : 'ঠিক আছে'}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
       <div
         className="bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
         onClick={(e) => e.stopPropagation()}
@@ -510,136 +634,10 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             </form>
           )}
 
-          {/* STEP 3: Generated Receipt */}
-          {step === 3 && (
-            <div className="text-center py-2">
-              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8 stroke-[3]" />
-              </div>
-
-              <h4 className="font-serif-bn font-bold text-xl sm:text-2xl text-[#045332] mb-2">
-                {t.donationModal.successTitle}
-              </h4>
-
-              {/* Arabic Blessing */}
-              <div className="mb-4 inline-flex items-center justify-center px-4 py-1.5 sm:px-5 sm:py-2 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-emerald-100/75 to-emerald-50/90 border border-emerald-200/90 shadow-xs">
-                <span
-                  dir="rtl"
-                  lang="ar"
-                  className="font-cairo text-xl sm:text-2xl text-[#045332] font-semibold sm:font-bold tracking-normal leading-[1.8] select-text"
-                  style={{ fontFamily: "'Cairo', 'Amiri', sans-serif" }}
-                >
-                  جَزَاكَ ٱللَّٰهُ خَيْرًا
-                </span>
-              </div>
-
-              <p className="text-xs text-slate-600 mb-4 max-w-sm mx-auto">
-                {t.donationModal.successSub}
-              </p>
-
-              {/* Email Send Confirmation & Direct Buttons */}
-              <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 text-left mb-5 shadow-xs">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
-                  <h5 className="font-bold text-xs sm:text-sm text-emerald-950 font-serif-bn">
-                    {t.donationModal.emailSectionTitle}
-                  </h5>
-                </div>
-                <p className="text-[11px] sm:text-xs text-emerald-800 leading-relaxed mb-3">
-                  {t.donationModal.emailSectionDesc}
-                </p>
-                <div className="flex flex-wrap items-center gap-2.5">
-                  {emailLinks?.gmailUrl && (
-                    <a
-                      href={emailLinks.gmailUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>{t.donationModal.emailGmailBtn}</span>
-                    </a>
-                  )}
-                  {emailLinks?.mailtoUrl && (
-                    <a
-                      href={emailLinks.mailtoUrl}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#045332] hover:bg-[#087443] text-white font-bold text-xs shadow-xs transition-colors"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      <span>{t.donationModal.emailAppBtn}</span>
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              {/* Digital Money Receipt */}
-              <div className="bg-[#fcfdfa] border-2 border-dashed border-emerald-300 rounded-2xl p-5 text-left mb-6 relative">
-                <div className="flex items-center justify-between border-b border-emerald-100 pb-3 mb-3">
-                  <div>
-                    <strong className="block text-sm font-bold text-emerald-900 font-serif-bn">
-                      {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
-                    </strong>
-                    <span className="text-[10px] text-slate-500">{isEn ? FOUNDATION_INFO.addressEn : FOUNDATION_INFO.address}</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] text-slate-500 uppercase block">{t.donationModal.receiptNo}</span>
-                    <span className="text-xs font-mono font-bold text-emerald-800">{receiptNumber}</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 mb-3">
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">{t.donationModal.donorName}</span>
-                    <strong>{donorName || (isEn ? 'Respected Well-wisher' : 'সম্মানিত শুভাকাঙ্ক্ষী')}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">{t.donationModal.date}</span>
-                    <strong>{donationDate}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">{t.donationModal.category}</span>
-                    <strong>{currentCategoryName}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">{t.donationModal.methodTrx}</span>
-                    <strong className="font-mono">{paymentMethod.toUpperCase()} · {trxId}</strong>
-                  </div>
-                </div>
-
-                <div className="bg-emerald-50 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-700">{t.donationModal.totalDonation}</span>
-                  <span className="text-base font-bold text-emerald-800 font-mono tabular-nums">
-                    ৳ {isEn ? amount.toLocaleString('en-US') : amount.toLocaleString('bn-BD')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => window.print()}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold text-xs cursor-pointer"
-                >
-                  <Printer className="w-3.5 h-3.5" />
-                  <span>{t.donationModal.printReceipt}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={resetAndClose}
-                  className="px-6 py-2.5 rounded-xl bg-[#087443] hover:bg-[#045332] text-white font-bold text-xs shadow-xs cursor-pointer"
-                >
-                  {t.donationModal.finishBtn}
-                </button>
-              </div>
-
-            </div>
-          )}
-
         </div>
 
       </div>
+      )}
     </div>
   );
 };

@@ -17,10 +17,16 @@ export function getEmailWebhookUrl(): string {
 
 async function sendViaCustomHtmlWebhook(payload: {
   to: string;
+  recipientEmail?: string;
   subject: string;
   htmlBody: string;
+  html?: string;
   textBody: string;
+  body?: string;
   formType: 'volunteer' | 'needy-info';
+  fields?: Record<string, string>;
+  data?: Record<string, string>;
+  [key: string]: unknown;
 }): Promise<boolean> {
   const webhookUrl = getEmailWebhookUrl();
   if (!webhookUrl) return false;
@@ -32,7 +38,12 @@ async function sendViaCustomHtmlWebhook(payload: {
       headers: {
         'Content-Type': 'text/plain;charset=utf-8',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        ...payload,
+        recipientEmail: payload.recipientEmail || payload.to,
+        html: payload.html || payload.htmlBody,
+        body: payload.body || payload.textBody,
+      }),
     });
     return true;
   } catch (err) {
@@ -272,13 +283,50 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
   const { recipientEmail, subject, body, htmlBody } = generateVolunteerEmailContent(data);
   const gmailUrl = getDirectGmailUrl(data);
   const mailtoUrl = getMailtoUrl(data);
+  const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
+  const bloodLabel = data.bloodGroup || 'অনুল্লেখিত';
+  const messageLabel = data.message?.trim() || 'কোনো বিশেষ বার্তা নেই';
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+
+  const structuredFields: Record<string, string> = {
+    'আবেদনকারীর নাম': data.name,
+    'মোবাইল নম্বর': data.phone,
+    'রক্তের গ্রুপ': bloodLabel,
+    'কাজের ক্ষেত্র': data.interest,
+    'পূর্ণ ঠিকানা': addressLabel,
+    'পরিচয় / বিশেষ বার্তা': messageLabel,
+    'আবেদনের সময়': submissionTime,
+  };
 
   const sentViaWebhook = await sendViaCustomHtmlWebhook({
     to: recipientEmail,
+    recipientEmail,
     subject,
     htmlBody,
+    html: htmlBody,
     textBody: body,
+    body,
     formType: 'volunteer',
+    name: data.name,
+    volunteerName: data.name,
+    phone: data.phone,
+    bloodGroup: bloodLabel,
+    interest: data.interest,
+    upazila: addressLabel,
+    address: addressLabel,
+    fullAddress: addressLabel,
+    message: messageLabel,
+    submissionTime,
+    fields: structuredFields,
+    data: {
+      name: data.name,
+      phone: data.phone,
+      bloodGroup: bloodLabel,
+      interest: data.interest,
+      upazila: addressLabel,
+      message: messageLabel,
+      submissionTime,
+    },
   });
 
   return {
@@ -658,13 +706,51 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   const { recipientEmail, subject, body, htmlBody } = generateNeedyInfoEmailContent(data);
   const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
   const mailtoUrl = getMailtoUrlForNeedyInfo(data);
+  const areaLabel = data.fullAddress?.trim() || 'উল্লেখ করা হয়নি';
+  const needyPhoneLabel = data.needyPhone?.trim() || 'উল্লেখ করা হয়নি';
+  const descLabel = data.description?.trim() || 'উল্লেখ করা হয়নি';
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+
+  const structuredFields: Record<string, string> = {
+    'অসহায় ব্যক্তির নাম': data.needyName,
+    'কী ধরনের সহযোগিতা প্রয়োজন': data.helpType,
+    'অসহায় ব্যক্তির মোবাইল নম্বর': needyPhoneLabel,
+    'পূর্ণ ঠিকানা': areaLabel,
+    'সংক্ষিপ্ত বিবরণ': descLabel,
+    'তথ্যদাতার নাম': data.informerName,
+    'তথ্যদাতার মোবাইল নম্বর': data.informerPhone,
+    'তথ্য প্রেরণের সময়': submissionTime,
+  };
 
   const sentViaWebhook = await sendViaCustomHtmlWebhook({
     to: recipientEmail,
+    recipientEmail,
     subject,
     htmlBody,
+    html: htmlBody,
     textBody: body,
+    body,
     formType: 'needy-info',
+    needyName: data.needyName,
+    helpType: data.helpType,
+    needyPhone: needyPhoneLabel,
+    fullAddress: areaLabel,
+    address: areaLabel,
+    description: descLabel,
+    informerName: data.informerName,
+    informerPhone: data.informerPhone,
+    submissionTime,
+    fields: structuredFields,
+    data: {
+      needyName: data.needyName,
+      helpType: data.helpType,
+      needyPhone: needyPhoneLabel,
+      fullAddress: areaLabel,
+      description: descLabel,
+      informerName: data.informerName,
+      informerPhone: data.informerPhone,
+      submissionTime,
+    },
   });
 
   return {
