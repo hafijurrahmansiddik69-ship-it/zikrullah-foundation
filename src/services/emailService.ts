@@ -82,10 +82,78 @@ function formatBengaliDateTimeWithAmPm(date: Date): string {
   return `${day} ${month}, ${year} — ${hours12}:${minutes} ${ampm}`;
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildHtmlTableSection(title: string, rows: Array<[string, string]>): string {
+  const rowsHtml = rows
+    .map(
+      ([label, value]) => `
+        <tr>
+          <td style="padding: 10px 12px; border: 1px solid #d1d5db; background-color: #f8fafc; color: #334155; font-weight: 400; width: 38%; vertical-align: top;">${escapeHtml(label)}</td>
+          <td style="padding: 10px 12px; border: 1px solid #d1d5db; background-color: #ffffff; color: #0f172a; vertical-align: top;"><b>${escapeHtml(value)}</b></td>
+        </tr>`
+    )
+    .join('');
+
+  return `
+    <div style="margin: 18px 0;">
+      <div style="font-size: 14px; font-weight: 700; color: #064e3b; margin-bottom: 8px;">${escapeHtml(title)}</div>
+      <table cellpadding="0" cellspacing="0" border="1" style="width: 100%; border-collapse: collapse; border: 1px solid #cbd5e1; font-size: 14px; line-height: 1.5;">
+        <tbody>${rowsHtml}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+export function generateVolunteerEmailHtml(
+  data: VolunteerSubmissionData,
+  submissionTime?: string
+): string {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const timeText = submissionTime || formatBengaliDateTimeWithAmPm(new Date());
+  const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
+
+  const applicantTable = buildHtmlTableSection('[ আবেদনকারীর তথ্য ]', [
+    ['আবেদনকারীর নাম', data.name],
+    ['মোবাইল নম্বর', data.phone],
+    ['রক্তের গ্রুপ', data.bloodGroup || 'অনুল্লেখিত'],
+    ['কাজের ক্ষেত্র', data.interest],
+    ['পূর্ণ ঠিকানা (গ্রাম/এলাকা, উপজেলা, জেলা)', addressLabel],
+    ['পরিচয় / বিশেষ বার্তা', data.message || 'কোনো বিশেষ বার্তা নেই'],
+  ]);
+
+  const metaTable = buildHtmlTableSection('[ আবেদনের বিবরণ ]', [
+    ['আবেদনের সময়', timeText],
+    ['ওয়েবসাইট', 'https://www.zikrullahfoundation.com'],
+  ]);
+
+  return `
+<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
+  <div style="padding: 14px 18px; background-color: #064e3b; color: #ffffff; border-radius: 8px 8px 0 0;">
+    <div style="font-size: 18px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 2px;">Official Email: ${escapeHtml(recipientEmail)}</div>
+  </div>
+  <div style="padding: 18px; border: 1px solid #cbd5e1; border-top: none; border-radius: 0 0 8px 8px; background-color: #ffffff;">
+    <p style="margin: 0 0 12px 0;">সম্মানিত ফাউন্ডেশন টিম,<br/>স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:</p>
+    ${applicantTable}
+    ${metaTable}
+    <p style="margin: 16px 0 0 0; font-size: 13px; color: #475569;">প্রেরক: <b>${escapeHtml(data.name)}</b></p>
+  </div>
+</div>`.trim();
+}
+
 export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
   recipientEmail: string;
   subject: string;
   body: string;
+  htmlBody: string;
 } {
   const recipientEmail = RECIPIENT_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
@@ -93,30 +161,33 @@ export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
   const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
   const subject = `[স্বেচ্ছাসেবক আবেদন] ${data.name} — ${addressLabel}`;
 
-  const body = `বিসমিল্লাহির রাহমানির রাহীম
-
-জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
+  const body = `জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
 Official Email: ${recipientEmail}
 
 সম্মানিত ফাউন্ডেশন টিম,
 স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:
 
 [ আবেদনকারীর তথ্য ]
-• নাম ও যোগাযোগ: ${data.name} (${data.phone})
-• রক্তের গ্রুপ: ${data.bloodGroup || 'অনুল্লেখিত'}
-• কাজের ক্ষেত্র: ★ ${data.interest} ★
-• পূর্ণ ঠিকানা (গ্রাম/এলাকা, উপজেলা, জেলা): ${addressLabel}
-• পরিচয় / বিশেষ বার্তা: ${data.message || 'কোনো বিশেষ বার্তা নেই'}
+----------------------------------------
+• আবেদনকারীর নাম : ${data.name}
+• মোবাইল নম্বর : ${data.phone}
+• রক্তের গ্রুপ : ${data.bloodGroup || 'অনুল্লেখিত'}
+• কাজের ক্ষেত্র : ${data.interest}
+• পূর্ণ ঠিকানা : ${addressLabel}
+• পরিচয় / বিশেষ বার্তা : ${data.message || 'কোনো বিশেষ বার্তা নেই'}
+----------------------------------------
 
-━━━━━━━━━━━━━━━━━━━━━━
-• আবেদনের সময়: ${submissionTime}
+[ আবেদনের বিবরণ ]
+----------------------------------------
+• আবেদনের সময় : ${submissionTime}
+• ওয়েবসাইট : https://www.zikrullahfoundation.com
+----------------------------------------
 
-جَزَاكَ اللَّهُ خَيْرًا
-${data.name}
+প্রেরক: ${data.name}`;
 
-ওয়েবসাইট: https://www.zikrullahfoundation.com`;
+  const htmlBody = generateVolunteerEmailHtml(data, submissionTime);
 
-  return { recipientEmail, subject, body };
+  return { recipientEmail, subject, body, htmlBody };
 }
 
 export function getDirectGmailUrl(data: VolunteerSubmissionData): string {
@@ -141,35 +212,8 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, subject } = generateVolunteerEmailContent(data);
   const gmailUrl = getDirectGmailUrl(data);
   const mailtoUrl = getMailtoUrl(data);
-  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
-  const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
-
-  try {
-    await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        _subject: subject,
-        _template: 'table',
-        _captcha: 'false',
-        'নাম ও যোগাযোগ': `${data.name} (${data.phone})`,
-        'রক্তের গ্রুপ': data.bloodGroup || 'অনুল্লেখিত',
-        'কাজের ক্ষেত্র': `★ ${data.interest} ★`,
-        'পূর্ণ ঠিকানা (গ্রাম/এলাকা, উপজেলা, জেলা)': addressLabel,
-        'পরিচয় / বিশেষ বার্তা': data.message || 'কোনো বিশেষ বার্তা নেই',
-        'আবেদনের সময়': submissionTime,
-        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
-      })
-    }).catch(() => null);
-  } catch (err) {
-    console.warn('Background FormSubmit dispatch notice:', err);
-  }
 
   return {
     success: true,
@@ -426,10 +470,48 @@ export interface NeedyInfoSubmissionData {
 }
 
 
+export function generateNeedyInfoEmailHtml(
+  data: NeedyInfoSubmissionData,
+  submissionTime?: string
+): string {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const timeText = submissionTime || formatBengaliDateTimeWithAmPm(new Date());
+  const areaLabel = data.fullAddress?.trim() || 'উল্লেখ করা হয়নি';
+
+  const needyTable = buildHtmlTableSection('[ সহায়তা প্রার্থীর তথ্য ]', [
+    ['অসহায় ব্যক্তির নাম', data.needyName],
+    ['কী ধরনের সহযোগিতা প্রয়োজন', data.helpType],
+    ['অসহায় ব্যক্তির মোবাইল নম্বর', data.needyPhone || 'উল্লেখ করা হয়নি'],
+    ['পূর্ণ ঠিকানা', areaLabel],
+    ['সংক্ষিপ্ত বিবরণ', data.description || 'উল্লেখ করা হয়নি'],
+  ]);
+
+  const informerTable = buildHtmlTableSection('[ তথ্যদাতার বিবরণ ]', [
+    ['তথ্যদাতার নাম', data.informerName],
+    ['মোবাইল নম্বর', data.informerPhone],
+    ['তথ্য প্রেরণের সময়', timeText],
+  ]);
+
+  return `
+<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
+  <div style="padding: 14px 18px; background-color: #064e3b; color: #ffffff; border-radius: 8px 8px 0 0;">
+    <div style="font-size: 18px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 2px;">Official Email: ${escapeHtml(recipientEmail)}</div>
+  </div>
+  <div style="padding: 18px; border: 1px solid #cbd5e1; border-top: none; border-radius: 0 0 8px 8px; background-color: #ffffff;">
+    <p style="margin: 0 0 12px 0;">সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,<br/>আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:</p>
+    ${needyTable}
+    ${informerTable}
+    <p style="margin: 16px 0 0 0; font-size: 13px; color: #475569;">Website: <b>https://www.zikrullahfoundation.com</b></p>
+  </div>
+</div>`.trim();
+}
+
 export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
   recipientEmail: string;
   subject: string;
   body: string;
+  htmlBody: string;
 } {
   const recipientEmail = RECIPIENT_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
@@ -437,33 +519,33 @@ export function generateNeedyInfoEmailContent(data: NeedyInfoSubmissionData): {
   const areaLabel = data.fullAddress?.trim() || 'উল্লেখ করা হয়নি';
   const subject = `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${areaLabel}`;
 
-  const body = `বিসমিল্লাহির রাহমানির রাহীম
-
-জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
+  const body = `জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
 Official Email: ${recipientEmail}
 
 সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,
 আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:
 
 [ সহায়তা প্রার্থীর তথ্য ]
-• অসহায় ব্যক্তির নাম: ${data.needyName}
-• কী ধরনের সহযোগিতা প্রয়োজন: ${data.helpType}
-• অসহায় ব্যক্তির মোবাইল নম্বর: ${data.needyPhone || 'উল্লেখ করা হয়নি'}
-• পূর্ণ ঠিকানা: ${areaLabel}
-• সংক্ষিপ্ত বিবরণ: ${data.description || 'উল্লেখ করা হয়নি'}
-
-________________________________________
+----------------------------------------
+• অসহায় ব্যক্তির নাম : ${data.needyName}
+• কী ধরনের সহযোগিতা প্রয়োজন : ${data.helpType}
+• অসহায় ব্যক্তির মোবাইল নম্বর : ${data.needyPhone || 'উল্লেখ করা হয়নি'}
+• পূর্ণ ঠিকানা : ${areaLabel}
+• সংক্ষিপ্ত বিবরণ : ${data.description || 'উল্লেখ করা হয়নি'}
+----------------------------------------
 
 [ তথ্যদাতার বিবরণ ]
-• নাম ও যোগাযোগ: ${data.informerName} (${data.informerPhone})
-• তথ্য প্রেরণের সময়: ${submissionTime}
-
-جزاك الله خيرا
-${data.informerName}
+----------------------------------------
+• তথ্যদাতার নাম : ${data.informerName}
+• মোবাইল নম্বর : ${data.informerPhone}
+• তথ্য প্রেরণের সময় : ${submissionTime}
+----------------------------------------
 
 Website: https://www.zikrullahfoundation.com`;
 
-  return { recipientEmail, subject, body };
+  const htmlBody = generateNeedyInfoEmailHtml(data, submissionTime);
+
+  return { recipientEmail, subject, body, htmlBody };
 }
 
 export function getDirectGmailUrlForNeedyInfo(data: NeedyInfoSubmissionData): string {
@@ -488,35 +570,8 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, subject } = generateNeedyInfoEmailContent(data);
   const gmailUrl = getDirectGmailUrlForNeedyInfo(data);
   const mailtoUrl = getMailtoUrlForNeedyInfo(data);
-  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
-
-  try {
-    await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        _subject: subject,
-        _template: 'table',
-        _captcha: 'false',
-        'অসহায় ব্যক্তির নাম': data.needyName,
-        'কী ধরনের সহযোগিতা প্রয়োজন': data.helpType,
-        'অসহায় ব্যক্তির মোবাইল নম্বর': data.needyPhone || 'উল্লেখ করা হয়নি',
-        'পূর্ণ ঠিকানা': data.fullAddress,
-        'সংক্ষিপ্ত বিবরণ': data.description || 'উল্লেখ করা হয়নি',
-        'নাম ও যোগাযোগ': `${data.informerName} (${data.informerPhone})`,
-        'তথ্য প্রেরণের সময়': submissionTime,
-        'Website': 'https://www.zikrullahfoundation.com'
-      })
-    }).catch(() => null);
-  } catch (err) {
-    console.warn('Needy info background dispatch notice:', err);
-  }
 
   return {
     success: true,

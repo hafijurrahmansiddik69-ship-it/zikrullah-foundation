@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { X, HandHeart, CheckCircle, Loader2, Send, Mail, ExternalLink } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import {
@@ -39,6 +39,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
   const [description, setDescription] = useState('');
   const [mailtoUrl, setMailtoUrl] = useState('');
   const [gmailUrl, setGmailUrl] = useState('');
+  const submitLockRef = useRef(false);
 
   if (!isOpen) return null;
 
@@ -46,6 +47,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting || submitLockRef.current || submitted) return;
     const cleanInformerName = informerName.trim();
     const cleanInformerPhone = informerPhone.trim();
     const cleanNeedyName = needyName.trim();
@@ -53,58 +55,63 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
     if (!cleanInformerName || !cleanInformerPhone || !cleanNeedyName || !cleanAddress) return;
 
+    submitLockRef.current = true;
     setSubmittedInformerName(cleanInformerName);
     setIsSubmitting(true);
 
-    const helpTypeLabel = selectedHelpType.bn;
-
-    const submissionPayload = {
-      informerName: cleanInformerName,
-      informerPhone: cleanInformerPhone,
-      needyName: cleanNeedyName,
-      needyPhone: needyPhone.trim() || '',
-      fullAddress: cleanAddress,
-      helpType: isEn ? `${selectedHelpType.en} (${selectedHelpType.bn})` : helpTypeLabel,
-      description: description.trim() || '',
-    };
-
-    const formattedDetails = [
-      `অসহায় ব্যক্তির নাম: ${cleanNeedyName}`,
-      `অসহায় ব্যক্তির মোবাইল: ${needyPhone.trim() || 'উল্লেখ করা হয়নি'}`,
-      `পূর্ণ ঠিকানা: ${cleanAddress}`,
-      `সহযোগিতার ধরন: ${helpTypeLabel}`,
-      `সংক্ষিপ্ত বিবরণ: ${description.trim() || 'উল্লেখ করা হয়নি'}`,
-    ].join('\n');
-
-    // 1. Save to local admin database
-    adminDataService.addContactMessage({
-      name: cleanInformerName,
-      contactInfo: cleanInformerPhone,
-      subject: `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${cleanAddress}`,
-      message: formattedDetails,
-    });
-
-    // 2. Compute direct Gmail and Mailto URLs
-    const directGmail = getDirectGmailUrlForNeedyInfo(submissionPayload);
-    const directMailto = getMailtoUrlForNeedyInfo(submissionPayload);
-    setGmailUrl(directGmail);
-    setMailtoUrl(directMailto);
-
-    // 3. Directly open Gmail compose window pre-filled
-    triggerDirectGmailForNeedyInfo(submissionPayload);
-
-    // 4. Background email service notification
     try {
-      await sendNeedyInfoEmail(submissionPayload);
-    } catch (err) {
-      console.warn('Needy info background dispatch notice:', err);
-    }
+      const helpTypeLabel = selectedHelpType.bn;
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      const submissionPayload = {
+        informerName: cleanInformerName,
+        informerPhone: cleanInformerPhone,
+        needyName: cleanNeedyName,
+        needyPhone: needyPhone.trim() || '',
+        fullAddress: cleanAddress,
+        helpType: isEn ? `${selectedHelpType.en} (${selectedHelpType.bn})` : helpTypeLabel,
+        description: description.trim() || '',
+      };
+
+      const formattedDetails = [
+        `অসহায় ব্যক্তির নাম: ${cleanNeedyName}`,
+        `অসহায় ব্যক্তির মোবাইল: ${needyPhone.trim() || 'উল্লেখ করা হয়নি'}`,
+        `পূর্ণ ঠিকানা: ${cleanAddress}`,
+        `সহযোগিতার ধরন: ${helpTypeLabel}`,
+        `সংক্ষিপ্ত বিবরণ: ${description.trim() || 'উল্লেখ করা হয়নি'}`,
+      ].join('\n');
+
+      // 1. Save to local admin database
+      adminDataService.addContactMessage({
+        name: cleanInformerName,
+        contactInfo: cleanInformerPhone,
+        subject: `[সহযোগিতার আবেদন] অসহায় ব্যক্তির তথ্য — ${cleanAddress}`,
+        message: formattedDetails,
+      });
+
+      // 2. Compute direct Gmail and Mailto URLs
+      const directGmail = getDirectGmailUrlForNeedyInfo(submissionPayload);
+      const directMailto = getMailtoUrlForNeedyInfo(submissionPayload);
+      setGmailUrl(directGmail);
+      setMailtoUrl(directMailto);
+
+      // 3. Directly open Gmail compose window pre-filled
+      triggerDirectGmailForNeedyInfo(submissionPayload);
+
+      // 4. Prepare email service result (single email flow)
+      await sendNeedyInfoEmail(submissionPayload);
+
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('Needy info submission notice:', err);
+    } finally {
+      setIsSubmitting(false);
+      submitLockRef.current = false;
+    }
   };
 
   const resetAndClose = () => {
+    submitLockRef.current = false;
+    setIsSubmitting(false);
     setSubmitted(false);
     setInformerName('');
     setSubmittedInformerName('');

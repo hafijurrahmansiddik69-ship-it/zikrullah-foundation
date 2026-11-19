@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { X, Users, CheckCircle, Loader2, Mail, ExternalLink, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
@@ -44,6 +44,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   const [message, setMessage] = useState('');
   const [mailtoUrl, setMailtoUrl] = useState('');
   const [gmailUrl, setGmailUrl] = useState('');
+  const submitLockRef = useRef(false);
 
   if (!isOpen) return null;
 
@@ -51,57 +52,63 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting || submitLockRef.current || submitted) return;
     const cleanName = name.trim();
     const cleanPhone = phone.trim();
     if (!cleanName || !cleanPhone) return;
 
+    submitLockRef.current = true;
     setSubmittedName(cleanName);
     setIsSubmitting(true);
 
-    const interestLabel = isEn ? selectedInterestObj.en : selectedInterestObj.bn;
-
-    const submissionPayload = {
-      name: cleanName,
-      phone: cleanPhone,
-      upazila: upazila.trim() || '',
-      bloodGroup: bloodGroup || 'A+',
-      interest: interestLabel,
-      message: message.trim() || ''
-    };
-
-    // 1. Save to local admin database
-    adminDataService.addVolunteer({
-      name: cleanName || (isEn ? 'Respected Brother/Sister' : 'সম্মানিত ভাই/বোন'),
-      phone: cleanPhone || (isEn ? 'Not provided' : 'অনুল্লেখিত'),
-      upazila: upazila.trim() || 'উল্লেখ করা হয়নি',
-      bloodGroup: bloodGroup || 'A+',
-      interest: selectedInterestObj.bn,
-      message: message.trim() || '',
-      status: 'অপেক্ষমাণ',
-      adminNote: 'মডাল আবেদন ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
-    });
-
-    // 2. Compute direct Gmail and Mailto URLs
-    const directGmail = getDirectGmailUrl(submissionPayload);
-    const directMailto = getMailtoUrl(submissionPayload);
-    setGmailUrl(directGmail);
-    setMailtoUrl(directMailto);
-
-    // 3. Directly open their Gmail with compose window pre-filled
-    triggerDirectGmail(submissionPayload);
-
-    // 4. Background email service notification
     try {
-      await sendVolunteerRegistrationEmail(submissionPayload);
-    } catch (err) {
-      console.warn('Background email dispatch log:', err);
-    }
+      const interestLabel = isEn ? selectedInterestObj.en : selectedInterestObj.bn;
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      const submissionPayload = {
+        name: cleanName,
+        phone: cleanPhone,
+        upazila: upazila.trim() || '',
+        bloodGroup: bloodGroup || 'A+',
+        interest: interestLabel,
+        message: message.trim() || ''
+      };
+
+      // 1. Save to local admin database
+      adminDataService.addVolunteer({
+        name: cleanName || (isEn ? 'Respected Brother/Sister' : 'সম্মানিত ভাই/বোন'),
+        phone: cleanPhone || (isEn ? 'Not provided' : 'অনুল্লেখিত'),
+        upazila: upazila.trim() || 'উল্লেখ করা হয়নি',
+        bloodGroup: bloodGroup || 'A+',
+        interest: selectedInterestObj.bn,
+        message: message.trim() || '',
+        status: 'অপেক্ষমাণ',
+        adminNote: 'মডাল আবেদন ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
+      });
+
+      // 2. Compute direct Gmail and Mailto URLs
+      const directGmail = getDirectGmailUrl(submissionPayload);
+      const directMailto = getMailtoUrl(submissionPayload);
+      setGmailUrl(directGmail);
+      setMailtoUrl(directMailto);
+
+      // 3. Directly open their Gmail with compose window pre-filled
+      triggerDirectGmail(submissionPayload);
+
+      // 4. Prepare email service result (single email flow)
+      await sendVolunteerRegistrationEmail(submissionPayload);
+
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('Volunteer submission log:', err);
+    } finally {
+      setIsSubmitting(false);
+      submitLockRef.current = false;
+    }
   };
 
   const resetAndClose = () => {
+    submitLockRef.current = false;
+    setIsSubmitting(false);
     setSubmitted(false);
     setName('');
     setSubmittedName('');

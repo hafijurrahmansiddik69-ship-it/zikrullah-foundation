@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Users, HeartHandshake, CheckCircle2, Sparkles, Send, Loader2, Mail, ExternalLink } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail, triggerDirectGmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
@@ -13,6 +13,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
   const { t, isEn } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitLockRef = useRef(false);
   const [submittedData, setSubmittedData] = useState<{
     name: string;
     phone: string;
@@ -45,65 +46,69 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting || submitLockRef.current || submitted) return;
     const cleanName = name.trim();
     const cleanPhone = phone.trim();
     if (!cleanName || !cleanPhone) return;
 
+    submitLockRef.current = true;
     setIsSubmitting(true);
 
-    const cleanAddress = upazila.trim();
-
-    const submissionPayload = {
-      name: cleanName,
-      phone: cleanPhone,
-      upazila: cleanAddress,
-      bloodGroup: bloodGroup || 'A+',
-      interest: resolvedInterest,
-      message: message.trim() || ''
-    };
-
-    // 1. Save to local admin database
-    adminDataService.addVolunteer({
-      name: cleanName,
-      phone: cleanPhone,
-      upazila: cleanAddress || (isEn ? 'Not provided' : 'উল্লেখ করা হয়নি'),
-      bloodGroup: bloodGroup || 'A+',
-      interest: resolvedInterest,
-      message: message.trim() || '',
-      status: 'অপেক্ষমাণ',
-      adminNote: 'Web Registration Form'
-    });
-
-    // 2. Direct Gmail and Mailto URLs
-    const gmailUrl = getDirectGmailUrl(submissionPayload);
-    const mailtoUrl = getMailtoUrl(submissionPayload);
-
-    // 3. Directly open their Gmail
-    triggerDirectGmail(submissionPayload);
-
-    // 4. Background email service dispatch
     try {
+      const cleanAddress = upazila.trim();
+
+      const submissionPayload = {
+        name: cleanName,
+        phone: cleanPhone,
+        upazila: cleanAddress,
+        bloodGroup: bloodGroup || 'A+',
+        interest: resolvedInterest,
+        message: message.trim() || ''
+      };
+
+      // 1. Save to local admin database
+      adminDataService.addVolunteer({
+        name: cleanName,
+        phone: cleanPhone,
+        upazila: cleanAddress || (isEn ? 'Not provided' : 'উল্লেখ করা হয়নি'),
+        bloodGroup: bloodGroup || 'A+',
+        interest: resolvedInterest,
+        message: message.trim() || '',
+        status: 'অপেক্ষমাণ',
+        adminNote: 'Web Registration Form'
+      });
+
+      // 2. Direct Gmail and Mailto URLs
+      const gmailUrl = getDirectGmailUrl(submissionPayload);
+      const mailtoUrl = getMailtoUrl(submissionPayload);
+
+      // 3. Directly open their Gmail
+      triggerDirectGmail(submissionPayload);
+
+      // 4. Prepare email service result (single email flow)
       await sendVolunteerRegistrationEmail(submissionPayload);
+
+      setSubmittedData({
+        name: cleanName,
+        phone: cleanPhone,
+        upazila: cleanAddress || (isEn ? 'Not provided' : 'উল্লেখ করা হয়নি'),
+        bloodGroup: bloodGroup || 'A+',
+        interest: resolvedInterest,
+        mailtoUrl,
+        gmailUrl
+      });
+
+      setSubmitted(true);
+      setName('');
+      setPhone('');
+      setUpazila('');
+      setMessage('');
     } catch (err) {
-      console.warn('Background email log:', err);
+      console.warn('Volunteer section submission log:', err);
+    } finally {
+      setIsSubmitting(false);
+      submitLockRef.current = false;
     }
-
-    setSubmittedData({
-      name: cleanName,
-      phone: cleanPhone,
-      upazila: cleanAddress || (isEn ? 'Not provided' : 'উল্লেখ করা হয়নি'),
-      bloodGroup: bloodGroup || 'A+',
-      interest: resolvedInterest,
-      mailtoUrl,
-      gmailUrl
-    });
-
-    setIsSubmitting(false);
-    setSubmitted(true);
-    setName('');
-    setPhone('');
-    setUpazila('');
-    setMessage('');
   };
 
   return (
