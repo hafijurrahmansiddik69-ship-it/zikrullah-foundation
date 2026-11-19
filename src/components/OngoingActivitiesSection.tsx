@@ -418,7 +418,7 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
         
         {/* Section Header: Styled strictly to user prompt */}
-        <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
+        <ScrollReveal direction="down" className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           {/* Small green badge: • আমাদের কাজ */}
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/90 text-[#064e3b] text-xs sm:text-sm font-bold mb-3.5 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-[#064e3b] animate-pulse" />
@@ -441,9 +441,9 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-7 items-stretch">
           {ONGOING_PROJECTS.map((project, idx) => {
             const isLastCard = idx === 6;
-            const dirs: RevealDirection[] = ['left', 'up', 'right'];
-            const delays: RevealDelay[] = [0, 100, 200];
-            const direction: RevealDirection = isLastCard ? 'up' : dirs[idx % 3];
+            const patterns: RevealDirection[] = ['zoom', 'up', 'down'];
+            const delays: RevealDelay[] = [0, 80, 150];
+            const direction: RevealDirection = isLastCard ? 'zoom' : patterns[idx % 3];
             const delay: RevealDelay = isLastCard ? 100 : delays[idx % 3];
             return (
               <ScrollReveal

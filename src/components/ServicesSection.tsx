@@ -121,8 +121,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
         {/* 2 Main Columns: Mission & Vision */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           
-          {/* Column 1: আমাদের লক্ষ্য (Mission) */}
-          <ScrollReveal direction="left" className="flex">
+          {/* Column 1: আমাদের লক্ষ্য (Mission) - Expands smoothly from within */}
+          <ScrollReveal direction="zoom" className="flex">
             <div className="w-full bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-xl shadow-emerald-950/5 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
             {/* Ambient Corner Glow */}
             <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
@@ -247,8 +247,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
             </div>
           </ScrollReveal>
 
-          {/* Column 2: আমাদের উদ্দেশ্য (Vision) */}
-          <ScrollReveal direction="right" delay={150} className="flex">
+          {/* Column 2: আমাদের উদ্দেশ্য (Vision) - Floats smoothly from bottom */}
+          <ScrollReveal direction="up" delay={150} className="flex">
             <div className="w-full bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-xl shadow-emerald-950/5 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-300 transition-all duration-300">
             {/* Ambient Corner Glow */}
             <div className="absolute top-0 right-0 w-36 h-36 bg-amber-50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />

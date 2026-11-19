@@ -145,7 +145,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       }
     >
       <div className="max-w-5xl mx-auto px-4">
-        <ScrollReveal direction="up" className="text-center mb-10">
+        <ScrollReveal direction="down" className="text-center mb-10">
           <span className="inline-block px-3 py-1.5 rounded-full bg-green-500/15 text-green-400 text-xs font-semibold mb-2.5 border border-green-500/20 shadow-sm">
             {t.projects.badge}
           </span>
@@ -163,9 +163,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
             const Icon = config.icon;
             const isLastCard = idx === 6;
-            const dirs: RevealDirection[] = ['left', 'up', 'right'];
-            const delays: RevealDelay[] = [0, 100, 200];
-            const direction: RevealDirection = isLastCard ? 'up' : dirs[idx % 3];
+            const patterns: RevealDirection[] = ['zoom', 'down', 'up'];
+            const delays: RevealDelay[] = [0, 80, 150];
+            const direction: RevealDirection = isLastCard ? 'zoom' : patterns[idx % 3];
             const delay: RevealDelay = isLastCard ? 100 : delays[idx % 3];
             return (
               <ScrollReveal

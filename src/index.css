@@ -390,11 +390,22 @@ body.lang-en .font-solaiman {
   animation: sparkleDrift 2.2s ease-in-out infinite;
 }
 
-/* Smooth Hero Entrance Animations (runs immediately on page load) */
+/* Smooth Hero Entrance Animations (runs immediately on page load with luxurious easing) */
+@keyframes heroFadeDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -26px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes heroFadeUp {
   0% {
     opacity: 0;
-    transform: translate3d(0, 26px, 0);
+    transform: translate3d(0, 24px, 0);
   }
   100% {
     opacity: 1;
@@ -402,67 +413,83 @@ body.lang-en .font-solaiman {
   }
 }
 
-@keyframes heroFadeLeft {
+@keyframes heroZoomIn {
   0% {
     opacity: 0;
-    transform: translate3d(-32px, 0, 0);
+    transform: scale3d(0.92, 0.92, 1) translate3d(0, 10px, 0);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
   }
 }
 
-@keyframes heroFadeRight {
+@keyframes heroFade {
   0% {
     opacity: 0;
-    transform: translate3d(32px, 0, 0);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
   }
+}
+
+.hero-reveal-down {
+  animation: heroFadeDown 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-reveal-up {
-  animation: heroFadeUp 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: heroFadeUp 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-reveal-left {
-  animation: heroFadeLeft 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+.hero-reveal-zoom {
+  animation: heroZoomIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-reveal-right {
-  animation: heroFadeRight 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+.hero-reveal-fade {
+  animation: heroFade 1s ease-out both;
 }
 
+.hero-delay-80 { animation-delay: 80ms; }
 .hero-delay-100 { animation-delay: 100ms; }
 .hero-delay-150 { animation-delay: 150ms; }
+.hero-delay-200 { animation-delay: 200ms; }
 .hero-delay-250 { animation-delay: 250ms; }
 .hero-delay-350 { animation-delay: 350ms; }
 .hero-delay-450 { animation-delay: 450ms; }
 .hero-delay-550 { animation-delay: 550ms; }
 .hero-delay-600 { animation-delay: 600ms; }
 
-/* Smooth Scroll-Reveal Animations (GPU-accelerated, one-time reveal) */
+/* Smooth Scroll-Reveal Animations (Silky, unhurried, luxury deceleration) */
 .reveal-base {
   opacity: 0;
   transition-property: opacity, transform;
-  transition-duration: 0.72s;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-duration: 0.95s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.reveal-up {
-  transform: translate3d(0, 28px, 0);
+/* 1. উপর থেকে আলতো নেমে আসা */
+.reveal-down {
+  transform: translate3d(0, -26px, 0);
 }
 
+/* 2. ভেতর থেকে আলতো বড় হওয়া (Apple/Stripe Style Zoom-In) */
+.reveal-zoom {
+  transform: scale3d(0.92, 0.92, 1) translate3d(0, 10px, 0);
+}
+
+/* 3. নিচ থেকে মৃদু উঠে আসা */
+.reveal-up {
+  transform: translate3d(0, 24px, 0);
+}
+
+/* 4. ডানে-বামে সূক্ষ্ম ড্রাফট */
 .reveal-left {
-  transform: translate3d(-32px, 0, 0);
+  transform: translate3d(-24px, 0, 0);
 }
 
 .reveal-right {
-  transform: translate3d(32px, 0, 0);
+  transform: translate3d(24px, 0, 0);
 }
 
 .reveal-fade {
@@ -471,7 +498,7 @@ body.lang-en .font-solaiman {
 
 .reveal-visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
   will-change: auto;
 }
 
@@ -488,9 +515,10 @@ body.lang-en .font-solaiman {
 .reveal-delay-600 { transition-delay: 600ms; }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-reveal-down,
   .hero-reveal-up,
-  .hero-reveal-left,
-  .hero-reveal-right {
+  .hero-reveal-zoom,
+  .hero-reveal-fade {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

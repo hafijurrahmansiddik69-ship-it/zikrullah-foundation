@@ -229,7 +229,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Core Heartfelt Statement (আমাদের প্রেরণা) */}
-        <ScrollReveal direction="up">
+        <ScrollReveal direction="zoom">
           <div className="relative overflow-hidden bg-gradient-to-br from-[#fcfdfb] via-[#f5faf7] to-emerald-50/75 border border-emerald-200/80 rounded-2xl sm:rounded-3xl p-5 sm:p-7 mb-9 shadow-[0_12px_32px_-12px_rgba(4,83,50,0.10)]">
           {/* Subtle Islamic Geometric SVG Watermark Pattern */}
           <svg
@@ -294,8 +294,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
         </ScrollReveal>
 
-        {/* Section 1: আমাদের লক্ষ্য (Mission) */}
-        <ScrollReveal direction="left">
+        {/* Section 1: আমাদের লক্ষ্য (Mission) - Drops gracefully from top */}
+        <ScrollReveal direction="down">
           <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-7 sm:mb-9">
           <div className="flex items-center gap-3 mb-4 sm:mb-5">
             <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shadow-md shadow-emerald-900/15 shrink-0">
@@ -395,8 +395,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
         </ScrollReveal>
 
-        {/* Section 2: আমাদের উদ্দেশ্য (Vision) */}
-        <ScrollReveal direction="right">
+        {/* Section 2: আমাদের উদ্দেশ্য (Vision) - Floats smoothly from bottom */}
+        <ScrollReveal direction="up">
           <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-emerald-100 shadow-md mb-10">
           <div className="flex items-center gap-3 mb-4 sm:mb-5">
             <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-900/15 shrink-0">
@@ -511,7 +511,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
         {/* Leadership & Executive Board Section */}
         <div className="mb-14">
-          <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto mb-10">
+          <ScrollReveal direction="down" className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold mb-3">
               <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
               <span>{isEn ? 'Leadership & Governance' : 'নেতৃত্ব ও পরিচালনা'}</span>
@@ -528,7 +528,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
           <div className="space-y-6">
             {/* Single Unified Professional Message Card */}
-            <ScrollReveal direction="up">
+            <ScrollReveal direction="zoom">
               <div className="relative overflow-hidden bg-gradient-to-b from-white via-[#fafdfb] to-[#f4f8f5] rounded-2xl sm:rounded-[36px] p-5 sm:p-10 lg:p-12 border border-emerald-100 shadow-xl shadow-emerald-950/5">
               
               {/* Background Watermark Quote Symbol */}
@@ -697,7 +697,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             {/* Executive Committee & Trustee Members Grid (Matched to screenshot ssss.jpg) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
               {EXECUTIVE_MEMBERS.map((member, idx) => {
-                const dirs: RevealDirection[] = ['left', 'up', 'right'];
+                const dirs: RevealDirection[] = ['zoom', 'up', 'down'];
                 const delays: RevealDelay[] = [0, 100, 200];
                 return (
                   <ScrollReveal
@@ -734,7 +734,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
 
         {/* Bottom CTA Box */}
-        <ScrollReveal direction="up">
+        <ScrollReveal direction="zoom">
           <div className="bg-gradient-to-r from-emerald-900 to-[#045332] text-white rounded-3xl p-8 sm:p-10 text-center shadow-xl">
             <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl mb-3">
               {t.ctaBanner.heading}

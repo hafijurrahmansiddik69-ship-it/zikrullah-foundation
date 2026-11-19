@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-export type RevealDirection = 'up' | 'left' | 'right' | 'fade';
+export type RevealDirection = 'up' | 'down' | 'zoom' | 'left' | 'right' | 'fade';
 export type RevealDelay = 0 | 80 | 100 | 150 | 200 | 250 | 300 | 350 | 400 | 500 | 600;
 
 interface ScrollRevealProps {
@@ -13,6 +13,8 @@ interface ScrollRevealProps {
 
 const DIRECTION_CLASS: Record<RevealDirection, string> = {
   up: 'reveal-up',
+  down: 'reveal-down',
+  zoom: 'reveal-zoom',
   left: 'reveal-left',
   right: 'reveal-right',
   fade: 'reveal-fade',

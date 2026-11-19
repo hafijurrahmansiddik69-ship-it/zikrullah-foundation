@@ -194,8 +194,8 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
       className="py-16 sm:py-24 bg-[#f8faf9] border-t border-b border-slate-200/80 overflow-x-clip selection:bg-emerald-100 selection:text-emerald-950"
     >
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
-        {/* Centered Section Header (No Eyebrow Label Above Heading) */}
-        <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto mb-7 sm:mb-12 px-1">
+        {/* Centered Section Header: Drops softly from above */}
+        <ScrollReveal direction="down" className="text-center max-w-2xl mx-auto mb-7 sm:mb-12 px-1">
           <h2 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-[42px] text-[#064E3B] leading-tight tracking-tight mb-2 sm:mb-3 text-balance">
             {isEn ? 'Thoughts & Field Notes' : 'ভাবনা ও কর্মকথা'}
           </h2>
@@ -216,7 +216,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
             return (
               <ScrollReveal
                 key={article.id}
-                direction={idx === 0 ? 'left' : 'right'}
+                direction={idx === 0 ? 'zoom' : 'up'}
                 delay={idx === 0 ? 0 : 150}
                 className="flex"
               >
@@ -264,7 +264,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                     className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#064E3B] hover:bg-[#043927] text-white text-[11px] sm:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap w-full sm:w-auto"
                   >
                     <span>{isEn ? 'Read Details' : 'বিস্তারিত পড়ুন'}</span>
-                    <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F59E0B] transition-transform duration-200 group-hover:translate-x-0.5 shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F59E0B] transition-transform duration-200 group-hover:translate-x-0.5 shrink-0" />
                   </button>
                 </div>
                 </article>
@@ -273,8 +273,8 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
           })}
         </div>
 
-        {/* Prominent "সব লেখা দেখুন →" Archive Button */}
-        <ScrollReveal direction="up" delay={150} className="mt-10 sm:mt-12 text-center">
+        {/* Prominent "সব লেখা দেখুন →" Archive Button: Expands smoothly from inside */}
+        <ScrollReveal direction="zoom" delay={150} className="mt-10 sm:mt-12 text-center">
           <button
             type="button"
             onClick={openArchive}

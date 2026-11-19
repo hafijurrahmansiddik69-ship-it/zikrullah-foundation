@@ -22,8 +22,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   return (
     <section id="about" className="py-16 sm:py-20 bg-[#fafcfb] border-b border-emerald-100/60 overflow-x-clip">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center">
-        {/* Visual Showcase & Quranic Verse Card */}
-        <ScrollReveal direction="up" className="w-full max-w-md sm:max-w-lg relative">
+        {/* Visual Showcase & Quranic Verse Card: Blooms gently from within */}
+        <ScrollReveal direction="zoom" className="w-full max-w-md sm:max-w-lg relative">
           <div className="relative rounded-3xl overflow-hidden border-2 border-emerald-800/20 shadow-2xl shadow-emerald-950/20 aspect-4/5 bg-[#012213] group">
             {/* Rich forest green backdrop and photo with warm lighting */}
             <img
@@ -81,8 +81,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
         {/* Three Action Cards with Glowing & Twinkling Animation Effect */}
         <div className="mt-8 sm:mt-10 w-full flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap items-stretch md:items-center justify-center gap-3.5 sm:gap-5 font-solaiman">
           
-          {/* Card 1: Rich Green (গাঢ় সবুজ) background, white icon, white text */}
-          <ScrollReveal direction="left" delay={100} className="flex justify-center">
+          {/* Card 1: Rich Green background - Drops gently from top */}
+          <ScrollReveal direction="down" delay={80} className="flex justify-center">
             <button
               type="button"
               onClick={onOpenVolunteer}
@@ -93,8 +93,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </button>
           </ScrollReveal>
 
-          {/* Card 2: Deep Navy Blue (গাঢ় নেভি ব্লু) background, orange/gold icon, white text */}
-          <ScrollReveal direction="up" delay={200} className="flex justify-center">
+          {/* Card 2: Deep Navy Blue background - Expands gently from within */}
+          <ScrollReveal direction="zoom" delay={150} className="flex justify-center">
             <button
               type="button"
               onClick={onOpenNeedyInfo}
@@ -111,8 +111,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </button>
           </ScrollReveal>
 
-          {/* Card 3: Clean White (শুভ্র সাদা) background, dark icon, dark text */}
-          <ScrollReveal direction="right" delay={300} className="flex justify-center">
+          {/* Card 3: Clean White background - Floats up softly */}
+          <ScrollReveal direction="up" delay={250} className="flex justify-center">
             <button
               type="button"
               onClick={onOpenContactModal}
