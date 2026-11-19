@@ -539,3 +539,60 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
   };
 }
 
+/* ==========================================================================
+   5. NEWSLETTER / THOUGHTS SUBSCRIPTION (ইমেইল সাবস্ক্রিপশন)
+   ========================================================================== */
+
+export async function sendNewsletterSubscriptionEmail(
+  subscriberEmail: string,
+  articleTitle?: string
+): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const ccEmail = CC_EMAIL;
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+  const cleanedEmail = subscriberEmail.trim();
+  const subject = `[নতুন সাবস্ক্রাইবার] ${cleanedEmail} — জিকরুল্লাহ ফাউন্ডেশন`;
+
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        email: cleanedEmail,
+        _replyto: cleanedEmail,
+        _subject: subject,
+        _cc: ccEmail,
+        _template: 'table',
+        _captcha: 'false',
+        'সাবস্ক্রাইবারের ইমেইল': cleanedEmail,
+        'সাবস্ক্রাইবের উৎস': articleTitle ? `প্রবন্ধ: ${articleTitle}` : 'ভাবনা ও কর্মকথা',
+        'সাবস্ক্রাইবের সময়': submissionTime,
+        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
+      })
+    });
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: 'সার্ভার থেকে সাড়া পাওয়া যায়নি, অনুগ্রহ করে আবার চেষ্টা করুন।'
+      };
+    }
+
+    return {
+      success: true,
+      message: 'আপনার ইমেইল সফলভাবে আমাদের অফিসিয়াল ইমেইলে পাঠানো হয়েছে।'
+    };
+  } catch (err) {
+    console.warn('Newsletter subscription dispatch error:', err);
+    return {
+      success: false,
+      message: 'নেটওয়ার্ক সমস্যার কারণে ইমেইল পাঠানো যায়নি, অনুগ্রহ করে পুনরায় চেষ্টা করুন।'
+    };
+  }
+}

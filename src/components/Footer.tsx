@@ -8,7 +8,7 @@ interface FooterProps {
   onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
   onNavigateToAbout?: () => void;
-  onNavigateHome?: () => void;
+  onNavigateHome?: (hash?: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -20,25 +20,36 @@ export const Footer: React.FC<FooterProps> = ({
   const { t, isEn } = useLanguage();
 
   return (
-    <footer className="relative overflow-hidden text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950 bg-[#002e1d]">
-      {/* Background Image with Soft Dark Green Tint Overlay */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+    <footer
+      id="footer"
+      className="relative overflow-hidden text-emerald-100/90 pt-12 sm:pt-16 pb-8 border-t border-emerald-950 bg-gradient-to-br from-[#022a1d] via-[#043927] to-[#012217]"
+    >
+      {/* Background Artwork: Full Uncropped Image Anchored Bottom-Right + 90% Page-Matched Emerald Frosted Blur */}
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-end justify-end overflow-hidden">
         <img
-          src={FOUNDATION_INFO.homeBackgroundUrl || heroImg}
+          src="https://res.cloudinary.com/dlklqihg6/image/upload/v1795071755/vl2d3bdnntcrzykzz27z.png"
           alt={isEn ? 'Zikrullah Foundation Background' : 'জিকরুল্লাহ ফাউন্ডেশন ব্যাকগ্রাউন্ড'}
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-center scale-105"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = FOUNDATION_INFO.homeBackgroundUrl || heroImg;
+          }}
+          className="block max-w-full max-h-full w-auto h-auto object-contain object-right-bottom select-none blur-[2px]"
+          style={{
+            WebkitMaskImage:
+              'radial-gradient(135% 135% at 100% 100%, #000 72%, rgba(0, 0, 0, 0.5) 88%, transparent 100%)',
+            maskImage:
+              'radial-gradient(135% 135% at 100% 100%, #000 72%, rgba(0, 0, 0, 0.5) 88%, transparent 100%)',
+          }}
         />
-        {/* Soft Dark Green Tint Layer */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#002818]/93 via-[#013520]/89 to-[#001e12]/95" />
-        <div className="absolute inset-0 bg-emerald-950/75 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-radial from-transparent via-emerald-950/30 to-emerald-950/75" />
+        {/* 90% Deep Page-Matched Emerald Blur Veil so the underlying artwork shows softly & seamlessly */}
+        <div className="absolute inset-0 backdrop-blur-[4px] bg-gradient-to-br from-[#022a1d]/92 via-[#043927]/88 to-[#012418]/91" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-emerald-900/60">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-emerald-400/25">
           
           {/* Brand Col (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
@@ -47,6 +58,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <img
                   src={FOUNDATION_INFO.logoUrl}
                   alt={isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
+                  referrerPolicy="no-referrer"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = '/logo.jpg';
@@ -81,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Quick Links (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-800/60 pb-2">
+            <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-400/25 pb-2">
               {t.footer.quickLinks}
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
@@ -109,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="#projects"
                   onClick={() => {
-                    if (onNavigateHome) onNavigateHome();
+                    if (onNavigateHome) onNavigateHome('#projects');
                   }}
                   className="hover:text-white transition-colors"
                 >
@@ -120,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="#services"
                   onClick={() => {
-                    if (onNavigateHome) onNavigateHome();
+                    if (onNavigateHome) onNavigateHome('#services');
                   }}
                   className="hover:text-white transition-colors"
                 >
@@ -132,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Special Programs (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-800/60 pb-2">
+            <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-400/25 pb-2">
               {t.services.badge}
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
@@ -146,26 +158,42 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
-                <a href="#gallery" className="hover:text-white transition-colors block">
-                  {t.nav.gallery}
+                <a
+                  href="#ongoing-activities"
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome('#ongoing-activities');
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  {isEn ? 'Ongoing Activities' : 'চলমান কার্যক্রম'}
                 </a>
               </li>
               <li>
-                <a href="#news" className="hover:text-white transition-colors block">
-                  {t.nav.news}
+                <a
+                  href="#thoughts"
+                  onClick={() => {
+                    if (onNavigateHome) onNavigateHome('#thoughts');
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  {isEn ? 'Thoughts & Notes' : 'ভাবনা ও কর্মকথা'}
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-white transition-colors block">
-                  {t.nav.contact}
-                </a>
+                <button
+                  type="button"
+                  onClick={onOpenDonation}
+                  className="hover:text-white transition-colors cursor-pointer text-left block"
+                >
+                  {t.common.donateNow}
+                </button>
               </li>
             </ul>
           </div>
 
           {/* Contact & Banking (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-800/60 pb-2">
+            <h4 className="text-white font-bold text-sm tracking-wider uppercase font-sans mb-3 border-b border-emerald-400/25 pb-2">
               {t.footer.contactInfo}
             </h4>
             
@@ -200,7 +228,7 @@ export const Footer: React.FC<FooterProps> = ({
                 </a>
               </div>
 
-              <div className="pt-2 text-xs bg-emerald-950/80 p-3 rounded-xl border border-emerald-800/60 space-y-1.5 shadow-inner">
+              <div className="pt-2 text-xs bg-[#013219]/55 backdrop-blur-[2px] p-3.5 rounded-xl border border-emerald-400/25 space-y-1.5 shadow-inner">
                 <strong 
                   className="block font-serif-bn font-bold text-white text-[13px]"
                   style={{ color: '#FFFFFF' }}

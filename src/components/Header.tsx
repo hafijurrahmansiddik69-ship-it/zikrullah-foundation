@@ -169,22 +169,15 @@ export const Header: React.FC<HeaderProps> = ({
               {t.nav.services}
             </a>
             <a
-              href="#gallery"
-              onClick={(e) => handleNavToSection(e, 'gallery')}
+              href="#thoughts"
+              onClick={(e) => handleNavToSection(e, 'thoughts')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
-              {t.nav.gallery}
+              {isEn ? 'Reflections' : 'ভাবনা ও কর্মকথা'}
             </a>
             <a
-              href="#news"
-              onClick={(e) => handleNavToSection(e, 'news')}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
-            >
-              {t.nav.news}
-            </a>
-            <a
-              href="#contact"
-              onClick={(e) => handleNavToSection(e, 'contact')}
+              href="#footer"
+              onClick={(e) => handleNavToSection(e, 'footer')}
               className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
             >
               {t.nav.contact}
@@ -330,17 +323,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </a>
 
-              {/* 4. Gallery */}
-              <a
-                href="#gallery"
-                onClick={(e) => handleNavToSection(e, 'gallery')}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-              >
-                <span>{t.nav.gallery}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </a>
-
-              {/* 5. Get Involved */}
+              {/* 4. Get Involved */}
               <button
                 type="button"
                 onClick={() => {
@@ -353,30 +336,20 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
 
-              {/* 6. Blogs */}
+              {/* 6. Thoughts & Field Notes */}
               <a
-                href="#news"
-                onClick={(e) => handleNavToSection(e, 'news')}
+                href="#thoughts"
+                onClick={(e) => handleNavToSection(e, 'thoughts')}
                 className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
               >
-                <span>{t.nav.blogs}</span>
+                <span>{isEn ? 'Thoughts & Field Notes' : 'ভাবনা ও কর্মকথা'}</span>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </a>
 
-              {/* 7. Notice */}
+              {/* 7. Contact */}
               <a
-                href="#contact"
-                onClick={(e) => handleNavToSection(e, 'contact')}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-              >
-                <span>{t.nav.notice}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </a>
-
-              {/* 8. Contact */}
-              <a
-                href="#contact"
-                onClick={(e) => handleNavToSection(e, 'contact')}
+                href="#footer"
+                onClick={(e) => handleNavToSection(e, 'footer')}
                 className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
               >
                 <span>{t.nav.contact}</span>

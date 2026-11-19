@@ -1,18 +1,12 @@
-import { Project, ServiceItem, NewsItem, GalleryItem } from '../types';
+import { Project, ServiceItem, NewsItem } from '../types';
 
 const heroImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1791214336/bfl9h9ic5e2zvkynca1b.jpg";
 const foodImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg";
-import eduImg from '../assets/images/education_aid_students_1791208774675.jpg';
-import medImg from '../assets/images/medical_camp_aid_1791208791787.jpg';
-import selfRelianceImg from '../assets/images/self_reliance_aid_1791986374204.jpg';
-import scholar1 from '../assets/images/milon_hossain_portrait_1791292236483.jpg';
-import scholar2 from '../assets/images/mamun_islam_portrait_1791292689791.jpg';
-import scholar3 from '../assets/images/borhan_ali_portrait_1791293367263.jpg';
-import scholar4 from '../assets/images/scholar_portrait_4_1791215689324.jpg';
-import scholar5 from '../assets/images/scholar_portrait_5_1791215706422.jpg';
-import scholar6 from '../assets/images/scholar_portrait_6_1791215718775.jpg';
+const eduImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1792763851/uhoy2dhdewkxkbqpf6hs.jpg";
+const medImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg";
+const selfRelianceImg = "https://res.cloudinary.com/dlklqihg6/image/upload/v1795062375/tbthh7wvmaybjfekcnnq.jpg";
 
-export { heroImg, foodImg, eduImg, medImg, selfRelianceImg, scholar1, scholar2, scholar3, scholar4, scholar5, scholar6 };
+export { heroImg, foodImg, eduImg, medImg, selfRelianceImg };
 
 export const EXECUTIVE_MEMBERS = [
   {
@@ -303,54 +297,6 @@ export const NEWS_LIST: NewsItem[] = [
   }
 ];
 
-export const GALLERY_ITEMS: GalleryItem[] = [
-  {
-    id: "g1",
-    title: "মানবসেবা ও ত্রাণ বিতরণ কার্যক্রম",
-    titleEn: "Humanitarian Service & Relief Distribution",
-    category: "খাদ্য সহায়তা",
-    categoryEn: "Food Aid",
-    location: "গুজিয়া, মোকামতলা",
-    locationEn: "Gujia, Mokamtala",
-    imageUrl: foodImg,
-    date: "সেপ্টেম্বর ২০২৬",
-    dateEn: "September 2026"
-  },
-  {
-    id: "g2",
-    title: "শিক্ষার্থীদের মাঝে পাঠ্যবই ও ব্যাগ উপহার",
-    titleEn: "Gifting Textbooks & School Bags to Students",
-    category: "শিক্ষা সহায়তা",
-    categoryEn: "Education Aid",
-    location: "মোকামতলা, বগুড়া",
-    locationEn: "Mokamtala, Bogura",
-    date: "আগস্ট ২০২৬",
-    dateEn: "August 2026"
-  },
-  {
-    id: "g3",
-    title: "বিনামূল্যে বিশেষজ্ঞ চিকিৎসা ক্যাম্প",
-    titleEn: "Free Specialist Medical Camp",
-    category: "স্বাস্থ্যসেবা",
-    categoryEn: "Healthcare",
-    location: "গুজিয়া, বগুড়া",
-    locationEn: "Gujia, Bogura",
-    date: "জুলাই ২০২৬",
-    dateEn: "July 2026"
-  },
-  {
-    id: "g4",
-    title: "স্বেচ্ছাসেবীদের মানবিক উদ্যোগ সমাবেশ",
-    titleEn: "Volunteers' Humanitarian Initiative Gathering",
-    category: "সামাজিক সমাবেশ",
-    categoryEn: "Community Gathering",
-    location: "বগুড়া কার্যালয়",
-    locationEn: "Bogura Office",
-    imageUrl: heroImg,
-    date: "মে ২০২৬",
-    dateEn: "May 2026"
-  }
-];
 
 export const DAILY_HADITH = {
   arabic: "مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ",

@@ -15,7 +15,6 @@ import {
   Camera
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { eduImg, medImg, selfRelianceImg } from '../data/mockData';
 
 interface CardConfig {
   id: string;
@@ -60,7 +59,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#ff416c]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(255,65,108,0.4)]',
     accentText: 'text-[#ff416c]',
-    bannerImage: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1200&q=80'
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg'
   },
   // 4. Education Aid
   {
@@ -104,7 +103,7 @@ const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#f59e0b]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(245,158,11,0.45)]',
     accentText: 'text-[#fbbf24]',
-    bannerImage: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80'
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg'
   }
 ];
 
@@ -210,7 +209,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
                     // Fallback placeholder if image load fails
-                    (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80';
+                    (e.currentTarget as HTMLImageElement).src = 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg';
                   }}
                 />
                 {/* Gradient Scrim */}

@@ -5,9 +5,7 @@ import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
 import { OngoingActivitiesSection } from './components/OngoingActivitiesSection';
-import { GallerySection } from './components/GallerySection';
-import { NewsSection } from './components/NewsSection';
-import { ContactSection } from './components/ContactSection';
+import { ThoughtsSection } from './components/ThoughtsSection';
 import { Footer } from './components/Footer';
 import { DonationModal } from './components/DonationModal';
 import { VolunteerModal } from './components/VolunteerModal';
@@ -18,7 +16,7 @@ import { Heart } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
 function MainApp() {
-  const { t, isEn } = useLanguage();
+  const { isEn } = useLanguage();
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -154,32 +152,31 @@ function MainApp() {
               onOpenDonation={(cat, amt) => handleOpenDonation(cat, amt)}
             />
 
-            <GallerySection />
-
-            <NewsSection />
-
-            <ContactSection />
+            <ThoughtsSection
+              onOpenDonation={() => handleOpenDonation()}
+              onOpenVolunteer={() => setIsVolunteerOpen(true)}
+            />
           </>
         )}
       </main>
 
       {/* Institutional Footer */}
       <Footer
-        onNavigateHome={() => navigateTo('home')}
+        onNavigateHome={(hash) => navigateTo('home', hash)}
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
       />
 
-      {/* Floating Quick Donate Trigger on Mobile/Desktop */}
+      {/* Floating Quick Support Trigger */}
       <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
         <button
           onClick={() => handleOpenDonation()}
-          className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-2.5 sm:px-5 sm:py-3.5 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white"
-          aria-label={t.common.donate}
+          className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white whitespace-nowrap"
+          aria-label={isEn ? 'Support Us' : 'সহযোগিতা করুন'}
         >
-          <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white animate-pulse" />
-          <span>{t.common.donate}</span>
+          <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
+          <span>{isEn ? 'Support Us' : 'সহযোগিতা করুন'}</span>
         </button>
       </div>
 

@@ -94,7 +94,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           <button
             type="button"
             onClick={onOpenNeedyInfo}
-            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(15,23,42,0.45)] hover:shadow-[0_0_30px_rgba(30,41,59,0.7)] border-2 border-amber-400/90 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold shadow-[0_0_20px_rgba(14,165,233,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.7)] border-2 border-cyan-400/80 animate-pulse-glow hover:-translate-y-1 transition-all cursor-pointer whitespace-nowrap"
           >
             <span className="relative inline-flex items-center justify-center shrink-0">
               <HandHeart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
