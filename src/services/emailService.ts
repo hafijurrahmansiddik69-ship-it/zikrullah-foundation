@@ -93,7 +93,7 @@ export function generateVolunteerEmailContent(data: VolunteerSubmissionData): {
   const addressLabel = data.upazila?.trim() || 'উল্লেখ করা হয়নি';
   const subject = `[স্বেচ্ছাসেবক আবেদন] ${data.name} — ${addressLabel}`;
 
-  const body = `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+  const body = `বিসমিল্লাহির রাহমানির রাহীম
 
 জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
 Official Email: ${recipientEmail}
