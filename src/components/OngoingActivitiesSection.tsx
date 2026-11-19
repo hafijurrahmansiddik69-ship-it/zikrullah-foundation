@@ -22,16 +22,20 @@ export interface OngoingProjectItem {
   donationCategoryKey: string;
   titleBn: string;
   titleEn: string;
+  subtitleBn?: string;
+  subtitleEn?: string;
   shortDescBn: string;
   shortDescEn: string;
   quoteBn: string;
   quoteEn: string;
+  quoteArabic?: string;
   quoteRefBn: string;
   quoteRefEn: string;
   detailedDescBn: string;
   detailedDescEn: string;
   highlightsBn: string[];
   highlightsEn: string[];
+  hideProgressInModal?: boolean;
   raisedAmount: number;
   raisedAmountBn: string;
   raisedAmountEn: string;
@@ -54,43 +58,34 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     donationCategoryKey: 'winter-relief',
     titleBn: 'শীত বস্ত্র বিতরণ কর্মসূচি',
     titleEn: 'Winter Clothing & Blanket Drive',
-    shortDescBn: 'হিমেল হাওয়া ও কনকনে শীতে অসহায়, এতিম ও ছিন্নমূল মানুষের মাঝে উষ্ণতা ছড়িয়ে দিতে জিকরুল্লাহ ফাউন্ডেশনের বিশেষ মানবিক উদ্যোগ...',
-    shortDescEn: 'A special humanitarian initiative by Zikrullah Foundation to spread warmth among vulnerable, orphaned, and destitute people during freezing winters...',
-    quoteBn: '“কোনো মুসলমান অপর কোনো মুসলমানকে বস্ত্রহীন অবস্থায় পোশাক পরিধান করালে আল্লাহ তাআলা তাকে জান্নাতের সবুজ পোশাক পরিধান করাবেন।”',
-    quoteEn: '“Whosoever clothes a Muslim when he is unclothed, Allah will clothe him with the green garments of Paradise.”',
-    quoteRefBn: '— সুনান আবু দাউদ : ১৬৮২',
-    quoteRefEn: '— Sunan Abi Dawud : 1682',
-    detailedDescBn: 'উত্তরবঙ্গের বগুড়া, শিবগঞ্জ ও মোকামতলা অঞ্চলে পৌষ-মাঘের হাড়কাঁপানো কনকনে শীতে অসহায় ছিন্নমূল মানুষ, দরিদ্র কৃষক, দিনমজুর ও এতিম শিশুরা সীমাহীন কষ্টে দিনাতিপাত করে। তীব্র শীতে প্রবীণ ও শিশুরা ঠান্ডাজনিত নানাবিধ জটিল রোগে আক্রান্ত হন। জিকরুল্লাহ ফাউন্ডেশন সরাসরি প্রত্যন্ত গ্রামগুলোতে বাড়ি বাড়ি গিয়ে প্রকৃত অভাবগ্রস্তদের তালিকা প্রণয়ন করে উন্নত মানের ভারী কম্বল, সোয়েটার ও শিশুদের শীতবস্ত্র পৌঁছে দিচ্ছে।',
-    detailedDescEn: 'In rural northern Bangladesh including Mokamtala, Gujia, and Shibganj, destitute laborers, elderly folks, and orphaned children suffer severe distress during freezing winter waves. Zikrullah Foundation conducts direct field surveys to hand over high-grade warm blankets, sweaters, and winter garments directly to those most in need.',
-    highlightsBn: [
-      'বগুড়ার প্রত্যন্ত চরাঞ্চল ও দুর্গম গ্রামে বাড়ি বাড়ি গিয়ে উন্নত মানের ভারী কম্বল বিতরণ',
-      'গ্রামের এতিমখানা ও মাদ্রাসার শিশুদের মাঝে উষ্ণ পোশাক ও সোয়েটার উপহার',
-      'প্রতিবন্ধী, প্রবীণ ও অসহায় বিধবাদের দ্বারে সরাসরি শীতবস্ত্র হস্তান্তর',
-      '১০০% আমানতদারিতা ও স্বচ্ছতার সাথে মাঠপর্যায়ের ছবি ও অডিট রিপোর্ট প্রকাশ'
-    ],
-    highlightsEn: [
-      'Door-to-door distribution of heavy high-grade warm blankets in rural villages',
-      'Sweaters and winter warm clothes gifted to madrasah and orphanage students',
-      'Direct winter warmth delivery to elderly, disabled, and destitute widows',
-      '100% transparent audit report and field photography documentation'
-    ],
-    raisedAmount: 15000,
-    raisedAmountBn: '৳১৫,০০০',
-    raisedAmountEn: '৳15,000',
-    targetAmount: 100000,
-    targetAmountBn: '৳১,০০,০০০',
-    targetAmountEn: '৳100,000',
-    percentage: 15,
-    percentageBn: '১৫% সম্পন্ন',
-    percentageEn: '15% Completed',
-    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
+    subtitleBn: 'শীত বস্ত্র বিতরণ কর্মসূচি ২০২৬-২৭',
+    subtitleEn: 'Winter Clothing Distribution Program 2026-27',
+    shortDescBn: 'কনকনে শীতে অসহায় মানুষের গায়ে উষ্ণতা জড়িয়ে দিতে জিকরুল্লাহ ফাউন্ডেশনের আন্তরিক প্রয়াস।',
+    shortDescEn: 'A sincere endeavor by Zikrullah Foundation to wrap helpless people in warmth during the freezing winter.',
+    quoteBn: '“আপনার আন্তরিক সহযোগিতা হতে পারে একজন শীতার্ত মানুষের জন্য স্বস্তির আশ্রয়।”',
+    quoteEn: '“Your sincere cooperation can be a shelter of comfort for a shivering human being.”',
+    quoteRefBn: '',
+    quoteRefEn: '',
+    detailedDescBn: 'শীতের আগমনে আমাদের ঘরে যখন উষ্ণতা নামে, তখন খোলা আকাশের নিচে, রাস্তার পাশে কিংবা জীর্ণ ঘরে থাকা অসহায় মানুষগুলো কাঁপতে থাকে তীব্র শীতে—এক টুকরো সামান্য কাপড়ই তখন তাদের একমাত্র সম্বল।\n\nঅসহায় সেই মানুষগুলোর গায়ে একটু উষ্ণতা জড়িয়ে দিতে জিকরুল্লাহ ফাউন্ডেশন শুরু করেছে শীতবস্ত্র বিতরণ কর্মসূচি। আপনার আন্তরিক সহযোগিতা হতে পারে একজন শীতার্ত মানুষের জন্য স্বস্তির আশ্রয়।',
+    detailedDescEn: 'When warmth fills our homes at the onset of winter, helpless people under the open sky, by the roadside, or in dilapidated huts shiver in the bitter cold—where a single piece of thin cloth is their only shelter.\n\nTo wrap those helpless people in warmth, Zikrullah Foundation has launched the Winter Clothing Distribution Program. Your sincere cooperation can be a shelter of comfort for a shivering human being.',
+    highlightsBn: [],
+    highlightsEn: [],
+    raisedAmount: 5000,
+    raisedAmountBn: '৳৫,০০০',
+    raisedAmountEn: '৳5,000',
+    targetAmount: 50000,
+    targetAmountBn: '৳৫০,০০০',
+    targetAmountEn: '৳50,000',
+    percentage: 10,
+    percentageBn: '১০% সম্পন্ন',
+    percentageEn: '10% Completed',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795062210/xozx5n4eovwro6gsjt4v.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80',
-      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
-      'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80'
+      'https://res.cloudinary.com/dlklqihg6/image/upload/v1795062210/xozx5n4eovwro6gsjt4v.jpg',
+      'https://res.cloudinary.com/dlklqihg6/image/upload/v1795054479/h2st0b9ide6rjqwlm5m0.jpg'
     ],
-    locationBn: 'মোকামতলা, গুজিয়া ও শিবগঞ্জ, বগুড়া',
-    locationEn: 'Mokamtala, Gujia & Shibganj, Bogura'
+    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ',
+    locationEn: 'Mokamtala & Shibganj, Bogura, Bangladesh'
   },
 
   // ২ নম্বর কার্ড — মানবতার সেবায় খাবার হাদিয়া
@@ -152,18 +147,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     quoteRefEn: '— Sahih Muslim : 2699',
     detailedDescBn: 'গ্রামের বহু প্রান্তিক পরিবার অর্থের অভাবে প্রেসক্রিপশনের জীবনরক্ষাকারী ওষুধ কিনতে পারে না। ফলে সামান্য অসুস্থতাও অনেক সময় দীর্ঘমেয়াদি পঙ্গুত্ব বা মৃত্যুর কারণ হয়ে দাঁড়ায়। জিকরুল্লাহ ফাউন্ডেশনের এই প্রকল্পের মাধ্যমে গুরুতর অসুস্থ রোগীদের ওষুধ কিনে দেওয়া হয়, প্রেসক্রিপশন অনুযায়ী সরাসরি ফার্মেসি থেকে ওষুধ হস্তান্তর করা হয় এবং বয়োবৃদ্ধদের ডায়াবেটিস ও প্রেশারের ওষুধ নিয়মিত সহায়তা করা হয়।',
     detailedDescEn: 'Due to severe poverty, many villagers cannot afford life-saving prescription medicines. Zikrullah Foundation purchases and provides authentic medicines directly to critically ill individuals, pays for diagnostic tests, and facilitates specialist healthcare camps.',
-    highlightsBn: [
-      'মুমূর্ষু ও অসহায় রোগীদের প্রেসক্রিপশন অনুযায়ী সরাসরি ১০০% বিনামূল্যে ওষুধ প্রদান',
-      'জরুরি ডায়াগনস্টিক পরীক্ষা ও রক্তের ল্যাব টেস্ট ফি ফাউন্ডেশন ফান্ড থেকে পরিশোধ',
-      'বয়স্ক ও দীর্ঘমেয়াদি জটিল রোগীদের নিয়মিত মাসিক ওষুধ সহায়তা',
-      'অভিজ্ঞ বিশেষজ্ঞ চিকিৎসকদের তত্ত্বাবধানে ফ্রি মেডিকেল ক্যাম্প পরিচালনা'
-    ],
-    highlightsEn: [
-      '100% free authentic prescription medicines purchased directly for critical patients',
-      'Full coverage of urgent diagnostic, blood, and pathology laboratory tests',
-      'Monthly continuous medicine support for destitute chronic patients',
-      'Free periodic specialist medical camps in underserved village centers'
-    ],
+    highlightsBn: [],
+    highlightsEn: [],
     raisedAmount: 18000,
     raisedAmountBn: '৳১৮,০০০',
     raisedAmountEn: '৳18,000',
@@ -173,11 +158,10 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     percentage: 18,
     percentageBn: '১৮% সম্পন্ন',
     percentageEn: '18% Completed',
-    image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
-      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
-      'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80'
+      'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg',
+      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80'
     ],
     locationBn: 'মোকামতলা ও শিবগঞ্জ স্বাস্থ্য কেন্দ্র এলাকা',
     locationEn: 'Mokamtala & Shibganj Healthcare Reach'
@@ -191,24 +175,26 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     titleEn: 'Orphan Care & Sponsorship',
     shortDescBn: 'পিতৃহীন ও অসহায় এতিম শিশুদের নিরাপদ আশ্রয়, পুষ্টিকর খাদ্য, পোশাক ও আদর্শ মানুষ হিসেবে গড়ে তোলার দায়িত্বশীল উদ্যোগ...',
     shortDescEn: 'A responsible initiative to provide safe shelter, wholesome food, clothing, and moral upbringing for fatherless and vulnerable orphaned children...',
-    quoteBn: 'রাসূলুল্লাহ (ﷺ) তর্জনী ও মধ্যমা আঙুল মিলিয়ে বললেন: “আমি ও এতিমের দায়িত্ব গ্রহণকারী জান্নাতে এভাবে পাশাপাশি থাকব।”',
-    quoteEn: 'The Messenger of Allah (ﷺ) said, holding his index and middle fingers together: “I and the sponsor of an orphan will be in Paradise like this.”',
+    quoteArabic: 'قَالَ رَسُوْلُ اللهِ ﷺ وَأَنَا وَكَافِلُ الْيَتِيمِ فِي الْجَنَّةِ هٰكَذَا',
+    quoteBn: 'রাসূলুল্লাহ (ﷺ) বলেছেন: “আমি এবং এতিমের দায়িত্ব গ্রহণকারী জান্নাতে এভাবে পাশাপাশি থাকব।”',
+    quoteEn: 'The Messenger of Allah (ﷺ) said: “I and the sponsor of an orphan will be in Paradise like this.”',
     quoteRefBn: '— সহীহ বুখারী : ৫৩০৪',
     quoteRefEn: '— Sahih Al-Bukhari : 5304',
-    detailedDescBn: 'পিতা হারানো নিষ্পাপ শিশুরা যখন চরম নিরাপত্তাহীনতা ও দারিদ্র্যের মুখে পড়ে, তখন তাদের পাশে দাঁড়ানো উম্মাহর সবচেয়ে বড় দায়িত্ব। জিকরুল্লাহ ফাউন্ডেশন এতিম শিশুদের অভিভাবকত্ব গ্রহণ করে তাদের পুষ্টিকর খাবার, স্বাস্থ্যসম্মত পোশাক, চিকিৎসা এবং ধর্মীয় ও যুগোপযোগী শিক্ষার সার্বিক দায়িত্ব বহন করে, যাতে তারা আত্মমর্যাদা নিয়ে আদর্শ মানুষ হতে পারে।',
-    detailedDescEn: 'When young fatherless children face acute vulnerability, standing by them is one of the highest deeds in Islam. Zikrullah Foundation provides comprehensive orphan sponsorships covering wholesome food, clothes, healthcare, and high-quality Islamic and formal education.',
+    detailedDescBn: 'সমাজ ও পরিবারের সবচেয়ে অসহায় অংশ হলো এতিম শিশুরা। বাবা-মাকে হারিয়ে যারা শৈশবেই অভিভাবকহীন হয়ে পড়ে, তাদের পাশে দাঁড়ানো আমাদের ঈমানি ও মানবিক দায়িত্ব।\n\nজিকরুল্লাহ ফাউন্ডেশনের “এতিম লালন-পালন” উদ্যোগের লক্ষ্য হলো এই সুবিধাবঞ্চিত শিশুদের শুধু অন্ন-বস্ত্র দেওয়াই নয়; বরং তাদের পুষ্টিকর খাবার, স্বাস্থ্যসম্মত পোশাক, চিকিৎসা এবং ধর্মীয় ও আধুনিক শিক্ষার সার্বিক দায়িত্ব বহন করে আত্মমর্যাদাশীল আদর্শ মানুষ হিসেবে গড়ে তোলা। আপনার সাদাকাহ, যাকাত ও আন্তরিক সহযোগিতার মাধ্যমে আপনিও আজই একজন এতিম শিশুর পাশে দাঁড়াতে বা অভিভাবকত্বে শরিক হতে পারেন।',
+    detailedDescEn: 'Orphaned children are the most vulnerable members of our society and families. Standing beside those who lose their parents and are left without a guardian in childhood is both our moral and faith-based responsibility.\n\nThe goal of Zikrullah Foundation’s “Orphan Care” initiative is not merely to provide food and clothing to these underprivileged children, but to take full responsibility for their nutritious meals, proper clothing, medical care, and both religious and modern education—nurturing them into dignified, ideal human beings. Through your Sadaqah, Zakat, and sincere support, you too can stand beside an orphan or participate in their sponsorship today.',
     highlightsBn: [
-      'মাসিক কাফালত স্পনসরশিপের মাধ্যমে এতিম শিশুদের সম্পূর্ণ খাদ্য ও পোশাকের দায়িত্ব',
-      'সহীহ কুরআন হেফজখানা ও স্কুলে পড়াশোনার যাবতীয় খরচ বহন',
-      'শিশুদের নিয়মিত স্বাস্থ্য পরীক্ষা ও মানসিক বিকাশে নিবিড় তত্ত্বাবধান',
-      'পবিত্র ঈদ ও ধর্মীয় উৎসবে নতুন পোশাক ও বিশেষ উৎসব উপহার প্রদান'
+      'নিয়মিত মাসিক সহযোগিতার মাধ্যমে এতিম শিশুদের খাদ্য ও পোশাকের দায়িত্ব',
+      'মাদ্রাসা (মক্তব, হিফজ, কিতাব বিভাগ ও উচ্চতর জামাত) ও স্কুলে পড়াশোনার খরচ বহন',
+      'শিশুদের নিয়মিত স্বাস্থ্য পরীক্ষা ও মানসিক বিকাশে যত্নশীল তত্ত্বাবধান',
+      'ঈদ ও বিশেষ উৎসবে নতুন পোশাক ও আনন্দের উপহার প্রদান'
     ],
     highlightsEn: [
-      'Comprehensive monthly Kafalah sponsorship covering full food and clothes',
-      'All educational fees and books for Hifzul Quran and primary schooling',
-      'Regular medical checkups, hygiene care, and compassionate emotional guidance',
-      'New festival clothes and gifts during Eid and auspicious Islamic celebrations'
+      'Responsibility for orphans’ food and clothing through regular monthly support',
+      'Covering educational expenses at Madrasah (Maktab, Hifz, Kitab & higher classes) and school',
+      'Regular health checkups and attentive supervision for children’s mental development',
+      'Providing new clothes and joyful gifts during Eid and special celebrations'
     ],
+    hideProgressInModal: true,
     raisedAmount: 20000,
     raisedAmountBn: '৳২০,০০০',
     raisedAmountEn: '৳20,000',
@@ -218,11 +204,10 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     percentage: 20,
     percentageBn: '২০% সম্পন্ন',
     percentageEn: '20% Completed',
-    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061051/e9anj19wzwxbp90kqqre.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80',
-      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763851/uhoy2dhdewkxkbqpf6hs.jpg',
-      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg'
+      'https://res.cloudinary.com/dlklqihg6/image/upload/v1795057376/wfzdhfhp8lgu932wghed.png',
+      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763851/uhoy2dhdewkxkbqpf6hs.jpg'
     ],
     locationBn: 'গুজিয়া ও শিবগঞ্জ এলাকা, বগুড়া',
     locationEn: 'Gujia & Shibganj Area, Bogura'
@@ -308,10 +293,8 @@ export const ONGOING_PROJECTS: OngoingProjectItem[] = [
     percentage: 17,
     percentageBn: '১৭% সম্পন্ন',
     percentageEn: '17% Completed',
-    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763774/zwnrunrscvxecmhnm1zk.jpg',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795062375/tbthh7wvmaybjfekcnnq.jpg',
     galleryImages: [
-      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763774/zwnrunrscvxecmhnm1zk.jpg',
-      'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
       'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80'
     ],
     locationBn: 'মোকামতলা ও বগুড়ার বিভিন্ন ইউনিয়ন',
@@ -416,8 +399,8 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
 
           <p className="text-slate-600 font-solaiman text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
             {isEn 
-              ? 'Stand beside our blessed ongoing humanitarian initiatives with your sincere charity and Sadaqah to bring smiles and build eternal rewards.'
-              : 'মানবতার নিঃস্বার্থ সেবা ও আখিরাতের স্থায়ী সঞ্চয় গড়ে তুলতে জিকরুল্লাহ ফাউন্ডেশনের চলমান বরকতময় প্রকল্পসমূহে আপনার সাদাকাহ ও অনুদান দিয়ে শরিক হোন।'}
+              ? 'You too can join our ongoing initiatives for the welfare of humanity and eternal rewards.'
+              : 'মানবতার কল্যাণে ও স্থায়ী সওয়াবের লক্ষ্যে আমাদের চলমান কার্যক্রমে আপনিও যুক্ত হতে পারেন।'}
           </p>
         </div>
 
@@ -580,6 +563,11 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                 <h3 className="font-serif-bn font-bold text-xl sm:text-2xl md:text-3xl leading-tight drop-shadow-md">
                   {isEn ? selectedProject.titleEn : selectedProject.titleBn}
                 </h3>
+                {(isEn ? selectedProject.subtitleEn : selectedProject.subtitleBn) && (
+                  <p className="font-solaiman text-xs sm:text-sm text-emerald-200 font-medium mt-1 drop-shadow-sm">
+                    {isEn ? selectedProject.subtitleEn : selectedProject.subtitleBn}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -588,12 +576,23 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
               
               {/* Green Border Quotation Box (As requested: সবুজ বর্ডার দেওয়া কোটেশন বক্স) */}
               <div className="bg-emerald-50/90 border-l-4 border-[#064e3b] rounded-r-2xl p-4 sm:p-5 shadow-xs">
+                {selectedProject.quoteArabic && (
+                  <p
+                    className="font-arabic font-bold text-[#064e3b] text-base sm:text-lg leading-loose text-right mb-2"
+                    dir="rtl"
+                    lang="ar"
+                  >
+                    {selectedProject.quoteArabic}
+                  </p>
+                )}
                 <p className="font-serif-bn text-emerald-950 text-sm sm:text-base leading-relaxed font-semibold italic">
                   {isEn ? selectedProject.quoteEn : selectedProject.quoteBn}
                 </p>
-                <span className="block text-right text-xs font-bold text-[#d97706] mt-2 font-mono">
-                  {isEn ? selectedProject.quoteRefEn : selectedProject.quoteRefBn}
-                </span>
+                {(isEn ? selectedProject.quoteRefEn : selectedProject.quoteRefBn) && (
+                  <span className="block text-right text-xs font-bold text-[#d97706] mt-2 font-mono">
+                    {isEn ? selectedProject.quoteRefEn : selectedProject.quoteRefBn}
+                  </span>
+                )}
               </div>
 
               {/* Project Detailed Narrative */}
@@ -602,26 +601,28 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                   <Layers className="w-4 h-4 text-[#064e3b]" />
                   <span>{isEn ? 'Project Overview & Field Context' : 'প্রকল্পের পটভূমি ও লক্ষ্য'}</span>
                 </h4>
-                <p className="text-slate-700 text-sm sm:text-[15px] leading-relaxed">
+                <p className="text-slate-700 text-sm sm:text-[15px] leading-relaxed whitespace-pre-line">
                   {isEn ? selectedProject.detailedDescEn : selectedProject.detailedDescBn}
                 </p>
               </div>
 
               {/* Key Highlights / Steps */}
-              <div className="bg-[#f8faf9] border border-emerald-900/10 rounded-2xl p-4 sm:p-5 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#064e3b] uppercase tracking-wider">
-                  <Sparkles className="w-4 h-4 text-[#d97706]" />
-                  <span>{isEn ? 'Key Action Steps & Execution' : 'কাজের প্রধান ধাপসমূহ'}</span>
+              {(isEn ? selectedProject.highlightsEn : selectedProject.highlightsBn).length > 0 && (
+                <div className="bg-[#f8faf9] border border-emerald-900/10 rounded-2xl p-4 sm:p-5 space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#064e3b] uppercase tracking-wider">
+                    <Sparkles className="w-4 h-4 text-[#d97706]" />
+                    <span>{isEn ? 'Key Action Steps & Execution' : 'কাজের প্রধান ধাপসমূহ'}</span>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {(isEn ? selectedProject.highlightsEn : selectedProject.highlightsBn).map((item, hIdx) => (
+                      <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                        <CheckCircle2 className="w-4 h-4 text-[#064e3b] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-2.5">
-                  {(isEn ? selectedProject.highlightsEn : selectedProject.highlightsBn).map((item, hIdx) => (
-                    <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-[#064e3b] shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              )}
 
               {/* Photo Gallery / Previews (ছবি ও গ্যালারি) */}
               {selectedProject.galleryImages && selectedProject.galleryImages.length > 0 && (
@@ -645,39 +646,41 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
               )}
 
               {/* Fund Progress Bar inside Modal */}
-              <div className="bg-[#f3f7f5] rounded-2xl p-4 sm:p-5 border border-emerald-900/15">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-solaiman mb-2.5">
-                  <span className="font-semibold text-slate-800">
-                    {isEn ? 'Raised: ' : 'সংগৃহীত: '}
-                    <span className="text-[#064e3b] font-bold font-mono">
-                      {isEn ? selectedProject.raisedAmountEn : selectedProject.raisedAmountBn}
+              {!selectedProject.hideProgressInModal && (
+                <div className="bg-[#f3f7f5] rounded-2xl p-4 sm:p-5 border border-emerald-900/15">
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-solaiman mb-2.5">
+                    <span className="font-semibold text-slate-800">
+                      {isEn ? 'Raised: ' : 'সংগৃহীত: '}
+                      <span className="text-[#064e3b] font-bold font-mono">
+                        {isEn ? selectedProject.raisedAmountEn : selectedProject.raisedAmountBn}
+                      </span>
                     </span>
-                  </span>
-                  <span className="font-semibold text-slate-800">
-                    {isEn ? 'Goal: ' : 'লক্ষ্য: '}
-                    <span className="text-slate-900 font-bold font-mono">
-                      {isEn ? selectedProject.targetAmountEn : selectedProject.targetAmountBn}
+                    <span className="font-semibold text-slate-800">
+                      {isEn ? 'Goal: ' : 'লক্ষ্য: '}
+                      <span className="text-slate-900 font-bold font-mono">
+                        {isEn ? selectedProject.targetAmountEn : selectedProject.targetAmountBn}
+                      </span>
                     </span>
-                  </span>
-                </div>
+                  </div>
 
-                <div className="w-full bg-slate-300/70 rounded-full h-3 overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#064e3b] via-[#087443] to-[#10b981] rounded-full"
-                    style={{ width: `${Math.min(selectedProject.percentage, 100)}%` }}
-                  />
-                </div>
+                  <div className="w-full bg-slate-300/70 rounded-full h-3 overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-[#064e3b] via-[#087443] to-[#10b981] rounded-full"
+                      style={{ width: `${Math.min(selectedProject.percentage, 100)}%` }}
+                    />
+                  </div>
 
-                <div className="flex items-center justify-between mt-2 text-xs">
-                  <span className="text-slate-500 flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#064e3b]" />
-                    <span>{isEn ? '100% Transparent Amanah' : '১০০% বিশ্বস্ত ও স্বচ্ছ পরিচালনা'}</span>
-                  </span>
-                  <span className="font-bold text-[#d97706] font-mono text-sm">
-                    {isEn ? selectedProject.percentageEn : selectedProject.percentageBn}
-                  </span>
+                  <div className="flex items-center justify-between mt-2 text-xs">
+                    <span className="text-slate-500 flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#064e3b]" />
+                      <span>{isEn ? '100% Transparent Amanah' : '১০০% বিশ্বস্ত ও স্বচ্ছ পরিচালনা'}</span>
+                    </span>
+                    <span className="font-bold text-[#d97706] font-mono text-sm">
+                      {isEn ? selectedProject.percentageEn : selectedProject.percentageBn}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
 
