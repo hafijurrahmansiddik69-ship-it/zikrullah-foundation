@@ -129,7 +129,10 @@ function MainApp() {
           <>
             <Hero
               onNavigateToAbout={() => navigateTo('about')}
-              onOpenDonation={() => handleOpenDonation()}
+              onOpenDonation={(cat) => handleOpenDonation(cat)}
+              onOpenVolunteer={() => setIsVolunteerOpen(true)}
+              onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+              onOpenContactModal={() => setIsDirectContactOpen(true)}
             />
 
             <AboutSection 
@@ -139,9 +142,6 @@ function MainApp() {
               onOpenContactModal={() => setIsDirectContactOpen(true)}
               onOpenDonation={() => handleOpenDonation()}
             />
-
-            {/* আমাদের বর্তমান ও চলমান প্রকল্পসমূহ (10 Minute School ক্যাটাগরি বাটন/কার্ড ও বিস্তারিত মডিউল) */}
-            <ProjectsSection onOpenDonation={(cat) => handleOpenDonation(cat)} />
 
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}

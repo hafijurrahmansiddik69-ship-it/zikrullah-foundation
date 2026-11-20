@@ -479,6 +479,46 @@ body.lang-en .font-solaiman {
   animation: heroFade 1s ease-out both;
 }
 
+@keyframes rayStream {
+  0% {
+    stroke-dashoffset: 56;
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.35;
+  }
+}
+
+.animate-ray-stream {
+  animation: rayStream 2.8s linear infinite;
+}
+
+@keyframes mapOpeningEffect {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) translateY(-10px);
+    filter: drop-shadow(0 0 30px rgba(56, 239, 125, 0.9)) brightness(1.6);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.02) translateY(0);
+    filter: drop-shadow(0 0 35px rgba(245, 158, 11, 0.95)) brightness(1.4);
+  }
+  100% {
+    opacity: 0.82;
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.5)) brightness(1.05);
+  }
+}
+
+.animate-map-opening {
+  animation: mapOpeningEffect 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .hero-delay-80 { animation-delay: 80ms; }
 .hero-delay-100 { animation-delay: 100ms; }
 .hero-delay-150 { animation-delay: 150ms; }

@@ -69,12 +69,12 @@ export const translations = {
         {
           badge: 'খাদ্য ও বস্ত্র',
           title: 'মানবিক সহায়তা',
-          subtitle: 'জরুরি খাদ্য, পুষ্টি ও বস্ত্র সহায়তা প্রকল্প',
-          description: 'সমাজের সবচেয়ে পিছিয়ে পড়া প্রান্তিক মানুষ, অসহায় বিধবা ও এতিম শিশুদের জন্য খাদ্য, পুষ্টি এবং নিরাপদ আশ্রয়ের সুব্যবস্থা করা। বগুড়ার মোকামতলা ও আশেপাশের এলাকায় নিয়মিত ফুড প্যাক বিতরণ করা হয়।',
+          subtitle: 'জরুরি খাদ্য, পুষ্টি ও শীতবস্ত্র বিতরণ প্রকল্প',
+          description: 'সমাজের সবচেয়ে পিছিয়ে পড়া প্রান্তিক মানুষ, অসহায় বিধবা ও এতিম শিশুদের জন্য খাদ্য, পুষ্টি, শীতবস্ত্র ও নিরাপদ আশ্রয়ের সুব্যবস্থা করা। বগুড়ার মোকামতলা ও আশেপাশের এলাকায় নিয়মিত ফুড প্যাক এবং প্রতি শীতে উষ্ণ কম্বল ও শীতবস্ত্র বিতরণ করা হয়।',
           highlights: [
             'অসহায় পরিবার ও বিধবাদের মাঝে মাসব্যাপী পুষ্টিকর খাদ্যপণ্য সরবরাহ',
-            'রমজান ও প্রাকৃতিক দুর্যোগে দ্রুত রান্না করা খাবার ও শুকনো রসদ বিতরণ',
-            'মাঠপর্যায়ে ১০০% যাচাইয়ের মাধ্যমে প্রকৃত হকদারদের সরাসরি সহায়তা'
+            'তীব্র শীতে অসহায় শীতার্ত মানুষের মাঝে উষ্ণ কম্বল ও শীতবস্ত্র বিতরণ',
+            'রমজান ও প্রাকৃতিক দুর্যোগে জরুরি ত্রাণ রসদ ও মাঠপর্যায়ে সরাসরি সহায়তা'
           ]
         },
         {
@@ -364,12 +364,12 @@ export const translations = {
         {
           badge: 'Food & Clothing',
           title: 'Humanitarian Aid',
-          subtitle: 'Emergency Food, Nutrition & Clothing Relief',
-          description: 'Providing food security, essential nutrition, and safe shelter for the most marginalized, helpless widows, and vulnerable orphans across rural Bogura.',
+          subtitle: 'Emergency Food, Nutrition & Winter Clothing Distribution',
+          description: 'Providing food security, essential nutrition, winter clothing, and safe shelter for the most marginalized, helpless widows, and vulnerable orphans across rural Bogura.',
           highlights: [
             'Monthly nutritional food packages for impoverished widows and families',
-            'Emergency cooked food and dry rations during floods and Ramadan',
-            '100% field verification ensuring direct delivery to rightful recipients'
+            'Distribution of warm blankets and winter clothes to cold-affected families',
+            'Emergency flood relief, Ramadan cooked food drives, and direct verified delivery'
           ]
         },
         {

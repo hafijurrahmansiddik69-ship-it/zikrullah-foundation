@@ -1,110 +1,568 @@
-import React from 'react';
-import { Calendar, MapPin, Layers, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  ArrowRight, 
+  BookOpen, 
+  Sparkles, 
+  X, 
+  ShieldCheck, 
+  Camera, 
+  Heart,
+  UserPlus,
+  HandHeart,
+  PhoneCall,
+  Coins
+} from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
+import { EstablishmentContextModal } from './EstablishmentContextModal';
+import { CARD_CONFIGS } from '../data/projectConfigs';
+import { ScrollReveal, RevealDirection, RevealDelay } from './ScrollReveal';
 
 interface HeroProps {
-  onOpenDonation?: () => void;
+  onOpenDonation?: (category?: string) => void;
   onNavigateToAbout?: () => void;
+  onOpenVolunteer?: () => void;
+  onOpenNeedyInfo?: () => void;
+  onOpenContactModal?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onNavigateToAbout }) => {
+const BANGLADESH_DIVISIONS = [
+  { id: 'dhaka', nameBn: 'ঢাকা', nameEn: 'Dhaka', x: 330, y: 355 },
+  { id: 'chattogram', nameBn: 'চট্টগ্রাম', nameEn: 'Chattogram', x: 445, y: 485 },
+  { id: 'sylhet', nameBn: 'সিলেট', nameEn: 'Sylhet', x: 460, y: 215 },
+  { id: 'rajshahi', nameBn: 'রাজশাহী', nameEn: 'Rajshahi', x: 185, y: 280 },
+  { id: 'rangpur', nameBn: 'রংপুর', nameEn: 'Rangpur', x: 255, y: 135 },
+  { id: 'khulna', nameBn: 'খুলনা', nameEn: 'Khulna', x: 225, y: 465 },
+  { id: 'barishal', nameBn: 'বরিশাল', nameEn: 'Barishal', x: 315, y: 505 },
+  { id: 'mymensingh', nameBn: 'ময়মনসিংহ', nameEn: 'Mymensingh', x: 345, y: 235 },
+];
+
+const BOGURA_HUB = { x: 270, y: 245, nameBn: 'বগুড়া', nameEn: 'Bogura' };
+
+export const Hero: React.FC<HeroProps> = ({ 
+  onOpenDonation, 
+  onNavigateToAbout,
+  onOpenVolunteer,
+  onOpenNeedyInfo,
+  onOpenContactModal
+}) => {
   const { t, isEn } = useLanguage();
+  const [isContextModalOpen, setIsContextModalOpen] = useState(false);
+  const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
+
+  // First 6 core welfare activity cards in 10 Minute School 2x3 grid (3 cards per line)
+  const sixCoreCards = t.projects.cards.slice(0, 6);
+  const zakatCard = t.projects.cards[6];
+
+  const selectedCard = selectedCardIndex !== null ? t.projects.cards[selectedCardIndex] : null;
+  const activeConfig = selectedCardIndex !== null ? CARD_CONFIGS[selectedCardIndex] : null;
+
+  const handleDonateFromModal = () => {
+    if (!activeConfig) return;
+    const targetCategory = activeConfig.targetCategoryId;
+    setSelectedCardIndex(null);
+    if (onOpenDonation) {
+      onOpenDonation(targetCategory);
+    }
+  };
 
   return (
-    <section id="home" className="relative min-h-[560px] sm:min-h-[620px] lg:min-h-[680px] flex items-center justify-center overflow-hidden bg-black">
-      {/* Background Image: Left side heavily dark & blurred with black, Right side softly visible */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+    <section 
+      id="home" 
+      className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden bg-[#030805] text-white pt-8 sm:pt-12 pb-16 sm:pb-20"
+    >
+      {/* 1. Background Layer: User's Cloudinary Image + Bangladesh Map & Bogura Light Rays Animation */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        {/* Background Image */}
         <img
-          src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792118844/hk3ytqebhh3unwlwsb3m.jpg"
-          alt={isEn ? 'Zikrullah Foundation Humanitarian Work' : 'জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম'}
-          className="w-full h-full object-cover object-right sm:object-[75%_center] filter brightness-[0.95] contrast-[1.05]"
+          src="https://res.cloudinary.com/dlklqihg6/image/upload/v1795184184/em2z9e9nrdtppmjm5wvm.png"
+          alt="Zikrullah Foundation Background"
+          className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.06]"
         />
+        
+        {/* Bangladesh Map & Bogura Light Rays Overlay (Opens first upon loading, radiating across Bangladesh) */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-80 sm:opacity-90 animate-map-opening">
+          <svg
+            viewBox="0 0 600 720"
+            className="w-full max-w-[620px] h-auto object-contain mx-auto select-none pointer-events-none drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              <linearGradient id="bdMapFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#064e3b" stopOpacity="0.25" />
+                <stop offset="50%" stopColor="#047857" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#022c22" stopOpacity="0.3" />
+              </linearGradient>
+              <linearGradient id="bdMapBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#34d399" stopOpacity="0.85" />
+                <stop offset="50%" stopColor="#10b981" stopOpacity="0.55" />
+                <stop offset="100%" stopColor="#059669" stopOpacity="0.75" />
+              </linearGradient>
+              <linearGradient id="rayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.95" />
+                <stop offset="35%" stopColor="#34d399" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.3" />
+              </linearGradient>
+              <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
 
-        {/* Left Side Deep Black & Blur Overlay */}
-        <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 bg-gradient-to-r from-black via-black/95 via-50% to-transparent backdrop-blur-md z-[1]" />
+            {/* Stylized Bangladesh Map Silhouette */}
+            <path
+              d="M 260 55 
+                 C 275 65 295 90 300 115 
+                 C 310 140 345 150 365 140 
+                 C 395 130 425 145 460 170 
+                 C 495 190 525 210 535 245 
+                 C 525 275 490 290 470 325 
+                 C 460 355 485 390 495 440 
+                 C 515 510 520 590 510 650 
+                 C 490 630 475 570 445 530 
+                 C 420 500 390 515 370 540 
+                 C 350 570 320 610 280 610 
+                 C 240 610 220 570 200 510 
+                 C 180 460 170 410 180 360 
+                 C 170 315 150 275 160 235 
+                 C 170 195 200 155 220 120 
+                 C 235 90 250 65 260 55 Z"
+              fill="url(#bdMapFill)"
+              stroke="url(#bdMapBorder)"
+              strokeWidth="1.8"
+              filter="url(#mapGlow)"
+            />
 
-        {/* Smooth Dark Transition */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 via-40% via-black/50 to-black/20 z-[2]" />
+            {/* Radiant Light Rays Streaming from Bogura to all 8 Divisions */}
+            {BANGLADESH_DIVISIONS.map((div) => (
+              <g key={div.id}>
+                <line
+                  x1={BOGURA_HUB.x}
+                  y1={BOGURA_HUB.y}
+                  x2={div.x}
+                  y2={div.y}
+                  stroke="url(#rayGrad)"
+                  strokeWidth="1.6"
+                  strokeDasharray="5 4"
+                  className="animate-ray-stream"
+                />
+                {/* Division Pin Marker */}
+                <circle
+                  cx={div.x}
+                  cy={div.y}
+                  r="3.2"
+                  fill="#34d399"
+                  filter="url(#mapGlow)"
+                />
+                <text
+                  x={div.x + 6}
+                  y={div.y + 3}
+                  fill="#ecfdf5"
+                  fontSize="10"
+                  fontWeight="600"
+                  className="font-solaiman opacity-85 select-none"
+                >
+                  {isEn ? div.nameEn : div.nameBn}
+                </text>
+              </g>
+            ))}
 
-        {/* Top & bottom subtle black shadows */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-transparent to-black/95 z-[2]" />
+            {/* Bogura Epicenter / Focal Beacon */}
+            <g>
+              <circle
+                cx={BOGURA_HUB.x}
+                cy={BOGURA_HUB.y}
+                r="20"
+                fill="rgba(245, 158, 11, 0.22)"
+                className="animate-ping"
+              />
+              <circle
+                cx={BOGURA_HUB.x}
+                cy={BOGURA_HUB.y}
+                r="32"
+                fill="none"
+                stroke="rgba(52, 211, 153, 0.4)"
+                strokeWidth="1.2"
+                className="animate-pulse"
+              />
+              <circle
+                cx={BOGURA_HUB.x}
+                cy={BOGURA_HUB.y}
+                r="6.5"
+                fill="#f59e0b"
+                filter="url(#mapGlow)"
+              />
+              <circle
+                cx={BOGURA_HUB.x}
+                cy={BOGURA_HUB.y}
+                r="3"
+                fill="#ffffff"
+              />
+              {/* Bogura HQ Tag */}
+              <rect
+                x={BOGURA_HUB.x - 48}
+                y={BOGURA_HUB.y - 28}
+                width="96"
+                height="17"
+                rx="8.5"
+                fill="rgba(6, 78, 59, 0.9)"
+                stroke="#34d399"
+                strokeWidth="1"
+              />
+              <text
+                x={BOGURA_HUB.x}
+                y={BOGURA_HUB.y - 16}
+                textAnchor="middle"
+                fill="#fde047"
+                fontSize="10"
+                fontWeight="bold"
+                className="font-solaiman select-none"
+              >
+                {isEn ? 'Bogura (HQ)' : 'বগুড়া (হেডকোয়ার্টার)'}
+              </text>
+            </g>
+          </svg>
+        </div>
 
-        {/* Subtle Islamic Geometric Pattern Texture */}
-        <div 
-          className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none z-[3]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15L30 0zm0 30l15 15-15 15-15-15 15-15zM0 30l15-15 15 15-15 15L0 30zm30 0l15-15 15 15-15 15-15-15z' fill='%23ffffff' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-            backgroundSize: '48px 48px'
-          }}
-        />
-
-        {/* Warm Ambient Glow in the Center */}
-        <div className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-amber-400/10 rounded-full blur-3xl pointer-events-none z-[3]" />
+        {/* Soft Dark Vignette to keep foreground text razor sharp */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020704]/80 via-black/55 to-[#010503]/92 pointer-events-none" />
       </div>
 
-      {/* Main Content Area */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24 text-center text-white flex flex-col items-center">
-        {/* 1. Foundation Name: বাম থেকে */}
-        <h1 className="hero-reveal-left font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-6 sm:mb-8 drop-shadow-md">
-          {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
-          <span className="block text-amber-300 font-solaiman text-lg sm:text-2xl md:text-3xl mt-2 sm:mt-3 font-semibold tracking-wide drop-shadow-sm">
-            {t.common.slogan}
-          </span>
-        </h1>
-
-        {/* Foundation Inspiring Statement & Establishment Text */}
-        <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
-          {/* 2. First Box: ডান দিক থেকে */}
-          <div className="hero-reveal-right hero-delay-150 relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/50 via-[#0a1b38]/65 to-[#020b1a]/75 backdrop-blur-md p-5 sm:p-6 border-2 border-blue-400 shadow-[0_8px_30px_rgba(37,99,235,0.3)] text-justify sm:text-center">
-            {/* Subtle Blue ambient glow inside frosted glass */}
-            <div className="absolute -top-8 -right-8 w-28 h-28 bg-blue-500/20 rounded-full blur-xl pointer-events-none" />
-            <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-sky-400/15 rounded-full blur-xl pointer-events-none" />
-            <p className="relative z-10 text-white leading-relaxed drop-shadow-xs">
-              {t.hero.quote}
-            </p>
+      {/* Main Foreground Content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-3 sm:px-6 flex flex-col items-center text-center">
+        
+        {/* Top Header: Foundation Name & Slogan */}
+        <div className="hero-reveal-left max-w-3xl mx-auto mb-3 sm:mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-semibold mb-2 shadow-[0_0_15px_rgba(16,185,129,0.2)] backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            <span>{isEn ? 'Humanity • Da\'wah • Education' : 'মানবসেবা • দাওয়াহ • শিক্ষা'}</span>
           </div>
 
-          {/* 3. Second Box: zoom */}
-          <div className="hero-reveal-zoom hero-delay-250 relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950/80 via-[#045332]/75 to-[#087443]/65 backdrop-blur-md px-5 sm:px-6 py-4 sm:py-4.5 border-2 border-emerald-400 shadow-[0_8px_28px_rgba(16,185,129,0.25)] text-center">
-            {/* Subtle Emerald ambient glow inside frosted glass */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 bg-emerald-400/20 rounded-full blur-xl pointer-events-none" />
-            <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-teal-400/15 rounded-full blur-xl pointer-events-none" />
-            <p className="relative z-10 text-sm sm:text-base md:text-lg text-emerald-50 font-solaiman font-medium leading-relaxed drop-shadow-xs">
-              {t.hero.history}
-            </p>
-          </div>
+          <h1 className="font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] drop-shadow-md">
+            {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
+            {/* Slogan font size made slightly smaller as requested */}
+            <span className="block text-amber-300 font-solaiman text-xs sm:text-base md:text-xl font-medium tracking-wide drop-shadow-sm mt-1.5 sm:mt-2 opacity-95">
+              {t.common.slogan}
+            </span>
+          </h1>
         </div>
 
-        {/* Informational Highlights: 4. উপর থেকে, 5. নিচ দিক থেকে, 6. আবার বাম থেকে */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-4xl pt-6 border-t border-emerald-500/20 text-xs sm:text-sm text-emerald-50 font-solaiman">
-          <div className="hero-reveal-down hero-delay-350 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
-            <Calendar className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{isEn ? 'Established: January 1, 2023' : 'প্রতিষ্ঠা: ১লা জানুয়ারি ২০২৩'}</span>
-          </div>
-          <div className="hero-reveal-up hero-delay-450 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
-            <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{isEn ? 'Headquarters: Gujia, Mokamtala, Bogura' : 'প্রধান কার্যালয়: গুজিয়া, মোকামতলা, বগুড়া'}</span>
-          </div>
-          <div className="hero-reveal-left hero-delay-550 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
-            <Layers className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{isEn ? '7 Permanent Welfare Projects' : '৭টি স্থায়ী সেবামূলক প্রকল্প'}</span>
-          </div>
-        </div>
-
-        {/* 7. Action Button: আবার ডান দিক থেকে */}
-        <div className="hero-reveal-right hero-delay-600 mt-6 flex justify-center">
+        {/* 2. First Line Buttons (ONLY 2 Buttons as requested: "প্রতিষ্ঠার প্রেক্ষাপট" + "আমাদের সম্পর্কে জানুন") */}
+        <div className="hero-reveal-zoom hero-delay-150 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-7 sm:mb-10 px-2 font-solaiman">
+          
+          {/* Button 1: "প্রতিষ্ঠার প্রেক্ষাপট" (Free Healthcare Cyan/Blue Gradient) */}
           <button
             type="button"
-            onClick={() => onNavigateToAbout?.()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-amber-400/10 backdrop-blur-md active:scale-95 text-amber-300 hover:text-amber-200 font-sans-bn font-bold text-xs sm:text-sm border border-amber-400/50 hover:border-amber-300/80 shadow-md shadow-black/30 hover:shadow-[0_0_24px_rgba(251,191,36,0.28)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+            onClick={() => setIsContextModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00c6ff] to-[#0072ff] hover:from-[#00b4ea] hover:to-[#005ece] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-[0_0_18px_rgba(0,198,255,0.45)] border-2 border-cyan-200 transition-all cursor-pointer whitespace-nowrap group shrink-0"
           >
-            <span>{isEn ? 'Learn About Us' : 'আমাদের সম্পর্কে জানুন'}</span>
-            <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
+            <BookOpen className="w-4 h-4 text-white group-hover:rotate-6 transition-transform shrink-0" />
+            <span className="tracking-wide">
+              {isEn ? 'Background of Establishment' : 'প্রতিষ্ঠার প্রেক্ষাপট'}
+            </span>
+            <Sparkles className="w-3.5 h-3.5 text-cyan-100 animate-pulse shrink-0" />
           </button>
+
+          {/* Button 2: "আমাদের সম্পর্কে জানুন" */}
+          <button
+            type="button"
+            onClick={onNavigateToAbout}
+            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] hover:from-[#086a51] hover:to-[#086a51] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-[0_0_18px_rgba(6,78,59,0.5)] border-2 border-emerald-300/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+          >
+            <Sparkles className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="tracking-wide">
+              {isEn ? 'Learn About Us' : 'আমাদের সম্পর্কে জানুন'}
+            </span>
+            <ArrowRight className="w-4 h-4 text-emerald-200 group-hover:translate-x-1 transition-transform shrink-0" />
+          </button>
+
+        </div>
+
+        {/* 3. আমাদের সেবামূলক কার্যক্রম — ১০ মিনিট স্কুলের হুবহু আদলে মসৃণ গোল আকৃতির ২ লাইনে ৬টি কার্ড */}
+        <div id="projects" className="w-full pt-1">
+          {/* Section Sub-heading */}
+          <div className="hero-reveal-down hero-delay-250 text-center mb-5 sm:mb-7">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span>{t.projects.badge}</span>
+            </div>
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold font-serif-bn text-white tracking-tight">
+              {t.projects.title}
+            </h2>
+            <p className="text-slate-300 font-solaiman text-[11px] sm:text-sm mt-1 max-w-xl mx-auto">
+              {t.projects.subtitle}
+            </p>
+          </div>
+
+          {/* 10 Minute School Exact Style: Smooth rounded squircles & spacious gaps */}
+          <div className="grid grid-cols-3 gap-3 sm:gap-5 md:gap-6 justify-items-center max-w-4xl mx-auto w-full">
+            {sixCoreCards.map((card, idx) => {
+              const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
+              const Icon = config.icon;
+              const patterns: RevealDirection[] = ['left', 'right', 'zoom', 'down', 'up'];
+              const delays: RevealDelay[] = [0, 80, 150];
+              const direction: RevealDirection = patterns[idx % patterns.length];
+              const delay: RevealDelay = delays[idx % delays.length];
+
+              return (
+                <ScrollReveal
+                  key={idx}
+                  direction={direction}
+                  delay={delay}
+                  className="w-full flex justify-center"
+                >
+                  <div
+                    onClick={() => setSelectedCardIndex(idx)}
+                    className={`w-full max-w-[210px] bg-[#0c121d]/90 backdrop-blur-md border-2 ${config.cardBorderClass} rounded-[20px] sm:rounded-[26px] p-2 sm:p-3 shadow-lg transition-all duration-300 cursor-pointer flex flex-col items-center hover:-translate-y-2 ${config.cardHoverShadow} active:scale-95 group`}
+                  >
+                    {/* Inner Colorful Rounded Squircle Box (10 Minute School app icon style) */}
+                    <div className={`w-full rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-1 min-h-[64px] sm:min-h-[96px] flex flex-col justify-center items-center bg-gradient-to-br ${config.gradientClass} shadow-inner group-hover:scale-[1.02] transition-transform`}>
+                      <span className="text-white font-extrabold text-[10px] sm:text-xs mb-0.5 text-center drop-shadow-md leading-tight px-0.5 font-serif-bn line-clamp-1">
+                        {card.badge}
+                      </span>
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-md mt-0.5" />
+                    </div>
+
+                    {/* Card Title & Subtitle Below */}
+                    <div className="py-1.5 sm:py-2.5 px-0.5 w-full flex flex-col items-center justify-center text-center">
+                      <h3 className="font-bold text-[11px] sm:text-[14px] text-white leading-tight font-serif-bn line-clamp-1">
+                        {card.title}
+                      </h3>
+                      {'subtitle' in card && card.subtitle && (
+                        <span className="text-[8.5px] sm:text-xs text-amber-300/90 font-medium tracking-tight mt-0.5 sm:mt-1 leading-snug line-clamp-1 font-solaiman hidden xs:block">
+                          {card.subtitle}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+
+          {/* 7th Project: শরী‘আহ সম্মত যাকাত তহবিল (Pill CTA Button right below 6 cards like 10MS) */}
+          {zakatCard && (
+            <div className="mt-4 sm:mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setSelectedCardIndex(6)}
+                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#fbbf24] via-[#f59e0b] to-[#b45309] hover:from-[#f59e0b] hover:to-[#92400e] text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-amber-950/40 border-2 border-amber-300/90 active:scale-95 transition-all cursor-pointer font-serif-bn whitespace-nowrap group"
+              >
+                <Coins className="w-4 h-4 text-slate-950 shrink-0 group-hover:rotate-12 transition-transform" />
+                <span>{isEn ? 'Shariah Compliant Zakat Fund' : 'শরী‘আহ ভিত্তিক যাকাত তহবিল'}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-950 shrink-0 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          )}
+
+          {/* 4. Directly Underneath the 7 Activity Icons: The 3 Action Buttons in their Original Colors */}
+          <div className="w-full max-w-4xl mx-auto mt-7 sm:mt-10 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 font-solaiman">
+            
+            {/* 1. "স্বেচ্ছাসেবক হিসেবে যোগ দিন" (Rich Emerald Green) */}
+            <button
+              type="button"
+              onClick={onOpenVolunteer}
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] hover:from-[#086a51] hover:to-[#086a51] text-white rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(6,78,59,0.5)] border-2 border-emerald-300/80 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 group"
+            >
+              <UserPlus className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-emerald-200 group-hover:scale-110 transition-transform" />
+              <span>{isEn ? 'Join as Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
+            </button>
+
+            {/* 2. "আপনার গ্রামের অসহায় মানুষের তথ্য দিন" (Deep Navy Blue) */}
+            <button
+              type="button"
+              onClick={onOpenNeedyInfo}
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] hover:from-[#1e293b] hover:to-[#0f172a] text-white rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(14,165,233,0.4)] border-2 border-cyan-400/80 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 group"
+            >
+              <span className="relative inline-flex items-center justify-center shrink-0">
+                <HandHeart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 group-hover:scale-110 transition-transform" />
+                <span className="absolute -top-1 -right-1 flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500" />
+                </span>
+              </span>
+              <span>{isEn ? 'Share Needy Info' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
+            </button>
+
+            {/* 3. "সরাসরি যোগাযোগ করুন" (Clean White Background) */}
+            <button
+              type="button"
+              onClick={onOpenContactModal}
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-slate-100 text-slate-900 rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 group"
+            >
+              <PhoneCall className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-emerald-700 group-hover:rotate-12 transition-transform" />
+              <span>{isEn ? 'Direct Contact' : 'সরাসরি যোগাযোগ করুন'}</span>
+            </button>
+
+          </div>
+
         </div>
 
       </div>
+
+      {/* "প্রতিষ্ঠার প্রেক্ষাপট" Popup Modal */}
+      <EstablishmentContextModal
+        isOpen={isContextModalOpen}
+        onClose={() => setIsContextModalOpen(false)}
+        onOpenDonation={() => {
+          setIsContextModalOpen(false);
+          if (onOpenDonation) onOpenDonation('general-sadaqah');
+        }}
+      />
+
+      {/* 4. ১০ মিনিট স্কুল স্টাইল ইন্টারেক্টিভ পপআপ (নামের দিকে ২ লাইন + ডানপাশে ৩ লাইন) */}
+      {selectedCard && activeConfig && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200" 
+          onClick={() => setSelectedCardIndex(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div 
+            className="bg-[#0f1422] rounded-3xl max-w-2xl w-full relative border border-slate-700/80 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden my-auto text-slate-100 animate-in zoom-in-95 duration-200" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Banner with Image (if available) */}
+            {activeConfig.bannerImage ? (
+              <div className="relative aspect-[16/8] sm:aspect-[16/7] w-full bg-slate-900 overflow-hidden group">
+                <img 
+                  src={activeConfig.bannerImage} 
+                  alt={selectedCard.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/70 to-black/50" />
+
+                <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20 shadow-md">
+                    {selectedCard.badge}
+                  </span>
+                </div>
+
+                <div className="absolute bottom-3 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xs text-[11px] text-slate-300 border border-white/10">
+                  <Camera className="w-3 h-3 text-emerald-400" />
+                  <span>{t.projects.modalImageTemplateTag}</span>
+                </div>
+
+                <button 
+                  onClick={() => setSelectedCardIndex(null)} 
+                  className="absolute top-3.5 right-3.5 text-slate-300 hover:text-white cursor-pointer z-20 p-2 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 transition-all active:scale-95 shadow-md"
+                  aria-label={t.projects.modalClose}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <div className="p-4 sm:p-5 flex items-center justify-between border-b border-slate-800">
+                <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-emerald-950/80 border border-emerald-500/30">
+                  {selectedCard.badge}
+                </span>
+                <button 
+                  onClick={() => setSelectedCardIndex(null)} 
+                  className="text-slate-400 hover:text-white cursor-pointer p-1.5 rounded-full bg-slate-800/80 hover:bg-slate-700 transition-colors"
+                  aria-label={t.projects.modalClose}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+
+            {/* Modal Body: 10 Minute School Split (নামের দিকে ২ লাইন + ডানপাশে ৩ লাইন) */}
+            <div className="p-5 sm:p-7 max-h-[62vh] overflow-y-auto space-y-4">
+              
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+                
+                {/* Left Column / নামের দিকে ২ লাইন (Line 1: Badge, Line 2: Title) + Description */}
+                <div className="md:col-span-5 space-y-2.5 text-left border-b md:border-b-0 md:border-r border-slate-800 pb-4 md:pb-0 md:pr-4">
+                  {/* Line 1: Badge / Category */}
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-white/10 text-cyan-300 border border-white/10 font-solaiman uppercase tracking-wider">
+                    {selectedCard.badge}
+                  </span>
+
+                  {/* Line 2: Prominent Project Title */}
+                  <h3 className={`text-2xl sm:text-3xl font-bold font-serif-bn leading-tight ${activeConfig.accentText}`}>
+                    {selectedCard.title}
+                  </h3>
+
+                  {'subtitle' in selectedCard && selectedCard.subtitle && (
+                    <p className="text-xs text-amber-300/90 font-medium font-solaiman">
+                      {selectedCard.subtitle}
+                    </p>
+                  )}
+
+                  {/* Summary Description */}
+                  <p className="text-slate-300 text-xs sm:text-[13.5px] leading-relaxed font-solaiman pt-1">
+                    {selectedCard.description}
+                  </p>
+                </div>
+
+                {/* Right Column / ডানপাশে ৩ লাইন (The 3 Key Highlights with Numbered Badges ১, ২, ৩) */}
+                <div className="md:col-span-7 space-y-2.5 text-left">
+                  <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider font-solaiman">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>{isEn ? 'Key Action Pillars' : 'মূল সেবাসমূহ ও বৈশিষ্ট্য'}</span>
+                  </div>
+
+                  {'highlights' in selectedCard && Array.isArray(selectedCard.highlights) && selectedCard.highlights.length > 0 && (
+                    <div className="space-y-2 font-solaiman">
+                      {selectedCard.highlights.slice(0, 3).map((highlight: string, hIdx: number) => {
+                        const bnNumbers = ['১', '২', '৩'];
+                        return (
+                          <div 
+                            key={hIdx} 
+                            className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#161c2d] border border-slate-700/60 shadow-xs"
+                          >
+                            {/* 10 Minute School Style Number Badge */}
+                            <span className="w-5 h-5 rounded-full bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-sm font-serif-bn ring-1 ring-emerald-400/40">
+                              {bnNumbers[hIdx] || hIdx + 1}
+                            </span>
+                            <span className="text-xs sm:text-[13.5px] text-slate-200 leading-snug">
+                              {highlight}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Trust Badge */}
+                  <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/25 text-emerald-300 text-xs font-solaiman mt-3">
+                    <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
+                    <span>{t.projects.modalTrustBadge}</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Modal Footer with Actions */}
+            <div className="p-4 sm:p-6 bg-[#0a0d17] border-t border-slate-800 flex items-center gap-3">
+              <button 
+                type="button"
+                onClick={() => setSelectedCardIndex(null)} 
+                className="py-2.5 sm:py-3 px-4 sm:px-6 rounded-full border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white font-medium transition-colors cursor-pointer text-xs sm:text-sm font-solaiman"
+              >
+                {t.projects.modalClose}
+              </button>
+
+              <button 
+                type="button"
+                onClick={handleDonateFromModal}
+                className="flex-1 py-2.5 sm:py-3 px-4 sm:px-6 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 active:scale-98 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-950/50 transition-all cursor-pointer flex items-center justify-center gap-2 font-solaiman"
+              >
+                <Heart className="w-4 h-4 fill-white" />
+                <span>{t.projects.modalDonate}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </section>
   );
 };

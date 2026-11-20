@@ -1,112 +1,16 @@
 import React, { useState } from 'react';
 import { 
-  HandHelping, 
-  HeartPulse, 
-  Heart, 
-  GraduationCap, 
-  Briefcase, 
-  Sprout, 
-  Coins, 
   X, 
   CheckCircle2, 
   ShieldCheck, 
   ArrowRight, 
   Sparkles,
-  Camera
+  Camera,
+  Heart
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal, RevealDirection, RevealDelay } from './ScrollReveal';
-
-interface CardConfig {
-  id: string;
-  targetCategoryId: string;
-  icon: React.ElementType;
-  gradientClass: string;
-  cardBorderClass: string;
-  cardHoverShadow: string;
-  accentText: string;
-  bannerImage: string;
-}
-
-const CARD_CONFIGS: CardConfig[] = [
-  // 1. Food Relief & Shelter
-  {
-    id: 'food',
-    targetCategoryId: 'food-relief',
-    icon: HandHelping,
-    gradientClass: 'from-[#ff7e5f] to-[#feb47b]',
-    cardBorderClass: 'border-[#ff7e5f]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(255,126,95,0.4)]',
-    accentText: 'text-[#ff7e5f]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763626/ylatsvcdpurnpitu1hnt.jpg'
-  },
-  // 2. Free Healthcare & Medical Aid
-  {
-    id: 'medical',
-    targetCategoryId: 'healthcare-medical-camp',
-    icon: HeartPulse,
-    gradientClass: 'from-[#00c6ff] to-[#0072ff]',
-    cardBorderClass: 'border-[#00c6ff]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(0,198,255,0.4)]',
-    accentText: 'text-[#00c6ff]',
-    bannerImage: ''
-  },
-  // 3. Blood Donation
-  {
-    id: 'blood',
-    targetCategoryId: 'healthcare-medical-camp',
-    icon: Heart,
-    gradientClass: 'from-[#ff416c] to-[#ff4b2b]',
-    cardBorderClass: 'border-[#ff416c]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(255,65,108,0.4)]',
-    accentText: 'text-[#ff416c]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg'
-  },
-  // 4. Education Aid
-  {
-    id: 'education',
-    targetCategoryId: 'education-support',
-    icon: GraduationCap,
-    gradientClass: 'from-[#f6d365] to-[#fda085]',
-    cardBorderClass: 'border-[#f6d365]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(246,211,101,0.4)]',
-    accentText: 'text-[#f6d365]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763851/uhoy2dhdewkxkbqpf6hs.jpg'
-  },
-  // 5. Self-Reliance & Youth Employment
-  {
-    id: 'self-reliance',
-    targetCategoryId: 'youth-training',
-    icon: Briefcase,
-    gradientClass: 'from-[#6b21a8] to-[#3b82f6]',
-    cardBorderClass: 'border-[#a855f7]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(168,85,247,0.4)]',
-    accentText: 'text-[#a855f7]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792763774/zwnrunrscvxecmhnm1zk.jpg'
-  },
-  // 6. Tube-wells & Tree Plantation (Sadaqah Jariyah)
-  {
-    id: 'water-trees',
-    targetCategoryId: 'tubewell-tree-plantation',
-    icon: Sprout,
-    gradientClass: 'from-[#11998e] to-[#38ef7d]',
-    cardBorderClass: 'border-[#38ef7d]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(56,239,125,0.4)]',
-    accentText: 'text-[#38ef7d]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792764025/zlscwxoft986d0ud4wi7.jpg'
-  },
-  // 7. Zakat Fund (Shariah Compliant)
-  {
-    id: 'zakat',
-    targetCategoryId: 'zakat-fund',
-    icon: Coins,
-    gradientClass: 'from-[#fbbf24] via-[#f59e0b] to-[#b45309]',
-    cardBorderClass: 'border-[#f59e0b]',
-    cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(245,158,11,0.45)]',
-    accentText: 'text-[#fbbf24]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg'
-  }
-];
+import { CARD_CONFIGS, CardConfig } from '../data/projectConfigs';
 
 interface ProjectsSectionProps {
   isEmbedded?: boolean;
