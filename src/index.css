@@ -433,6 +433,36 @@ body.lang-en .font-solaiman {
   }
 }
 
+@keyframes heroFadeLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-26px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroFadeRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(26px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-reveal-left {
+  animation: heroFadeLeft 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-reveal-right {
+  animation: heroFadeRight 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .hero-reveal-down {
   animation: heroFadeDown 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -515,6 +545,8 @@ body.lang-en .font-solaiman {
 .reveal-delay-600 { transition-delay: 600ms; }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-reveal-left,
+  .hero-reveal-right,
   .hero-reveal-down,
   .hero-reveal-up,
   .hero-reveal-zoom,

@@ -45,18 +45,18 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToAbout }) => {
 
       {/* Main Content Area */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24 text-center text-white flex flex-col items-center">
-        {/* Foundation Name: Drops smoothly from above */}
-        <h1 className="hero-reveal-down font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-6 sm:mb-8 drop-shadow-md">
+        {/* 1. Foundation Name: বাম থেকে */}
+        <h1 className="hero-reveal-left font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] mb-6 sm:mb-8 drop-shadow-md">
           {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
           <span className="block text-amber-300 font-solaiman text-lg sm:text-2xl md:text-3xl mt-2 sm:mt-3 font-semibold tracking-wide drop-shadow-sm">
             {t.common.slogan}
           </span>
         </h1>
 
-        {/* Foundation Inspiring Statement & Establishment Text with Vibrant Blue & Green Accents */}
+        {/* Foundation Inspiring Statement & Establishment Text */}
         <div className="max-w-3xl mx-auto mb-8 sm:mb-10 space-y-4 font-solaiman text-base sm:text-lg md:text-xl leading-relaxed font-normal">
-          {/* First Box: Expands gently from inside */}
-          <div className="hero-reveal-zoom hero-delay-150 relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/50 via-[#0a1b38]/65 to-[#020b1a]/75 backdrop-blur-md p-5 sm:p-6 border-2 border-blue-400 shadow-[0_8px_30px_rgba(37,99,235,0.3)] text-justify sm:text-center">
+          {/* 2. First Box: ডান দিক থেকে */}
+          <div className="hero-reveal-right hero-delay-150 relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/50 via-[#0a1b38]/65 to-[#020b1a]/75 backdrop-blur-md p-5 sm:p-6 border-2 border-blue-400 shadow-[0_8px_30px_rgba(37,99,235,0.3)] text-justify sm:text-center">
             {/* Subtle Blue ambient glow inside frosted glass */}
             <div className="absolute -top-8 -right-8 w-28 h-28 bg-blue-500/20 rounded-full blur-xl pointer-events-none" />
             <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-sky-400/15 rounded-full blur-xl pointer-events-none" />
@@ -65,8 +65,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToAbout }) => {
             </p>
           </div>
 
-          {/* Second Box: Floats up gently */}
-          <div className="hero-reveal-up hero-delay-250 relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950/80 via-[#045332]/75 to-[#087443]/65 backdrop-blur-md px-5 sm:px-6 py-4 sm:py-4.5 border-2 border-emerald-400 shadow-[0_8px_28px_rgba(16,185,129,0.25)] text-center">
+          {/* 3. Second Box: zoom */}
+          <div className="hero-reveal-zoom hero-delay-250 relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950/80 via-[#045332]/75 to-[#087443]/65 backdrop-blur-md px-5 sm:px-6 py-4 sm:py-4.5 border-2 border-emerald-400 shadow-[0_8px_28px_rgba(16,185,129,0.25)] text-center">
             {/* Subtle Emerald ambient glow inside frosted glass */}
             <div className="absolute -top-6 -right-6 w-24 h-24 bg-emerald-400/20 rounded-full blur-xl pointer-events-none" />
             <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-teal-400/15 rounded-full blur-xl pointer-events-none" />
@@ -76,24 +76,24 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToAbout }) => {
           </div>
         </div>
 
-        {/* Informational Highlights: Top, Zoom, Up */}
+        {/* Informational Highlights: 4. উপর থেকে, 5. নিচ দিক থেকে, 6. আবার বাম থেকে */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-4xl pt-6 border-t border-emerald-500/20 text-xs sm:text-sm text-emerald-50 font-solaiman">
           <div className="hero-reveal-down hero-delay-350 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
             <Calendar className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{isEn ? 'Established: January 1, 2023' : 'প্রতিষ্ঠা: ১লা জানুয়ারি ২০২৩'}</span>
           </div>
-          <div className="hero-reveal-zoom hero-delay-450 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
+          <div className="hero-reveal-up hero-delay-450 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
             <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{isEn ? 'Headquarters: Gujia, Mokamtala, Bogura' : 'প্রধান কার্যালয়: গুজিয়া, মোকামতলা, বগুড়া'}</span>
           </div>
-          <div className="hero-reveal-up hero-delay-550 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
+          <div className="hero-reveal-left hero-delay-550 flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 shadow-sm">
             <Layers className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{isEn ? '7 Permanent Welfare Projects' : '৭টি স্থায়ী সেবামূলক প্রকল্প'}</span>
           </div>
         </div>
 
-        {/* Sleek Amber/Gold Glassmorphism Pill Action Button -> About Page */}
-        <div className="hero-reveal-zoom hero-delay-600 mt-6 flex justify-center">
+        {/* 7. Action Button: আবার ডান দিক থেকে */}
+        <div className="hero-reveal-right hero-delay-600 mt-6 flex justify-center">
           <button
             type="button"
             onClick={() => onNavigateToAbout?.()}

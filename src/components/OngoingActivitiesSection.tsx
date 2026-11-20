@@ -437,14 +437,14 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
           </p>
         </ScrollReveal>
 
-        {/* Responsive Grid Card Layout: Mobile 2 Cols (matching ThoughtsSection), Tablet 2 Cols, Desktop 3 Cols */}
+        {/* Responsive Grid Card Layout: বাম থেকে -> ডান দিক থেকে -> zoom -> উপর থেকে -> নিচ দিক থেকে */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-7 items-stretch">
           {ONGOING_PROJECTS.map((project, idx) => {
             const isLastCard = idx === 6;
-            const patterns: RevealDirection[] = ['zoom', 'up', 'down'];
+            const patterns: RevealDirection[] = ['left', 'right', 'zoom', 'down', 'up'];
             const delays: RevealDelay[] = [0, 80, 150];
-            const direction: RevealDirection = isLastCard ? 'zoom' : patterns[idx % 3];
-            const delay: RevealDelay = isLastCard ? 100 : delays[idx % 3];
+            const direction: RevealDirection = patterns[idx % patterns.length];
+            const delay: RevealDelay = delays[idx % delays.length];
             return (
               <ScrollReveal
                 key={project.id}

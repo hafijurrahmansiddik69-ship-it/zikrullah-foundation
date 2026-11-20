@@ -145,7 +145,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       }
     >
       <div className="max-w-5xl mx-auto px-4">
-        <ScrollReveal direction="down" className="text-center mb-10">
+        {/* 5. নিচ দিক থেকে */}
+        <ScrollReveal direction="up" className="text-center mb-10">
           <span className="inline-block px-3 py-1.5 rounded-full bg-green-500/15 text-green-400 text-xs font-semibold mb-2.5 border border-green-500/20 shadow-sm">
             {t.projects.badge}
           </span>
@@ -157,16 +158,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           </p>
         </ScrollReveal>
         
-        {/* Responsive Grid of Cards */}
+        {/* Responsive Grid of Cards: বাম থেকে -> ডান দিক থেকে -> zoom -> উপর থেকে -> নিচ দিক থেকে */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
           {t.projects.cards.map((card, idx) => {
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
             const Icon = config.icon;
             const isLastCard = idx === 6;
-            const patterns: RevealDirection[] = ['zoom', 'down', 'up'];
+            const patterns: RevealDirection[] = ['left', 'right', 'zoom', 'down', 'up'];
             const delays: RevealDelay[] = [0, 80, 150];
-            const direction: RevealDirection = isLastCard ? 'zoom' : patterns[idx % 3];
-            const delay: RevealDelay = isLastCard ? 100 : delays[idx % 3];
+            const direction: RevealDirection = patterns[idx % patterns.length];
+            const delay: RevealDelay = delays[idx % delays.length];
             return (
               <ScrollReveal
                 key={idx}

@@ -216,7 +216,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
             return (
               <ScrollReveal
                 key={article.id}
-                direction={idx === 0 ? 'zoom' : 'up'}
+                direction={idx === 0 ? 'left' : 'right'}
                 delay={idx === 0 ? 0 : 150}
                 className="flex"
               >
