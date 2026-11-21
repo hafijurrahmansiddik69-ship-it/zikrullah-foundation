@@ -8,14 +8,27 @@ import {
   Coins 
 } from 'lucide-react';
 
-// Food & Clothing Icon: High fidelity image provided by user
+// Food & Clothing Icon: Clean line-art SVG provided by user
 export const FoodClothingIcon: React.FC<{ className?: string }> = ({ className }) => {
-  return React.createElement('img', {
-    src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795187359/ulgwm2ww3m6rxqjzxyms.png',
-    alt: 'খাদ্য ও বস্ত্র',
-    className: className || 'w-6 h-6 sm:w-8 sm:h-8 object-contain drop-shadow-md',
-    loading: 'lazy'
-  });
+  return React.createElement(
+    'svg',
+    {
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: '28',
+      height: '28',
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: '1.8',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: className || 'w-5 h-5 sm:w-6 sm:h-6'
+    },
+    React.createElement('path', { d: 'M7 3h10l2.5 3.5-2.5 1.5V12H7V8L4.5 6.5 7 3z' }),
+    React.createElement('path', { d: 'M4 15.5h16' }),
+    React.createElement('path', { d: 'M5.5 15.5a6.5 6.5 0 0 0 13 0' }),
+    React.createElement('path', { d: 'M9.5 21h5' })
+  );
 };
 
 export interface CardConfig {

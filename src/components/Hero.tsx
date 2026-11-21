@@ -480,11 +480,11 @@ export const Hero: React.FC<HeroProps> = ({
                   </p>
                 </div>
 
-                {/* Right Column / ডানপাশে ৩ লাইন (The 3 Key Highlights with Numbered Badges ১, ২, ৩) */}
+                {/* Right Column / ডানপাশে ৩ লাইন */}
                 <div className="md:col-span-7 space-y-2.5 text-left">
                   <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider font-solaiman">
                     <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{isEn ? 'Key Action Pillars' : 'মূল সেবাসমূহ ও বৈশিষ্ট্য'}</span>
+                    <span>{isEn ? 'Core Pillars & Impact' : 'আমাদের অনন্য অঙ্গীকার ও সেবার মান'}</span>
                   </div>
 
                   {'highlights' in selectedCard && Array.isArray(selectedCard.highlights) && selectedCard.highlights.length > 0 && (

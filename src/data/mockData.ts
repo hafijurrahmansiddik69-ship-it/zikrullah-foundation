@@ -72,7 +72,7 @@ export const FOUNDATION_INFO = {
   established: "১লা জানুয়ারি ২০২৩",
   address: "গুজিয়া, মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ",
   addressEn: "Gujia, Mokamtala & Shibganj, Bogura, Bangladesh",
-  email: "zikrullahfd@gmail.com",
+  email: "zikrullahfoundation@gmail.com",
   phone: "016 20 500 920",
   altPhone: "+880 16 20 500 920",
   officeHours: "শনিবার – বৃহস্পতিবার: সকাল ৯টা – সন্ধ্যা ৬টা",
