@@ -239,7 +239,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   onClick={() => onSelectServiceDonation('সাধারণ দান ও সেবা ফান্ড')}
                   className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline cursor-pointer shrink-0 ml-2"
                 >
-                  <span>{isEn ? 'Contribute' : 'সহযোগিতা করুন'}</span>
+                  <span>{isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>

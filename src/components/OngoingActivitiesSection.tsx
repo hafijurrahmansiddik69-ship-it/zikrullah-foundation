@@ -871,7 +871,7 @@ export const OngoingActivitiesSection: React.FC<OngoingActivitiesSectionProps> =
                 className="flex-1 py-3 px-5 sm:px-7 rounded-full bg-[#064e3b] hover:bg-[#043d2e] active:scale-98 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/20 transition-all cursor-pointer flex items-center justify-center gap-2 border border-emerald-600/30"
               >
                 <Heart className="w-4 h-4 fill-white text-white animate-pulse" />
-                <span>{isEn ? 'Donate to This Project' : 'এই প্রকল্পে এখনই দান করুন'}</span>
+                <span>{isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

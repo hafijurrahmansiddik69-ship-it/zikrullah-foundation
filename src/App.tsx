@@ -174,10 +174,10 @@ function MainApp() {
         <button
           onClick={() => handleOpenDonation()}
           className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white whitespace-nowrap"
-          aria-label={isEn ? 'Support Us' : 'সহযোগিতা করুন'}
+          aria-label={isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}
         >
           <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
-          <span>{isEn ? 'Support Us' : 'সহযোগিতা করুন'}</span>
+          <span>{isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}</span>
         </button>
       </div>
 

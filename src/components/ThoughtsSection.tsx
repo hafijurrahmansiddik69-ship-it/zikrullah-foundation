@@ -720,7 +720,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                     </div>
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3.5 sm:py-4 bg-[#FACC15] hover:bg-[#eab308] active:bg-[#ca8a04] text-[#0F172A] font-bold text-xs sm:text-base transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3.5 sm:py-4 bg-[#059669] hover:bg-[#047857] active:bg-[#065f46] text-white font-bold text-xs sm:text-base transition-colors cursor-pointer whitespace-nowrap shrink-0"
                     >
                       <span>{isEn ? 'Subscribe' : 'সাবস্ক্রাইব করুন'}</span>
                       <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />

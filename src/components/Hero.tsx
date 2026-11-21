@@ -133,7 +133,7 @@ export const Hero: React.FC<HeroProps> = ({
               filter="url(#mapGlow)"
             />
 
-            {/* Radiant Light Rays Streaming from Bogura to all 8 Divisions */}
+            {/* Radiant Light Rays Streaming from Bogura to all 8 Directions */}
             {BANGLADESH_DIVISIONS.map((div) => (
               <g key={div.id}>
                 <line
@@ -142,28 +142,10 @@ export const Hero: React.FC<HeroProps> = ({
                   x2={div.x}
                   y2={div.y}
                   stroke="url(#rayGrad)"
-                  strokeWidth="1.6"
-                  strokeDasharray="5 4"
+                  strokeWidth="1.8"
+                  strokeDasharray="6 4"
                   className="animate-ray-stream"
                 />
-                {/* Division Pin Marker */}
-                <circle
-                  cx={div.x}
-                  cy={div.y}
-                  r="3.2"
-                  fill="#34d399"
-                  filter="url(#mapGlow)"
-                />
-                <text
-                  x={div.x + 6}
-                  y={div.y + 3}
-                  fill="#ecfdf5"
-                  fontSize="10"
-                  fontWeight="600"
-                  className="font-solaiman opacity-85 select-none"
-                >
-                  {isEn ? div.nameEn : div.nameBn}
-                </text>
               </g>
             ))}
 
@@ -263,17 +245,17 @@ export const Hero: React.FC<HeroProps> = ({
             <Sparkles className="w-3.5 h-3.5 text-cyan-100 animate-pulse shrink-0" />
           </button>
 
-          {/* Button 2: "আমাদের সম্পর্কে জানুন" */}
+          {/* Button 2: "আমাদের সম্পর্কে জানুন" (Matching "সরাসরি যোগাযোগ করুন" white background style) */}
           <button
             type="button"
             onClick={onNavigateToAbout}
-            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] hover:from-[#086a51] hover:to-[#086a51] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-[0_0_18px_rgba(6,78,59,0.5)] border-2 border-emerald-300/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-slate-100 active:scale-95 text-slate-900 font-bold text-xs sm:text-sm shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
           >
-            <Sparkles className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform shrink-0" />
+            <Sparkles className="w-4 h-4 text-emerald-700 group-hover:scale-110 transition-transform shrink-0" />
             <span className="tracking-wide">
               {isEn ? 'Learn About Us' : 'আমাদের সম্পর্কে জানুন'}
             </span>
-            <ArrowRight className="w-4 h-4 text-emerald-200 group-hover:translate-x-1 transition-transform shrink-0" />
+            <ArrowRight className="w-4 h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0" />
           </button>
 
         </div>

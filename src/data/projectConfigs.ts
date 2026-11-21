@@ -8,33 +8,14 @@ import {
   Coins 
 } from 'lucide-react';
 
-// Bespoke Food & Clothing Vector Icon combining warm winter clothing and nourishing food
-export const FoodClothingIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
-  return React.createElement(
-    'svg',
-    {
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      stroke: 'currentColor',
-      strokeWidth: 2,
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      className: className || 'w-5 h-5 sm:w-6 sm:h-6',
-      ...props
-    },
-    // Upper part: Warm winter shirt / clothing with collar
-    React.createElement('path', {
-      d: 'M16.5 3.5 13.5 2a3 3 0 0 0-3 0L7.5 3.5a1.5 1.5 0 0 0-.9 1.5l.3 2.2a1 1 0 0 0 .9.8h1.2v2h6v-2h1.2a1 1 0 0 0 .9-.8l.3-2.2a1.5 1.5 0 0 0-.9-1.5z'
-    }),
-    // Lower part: Nourishing food bowl
-    React.createElement('path', {
-      d: 'M4.5 13.5h15a1 1 0 0 1 1 1c0 3.87-3.36 6.5-7.5 6.5s-7.5-2.63-7.5-6.5a1 1 0 0 1 1-1z'
-    }),
-    // Warm rising nourishment vapor lines
-    React.createElement('path', { d: 'M8.5 11v1' }),
-    React.createElement('path', { d: 'M12 10.5v1.5' }),
-    React.createElement('path', { d: 'M15.5 11v1' })
-  );
+// Food & Clothing Icon: High fidelity image provided by user
+export const FoodClothingIcon: React.FC<{ className?: string }> = ({ className }) => {
+  return React.createElement('img', {
+    src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795187359/ulgwm2ww3m6rxqjzxyms.png',
+    alt: 'খাদ্য ও বস্ত্র',
+    className: className || 'w-6 h-6 sm:w-8 sm:h-8 object-contain drop-shadow-md',
+    loading: 'lazy'
+  });
 };
 
 export interface CardConfig {
