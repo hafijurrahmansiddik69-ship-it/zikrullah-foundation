@@ -46,19 +46,113 @@ export interface ArticleEntry {
   bannerImage: string;
   bannerAltBn: string;
   bannerAltEn: string;
+  publishedAt?: string;
   blocks: ArticleBlock[];
 }
 
 /**
- * নতুন সাপ্তাহিক লেখা যোগ করার নিয়ম:
- * নিচের ARTICLES_DATA অ্যারের একদম শুরুতে (উপরে) নতুন একটি অবজেক্ট যোগ করুন।
- * হোমপেজের "ভাবনা ও কর্মকথা" অংশে স্বয়ংক্রিয়ভাবে সর্বশেষ প্রথম ২টি লেখা প্রদর্শিত হবে
- * এবং বাকি সব লেখা "সব লেখা দেখুন →" আর্কাইভ পেজে দেখা যাবে।
+ * নতুন নিউজ / সাপ্তাহিক লেখা যোগ করার নিয়ম:
+ * ARTICLES_DATA অ্যারেতে নতুন একটি অবজেক্ট (নতুন publishedAt তারিখসহ, যেমন '2026-12-01') যোগ করুন।
+ * getSortedArticles() স্বয়ংক্রিয়ভাবে সর্বশেষ প্রকাশিত লেখাটিকে সবার শুরুতে প্রদর্শন করবে।
  */
+export function getSortedArticles(): ArticleEntry[] {
+  const getTimestamp = (item: ArticleEntry): number => {
+    if (item.publishedAt) {
+      const parsed = Date.parse(item.publishedAt);
+      if (!Number.isNaN(parsed)) return parsed;
+    }
+    const fallbackParsed = Date.parse(item.dateEn);
+    if (!Number.isNaN(fallbackParsed)) return fallbackParsed;
+    return Number.MAX_SAFE_INTEGER;
+  };
+
+  return ARTICLES_DATA
+    .map((item, idx) => ({ item, idx, ts: getTimestamp(item) }))
+    .sort((a, b) => {
+      if (b.ts !== a.ts) return b.ts - a.ts;
+      return a.idx - b.idx;
+    })
+    .map(({ item }) => item);
+}
+
 export const ARTICLES_DATA: ArticleEntry[] = [
+  {
+    id: 'art-aliar-hat-medical-camp-2023',
+    slug: 'aliar-hat-fazil-madrasah-free-medical-camp-2023',
+    publishedAt: '2026-11-23',
+    titleBn: 'আলোর স্পর্শে প্রশান্তির হাসি: ২০২৩ সালে আলিয়ার হাট ফাজিল মাদ্রাসায় ফ্রি মেডিকেল ক্যাম্পের হৃদয়ছোঁয়া গল্প',
+    titleEn: 'A Touch of Healing, A Smile of Hope: Remembering Our 2023 Free Medical Camp at Aliar Hat Fazil Madrasah',
+    excerptBn:
+      'অর্থের অভাবে যে মানুষগুলো প্রেসক্রিপশনের পাতা ভাঁজ করে নীরবে দীর্ঘশ্বাস ফেলতেন, ২০২৩ সালে আলিয়ার হাট ফাজিল মাদ্রাসা প্রাঙ্গণে তাঁদের চোখে ফুটে উঠেছিল এক অদ্ভুত স্বস্তির আলো। মানবতার প্রেমে গাঁথা সেই ঐতিহাসিক দিনের গল্প।',
+    excerptEn:
+      'In the courtyard of Aliar Hat Fazil Madrasah in 2023, villagers who once folded away medical prescriptions in quiet helplessness found free diagnosis, essential medicines, and heartfelt care. A stirring chronicle of compassion in action.',
+    categoryBn: 'মাঠপর্যায়ের অভিজ্ঞতা',
+    categoryEn: 'Field Experience',
+    dateBn: '২৩ নভেম্বর ২০২৬',
+    dateEn: '23 November 2026',
+    readTimeBn: '৫ মিনিট পাঠ',
+    readTimeEn: '5 min read',
+    locationBn: 'আলিয়ার হাট ফাজিল মাদ্রাসা, শিবগঞ্জ, বগুড়া',
+    locationEn: 'Aliar Hat Fazil Madrasah, Shibganj, Bogura',
+    authorBn: 'সম্পাদনা ও স্বাস্থ্যসেবা ডেস্ক, জিকরুল্লাহ ফাউন্ডেশন',
+    authorEn: 'Healthcare & Editorial Desk, Zikrullah Foundation',
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795427347/pgxdhulptqjdlab3oxlm.jpg',
+    bannerAltBn: '২০২৩ সালে আলিয়ার হাট ফাজিল মাদ্রাসায় জিকরুল্লাহ ফাউন্ডেশনের বিনামূল্যে চিকিৎসা ও ঔষধ ক্যাম্প',
+    bannerAltEn: 'Zikrullah Foundation Free Medical Camp held in 2023 at Aliar Hat Fazil Madrasah',
+    blocks: [
+      {
+        type: 'paragraph',
+        textBn:
+          'সকালের রোদ তখনও পুরোপুরি তেতে ওঠেনি; শিশিরভেজা গ্রামীণ পথ ধরে ধীরে ধীরে জড়ো হচ্ছিলেন নানা বয়সী মানুষ। কারও হাতের লাঠি কাঁপছে বার্ধক্যের ভারে, কারও কোলে অসুস্থ শিশু, আবার কারও চোখে বছরের পর বছর জমে থাকা চিকিৎসার না-পাওয়ার ক্লান্তি। ২০২৩ সালে ঐতিহ্যবাহী আলিয়ার হাট ফাজিল মাদ্রাসা প্রাঙ্গণে জিকরুল্লাহ ফাউন্ডেশনের আয়োজনে সেদিন কেবল একটি ফ্রি মেডিকেল ক্যাম্প বসেনি—বসেছিল অসহায় মানুষের প্রতি ভালোবাসা ও দায়বদ্ধতার এক জীবন্ত আসর।',
+        textEn:
+          'Before the morning sun grew fierce, villagers began gathering along the dew-kissed lanes leading into Aliar Hat Fazil Madrasah. Some leaned heavily on walking sticks, mothers cradled feverish infants, and elders carried the quiet fatigue of illnesses left untreated for years. On that memorable day in 2023, Zikrullah Foundation did far more than host a medical camp—it opened a sanctuary of dignity, tenderness, and healing.'
+      },
+      {
+        type: 'heading',
+        textBn: 'যখন একটি বিনামূল্যের ওষুধের প্যাকেট হয়ে ওঠে বেঁচে থাকার সাহস',
+        textEn: 'When Free Medicine Becomes Renewed Strength to Live'
+      },
+      {
+        type: 'paragraph',
+        textBn:
+          'গ্রামীণ জনপদে মানুষের সবচেয়ে নীরব বেদনা হলো—রোগ শরীরে বাসা বাঁধে, কিন্তু সংসারের টানাপোড়েনে ডাক্তারের ফিস বা ওষুধের দাম জোগাড় করা হয়ে ওঠে দুঃসাধ্য। সেদিন আলিয়ার হাট ফাজিল মাদ্রাসার কক্ষগুলোতে একের পর এক রোগী যখন বিশেষজ্ঞ চিকিৎসকদের সামনে বসে নিজের কষ্টের কথা বললেন, ডাক্তারদের মমতাময়ী কথা আর জিকরুল্লাহ ফাউন্ডেশনের স্বেচ্ছাসেবকদের আন্তরিক সেবায় তাঁদের ভেতরের জড়তা মুহূর্তেই কেটে গেল। ব্যবস্থাপত্রের সাথে সাথে সম্পূর্ণ বিনামূল্যে প্রয়োজনীয় ওষুধ হাতে পেয়ে বহু প্রবীণ মানুষ দু’হাত তুলে দোয়া করেছেন—সেই অকৃত্রিম দোয়ার দৃশ্য আজও আমাদের হৃদয়ে গেঁথে আছে।',
+        textEn:
+          'In rural communities, one of the quietest tragedies is delaying care simply because a household must choose between food and a doctor’s prescription. Inside the classrooms of Aliar Hat Fazil Madrasah, compassionate physicians listened patiently to every villager while volunteers guided elders with gentle respect. As free diagnostic checks and essential medicines were placed directly into their hands, tearful prayers of gratitude rose spontaneously—moments that remain etched into our hearts forever.'
+      },
+      {
+        type: 'quote',
+        textBn:
+          'একজন অসহায় মানুষের বুকের ব্যথা একটুখানি কমাতে পারা, আর তাঁর ঠোঁটের কোণে প্রশান্তির হাসি ফোটানো—দুনিয়ার সমস্ত অর্জনের চেয়েও বড় প্রশান্তি।',
+        textEn:
+          'Easing even a fraction of a distressed neighbor’s pain and seeing relief bloom on their face outweighs every worldly reward.',
+        attributionBn: 'জিকরুল্লাহ ফাউন্ডেশন স্বাস্থ্যসেবা টিম (২০২৩ ক্যাম্প স্মরণে)',
+        attributionEn: 'Zikrullah Foundation Medical Relief Team (Reflecting on the 2023 Camp)'
+      },
+      {
+        type: 'heading',
+        textBn: 'আলিয়ার হাট থেকে প্রজন্মের অনুপ্রেরণা: একটি আহ্বানের গল্প',
+        textEn: 'From Aliar Hat to Tomorrow: An Invitation to Shared Goodness'
+      },
+      {
+        type: 'paragraph',
+        textBn:
+          '২০২৩ সালের সেই দিনের সফলতা আমাদের শিখিয়েছে—মানুষের পাশে দাঁড়াতে বিশাল সাম্রাজ্যের প্রয়োজন হয় না; প্রয়োজন কেবল একটুকরো খাঁটি নিয়ত, কিছু নিবেদিতপ্রাণ চিকিৎসক, আর আপনার মতো হৃদয়বান মানুষের আন্তরিক সহযোগিতা। মাদ্রাসার শিক্ষক-শিক্ষার্থী, স্থানীয় মুরুব্বী ও ফাউন্ডেশনের স্বেচ্ছাসেবকদের ঘামে ভেজা পরিশ্রম সেদিন প্রমাণ করেছিল, একসাথে হাত মেলালে প্রত্যন্ত গ্রামের প্রতিটি ঘরেই আশার প্রদীপ জ্বালানো সম্ভব।',
+        textEn:
+          'The success of that 2023 camp taught us a timeless lesson: serving humanity does not wait for vast fortunes—it begins with sincere intention, dedicated doctors, and generous hearts standing side by side. The tireless spirit of local teachers, elders, and volunteers under those madrasah roofs proved that together we can bring light to every underserved doorstep.'
+      },
+      {
+        type: 'paragraph',
+        textBn:
+          'আজও বগুড়া ও উত্তরাঞ্চলের অসংখ্য গ্রামে অসচ্ছল রোগীরা এমন আরেকটি ক্যাম্পের অপেক্ষায় প্রহর গোনেন। আপনি চাইলে আপনার সামান্য অনুদান, প্রয়োজনীয় ওষুধের ব্যবস্থা কিংবা একজন চিকিৎসক ও স্বেচ্ছাসেবক হিসেবে আমাদের আগামী মানবিক স্বাস্থ্যসেবায় শরিক হতে পারেন। আসুন, আলিয়ার হাট ফাজিল মাদ্রাসায় শুরু হওয়া সেই ভালোবাসার ধারাকে আরও বহু দূর ছড়িয়ে দিই।',
+        textEn:
+          'Across countless villages in Bogura and northern Bangladesh, vulnerable families still await the next camp. Whether through a modest contribution, sponsoring medicines, or joining our field team as a volunteer or physician, you can become part of this living Sadaqah. Let us carry forward the wave of mercy that began at Aliar Hat Fazil Madrasah.'
+      }
+    ]
+  },
   {
     id: 'art-winter-field-notes-2026',
     slug: 'mokamtala-shibganj-winter-field-experience',
+    publishedAt: '2026-11-18',
     titleBn: 'মোকামতলা ও শিবগঞ্জের শীতসন্ধ্যায়: উষ্ণতার খোঁজে মাঠপর্যায়ের অভিজ্ঞতা',
     titleEn: 'Winter Evenings in Mokamtala & Shibganj: Field Reflections in Search of Warmth',
     excerptBn:
@@ -132,6 +226,7 @@ export const ARTICLES_DATA: ArticleEntry[] = [
   {
     id: 'art-orphan-care-northern-districts',
     slug: 'orphan-care-bogura-joypurhat-dinajpur-plan',
+    publishedAt: '2026-11-12',
     titleBn: 'বগুড়া থেকে জয়পুরহাট ও দিনাজপুর: এতিম ও অসচ্ছল শিশুদের পাশে সম্মিলিত দায়বদ্ধতা',
     titleEn: 'From Bogura to Joypurhat & Dinajpur: Our Shared Responsibility for Orphaned Children',
     excerptBn:
@@ -203,6 +298,7 @@ export const ARTICLES_DATA: ArticleEntry[] = [
   {
     id: 'art-self-reliance-gujia-model',
     slug: 'sustainable-self-reliance-gujia-shibganj-model',
+    publishedAt: '2026-11-05',
     titleBn: 'সাময়িক ত্রাণ নয়, স্থায়ী স্বাবলম্বিতা: আত্মকর্মসংস্থান ভাবনা ও গুজিয়া-শিবগঞ্জ মডেল',
     titleEn: 'Beyond Temporary Relief: Reflections on the Gujia-Shibganj Self-Reliance Model',
     excerptBn:
@@ -262,6 +358,7 @@ export const ARTICLES_DATA: ArticleEntry[] = [
   {
     id: 'art-journey-since-jan-2023',
     slug: 'foundation-journey-since-january-2023-amanah',
+    publishedAt: '2026-10-28',
     titleBn: '১লা জানুয়ারি ২০২৩ থেকে পথচলা: আমানতদারিতা, যাচাই-বাছাই ও আমাদের কর্মনীতি',
     titleEn: 'Journey Since January 1, 2023: Integrity, Verification, and Our Guiding Principles',
     excerptBn:

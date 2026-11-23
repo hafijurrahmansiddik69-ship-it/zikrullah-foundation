@@ -9,7 +9,7 @@ import {
   Link2,
   BookOpen
 } from 'lucide-react';
-import { ARTICLES_DATA, ArticleEntry } from '../data/articlesData';
+import { getSortedArticles, ArticleEntry } from '../data/articlesData';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal } from './ScrollReveal';
 import { ModalEngagementBlocks } from './ModalEngagementBlocks';
@@ -81,7 +81,8 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
   const [copiedLink, setCopiedLink] = useState(false);
   const overlayScrollRef = useRef<HTMLDivElement>(null);
 
-  const latestTwoArticles = ARTICLES_DATA.slice(0, 2);
+  const orderedArticles = getSortedArticles();
+  const latestTwoArticles = orderedArticles.slice(0, 2);
 
   const categories = [
     { key: 'all', bn: 'সকল লেখা', en: 'All Articles' },
@@ -93,8 +94,8 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
 
   const filteredArchiveArticles =
     activeCategory === 'all'
-      ? ARTICLES_DATA
-      : ARTICLES_DATA.filter((item) => item.categoryBn === activeCategory);
+      ? orderedArticles
+      : orderedArticles.filter((item) => item.categoryBn === activeCategory);
 
   const openArticle = (article: ArticleEntry, from: 'grid' | 'archive') => {
     setPreviousView(from);
