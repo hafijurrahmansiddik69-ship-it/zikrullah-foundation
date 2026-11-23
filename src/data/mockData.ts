@@ -19,11 +19,11 @@ export const EXECUTIVE_MEMBERS = [
   },
   {
     id: 2,
-    name: 'MAULANA ABDULLAH',
-    nameBn: 'মাওলানা আব্দুল্লাহ',
+    name: 'MAULANA ABDULLAH HOSSAIN',
+    nameBn: 'মাওলানা আব্দুল্লাহ হোসাইন',
     role: 'ORGANIZING SECRETARY',
     roleBn: 'অর্গানাইজিং সেক্রেটারি',
-    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795423354/wie4cp9rereaxtsnwiq3.png',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795424595/rjvqtqg4b2rdrxmwhw1e.png',
   },
   {
     id: 3,
