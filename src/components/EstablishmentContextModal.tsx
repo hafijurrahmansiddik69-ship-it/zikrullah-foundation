@@ -120,7 +120,7 @@ export const EstablishmentContextModal: React.FC<EstablishmentContextModalProps>
 
           {/* 3. Quranic Guidance & Inspiration (Navy Blue BG, White Text, Golden Yellow Ref) */}
           <div className="rounded-2xl bg-gradient-to-br from-[#0e1b4d] via-[#0b1742] to-[#081236] border border-blue-500/40 p-4 sm:p-5 space-y-3 shadow-md">
-            <p className="font-times font-bold text-amber-300 text-sm sm:text-base md:text-lg leading-[2.1] text-center" dir="rtl">
+            <p className="font-times font-bold text-white text-sm sm:text-base md:text-lg leading-[2.1] text-center" dir="rtl">
               الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
             </p>
             <p className="text-white text-xs sm:text-sm text-center leading-relaxed">

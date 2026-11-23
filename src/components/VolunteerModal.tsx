@@ -120,6 +120,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
         <CelebrationConfirmationPopup
           displayName={displayName}
           isEn={isEn}
+          contextType="volunteer"
           onClose={resetAndClose}
         />
       ) : (

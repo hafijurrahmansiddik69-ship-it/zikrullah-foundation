@@ -528,6 +528,13 @@ body.lang-en .font-solaiman {
 .hero-delay-450 { animation-delay: 450ms; }
 .hero-delay-550 { animation-delay: 550ms; }
 .hero-delay-600 { animation-delay: 600ms; }
+.hero-delay-900 { animation-delay: 900ms; }
+.hero-delay-1050 { animation-delay: 1050ms; }
+.hero-delay-1200 { animation-delay: 1200ms; }
+.hero-delay-1350 { animation-delay: 1350ms; }
+.hero-delay-1500 { animation-delay: 1500ms; }
+.hero-delay-1650 { animation-delay: 1650ms; }
+.hero-delay-1800 { animation-delay: 1800ms; }
 
 /* Smooth Scroll-Reveal Animations (Silky, unhurried, luxury deceleration) */
 .reveal-base {

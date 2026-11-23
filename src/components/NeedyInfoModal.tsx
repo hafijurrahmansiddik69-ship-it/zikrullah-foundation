@@ -30,6 +30,8 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
   const [informerName, setInformerName] = useState('');
   const [submittedInformerName, setSubmittedInformerName] = useState('');
+  const [submittedNeedyName, setSubmittedNeedyName] = useState('');
+  const [submittedAddress, setSubmittedAddress] = useState('');
   const [informerPhone, setInformerPhone] = useState('');
   const [needyName, setNeedyName] = useState('');
   const [needyPhone, setNeedyPhone] = useState('');
@@ -54,6 +56,8 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
 
     submitLockRef.current = true;
     setSubmittedInformerName(cleanInformerName);
+    setSubmittedNeedyName(cleanNeedyName);
+    setSubmittedAddress(cleanAddress);
     setIsSubmitting(true);
 
     try {
@@ -107,6 +111,8 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
     setSubmitted(false);
     setInformerName('');
     setSubmittedInformerName('');
+    setSubmittedNeedyName('');
+    setSubmittedAddress('');
     setInformerPhone('');
     setNeedyName('');
     setNeedyPhone('');
@@ -117,6 +123,8 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
   };
 
   const displayName = submittedInformerName || informerName.trim() || (isEn ? 'Respected Well-Wisher' : 'সম্মানিত শুভাকাঙ্ক্ষী');
+  const displayNeedyName = submittedNeedyName || needyName.trim();
+  const displayNeedyAddress = submittedAddress || fullAddress.trim();
 
   return (
     <div
@@ -127,6 +135,9 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
         <CelebrationConfirmationPopup
           displayName={displayName}
           isEn={isEn}
+          contextType="needy-info"
+          needyName={displayNeedyName}
+          needyAddress={displayNeedyAddress}
           onClose={resetAndClose}
         />
       ) : (

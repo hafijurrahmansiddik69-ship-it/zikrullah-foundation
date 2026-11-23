@@ -7,9 +7,6 @@ import {
   ShieldCheck, 
   Camera, 
   Heart,
-  UserPlus,
-  HandHeart,
-  PhoneCall,
   Coins
 } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
@@ -17,6 +14,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { EstablishmentContextModal } from './EstablishmentContextModal';
 import { CARD_CONFIGS } from '../data/projectConfigs';
 import { ScrollReveal, RevealDirection, RevealDelay } from './ScrollReveal';
+import { ModalEngagementBlocks } from './ModalEngagementBlocks';
 
 interface HeroProps {
   onOpenDonation?: (category?: string) => void;
@@ -42,9 +40,7 @@ const BOGURA_HUB = { x: 270, y: 245, nameBn: 'বগুড়া', nameEn: 'Bogura'
 export const Hero: React.FC<HeroProps> = ({ 
   onOpenDonation, 
   onNavigateToAbout,
-  onOpenVolunteer,
-  onOpenNeedyInfo,
-  onOpenContactModal
+  onOpenVolunteer
 }) => {
   const { t, isEn } = useLanguage();
   const [isContextModalOpen, setIsContextModalOpen] = useState(false);
@@ -213,49 +209,51 @@ export const Hero: React.FC<HeroProps> = ({
       {/* Main Foreground Content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-3 sm:px-6 flex flex-col items-center text-center">
         
-        {/* Top Header: Foundation Name & Slogan */}
-        <div className="hero-reveal-left max-w-3xl mx-auto mb-3 sm:mb-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-semibold mb-2 shadow-[0_0_15px_rgba(16,185,129,0.2)] backdrop-blur-md">
+        {/* Top Header: Foundation Name & Slogan (Reveals smoothly right after Bogura map & light rays) */}
+        <div className="max-w-3xl mx-auto mb-3 sm:mb-4">
+          <div className="hero-reveal-fade hero-delay-900 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-semibold mb-2 shadow-[0_0_15px_rgba(16,185,129,0.2)] backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
             <span>{isEn ? 'Humanity • Da\'wah • Education' : 'মানবসেবা • দাওয়াহ • শিক্ষা'}</span>
           </div>
 
           <h1 className="font-serif-bn font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.2] drop-shadow-md">
-            {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
+            <span className="hero-reveal-left hero-delay-1050 block">
+              {isEn ? FOUNDATION_INFO.englishName : FOUNDATION_INFO.name}
+            </span>
             {/* Slogan font size made slightly smaller as requested */}
-            <span className="block text-amber-300 font-solaiman text-xs sm:text-base md:text-xl font-medium tracking-wide drop-shadow-sm mt-1.5 sm:mt-2 opacity-95">
+            <span className="hero-reveal-up hero-delay-1200 block text-amber-300 font-solaiman text-xs sm:text-base md:text-xl font-medium tracking-wide drop-shadow-sm mt-1.5 sm:mt-2 opacity-95">
               {t.common.slogan}
             </span>
           </h1>
         </div>
 
-        {/* 2. First Line Buttons (ONLY 2 Buttons as requested: "প্রতিষ্ঠার প্রেক্ষাপট" + "আমাদের সম্পর্কে জানুন") */}
-        <div className="hero-reveal-zoom hero-delay-150 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-7 sm:mb-10 px-2 font-solaiman">
+        {/* 2. First Line Buttons (ONLY 2 Buttons on 1 line: "প্রতিষ্ঠার প্রেক্ষাপট" + "আমাদের সম্পর্কে জানুন") */}
+        <div className="hero-reveal-zoom hero-delay-1350 flex flex-nowrap items-center justify-center gap-2 sm:gap-4 mb-7 sm:mb-10 px-1 sm:px-2 font-solaiman w-full max-w-full">
           
           {/* Button 1: "প্রতিষ্ঠার প্রেক্ষাপট" (Free Healthcare Cyan/Blue Gradient) */}
           <button
             type="button"
             onClick={() => setIsContextModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00c6ff] to-[#0072ff] hover:from-[#00b4ea] hover:to-[#005ece] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-[0_0_18px_rgba(0,198,255,0.45)] border-2 border-cyan-200 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00c6ff] to-[#0072ff] hover:from-[#00b4ea] hover:to-[#005ece] active:scale-95 text-white font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(0,198,255,0.45)] border-2 border-cyan-200 transition-all cursor-pointer whitespace-nowrap group shrink-0"
           >
-            <BookOpen className="w-4 h-4 text-white group-hover:rotate-6 transition-transform shrink-0" />
+            <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:rotate-6 transition-transform shrink-0" />
             <span className="tracking-wide">
               {isEn ? 'Background of Establishment' : 'প্রতিষ্ঠার প্রেক্ষাপট'}
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-cyan-100 animate-pulse shrink-0" />
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-100 animate-pulse shrink-0" />
           </button>
 
           {/* Button 2: "আমাদের সম্পর্কে জানুন" (Matching "সরাসরি যোগাযোগ করুন" white background style) */}
           <button
             type="button"
             onClick={onNavigateToAbout}
-            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-slate-100 active:scale-95 text-slate-900 font-bold text-xs sm:text-sm shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-slate-100 active:scale-95 text-slate-900 font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
           >
-            <Sparkles className="w-4 h-4 text-emerald-700 group-hover:scale-110 transition-transform shrink-0" />
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 group-hover:scale-110 transition-transform shrink-0" />
             <span className="tracking-wide">
               {isEn ? 'Learn About Us' : 'আমাদের সম্পর্কে জানুন'}
             </span>
-            <ArrowRight className="w-4 h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0" />
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0" />
           </button>
 
         </div>
@@ -263,7 +261,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* 3. আমাদের সেবামূলক কার্যক্রম — ১০ মিনিট স্কুলের হুবহু আদলে মসৃণ গোল আকৃতির ২ লাইনে ৬টি কার্ড */}
         <div id="projects" className="w-full pt-1">
           {/* Section Sub-heading */}
-          <div className="hero-reveal-down hero-delay-250 text-center mb-5 sm:mb-7">
+          <div className="hero-reveal-down hero-delay-1500 text-center mb-5 sm:mb-7">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>{t.projects.badge}</span>
@@ -337,47 +335,6 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           )}
 
-          {/* 4. Directly Underneath the 7 Activity Icons: The 3 Action Buttons in their Original Colors */}
-          <div className="w-full max-w-4xl mx-auto mt-7 sm:mt-10 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 font-solaiman">
-            
-            {/* 1. "স্বেচ্ছাসেবক হিসেবে যোগ দিন" (Rich Emerald Green) */}
-            <button
-              type="button"
-              onClick={onOpenVolunteer}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-[#064e3b] via-[#047857] to-[#064e3b] hover:from-[#086a51] hover:to-[#086a51] text-white rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(6,78,59,0.5)] border-2 border-emerald-300/80 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 group"
-            >
-              <UserPlus className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-emerald-200 group-hover:scale-110 transition-transform" />
-              <span>{isEn ? 'Join as Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
-            </button>
-
-            {/* 2. "আপনার গ্রামের অসহায় মানুষের তথ্য দিন" (Deep Navy Blue) */}
-            <button
-              type="button"
-              onClick={onOpenNeedyInfo}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] hover:from-[#1e293b] hover:to-[#0f172a] text-white rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(14,165,233,0.4)] border-2 border-cyan-400/80 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 group"
-            >
-              <span className="relative inline-flex items-center justify-center shrink-0">
-                <HandHeart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 group-hover:scale-110 transition-transform" />
-                <span className="absolute -top-1 -right-1 flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500" />
-                </span>
-              </span>
-              <span>{isEn ? 'Share Needy Info' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
-            </button>
-
-            {/* 3. "সরাসরি যোগাযোগ করুন" (Clean White Background) */}
-            <button
-              type="button"
-              onClick={onOpenContactModal}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-slate-100 text-slate-900 rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 group"
-            >
-              <PhoneCall className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-emerald-700 group-hover:rotate-12 transition-transform" />
-              <span>{isEn ? 'Direct Contact' : 'সরাসরি যোগাযোগ করুন'}</span>
-            </button>
-
-          </div>
-
         </div>
 
       </div>
@@ -401,12 +358,12 @@ export const Hero: React.FC<HeroProps> = ({
           aria-modal="true"
         >
           <div 
-            className="bg-[#0f1422] rounded-3xl max-w-2xl w-full relative border border-slate-700/80 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden my-auto text-slate-100 animate-in zoom-in-95 duration-200" 
+            className="bg-[#0f1422] rounded-3xl max-w-2xl w-full relative border border-slate-700/80 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden my-auto text-slate-100 animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col" 
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Banner with Image (if available) */}
             {activeConfig.bannerImage ? (
-              <div className="relative aspect-[16/8] sm:aspect-[16/7] w-full bg-slate-900 overflow-hidden group">
+              <div className="relative aspect-[16/8] sm:aspect-[16/7] w-full bg-slate-900 overflow-hidden group shrink-0">
                 <img 
                   src={activeConfig.bannerImage} 
                   alt={selectedCard.title} 
@@ -415,15 +372,15 @@ export const Hero: React.FC<HeroProps> = ({
                     (e.currentTarget as HTMLImageElement).src = 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/70 to-black/50" />
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0f1422]/55 to-transparent pointer-events-none" />
 
                 <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20 shadow-md">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/55 border border-white/20 shadow-md">
                     {selectedCard.badge}
                   </span>
                 </div>
 
-                <div className="absolute bottom-3 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xs text-[11px] text-slate-300 border border-white/10">
+                <div className="absolute bottom-2.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/45 text-[11px] text-slate-200 border border-white/10">
                   <Camera className="w-3 h-3 text-emerald-400" />
                   <span>{t.projects.modalImageTemplateTag}</span>
                 </div>
@@ -437,7 +394,7 @@ export const Hero: React.FC<HeroProps> = ({
                 </button>
               </div>
             ) : (
-              <div className="p-4 sm:p-5 flex items-center justify-between border-b border-slate-800">
+              <div className="p-4 sm:p-5 flex items-center justify-between border-b border-slate-800 shrink-0">
                 <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-emerald-950/80 border border-emerald-500/30">
                   {selectedCard.badge}
                 </span>
@@ -452,76 +409,53 @@ export const Hero: React.FC<HeroProps> = ({
             )}
 
             {/* Modal Body: 10 Minute School Split (নামের দিকে ২ লাইন + ডানপাশে ৩ লাইন) */}
-            <div className="p-5 sm:p-7 max-h-[62vh] overflow-y-auto space-y-4">
+            <div className="p-5 sm:p-7 flex-1 overflow-y-auto space-y-6">
               
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
-                
-                {/* Left Column / নামের দিকে ২ লাইন (Line 1: Badge, Line 2: Title) + Description */}
-                <div className="md:col-span-5 space-y-2.5 text-left border-b md:border-b-0 md:border-r border-slate-800 pb-4 md:pb-0 md:pr-4">
-                  {/* Line 1: Badge / Category */}
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-white/10 text-cyan-300 border border-white/10 font-solaiman uppercase tracking-wider">
-                    {selectedCard.badge}
-                  </span>
+              <div className="space-y-3 text-left">
+                {/* Line 1: Badge / Category */}
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-white/10 text-cyan-300 border border-white/10 font-solaiman uppercase tracking-wider">
+                  {selectedCard.badge}
+                </span>
 
-                  {/* Line 2: Prominent Project Title */}
-                  <h3 className={`text-2xl sm:text-3xl font-bold font-serif-bn leading-tight ${activeConfig.accentText}`}>
-                    {selectedCard.title}
-                  </h3>
+                {/* Line 2: Prominent Project Title */}
+                <h3 className={`text-2xl sm:text-3xl font-bold font-serif-bn leading-tight ${activeConfig.accentText}`}>
+                  {selectedCard.title}
+                </h3>
 
-                  {'subtitle' in selectedCard && selectedCard.subtitle && (
-                    <p className="text-xs text-amber-300/90 font-medium font-solaiman">
-                      {selectedCard.subtitle}
-                    </p>
-                  )}
-
-                  {/* Summary Description */}
-                  <p className="text-slate-300 text-xs sm:text-[13.5px] leading-relaxed font-solaiman pt-1">
-                    {selectedCard.description}
+                {'subtitle' in selectedCard && selectedCard.subtitle && (
+                  <p className="text-xs sm:text-sm text-amber-300/90 font-medium font-solaiman">
+                    {selectedCard.subtitle}
                   </p>
+                )}
+
+                {/* Summary Description */}
+                <p className="text-slate-200 text-sm sm:text-[15px] leading-relaxed font-solaiman pt-1">
+                  {selectedCard.description}
+                </p>
+
+                {/* Trust Badge */}
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/25 text-emerald-300 text-xs font-solaiman pt-2.5">
+                  <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
+                  <span>{t.projects.modalTrustBadge}</span>
                 </div>
-
-                {/* Right Column / ডানপাশে ৩ লাইন */}
-                <div className="md:col-span-7 space-y-2.5 text-left">
-                  <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider font-solaiman">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{isEn ? 'Core Pillars & Impact' : 'আমাদের অনন্য অঙ্গীকার ও সেবার মান'}</span>
-                  </div>
-
-                  {'highlights' in selectedCard && Array.isArray(selectedCard.highlights) && selectedCard.highlights.length > 0 && (
-                    <div className="space-y-2 font-solaiman">
-                      {selectedCard.highlights.slice(0, 3).map((highlight: string, hIdx: number) => {
-                        const bnNumbers = ['১', '২', '৩'];
-                        return (
-                          <div 
-                            key={hIdx} 
-                            className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#161c2d] border border-slate-700/60 shadow-xs"
-                          >
-                            {/* 10 Minute School Style Number Badge */}
-                            <span className="w-5 h-5 rounded-full bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-sm font-serif-bn ring-1 ring-emerald-400/40">
-                              {bnNumbers[hIdx] || hIdx + 1}
-                            </span>
-                            <span className="text-xs sm:text-[13.5px] text-slate-200 leading-snug">
-                              {highlight}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* Trust Badge */}
-                  <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/25 text-emerald-300 text-xs font-solaiman mt-3">
-                    <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
-                    <span>{t.projects.modalTrustBadge}</span>
-                  </div>
-                </div>
-
               </div>
+
+              {/* Bottom Matching Action & Update Blocks Across All 7 Activity Popups */}
+              <ModalEngagementBlocks
+                sourceLabel={`কার্যক্রম: ${selectedCard.title}`}
+                onDonate={handleDonateFromModal}
+                onVolunteer={() => {
+                  setSelectedCardIndex(null);
+                  if (onOpenVolunteer) {
+                    setTimeout(() => onOpenVolunteer(), 60);
+                  }
+                }}
+              />
 
             </div>
 
             {/* Modal Footer with Actions */}
-            <div className="p-4 sm:p-6 bg-[#0a0d17] border-t border-slate-800 flex items-center gap-3">
+            <div className="p-4 sm:p-6 bg-[#0a0d17] border-t border-slate-800 flex items-center gap-3 shrink-0">
               <button 
                 type="button"
                 onClick={() => setSelectedCardIndex(null)} 

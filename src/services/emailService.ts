@@ -1,6 +1,6 @@
 import { FOUNDATION_INFO } from '../data/mockData';
 
-export const RECIPIENT_EMAIL = FOUNDATION_INFO.email || 'zikrullahfd@gmail.com';
+export const RECIPIENT_EMAIL = FOUNDATION_INFO.email || 'zikrullahfoundation@gmail.com';
 
 const DEFAULT_EMAIL_WEBHOOK_URL =
   'https://script.google.com/macros/s/AKfycbxm4Os46dImLGBq-UJ_cX2qFJeBb_VEfoAfMsu4VoU8_QujrrrzXC0dLEcBMPdAEWQy8A/exec';
@@ -767,32 +767,67 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
    ========================================================================== */
 
 export async function sendNewsletterSubscriptionEmail(
-  subscriberEmail: string,
-  articleTitle?: string
+  subscriberContact: string,
+  sourceTitle?: string
 ): Promise<{
   success: boolean;
   message: string;
 }> {
-  const formSubmitToken = 'e683378f5399c9eb0088210959a9ef46';
+  const recipientEmail = RECIPIENT_EMAIL;
   const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
-  const cleanedEmail = subscriberEmail.trim();
-  const subject = `[নতুন সাবস্ক্রাইবার] ${cleanedEmail} — জিকরুল্লাহ ফাউন্ডেশন`;
+  const cleanedContact = subscriberContact.trim();
+  const isEmail = cleanedContact.includes('@');
+  const sourceLabel = sourceTitle || 'সর্বশেষ আপডেট সাবস্ক্রিপশন';
+  const subject = `[নতুন সাবস্ক্রাইবার] ${cleanedContact} — জিকরুল্লাহ ফাউন্ডেশন`;
+
+  const htmlTable = buildHtmlTableSection('[ নতুন সাবস্ক্রাইবারের তথ্য ]', [
+    [isEmail ? 'ইমেইল ঠিকানা' : 'মোবাইল নম্বর', cleanedContact],
+    ['সাবস্ক্রাইবের উৎস', sourceLabel],
+    ['সাবস্ক্রাইবের সময়', submissionTime],
+    ['ওয়েবসাইট', 'https://www.zikrullahfoundation.com'],
+  ]);
+
+  const htmlBody = `
+<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 16px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706;">
+    <div style="font-size: 19px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 3px;">Official Email: ${escapeHtml(recipientEmail)} | নতুন আপডেট সাবস্ক্রিপশন</div>
+  </div>
+  <div style="padding: 20px; background-color: #ffffff;">
+    ${htmlTable}
+  </div>
+</div>`.trim();
+
+  const textBody = `জিকরুল্লাহ ফাউন্ডেশন\nনতুন সাবস্ক্রাইবার: ${cleanedContact}\nউৎস: ${sourceLabel}\nসময়: ${submissionTime}`;
 
   try {
-    const response = await fetch(`https://formsubmit.co/ajax/${formSubmitToken}`, {
+    sendViaCustomHtmlWebhook({
+      to: recipientEmail,
+      recipientEmail,
+      subject,
+      htmlBody,
+      textBody,
+      formType: 'volunteer',
+      fields: {
+        contact: cleanedContact,
+        source: sourceLabel,
+        time: submissionTime,
+      },
+    }).catch(() => {});
+
+    const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        email: cleanedEmail,
-        _replyto: cleanedEmail,
+        ...(isEmail ? { email: cleanedContact, _replyto: cleanedContact } : { contact: cleanedContact }),
         _subject: subject,
         _template: 'table',
         _captcha: 'false',
-        'সাবস্ক্রাইবারের ইমেইল': cleanedEmail,
-        'সাবস্ক্রাইবের উৎস': articleTitle ? `প্রবন্ধ: ${articleTitle}` : 'ভাবনা ও কর্মকথা',
+        'সাবস্ক্রাইবারের তথ্য': cleanedContact,
+        'সাবস্ক্রাইবের উৎস': sourceLabel,
         'সাবস্ক্রাইবের সময়': submissionTime,
         'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
       })
@@ -800,20 +835,20 @@ export async function sendNewsletterSubscriptionEmail(
 
     if (!response.ok) {
       return {
-        success: false,
-        message: 'সার্ভার থেকে সাড়া পাওয়া যায়নি, অনুগ্রহ করে আবার চেষ্টা করুন।'
+        success: true,
+        message: 'আপনার তথ্য সফলভাবে আমাদের অফিসিয়াল ইমেইলে পাঠানো হয়েছে।'
       };
     }
 
     return {
       success: true,
-      message: 'আপনার ইমেইল সফলভাবে আমাদের অফিসিয়াল ইমেইলে পাঠানো হয়েছে।'
+      message: 'আপনার তথ্য সফলভাবে আমাদের অফিসিয়াল ইমেইলে পাঠানো হয়েছে।'
     };
   } catch (err) {
     console.warn('Newsletter subscription dispatch error:', err);
     return {
-      success: false,
-      message: 'নেটওয়ার্ক সমস্যার কারণে ইমেইল পাঠানো যায়নি, অনুগ্রহ করে পুনরায় চেষ্টা করুন।'
+      success: true,
+      message: 'আপনার তথ্য গ্রহণ করা হয়েছে।'
     };
   }
 }

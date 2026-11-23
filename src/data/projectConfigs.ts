@@ -63,7 +63,7 @@ export const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#00c6ff]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(0,198,255,0.4)]',
     accentText: 'text-[#00c6ff]',
-    bannerImage: ''
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795420357/v2gyr2o1xyt9xqejhzok.jpg'
   },
   // 3. Blood Donation
   {

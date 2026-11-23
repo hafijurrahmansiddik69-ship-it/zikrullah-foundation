@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { 
   X, 
-  CheckCircle2, 
   ShieldCheck, 
   ArrowRight, 
-  Sparkles,
   Camera,
   Heart
 } from 'lucide-react';
@@ -129,17 +127,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   }}
                 />
                 {/* Gradient Scrim */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1422] via-[#0f1422]/70 to-black/50" />
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0f1422]/55 to-transparent pointer-events-none" />
 
                 {/* Floating Badge (Top Left) */}
                 <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20 shadow-md">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/55 border border-white/20 shadow-md">
                     {selectedCard.badge}
                   </span>
                 </div>
 
                 {/* Editable Template Indicator (Bottom Left) */}
-                <div className="absolute bottom-3 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xs text-[11px] text-slate-300 border border-white/10">
+                <div className="absolute bottom-2.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/45 text-[11px] text-slate-200 border border-white/10">
                   <Camera className="w-3 h-3 text-emerald-400" />
                   <span>{t.projects.modalImageTemplateTag}</span>
                 </div>
@@ -183,24 +181,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               <p className="text-slate-200 text-sm sm:text-[15px] leading-relaxed font-solaiman">
                 {selectedCard.description}
               </p>
-
-              {/* Key Highlights / Services Bullet List */}
-              {'highlights' in selectedCard && Array.isArray(selectedCard.highlights) && selectedCard.highlights.length > 0 && (
-                <div className="bg-[#161c2d] border border-slate-700/60 rounded-2xl p-4 sm:p-5 space-y-2.5">
-                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>{t.projects.modalKeyHighlights}</span>
-                  </div>
-                  <ul className="space-y-2">
-                    {selectedCard.highlights.map((highlight: string, hIdx: number) => (
-                      <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200 font-solaiman">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
 
               {/* Transparency / Field Delivery Trust Note */}
               <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 text-xs">

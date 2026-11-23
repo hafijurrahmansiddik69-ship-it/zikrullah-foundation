@@ -7,13 +7,12 @@ import {
   Clock,
   Check,
   Link2,
-  BookOpen,
-  Send,
-  Mail
+  BookOpen
 } from 'lucide-react';
 import { ARTICLES_DATA, ArticleEntry } from '../data/articlesData';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal } from './ScrollReveal';
+import { ModalEngagementBlocks } from './ModalEngagementBlocks';
 
 const FacebookIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -80,7 +79,6 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
   const [selectedArticle, setSelectedArticle] = useState<ArticleEntry | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [copiedLink, setCopiedLink] = useState(false);
-  const [subscribeEmail, setSubscribeEmail] = useState('');
   const overlayScrollRef = useRef<HTMLDivElement>(null);
 
   const latestTwoArticles = ARTICLES_DATA.slice(0, 2);
@@ -103,7 +101,6 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
     setSelectedArticle(article);
     setViewMode('article');
     setCopiedLink(false);
-    setSubscribeEmail('');
   };
 
   const openArchive = () => {
@@ -170,36 +167,18 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
     }
   };
 
-  const handleNewsletterSubmit = () => {
-    const cleaned = subscribeEmail.trim();
-    if (!cleaned) return;
-
-    try {
-      const existingRaw = localStorage.getItem('zikrullah_newsletter_subscribers');
-      const existing: string[] = existingRaw ? JSON.parse(existingRaw) : [];
-      if (!existing.includes(cleaned)) {
-        localStorage.setItem(
-          'zikrullah_newsletter_subscribers',
-          JSON.stringify([...existing, cleaned])
-        );
-      }
-    } catch {
-      // ignore storage errors
-    }
-  };
-
   return (
     <section
       id="thoughts"
-      className="py-16 sm:py-24 bg-[#f8faf9] border-t border-b border-slate-200/80 overflow-x-clip selection:bg-emerald-100 selection:text-emerald-950"
+      className="py-16 sm:py-24 bg-gradient-to-br from-[#0e1b4d] via-[#0b1742] to-[#081236] border-t border-b border-blue-900/60 overflow-x-clip selection:bg-emerald-100 selection:text-emerald-950"
     >
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
         {/* Centered Section Header: Drops softly from above */}
         <ScrollReveal direction="down" className="text-center max-w-2xl mx-auto mb-7 sm:mb-12 px-1">
-          <h2 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-[42px] text-[#064E3B] leading-tight tracking-tight mb-2 sm:mb-3 text-balance">
+          <h2 className="font-serif-bn font-bold text-2xl sm:text-4xl lg:text-[42px] text-white leading-tight tracking-tight mb-2 sm:mb-3 text-balance">
             {isEn ? 'Thoughts & Field Notes' : 'ভাবনা ও কর্মকথা'}
           </h2>
-          <p className="text-slate-600 text-xs sm:text-base leading-relaxed">
+          <p className="text-slate-200 text-xs sm:text-base leading-relaxed">
             {isEn
               ? 'Read real field experiences, upcoming roadmaps, and selected reflections.'
               : 'মাঠপর্যায়ের বাস্তব অভিজ্ঞতা, আগামী দিনের পরিকল্পনা ও নির্বাচিত লেখাগুলো পড়ুন।'}
@@ -278,7 +257,7 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
           <button
             type="button"
             onClick={openArchive}
-            className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#064E3B] hover:bg-[#043927] active:scale-98 text-white font-bold text-sm sm:text-base shadow-sm transition-all duration-200 cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#064E3B] hover:bg-[#043927] active:scale-98 text-white font-bold text-sm sm:text-base shadow-lg border border-emerald-400/30 transition-all duration-200 cursor-pointer whitespace-nowrap"
           >
             <span>{isEn ? 'View All Articles' : 'সব লেখা দেখুন'}</span>
             <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
@@ -616,124 +595,13 @@ export const ThoughtsSection: React.FC<ThoughtsSectionProps> = ({
                 </div>
               </div>
 
-              {/* 2. Deep Emerald Green "চলুন একসাথে কাজ করি" Card (Matched to Page Theme) */}
-              <div className="bg-gradient-to-br from-[#043927] via-[#064E3B] to-[#087443] border border-emerald-700/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-md text-center">
-                <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-white mb-2 leading-snug">
-                  {isEn ? 'Let Us Work Together' : 'চলুন একসাথে কাজ করি'}
-                </h3>
-                <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto mb-5 sm:mb-6">
-                  {isEn
-                    ? 'Your sincere support and voluntary service help transform lives across Bogura and northern Bangladesh.'
-                    : 'আপনার আন্তরিক সহযোগিতা ও স্বেচ্ছাশ্রম অসহায় মানুষের জীবনে স্থায়ী স্বস্তি ও পরিবর্তন আনতে পারে।'}
-                </p>
-
-                <div className="space-y-3">
-                  <button
-                    type="button"
-                    onClick={() => handleCloseToAction(onOpenDonation)}
-                    className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-gradient-to-br from-[#fbbf24] via-[#f59e0b] to-[#b45309] hover:from-[#fcd34d] hover:via-[#f59e0b] hover:to-[#92400e] active:scale-[0.99] text-white font-bold text-sm sm:text-base drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] shadow-lg shadow-amber-950/25 border border-amber-300/40 transition-all cursor-pointer text-center"
-                  >
-                    {isEn ? 'Join the Cause' : 'খেদমতে শরীক হন'}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleCloseToAction(onOpenVolunteer)}
-                    className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-white hover:bg-emerald-50 active:scale-[0.99] text-[#0F172A] font-bold text-sm sm:text-base transition-all cursor-pointer text-center"
-                  >
-                    {isEn ? 'Be a Volunteer' : 'স্বেচ্ছাসেবক হোন'}
-                  </button>
-                </div>
-              </div>
-
-              {/* 3. Deep Navy Blue Newsletter Subscribe Box (Matches Screenshot 1 Layout) */}
-              <div className="relative overflow-hidden bg-gradient-to-br from-[#0e1b4d] via-[#0b1742] to-[#081236] text-white rounded-2xl sm:rounded-3xl px-4 py-8 sm:px-8 sm:py-11 shadow-sm text-center">
-                <div className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-amber-300/10 blur-3xl pointer-events-none" />
-                <div className="relative z-10 max-w-2xl mx-auto">
-                  {/* Top Circular Paper-Plane Icon */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 border border-white/15 flex items-center justify-center mx-auto mb-4 sm:mb-5">
-                    <Send className="w-5 h-5 sm:w-6 sm:h-6 text-[#FACC15]" />
-                  </div>
-
-                  {/* Centered Heading */}
-                  <h3 className="font-serif-bn font-bold text-2xl sm:text-3xl text-white mb-2.5 leading-snug">
-                    {isEn
-                      ? 'Stay Connected for Our Latest Updates'
-                      : 'আমাদের সর্বশেষ আপডেট পেতে যুক্ত থাকুন'}
-                  </h3>
-
-                  {/* Centered Subtitle */}
-                  <p className="text-slate-200/90 text-xs sm:text-base leading-relaxed max-w-xl mx-auto mb-6 sm:mb-7">
-                    {isEn
-                      ? 'Subscribe with your mobile number or email to receive regular updates on our charitable activities, field reports, and public welfare initiatives first.'
-                      : 'আমাদের সেবামূলক কার্যক্রম, মাঠপর্যায়ের প্রতিবেদন ও জনকল্যাণমূলক উদ্যোগের নিয়মিত আপডেট সবার আগে পেতে আপনার মোবাইল নাম্বার অথবা ইমেইল দিয়ে সাবস্ক্রাইব করুন।'}
-                  </p>
-
-                  <form
-                    action="https://formsubmit.co/e683378f5399c9eb0088210959a9ef46"
-                    method="POST"
-                    onSubmit={handleNewsletterSubmit}
-                    className="bg-white rounded-xl sm:rounded-2xl overflow-hidden flex items-stretch shadow-xl max-w-2xl mx-auto border border-white/20"
-                  >
-                    <input
-                      type="hidden"
-                      name="_subject"
-                      value="[নতুন সাবস্ক্রাইবার] জিকরুল্লাহ ফাউন্ডেশন"
-                    />
-                    <input type="hidden" name="_template" value="table" />
-                    <input type="hidden" name="_captcha" value="false" />
-                    <input
-                      type="hidden"
-                      name="_next"
-                      value={
-                        typeof window !== 'undefined'
-                          ? window.location.href
-                          : 'https://zikrullahfoundation.com/'
-                      }
-                    />
-                    <input
-                      type="hidden"
-                      name="source"
-                      value={
-                        selectedArticle
-                          ? `প্রবন্ধ: ${selectedArticle.titleBn}`
-                          : 'ভাবনা ও কর্মকথা'
-                      }
-                    />
-
-                    <div className="flex-1 flex items-center pl-3 sm:pl-5 min-w-0">
-                      <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0" />
-                      <input
-                        type="text"
-                        name={subscribeEmail.includes('@') ? 'email' : 'contact'}
-                        required
-                        value={subscribeEmail}
-                        onChange={(e) => setSubscribeEmail(e.target.value)}
-                        placeholder={
-                          isEn
-                            ? 'Email or phone number ...'
-                            : 'ইমেইল বা ফোন নাম্বার দিন ...'
-                        }
-                        aria-label={isEn ? 'Email or phone number' : 'ইমেইল বা ফোন নাম্বার'}
-                        className="w-full px-2.5 sm:px-3.5 py-3.5 sm:py-4 text-xs sm:text-base text-slate-800 placeholder:text-slate-400 bg-transparent focus:outline-none min-w-0"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3.5 sm:py-4 bg-[#059669] hover:bg-[#047857] active:bg-[#065f46] text-white font-bold text-xs sm:text-base transition-colors cursor-pointer whitespace-nowrap shrink-0"
-                    >
-                      <span>{isEn ? 'Subscribe' : 'সাবস্ক্রাইব করুন'}</span>
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </button>
-                  </form>
-
-                  <p className="mt-4 text-[11px] sm:text-xs text-slate-300/80 text-center">
-                    {isEn
-                      ? '* We are committed to protecting your privacy.'
-                      : '* আমরা আপনার তথ্যের গোপনীয়তা রক্ষায় প্রতিশ্রুতিবদ্ধ।'}
-                  </p>
-                </div>
-              </div>
+              {/* 2 & 3. Shared Engagement & Subscribe Blocks with Green Button and Celebration Popup */}
+              <ModalEngagementBlocks
+                sourceLabel={selectedArticle ? `প্রবন্ধ: ${selectedArticle.titleBn}` : 'ভাবনা ও কর্মকথা'}
+                onDonate={() => handleCloseToAction(onOpenDonation)}
+                onVolunteer={() => handleCloseToAction(onOpenVolunteer)}
+                donateLabelEn="Join the Cause"
+              />
             </div>
 
             {/* Bottom Back Navigation */}

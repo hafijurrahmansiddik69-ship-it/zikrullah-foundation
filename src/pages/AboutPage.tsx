@@ -699,18 +699,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               {EXECUTIVE_MEMBERS.map((member, idx) => {
                 const dirs: RevealDirection[] = ['zoom', 'up', 'down'];
                 const delays: RevealDelay[] = [0, 100, 200];
+                const isLastLone = EXECUTIVE_MEMBERS.length % 3 === 1 && idx === EXECUTIVE_MEMBERS.length - 1;
                 return (
                   <ScrollReveal
                     key={member.id}
                     direction={dirs[idx % 3]}
                     delay={delays[idx % 3]}
-                    className="flex"
+                    className={`flex ${isLastLone ? 'lg:col-start-2' : ''}`}
                   >
                     <div className="w-full h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all text-center flex flex-col items-center justify-center group">
                       <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-3 border-emerald-100/90 shadow-sm mb-4 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
                         <img
                           src={member.image}
-                          alt={member.name}
+                          alt={isEn ? member.name : (member.nameBn || member.name)}
                           className="w-full h-full object-cover object-top"
                         />
                       </div>

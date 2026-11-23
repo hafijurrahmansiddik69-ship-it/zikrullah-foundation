@@ -1,10 +1,13 @@
 import React from 'react';
-import { X, Check, Sparkles } from 'lucide-react';
+import { X, Check, Sparkles, Users, MapPin } from 'lucide-react';
 
 interface CelebrationConfirmationPopupProps {
   displayName: string;
   isEn: boolean;
   onClose: () => void;
+  contextType?: 'volunteer' | 'needy-info' | 'default';
+  needyName?: string;
+  needyAddress?: string;
 }
 
 interface FloatingHeartConfig {
@@ -47,6 +50,9 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
   displayName,
   isEn,
   onClose,
+  contextType = 'default',
+  needyName,
+  needyAddress,
 }) => {
   return (
     <>
@@ -84,7 +90,7 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
 
       {/* Centered, Responsive International-Grade Confirmation Card */}
       <div
-        className="relative z-[61] bg-white rounded-[28px] w-full max-w-[370px] sm:max-w-[420px] border-2 border-[#2563eb] ring-4 ring-[#00c6ff]/15 shadow-[0_22px_55px_-10px_rgba(14,27,77,0.48),0_0_32px_rgba(0,198,255,0.32)] overflow-hidden my-auto text-slate-800 animate-celebration-pop"
+        className="relative z-[61] bg-white rounded-[24px] sm:rounded-[28px] w-full max-w-[370px] sm:max-w-[440px] lg:max-w-[460px] max-h-[92vh] overflow-y-auto border-2 border-[#2563eb] ring-4 ring-[#00c6ff]/15 shadow-[0_22px_55px_-10px_rgba(14,27,77,0.48),0_0_32px_rgba(0,198,255,0.32)] my-auto text-slate-800 animate-celebration-pop"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Royal Blue Gradient Accent Bar */}
@@ -118,9 +124,51 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
           </div>
 
           {/* Dynamic Thank You Heading */}
-          <h3 className="font-serif-bn font-bold text-[22px] sm:text-[26px] text-[#0e1b4d] mb-4 tracking-tight leading-snug">
+          <h3 className="font-serif-bn font-bold text-[21px] sm:text-[26px] text-[#0e1b4d] mb-3.5 tracking-tight leading-snug break-words max-w-full">
             {isEn ? `Thank You, ${displayName}!` : `ধন্যবাদ, ${displayName}!`}
           </h3>
+
+          {/* Context-Specific Highlight: Bold "স্বেচ্ছাসেবক" or Needy Person's Address */}
+          {contextType === 'volunteer' && (
+            <div className="mb-4 inline-flex items-center justify-center gap-2 px-4 py-1.5 sm:py-2 rounded-full bg-emerald-50 border border-emerald-200/90 text-[#045332] text-xs sm:text-sm font-solaiman shadow-2xs max-w-full">
+              <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#059669] shrink-0" />
+              <span className="leading-snug">
+                {isEn ? (
+                  <>
+                    Thank you for registering as a{' '}
+                    <strong className="font-extrabold text-[#045332]">Volunteer</strong>
+                  </>
+                ) : (
+                  <>
+                    <strong className="font-extrabold text-[#045332]">স্বেচ্ছাসেবক</strong> হিসেবে নিবন্ধনের জন্য ধন্যবাদ
+                  </>
+                )}
+              </span>
+            </div>
+          )}
+
+          {contextType === 'needy-info' && needyAddress && (
+            <div className="mb-4 w-full max-w-[330px] sm:max-w-[375px] mx-auto px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl bg-sky-50/90 border border-sky-200 text-left shadow-2xs">
+              <div className="flex items-start gap-2.5">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#0e1b4d] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#fbbf24]" />
+                </div>
+                <div className="min-w-0 flex-1 font-solaiman">
+                  <div className="text-[11px] sm:text-xs font-bold text-[#1e3a8a] leading-tight mb-0.5">
+                    {isEn ? "Needy Person's Address" : 'অসহায় মানুষের ঠিকানা'}
+                  </div>
+                  {needyName && (
+                    <div className="text-xs sm:text-[13px] font-semibold text-slate-700 leading-snug break-words">
+                      {needyName}
+                    </div>
+                  )}
+                  <div className="text-xs sm:text-sm font-bold text-[#0e1b4d] leading-snug break-words">
+                    {needyAddress}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Soft Sky-Ivory Arabic Blessing Badge */}
           <div className="mb-5 inline-flex items-center justify-center px-6 py-2 rounded-2xl bg-[#f1f6ff] border border-[#bfdbfe] shadow-2xs">
