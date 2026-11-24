@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { X, Users, Loader2, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
-import { sendVolunteerRegistrationEmail, triggerDirectGmail, getEmailWebhookUrl } from '../services/emailService';
+import { sendVolunteerRegistrationEmail } from '../services/emailService';
+import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { CelebrationConfirmationPopup } from './CelebrationConfirmationPopup';
 
@@ -83,12 +84,8 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
         adminNote: 'মডাল আবেদন ফরম থেকে সরাসরি জিমেইলে প্রেরিত'
       });
 
-      // 2. Single-email dispatch: use custom HTML webhook if configured, otherwise open Gmail/mailto once
-      if (getEmailWebhookUrl()) {
-        await sendVolunteerRegistrationEmail(submissionPayload);
-      } else {
-        triggerDirectGmail(submissionPayload);
-      }
+      // 2. Dispatch directly to official foundation Gmail (zikrullahfoundation@gmail.com)
+      await sendVolunteerRegistrationEmail(submissionPayload);
 
       setSubmitted(true);
     } catch (err) {
@@ -135,7 +132,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
               জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
             </div>
             <div className="text-xs text-emerald-100 mt-1 text-center">
-              Official Email: zikrullahfoundation@gmail.com | স্বেচ্ছাসেবক আবেদন পত্র
+              Official Email: {FOUNDATION_INFO.email} | স্বেচ্ছাসেবক আবেদন পত্র
             </div>
           </div>
 

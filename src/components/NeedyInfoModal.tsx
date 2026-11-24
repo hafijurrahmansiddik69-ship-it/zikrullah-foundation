@@ -1,11 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { X, HandHeart, Loader2, Send } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
-import {
-  sendNeedyInfoEmail,
-  triggerDirectGmailForNeedyInfo,
-  getEmailWebhookUrl,
-} from '../services/emailService';
+import { sendNeedyInfoEmail } from '../services/emailService';
+import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { CelebrationConfirmationPopup } from './CelebrationConfirmationPopup';
 
@@ -90,12 +87,8 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
         message: formattedDetails,
       });
 
-      // 2. Single-email dispatch: use custom HTML webhook if configured, otherwise open Gmail/mailto once
-      if (getEmailWebhookUrl()) {
-        await sendNeedyInfoEmail(submissionPayload);
-      } else {
-        triggerDirectGmailForNeedyInfo(submissionPayload);
-      }
+      // 2. Dispatch directly to official foundation Gmail (zikrullahfoundation@gmail.com)
+      await sendNeedyInfoEmail(submissionPayload);
 
       setSubmitted(true);
     } catch (err) {
@@ -152,7 +145,7 @@ export const NeedyInfoModal: React.FC<NeedyInfoModalProps> = ({ isOpen, onClose 
               জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
             </div>
             <div className="text-xs text-emerald-100 mt-1 text-center">
-              Official Email: zikrullahfoundation@gmail.com | সহায়তার আবেদন তথ্য
+              Official Email: {FOUNDATION_INFO.email} | সহায়তার আবেদন তথ্য
             </div>
           </div>
 

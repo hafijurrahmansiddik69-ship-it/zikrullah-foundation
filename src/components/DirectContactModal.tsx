@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, PhoneCall, Mail, MapPin, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { FOUNDATION_INFO } from '../data/mockData';
 
 interface DirectContactModalProps {
   isOpen: boolean;
@@ -76,7 +77,7 @@ export const DirectContactModal: React.FC<DirectContactModalProps> = ({ isOpen, 
 
           {/* 2. Email / Gmail */}
           <a
-            href="mailto:zikrullahfoundation@gmail.com"
+            href={`mailto:${FOUNDATION_INFO.email}`}
             className="flex items-center justify-between gap-3 p-4 rounded-2xl bg-[#fafcfb] hover:bg-emerald-50/80 border border-slate-200 hover:border-emerald-400 shadow-xs hover:shadow-md transition-all duration-200 group cursor-pointer"
           >
             <div className="flex items-center gap-3.5 min-w-0">
@@ -88,7 +89,7 @@ export const DirectContactModal: React.FC<DirectContactModalProps> = ({ isOpen, 
                   {isEn ? 'Send Email / Gmail' : 'ইমেইল / জিমেইল পাঠান'}
                 </span>
                 <span className="font-sans font-bold text-sm sm:text-base text-slate-900 truncate block">
-                  zikrullahfoundation@gmail.com
+                  {FOUNDATION_INFO.email}
                 </span>
               </div>
             </div>

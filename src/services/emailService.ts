@@ -2,8 +2,7 @@ import { FOUNDATION_INFO } from '../data/mockData';
 
 export const RECIPIENT_EMAIL = FOUNDATION_INFO.email || 'zikrullahfoundation@gmail.com';
 
-const DEFAULT_EMAIL_WEBHOOK_URL =
-  'https://script.google.com/macros/s/AKfycbxm4Os46dImLGBq-UJ_cX2qFJeBb_VEfoAfMsu4VoU8_QujrrrzXC0dLEcBMPdAEWQy8A/exec';
+const DEFAULT_EMAIL_WEBHOOK_URL = '';
 
 export function getEmailWebhookUrl(): string {
   try {
@@ -15,6 +14,34 @@ export function getEmailWebhookUrl(): string {
   }
 }
 
+async function sendViaFormSubmit(
+  recipientEmail: string,
+  subject: string,
+  fields: Record<string, string | number>,
+  extra?: { email?: string }
+): Promise<boolean> {
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        ...(extra?.email ? { email: extra.email, _replyto: extra.email } : {}),
+        _subject: subject,
+        _template: 'table',
+        _captcha: 'false',
+        ...fields,
+      }),
+    });
+    return response.ok;
+  } catch (err) {
+    console.warn('FormSubmit background dispatch notice:', err);
+    return false;
+  }
+}
+
 async function sendViaCustomHtmlWebhook(payload: {
   to: string;
   recipientEmail?: string;
@@ -23,7 +50,7 @@ async function sendViaCustomHtmlWebhook(payload: {
   html?: string;
   textBody: string;
   body?: string;
-  formType: 'volunteer' | 'needy-info';
+  formType: 'volunteer' | 'needy-info' | 'donation' | 'contact';
   fields?: Record<string, string>;
   data?: Record<string, string>;
   [key: string]: unknown;
@@ -306,38 +333,44 @@ export async function sendVolunteerRegistrationEmail(data: VolunteerSubmissionDa
     'পূর্ণ ঠিকানা': addressLabel,
     'পরিচয় / বিশেষ বার্তা': messageLabel,
     'আবেদনের সময়': submissionTime,
+    'ওয়েবসাইট': 'https://www.zikrullahfoundation.com',
   };
 
-  const sentViaWebhook = await sendViaCustomHtmlWebhook({
-    to: recipientEmail,
-    recipientEmail,
-    subject,
-    htmlBody,
-    html: htmlBody,
-    textBody: body,
-    body,
-    formType: 'volunteer',
-    name: data.name,
-    volunteerName: data.name,
-    phone: data.phone,
-    bloodGroup: bloodLabel,
-    interest: data.interest,
-    upazila: addressLabel,
-    address: addressLabel,
-    fullAddress: addressLabel,
-    message: messageLabel,
-    submissionTime,
-    fields: structuredFields,
-    data: {
+  let sentViaWebhook = false;
+  if (getEmailWebhookUrl()) {
+    sentViaWebhook = await sendViaCustomHtmlWebhook({
+      to: recipientEmail,
+      recipientEmail,
+      subject,
+      htmlBody,
+      html: htmlBody,
+      textBody: body,
+      body,
+      formType: 'volunteer',
       name: data.name,
+      volunteerName: data.name,
       phone: data.phone,
       bloodGroup: bloodLabel,
       interest: data.interest,
       upazila: addressLabel,
+      address: addressLabel,
+      fullAddress: addressLabel,
       message: messageLabel,
       submissionTime,
-    },
-  });
+      fields: structuredFields,
+      data: {
+        name: data.name,
+        phone: data.phone,
+        bloodGroup: bloodLabel,
+        interest: data.interest,
+        upazila: addressLabel,
+        message: messageLabel,
+        submissionTime,
+      },
+    });
+  } else {
+    sentViaWebhook = await sendViaFormSubmit(recipientEmail, subject, structuredFields);
+  }
 
   return {
     success: true,
@@ -431,33 +464,37 @@ export async function sendDonationEmail(data: DonationSubmissionData): Promise<{
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, subject } = generateDonationEmailContent(data);
+  const { recipientEmail, subject, body } = generateDonationEmailContent(data);
   const gmailUrl = getDirectGmailUrlForDonation(data);
   const mailtoUrl = getMailtoUrlForDonation(data);
   const submissionTime = new Date().toLocaleString('bn-BD');
 
+  const fields: Record<string, string | number> = {
+    'রসিদ নম্বর': data.receiptId,
+    'দানকারীর নাম': data.donorName || 'অজ্ঞাত দানকারী',
+    'মোবাইল নম্বর': data.phone || 'অনুল্লেখিত',
+    'দানের খাত': data.category,
+    'দানের পরিমাণ (টাকা)': data.amount,
+    'পেমেন্ট মাধ্যম': data.paymentMethod.toUpperCase(),
+    'ট্রানজেকশন আইডি (TrxID)': data.transactionId,
+    'বিশেষ দোয়া বা বার্তা': data.donorMessage || 'নেই',
+    'জমার তারিখ ও সময়': `${data.date} (${submissionTime})`,
+  };
+
   try {
-    await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        _subject: subject,
-        _template: 'table',
-        _captcha: 'false',
-        'রসিদ নম্বর': data.receiptId,
-        'দানকারীর নাম': data.donorName || 'অজ্ঞাত দানকারী',
-        'মোবাইল নম্বর': data.phone || 'অনুল্লেখিত',
-        'দানের খাত': data.category,
-        'দানের পরিমাণ (টাকা)': data.amount,
-        'পেমেন্ট মাধ্যম': data.paymentMethod.toUpperCase(),
-        'ট্রানজেকশন আইডি (TrxID)': data.transactionId,
-        'বিশেষ দোয়া বা বার্তা': data.donorMessage || 'নেই',
-        'জমার তারিখ ও সময়': `${data.date} (${submissionTime})`
-      })
-    }).catch(() => null);
+    if (getEmailWebhookUrl()) {
+      await sendViaCustomHtmlWebhook({
+        to: recipientEmail,
+        recipientEmail,
+        subject,
+        htmlBody: `<pre style="font-family: 'Noto Sans Bengali', Arial, sans-serif; white-space: pre-wrap;">${escapeHtml(body)}</pre>`,
+        textBody: body,
+        formType: 'donation',
+        fields: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, String(v)])),
+      });
+    } else {
+      await sendViaFormSubmit(recipientEmail, subject, fields);
+    }
   } catch (err) {
     console.warn('Donation background dispatch notice:', err);
   }
@@ -545,29 +582,33 @@ export async function sendContactMessageEmail(data: ContactMessageSubmissionData
   mailtoUrl: string;
   gmailUrl: string;
 }> {
-  const { recipientEmail, subject } = generateContactEmailContent(data);
+  const { recipientEmail, subject, body } = generateContactEmailContent(data);
   const gmailUrl = getDirectGmailUrlForContact(data);
   const mailtoUrl = getMailtoUrlForContact(data);
   const submissionTime = new Date().toLocaleString('bn-BD');
 
+  const fields: Record<string, string> = {
+    'প্রেরকের নাম': data.name,
+    'যোগাযোগ (মোবাইল/ইমেইল)': data.contactInfo,
+    'বার্তার বিষয়': data.subject || 'সাধারণ যোগাযোগ',
+    'বিস্তারিত বার্তা': data.message,
+    'প্রেরণের সময়': submissionTime,
+  };
+
   try {
-    await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        _subject: subject,
-        _template: 'table',
-        _captcha: 'false',
-        'প্রেরকের নাম': data.name,
-        'যোগাযোগ (মোবাইল/ইমেইল)': data.contactInfo,
-        'বার্তার বিষয়': data.subject || 'সাধারণ যোগাযোগ',
-        'বিস্তারিত বার্তা': data.message,
-        'প্রেরণের সময়': submissionTime
-      })
-    }).catch(() => null);
+    if (getEmailWebhookUrl()) {
+      await sendViaCustomHtmlWebhook({
+        to: recipientEmail,
+        recipientEmail,
+        subject,
+        htmlBody: `<pre style="font-family: 'Noto Sans Bengali', Arial, sans-serif; white-space: pre-wrap;">${escapeHtml(body)}</pre>`,
+        textBody: body,
+        formType: 'contact',
+        fields,
+      });
+    } else {
+      await sendViaFormSubmit(recipientEmail, subject, fields);
+    }
   } catch (err) {
     console.warn('Contact message background dispatch notice:', err);
   }
@@ -740,38 +781,44 @@ export async function sendNeedyInfoEmail(data: NeedyInfoSubmissionData): Promise
     'তথ্যদাতার নাম': data.informerName,
     'তথ্যদাতার মোবাইল নম্বর': data.informerPhone,
     'তথ্য প্রেরণের সময়': submissionTime,
+    'ওয়েবসাইট': 'https://www.zikrullahfoundation.com',
   };
 
-  const sentViaWebhook = await sendViaCustomHtmlWebhook({
-    to: recipientEmail,
-    recipientEmail,
-    subject,
-    htmlBody,
-    html: htmlBody,
-    textBody: body,
-    body,
-    formType: 'needy-info',
-    needyName: data.needyName,
-    helpType: data.helpType,
-    needyPhone: needyPhoneLabel,
-    fullAddress: areaLabel,
-    address: areaLabel,
-    description: descLabel,
-    informerName: data.informerName,
-    informerPhone: data.informerPhone,
-    submissionTime,
-    fields: structuredFields,
-    data: {
+  let sentViaWebhook = false;
+  if (getEmailWebhookUrl()) {
+    sentViaWebhook = await sendViaCustomHtmlWebhook({
+      to: recipientEmail,
+      recipientEmail,
+      subject,
+      htmlBody,
+      html: htmlBody,
+      textBody: body,
+      body,
+      formType: 'needy-info',
       needyName: data.needyName,
       helpType: data.helpType,
       needyPhone: needyPhoneLabel,
       fullAddress: areaLabel,
+      address: areaLabel,
       description: descLabel,
       informerName: data.informerName,
       informerPhone: data.informerPhone,
       submissionTime,
-    },
-  });
+      fields: structuredFields,
+      data: {
+        needyName: data.needyName,
+        helpType: data.helpType,
+        needyPhone: needyPhoneLabel,
+        fullAddress: areaLabel,
+        description: descLabel,
+        informerName: data.informerName,
+        informerPhone: data.informerPhone,
+        submissionTime,
+      },
+    });
+  } else {
+    sentViaWebhook = await sendViaFormSubmit(recipientEmail, subject, structuredFields);
+  }
 
   return {
     success: true,
@@ -831,43 +878,33 @@ export async function sendNewsletterSubscriptionEmail(
   const textBody = `জিকরুল্লাহ ফাউন্ডেশন\nনতুন সাবস্ক্রাইবার: ${cleanedContact}\nউৎস: ${sourceLabel}\nসময়: ${submissionTime}`;
 
   try {
-    sendViaCustomHtmlWebhook({
-      to: recipientEmail,
-      recipientEmail,
-      subject,
-      htmlBody,
-      textBody,
-      formType: 'volunteer',
-      fields: {
-        contact: cleanedContact,
-        source: sourceLabel,
-        time: submissionTime,
-      },
-    }).catch(() => {});
-
-    const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        ...(isEmail ? { email: cleanedContact, _replyto: cleanedContact } : { contact: cleanedContact }),
-        _subject: subject,
-        _template: 'table',
-        _captcha: 'false',
-        'সাবস্ক্রাইবারের তথ্য': cleanedContact,
-        'সাবস্ক্রাইবের উৎস': sourceLabel,
-        'সাবস্ক্রাইবের সময়': submissionTime,
-        'ওয়েবসাইট': 'https://www.zikrullahfoundation.com'
-      })
-    });
-
-    if (!response.ok) {
-      return {
-        success: true,
-        message: 'আপনার তথ্য সফলভাবে আমাদের অফিসিয়াল ইমেইলে পাঠানো হয়েছে।'
-      };
+    if (getEmailWebhookUrl()) {
+      await sendViaCustomHtmlWebhook({
+        to: recipientEmail,
+        recipientEmail,
+        subject,
+        htmlBody,
+        textBody,
+        formType: 'volunteer',
+        fields: {
+          contact: cleanedContact,
+          source: sourceLabel,
+          time: submissionTime,
+        },
+      });
+    } else {
+      await sendViaFormSubmit(
+        recipientEmail,
+        subject,
+        {
+          ...(isEmail ? {} : { contact: cleanedContact }),
+          'সাবস্ক্রাইবারের তথ্য': cleanedContact,
+          'সাবস্ক্রাইবের উৎস': sourceLabel,
+          'সাবস্ক্রাইবের সময়': submissionTime,
+          'ওয়েবসাইট': 'https://www.zikrullahfoundation.com',
+        },
+        isEmail ? { email: cleanedContact } : undefined
+      );
     }
 
     return {
