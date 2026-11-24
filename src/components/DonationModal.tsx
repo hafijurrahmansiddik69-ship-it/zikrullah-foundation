@@ -147,26 +147,36 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200"
+      className="printable-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200"
       onClick={step === 3 ? resetAndClose : undefined}
     >
       {step === 3 ? (
         /* STEP 3: Clean Emerald & Gold Confirmation Popup with Compact Receipt */
         <div
-          className="relative bg-white rounded-[28px] w-full max-w-[390px] sm:max-w-[450px] border-2 border-[#087443]/30 ring-4 ring-emerald-500/10 shadow-[0_22px_55px_-12px_rgba(4,83,50,0.34),0_0_28px_rgba(217,119,6,0.18)] overflow-hidden my-auto text-slate-800 animate-celebration-pop"
+          className="printable-card relative bg-white rounded-[28px] w-full max-w-[390px] sm:max-w-[450px] border-2 border-[#087443]/30 ring-4 ring-emerald-500/10 shadow-[0_22px_55px_-12px_rgba(4,83,50,0.34),0_0_28px_rgba(217,119,6,0.18)] overflow-hidden my-auto text-slate-800 animate-celebration-pop"
           onClick={(e) => e.stopPropagation()}
         >
+          {/* Centered Official Print Header Banner (visible on Print / Save as PDF) */}
+          <div className="hidden print:block bg-[#064e3b] text-white px-5 py-4 border-b-[3px] border-[#d97706] text-center">
+            <div className="font-serif-bn font-bold text-lg text-center">
+              জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
+            </div>
+            <div className="text-xs text-emerald-100 mt-1 text-center">
+              Official Email: {FOUNDATION_INFO.email} | {isEn ? 'Official Donation Receipt' : 'অনলাইন অনুদান রসিদ'}
+            </div>
+          </div>
+
           {/* Top Emerald & Gold Accent Bar */}
-          <div className="h-2 bg-gradient-to-r from-[#045332] via-[#087443] to-[#d97706]" />
+          <div className="print:hidden h-2 bg-gradient-to-r from-[#045332] via-[#087443] to-[#d97706]" />
 
           {/* Subtle Ambient Emerald-Gold Top Glow */}
-          <div className="absolute top-2 inset-x-0 h-28 bg-gradient-to-b from-emerald-50/75 via-amber-50/25 to-transparent pointer-events-none" />
+          <div className="no-print absolute top-2 inset-x-0 h-28 bg-gradient-to-b from-emerald-50/75 via-amber-50/25 to-transparent pointer-events-none" />
 
           {/* Close X Button */}
           <button
             type="button"
             onClick={resetAndClose}
-            className="absolute top-4 right-4 p-2 rounded-full text-[#045332]/65 hover:text-[#045332] hover:bg-emerald-50 transition-colors cursor-pointer z-10"
+            className="no-print absolute top-4 right-4 p-2 rounded-full text-[#045332]/65 hover:text-[#045332] hover:bg-emerald-50 transition-colors cursor-pointer z-10"
             aria-label={t.donationModal.close}
           >
             <X className="w-5 h-5 stroke-[2]" />
@@ -256,7 +266,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5 w-full">
+            <div className="no-print flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5 w-full">
               <button
                 type="button"
                 onClick={() => window.print()}
@@ -278,16 +288,16 @@ export const DonationModal: React.FC<DonationModalProps> = ({
         </div>
       ) : (
       <div
-        className="bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
+        className="printable-card bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Ribbon */}
-        <div className="bg-[#045332] text-white px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+        <div className="bg-[#045332] text-white px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between print:justify-center print:text-center print:border-b-[3px] print:border-[#d97706]">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 print:flex-col print:items-center">
+            <div className="print:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300 fill-emerald-300" />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 print:text-center">
               <h3 className="font-serif-bn font-bold text-lg sm:text-xl leading-tight truncate">
                 {t.donationModal.title}
               </h3>
@@ -298,7 +308,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
           </div>
           <button
             onClick={resetAndClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
+            className="no-print p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
             aria-label={t.donationModal.close}
           >
             <X className="w-5 h-5" />
@@ -306,7 +316,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 sm:p-7 max-h-[82vh] overflow-y-auto">
+        <div className="printable-card-scroll p-4 sm:p-7 max-h-[82vh] overflow-y-auto">
           
           {/* STEP 1: Select Amount & Category */}
           {step === 1 && (

@@ -185,10 +185,19 @@ export function generateVolunteerEmailHtml(
   ]);
 
   return `
-<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
-  <div style="padding: 16px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706;">
-    <div style="font-size: 19px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
-    <div style="font-size: 13px; color: #d1fae5; margin-top: 3px;">Official Email: ${escapeHtml(recipientEmail)} | স্বেচ্ছাসেবক আবেদন পত্র</div>
+<div style="margin: 0; padding: 0;">
+<style>
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .no-print, .gmail_attr, .gmail_quote_container { display: none !important; }
+    .zf-print-card { max-width: 680px !important; width: 100% !important; margin: 0 auto !important; box-shadow: none !important; }
+  }
+</style>
+<div class="zf-print-card" style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 18px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706; text-align: center;">
+    <div style="font-size: 19px; font-weight: 700; text-align: center;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 4px; text-align: center;">Official Email: ${escapeHtml(recipientEmail)} | স্বেচ্ছাসেবক আবেদন পত্র</div>
   </div>
   <div style="padding: 20px; background-color: #ffffff;">
     <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত ফাউন্ডেশন টিম,<br/>স্বেচ্ছাসেবী হিসেবে ফাউন্ডেশনের মানবিক কার্যক্রমে যুক্ত হতে আগ্রহী হয়ে নিচের তথ্যগুলো পাঠানো হলো:</p>
@@ -198,6 +207,7 @@ export function generateVolunteerEmailHtml(
       আবেদনকারী: <b>${escapeHtml(data.name)}</b> • Website: https://www.zikrullahfoundation.com
     </div>
   </div>
+</div>
 </div>`.trim();
 }
 
@@ -608,10 +618,19 @@ export function generateNeedyInfoEmailHtml(
   ]);
 
   return `
-<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
-  <div style="padding: 16px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706;">
-    <div style="font-size: 19px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
-    <div style="font-size: 13px; color: #d1fae5; margin-top: 3px;">Official Email: ${escapeHtml(recipientEmail)} | সহায়তার আবেদন তথ্য</div>
+<div style="margin: 0; padding: 0;">
+<style>
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .no-print, .gmail_attr, .gmail_quote_container { display: none !important; }
+    .zf-print-card { max-width: 680px !important; width: 100% !important; margin: 0 auto !important; box-shadow: none !important; }
+  }
+</style>
+<div class="zf-print-card" style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 18px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706; text-align: center;">
+    <div style="font-size: 19px; font-weight: 700; text-align: center;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 4px; text-align: center;">Official Email: ${escapeHtml(recipientEmail)} | সহায়তার আবেদন তথ্য</div>
   </div>
   <div style="padding: 20px; background-color: #ffffff;">
     <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,<br/>আমাদের এলাকার একজন অসহায় মানুষের সহযোগিতার জন্য নিম্নোক্ত তথ্যগুলো প্রেরণ করা হলো:</p>
@@ -621,6 +640,7 @@ export function generateNeedyInfoEmailHtml(
       তথ্যদাতা: <b>${escapeHtml(data.informerName)}</b> • Website: https://www.zikrullahfoundation.com
     </div>
   </div>
+</div>
 </div>`.trim();
 }
 
@@ -788,14 +808,24 @@ export async function sendNewsletterSubscriptionEmail(
   ]);
 
   const htmlBody = `
-<div style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
-  <div style="padding: 16px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706;">
-    <div style="font-size: 19px; font-weight: 700;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
-    <div style="font-size: 13px; color: #d1fae5; margin-top: 3px;">Official Email: ${escapeHtml(recipientEmail)} | নতুন আপডেট সাবস্ক্রিপশন</div>
+<div style="margin: 0; padding: 0;">
+<style>
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .no-print, .gmail_attr, .gmail_quote_container { display: none !important; }
+    .zf-print-card { max-width: 680px !important; width: 100% !important; margin: 0 auto !important; box-shadow: none !important; }
+  }
+</style>
+<div class="zf-print-card" style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 18px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706; text-align: center;">
+    <div style="font-size: 19px; font-weight: 700; text-align: center;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 4px; text-align: center;">Official Email: ${escapeHtml(recipientEmail)} | নতুন আপডেট সাবস্ক্রিপশন</div>
   </div>
   <div style="padding: 20px; background-color: #ffffff;">
     ${htmlTable}
   </div>
+</div>
 </div>`.trim();
 
   const textBody = `জিকরুল্লাহ ফাউন্ডেশন\nনতুন সাবস্ক্রাইবার: ${cleanedContact}\nউৎস: ${sourceLabel}\nসময়: ${submissionTime}`;

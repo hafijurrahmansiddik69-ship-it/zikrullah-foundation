@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Check, Sparkles, Users, MapPin } from 'lucide-react';
+import { X, Check, Sparkles, Users, MapPin, HandHeart } from 'lucide-react';
 
 interface CelebrationConfirmationPopupProps {
   displayName: string;
@@ -58,7 +58,7 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
     <>
       {/* Facebook-Live / Birthday Style Floating Hearts & Celebration Burst */}
       <div
-        className="fixed inset-0 pointer-events-none overflow-hidden z-[60]"
+        className="no-print fixed inset-0 pointer-events-none overflow-hidden z-[60]"
         aria-hidden="true"
       >
         {FLOATING_HEARTS.map((heart) => (
@@ -90,20 +90,20 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
 
       {/* Centered, Responsive International-Grade Confirmation Card */}
       <div
-        className="relative z-[61] bg-white rounded-[24px] sm:rounded-[28px] w-full max-w-[370px] sm:max-w-[440px] lg:max-w-[460px] max-h-[92vh] overflow-y-auto border-2 border-[#2563eb] ring-4 ring-[#00c6ff]/15 shadow-[0_22px_55px_-10px_rgba(14,27,77,0.48),0_0_32px_rgba(0,198,255,0.32)] my-auto text-slate-800 animate-celebration-pop"
+        className="printable-card relative z-[61] bg-white rounded-[24px] sm:rounded-[28px] w-full max-w-[370px] sm:max-w-[440px] lg:max-w-[460px] max-h-[92vh] overflow-y-auto border-2 border-[#2563eb] ring-4 ring-[#00c6ff]/15 shadow-[0_22px_55px_-10px_rgba(14,27,77,0.48),0_0_32px_rgba(0,198,255,0.32)] my-auto text-slate-800 animate-celebration-pop"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Royal Blue Gradient Accent Bar */}
         <div className="h-2 bg-gradient-to-r from-[#0e1b4d] via-[#2563eb] to-[#00c6ff]" />
 
         {/* Subtle Ambient Top Glow inside Card */}
-        <div className="absolute top-2 inset-x-0 h-28 bg-gradient-to-b from-blue-50/75 via-sky-50/30 to-transparent pointer-events-none" />
+        <div className="no-print absolute top-2 inset-x-0 h-28 bg-gradient-to-b from-blue-50/75 via-sky-50/30 to-transparent pointer-events-none" />
 
         {/* Clean Close X Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-[#1e3a8a]/70 hover:text-[#0e1b4d] hover:bg-blue-50 transition-colors cursor-pointer z-10"
+          className="no-print absolute top-4 right-4 p-2 rounded-full text-[#1e3a8a]/70 hover:text-[#0e1b4d] hover:bg-blue-50 transition-colors cursor-pointer z-10"
           aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
         >
           <X className="w-5 h-5 stroke-[2]" />
@@ -141,6 +141,23 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
                 ) : (
                   <>
                     <strong className="font-extrabold text-[#045332]">স্বেচ্ছাসেবক</strong> হিসেবে নিবন্ধনের জন্য ধন্যবাদ
+                  </>
+                )}
+              </span>
+            </div>
+          )}
+
+          {contextType === 'needy-info' && (
+            <div className="mb-3.5 inline-flex items-center justify-center gap-2 px-4 py-1.5 sm:py-2 rounded-full bg-blue-50 border border-blue-200/90 text-[#0e1b4d] text-xs sm:text-sm font-solaiman shadow-2xs max-w-full">
+              <HandHeart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2563eb] shrink-0" />
+              <span className="leading-snug">
+                {isEn ? (
+                  <>
+                    Thank you for sharing <strong className="font-extrabold text-[#0e1b4d]">a needy person&apos;s</strong> info
+                  </>
+                ) : (
+                  <>
+                    <strong className="font-extrabold text-[#0e1b4d]">অসহায় ব্যক্তির</strong> তথ্য দেওয়ার জন্য ধন্যবাদ
                   </>
                 )}
               </span>
@@ -200,7 +217,7 @@ export const CelebrationConfirmationPopup: React.FC<CelebrationConfirmationPopup
           <button
             type="button"
             onClick={onClose}
-            className="w-full max-w-[310px] inline-flex items-center justify-center py-3 sm:py-3.5 px-6 rounded-full bg-gradient-to-r from-[#0e1b4d] via-[#1d4ed8] to-[#0b1742] hover:from-[#0b1742] hover:via-[#1e40af] hover:to-[#081236] active:scale-[0.98] text-white font-sans-bn font-bold text-[15px] sm:text-base shadow-[0_10px_24px_-6px_rgba(14,27,77,0.55),0_0_14px_rgba(37,99,235,0.28)] border border-[#60a5fa]/30 transition-all cursor-pointer"
+            className="no-print w-full max-w-[310px] inline-flex items-center justify-center py-3 sm:py-3.5 px-6 rounded-full bg-gradient-to-r from-[#0e1b4d] via-[#1d4ed8] to-[#0b1742] hover:from-[#0b1742] hover:via-[#1e40af] hover:to-[#081236] active:scale-[0.98] text-white font-sans-bn font-bold text-[15px] sm:text-base shadow-[0_10px_24px_-6px_rgba(14,27,77,0.55),0_0_14px_rgba(37,99,235,0.28)] border border-[#60a5fa]/30 transition-all cursor-pointer"
           >
             {isEn ? 'OK' : 'ঠিক আছে'}
           </button>

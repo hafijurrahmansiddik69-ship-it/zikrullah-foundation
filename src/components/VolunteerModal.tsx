@@ -115,7 +115,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
   const displayName = submittedName || name.trim() || (isEn ? 'Respected Brother/Sister' : 'সম্মানিত ভাই/বোন');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
+    <div className="printable-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/65 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
       {submitted ? (
         <CelebrationConfirmationPopup
           displayName={displayName}
@@ -126,11 +126,21 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
       ) : (
         /* REGISTRATION FORM */
         <div
-          className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
+          className="printable-card bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 overflow-hidden relative my-auto sm:my-6 text-slate-800"
           onClick={(e) => e.stopPropagation()}
         >
+          {/* Centered Official Print Header Banner */}
+          <div className="hidden print:block bg-[#064e3b] text-white px-5 py-4 border-b-[3px] border-[#d97706] text-center">
+            <div className="font-serif-bn font-bold text-lg text-center">
+              জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)
+            </div>
+            <div className="text-xs text-emerald-100 mt-1 text-center">
+              Official Email: zikrullahfoundation@gmail.com | স্বেচ্ছাসেবক আবেদন পত্র
+            </div>
+          </div>
+
           {/* Header */}
-          <div className="bg-[#045332] text-white px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
+          <div className="print:hidden bg-[#045332] text-white px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
                 <Users className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300" />
@@ -146,14 +156,14 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
             </div>
             <button
               onClick={resetAndClose}
-              className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
+              className="no-print p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer shrink-0 ml-2"
               aria-label={isEn ? 'Close' : 'বন্ধ করুন'}
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="p-4 sm:p-6 max-h-[82vh] overflow-y-auto">
+          <div className="printable-card-scroll p-4 sm:p-6 max-h-[82vh] overflow-y-auto">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
@@ -250,7 +260,7 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
+                className="no-print w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#087443] hover:bg-[#045332] active:scale-98 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
