@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MapPin, Mail, Phone, Users } from 'lucide-react';
+import { Heart, MapPin, Mail, Phone, Users, HandHeart, PhoneCall } from 'lucide-react';
 import { FOUNDATION_INFO, heroImg } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal } from './ScrollReveal';
@@ -8,6 +8,8 @@ interface FooterProps {
   onOpenDonation: () => void;
   onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
+  onOpenNeedyInfo?: () => void;
+  onOpenContactModal?: () => void;
   onOpenGallery?: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: (hash?: string) => void;
@@ -16,6 +18,8 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({
   onOpenDonation,
   onOpenVolunteer,
+  onOpenNeedyInfo,
+  onOpenContactModal,
   onOpenGallery,
   onNavigateToAbout,
   onNavigateHome
@@ -156,10 +160,34 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={onOpenVolunteer}
                   className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer text-left"
                 >
-                  <Users className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{t.volunteer.title}</span>
+                  <Users className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span>{isEn ? 'Join as Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
                 </button>
               </li>
+              {onOpenNeedyInfo && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={onOpenNeedyInfo}
+                    className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer text-left"
+                  >
+                    <HandHeart className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>{isEn ? 'Share Needy Info' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
+                  </button>
+                </li>
+              )}
+              {onOpenContactModal && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={onOpenContactModal}
+                    className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer text-left"
+                  >
+                    <PhoneCall className="w-3.5 h-3.5 text-emerald-300 shrink-0" />
+                    <span>{isEn ? 'Direct Contact' : 'সরাসরি যোগাযোগ করুন'}</span>
+                  </button>
+                </li>
+              )}
               <li>
                 <a
                   href="#ongoing-activities"

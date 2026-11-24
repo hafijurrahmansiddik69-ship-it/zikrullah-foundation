@@ -16,12 +16,21 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal } from './ScrollReveal';
+import { QuickEngagementBar } from './QuickEngagementBar';
 
 interface ServicesSectionProps {
   onSelectServiceDonation?: (serviceTitle: string) => void;
+  onOpenVolunteer?: () => void;
+  onOpenNeedyInfo?: () => void;
+  onOpenContactModal?: () => void;
 }
 
-export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServiceDonation }) => {
+export const ServicesSection: React.FC<ServicesSectionProps> = ({
+  onSelectServiceDonation,
+  onOpenVolunteer,
+  onOpenNeedyInfo,
+  onOpenContactModal
+}) => {
   const { isEn } = useLanguage();
   const [openMissionIndex, setOpenMissionIndex] = useState<number | null>(null);
   const [openVisionIndex, setOpenVisionIndex] = useState<number | null>(null);
@@ -370,6 +379,25 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
           </ScrollReveal>
 
         </div>
+
+        {/* High-Visibility Action Bar underneath Mission & Vision */}
+        <ScrollReveal direction="up" delay={150} className="mt-8 sm:mt-12">
+          <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-950 via-[#045332] to-emerald-900 px-4 py-6 sm:px-8 sm:py-8 text-center shadow-lg border border-emerald-700/40">
+            <h4 className="font-serif-bn font-bold text-lg sm:text-2xl text-white mb-1.5">
+              {isEn ? 'Be a Part of This Noble Journey' : 'মানবতার এই খেদমতে আপনিও যুক্ত হোন'}
+            </h4>
+            <p className="text-emerald-100/90 text-xs sm:text-sm max-w-2xl mx-auto mb-5 font-solaiman">
+              {isEn
+                ? 'Join as a volunteer, inform us about any needy person in your village, or reach out to us directly.'
+                : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন, আপনার গ্রামের কোনো অসহায় মানুষের তথ্য দিন অথবা আমাদের সাথে সরাসরি যোগাযোগ করুন।'}
+            </p>
+            <QuickEngagementBar
+              onOpenVolunteer={onOpenVolunteer}
+              onOpenNeedyInfo={onOpenNeedyInfo}
+              onOpenContactModal={onOpenContactModal}
+            />
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>

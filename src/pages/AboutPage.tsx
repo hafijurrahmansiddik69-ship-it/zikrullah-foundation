@@ -24,26 +24,33 @@ import {
   Landmark,
   ChevronDown
 } from 'lucide-react';
-import { FOUNDATION_INFO, heroImg, EXECUTIVE_MEMBERS } from '../data/mockData';
+import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { ProjectsSection } from '../components/ProjectsSection';
-import { ScrollReveal, RevealDirection, RevealDelay } from '../components/ScrollReveal';
+import { ScrollReveal } from '../components/ScrollReveal';
+import { LeadershipCommitteeGrid } from '../components/LeadershipSection';
+import { QuickEngagementBar } from '../components/QuickEngagementBar';
 
 interface AboutPageProps {
   onBackToHome: () => void;
   onOpenVolunteer: () => void;
+  onOpenNeedyInfo?: () => void;
+  onOpenContactModal?: () => void;
   onOpenDonation: (category?: string) => void;
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ 
   onBackToHome, 
   onOpenVolunteer,
+  onOpenNeedyInfo,
+  onOpenContactModal,
   onOpenDonation
 }) => {
   const { t, isEn } = useLanguage();
   const [heroImgError, setHeroImgError] = useState(false);
   const [openMissionIndex, setOpenMissionIndex] = useState<number | null>(null);
   const [openVisionIndex, setOpenVisionIndex] = useState<number | null>(null);
+  const [isFounderMessageOpen, setIsFounderMessageOpen] = useState(false);
 
   const missionPoints = [
     {
@@ -517,32 +524,37 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <span>{isEn ? 'Leadership & Governance' : 'নেতৃত্ব ও পরিচালনা'}</span>
             </div>
             <h2 className="font-serif-bn font-bold text-3xl sm:text-4xl text-slate-900 mb-3 tracking-tight">
-              {isEn ? 'Our Executive Committee' : 'আমাদের কার্যনির্বাহী পরিষদ'}
+              {isEn ? 'Our Executive Team' : 'আমাদের কার্যনির্বাহী টিম'}
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               {isEn
-                ? 'Our dedicated Executive Committee steering the mission of Zikrullah Foundation with integrity, transparency, and excellence.'
-                : 'সততা, স্বচ্ছতা ও দক্ষতার সাথে জিকরুল্লাহ ফাউন্ডেশনের কার্যক্রম পরিচালনায় আমাদের নিবেদিত কার্যনির্বাহী পরিষদ।'}
+                ? 'Our dedicated Executive Team steering the mission of Zikrullah Foundation with integrity, transparency, and excellence.'
+                : 'সততা, স্বচ্ছতা ও দক্ষতার সাথে জিকরুল্লাহ ফাউন্ডেশনের কার্যক্রম পরিচালনায় আমাদের নিবেদিত কার্যনির্বাহী টিম।'}
             </p>
           </ScrollReveal>
 
           <div className="space-y-6">
-            {/* Single Unified Professional Message Card */}
+            {/* Single Unified Professional Message Card (Click to reveal full message) */}
             <ScrollReveal direction="zoom">
               <div className="relative overflow-hidden bg-gradient-to-b from-white via-[#fafdfb] to-[#f4f8f5] rounded-2xl sm:rounded-[36px] p-5 sm:p-10 lg:p-12 border border-emerald-100 shadow-xl shadow-emerald-950/5">
               
               {/* Background Watermark Quote Symbol */}
-              <div className="absolute top-4 right-8 text-emerald-900/[0.04] text-7xl sm:text-9xl font-serif select-none pointer-events-none leading-none">
+              <div className="absolute top-4 right-14 sm:right-20 text-emerald-900/[0.04] text-7xl sm:text-9xl font-serif select-none pointer-events-none leading-none">
                 “
               </div>
 
-              {/* 1. Header: Founder Photo, Identity & Badges */}
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 pb-6 sm:pb-8 border-b border-emerald-100/80 relative z-10 text-center sm:text-left">
+              {/* 1. Header: Founder Photo, Identity & Badges + Corner Blinking Indicator Light */}
+              <div
+                onClick={() => setIsFounderMessageOpen((prev) => !prev)}
+                className={`flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 relative z-10 text-center sm:text-left cursor-pointer select-none group ${
+                  isFounderMessageOpen ? 'pb-6 sm:pb-8 border-b border-emerald-100/80' : ''
+                }`}
+              >
                 {/* Photo with Emerald Ring & Social Badge */}
                 <div className="relative shrink-0">
                   <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-emerald-600 shadow-xl ring-4 ring-emerald-100/90 bg-slate-100">
                     <img
-                      src="https://res.cloudinary.com/dlklqihg6/image/upload/v1791215813/zchzkth66qkenrlqmjmg.jpg"
+                      src="https://res.cloudinary.com/dlklqihg6/image/upload/v1795547568/ipvnrmiwbzwq5oktrwi7.jpg"
                       alt="Hafizur Rahman Siddik (Bogura)"
                       className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
                     />
@@ -551,6 +563,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     href="https://www.facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     aria-label="Facebook Profile"
                     className="absolute bottom-0 right-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1877f2] text-white flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors font-bold text-xs border-2 border-white"
                     title="Facebook"
@@ -560,7 +573,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </div>
 
                 {/* Identity Info */}
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-2 font-solaiman">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     <span>{isEn ? "Founder & Chairman's Message" : 'প্রতিষ্ঠাতা ও চেয়ারম্যানের বার্তা'}</span>
@@ -577,155 +590,162 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     </span>
                   </div>
                 </div>
-              </div>
 
-              {/* 2. Message Body */}
-              <div className="py-6 sm:py-8 space-y-5 sm:space-y-6 font-solaiman text-slate-700 text-sm sm:text-[17.5px] leading-[1.8] relative z-10 text-left">
-                {/* Paragraph 1: Founder's Deep Feeling & Inception */}
-                <p className="text-slate-800 font-normal">
-                  {isEn ? (
-                    <>
-                      My heart aches deeply whenever I witness the silent cries and distress of the helpless around us. It was out of that profound sense of compassion that <strong className="text-emerald-900 font-semibold">‘Zikrullah Foundation’</strong> emerged. In this fleeting world, wealth is here today and gone tomorrow—such is the transient reality of worldly possessions. True, lasting success lies in spending it for the welfare of distressed humanity solely to earn the pleasure of Almighty Allah.
-                    </>
-                  ) : (
-                    <>
-                      অসহায় মানুষের নীরব কান্না আর হাহাকার দেখলে আমার কলিজায় রক্তক্ষরণ হয়। সেই দরদি তাগিদ থেকেই আত্মপ্রকাশ করেছে <strong className="text-emerald-900 font-semibold">‘জিকরুল্লাহ ফাউন্ডেশন’</strong>। এই ক্ষণস্থায়ী দুনিয়ায় টাকা-পয়সা আজ আছে, কাল নেই—এটাই সম্পদের বাস্তবতা। আসল সফলতা তো লুকিয়ে আছে আল্লাহর সন্তুষ্টির উদ্দেশ্যে অসহায় মানুষের কল্যাণে তা ব্যয় করার মাঝে।
-                    </>
-                  )}
-                </p>
-
-                {/* Quranic Verse Box (Soft Emerald Accent) */}
-                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-2.5 sm:space-y-3">
-                  <p className="font-times font-bold text-emerald-950 text-sm sm:text-[15px] lg:text-base leading-[2.05] tracking-normal" dir="rtl">
-                    الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
-                  </p>
-                  <blockquote className="text-emerald-950 font-normal text-sm sm:text-base leading-relaxed font-solaiman">
-                    {isEn
-                      ? "“Those who spend their wealth [in Allah's way] by night and by day, secretly and publicly - they will have their reward with their Lord. And no fear will there be concerning them, nor will they grieve.”"
-                      : '“যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”'}
-                    <span className="not-italic block mt-1.5 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
-                      {isEn ? '— Surah Al-Baqarah : 274' : '— সূরা আল-বাক্বারাহ্ : ২৭৪'}
+                {/* Top-Right Corner Blinking Emerald Light (Slightly Larger) + Chevron */}
+                <button
+                  type="button"
+                  aria-expanded={isFounderMessageOpen}
+                  aria-label={isEn ? "Toggle Chairman's Message" : 'চেয়ারম্যানের বার্তা দেখুন'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsFounderMessageOpen((prev) => !prev);
+                  }}
+                  className={`absolute top-0 right-0 sm:relative sm:top-auto sm:right-auto shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+                    isFounderMessageOpen
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : 'bg-slate-50 text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-700'
+                  }`}
+                >
+                  <ChevronDown
+                    className={`w-4 h-4 sm:w-[18px] sm:h-[18px] transition-transform duration-300 ${
+                      isFounderMessageOpen ? 'rotate-180' : 'rotate-0'
+                    }`}
+                  />
+                  {!isFounderMessageOpen && (
+                    <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden="true">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-90" />
+                      <span className="relative inline-flex rounded-full h-3.5 w-3.5 sm:h-4 sm:w-4 bg-emerald-500 shadow-[0_0_10px_2px_rgba(16,185,129,0.8)] ring-2 ring-white" />
                     </span>
-                  </blockquote>
-                </div>
-
-                {/* Prophetic Hadith Box: Blessing & Angels' Prayer */}
-                <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-4 text-xs sm:text-[16.5px]">
-                  <p className="text-slate-800 leading-relaxed font-solaiman">
-                    {isEn ? (
-                      <>
-                        The Messenger of Allah (ﷺ) said— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> “Charity does not decrease wealth in the slightest” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih Muslim: 2588)</span>. Whenever you spend seeking the pleasure of Allah, the angels in the heavens supplicate— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> “O Allah, grant the one who spends in charity a blessed compensation” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih al-Bukhari: 1442)</span>.
-                      </>
-                    ) : (
-                      <>
-                        রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
-                      </>
-                    )}
-                  </p>
-
-                  <p className="text-slate-800 leading-relaxed border-t border-emerald-100/80 pt-3.5 font-solaiman">
-                    {isEn ? (
-                      <>
-                        Charity brings abundant mercy into a believer&apos;s life. Indeed— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> “Charity is clear proof (of faith)” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih Muslim: 223 / 422)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> “Charity extinguishes sin just as water extinguishes fire” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Jami` at-Tirmidhi: 2616)</span>, and <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> “Verily, charity extinguishes the heat of the grave for those who give it” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Al-Silsilah al-Sahihah: 3484)</span>.
-                      </>
-                    ) : (
-                      <>
-                        দান হলো মুমিনের জীবনের বহুমুখী রহমত। কারণ— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> ‘সদকা হলো ঈমানের অকাট্য দলিল’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ৪২২)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> ‘সদকা গুনাহসমূহকে এভাবে মিটিয়ে দেয়, যেমন পানি আগুনকে নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(জামে আত-তিরমিজি: ২৬১৬)</span>, এবং <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> ‘নিশ্চয়ই সদকা দানকারীর কবরের উত্তাপ নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সিলসিলাতুস সহীহাহ: ৩৪৮৪)</span>।
-                      </>
-                    )}
-                  </p>
-                </div>
-
-                {/* Medical Hadith Inset Box (Amber Accent) */}
-                <div className="bg-[#fffdf7] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200/80 border-l-4 border-l-amber-500 shadow-2xs">
-                  <p className="text-slate-800 text-sm sm:text-[16.5px] leading-relaxed font-solaiman">
-                    {isEn ? (
-                      <>
-                        Our beloved Prophet (ﷺ) even advised— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> “Treat your sick ones by giving charity” <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(Sahih al-Jami`: 3358)</span>.
-                      </>
-                    ) : (
-                      <>
-                        এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
-                      </>
-                    )}
-                  </p>
-                </div>
-
-                {/* Paragraph 3: Warm Institutional Invitation */}
-                <p className="text-slate-800 font-normal pt-1 font-solaiman">
-                  {isEn
-                    ? "We never knock on anyone's door seeking personal favors; whenever your heart resonates with our noble mission, you are most welcome to join this compassionate service willingly. Even a small gesture of kindness from you can become the means of bringing a precious smile to someone's face. To earn enduring eternal rewards in the Hereafter—we warmly welcome you to the ‘Zikrullah Foundation’ family."
-                    : 'আমরা অনুগ্রহপ্রার্থী হয়ে কারো দ্বারে কিছু চাই না; আমাদের আদর্শের সাথে আপনার মনের টান মিললেই স্বতঃস্ফূর্তভাবে এই খেদমতে যুক্ত হতে পারেন। আপনার সামান্য সহানুভূতিই হতে পারে কারো মুখে এক চিলতে হাসি ফোটানোর উসিলা। পরকালের চিরস্থায়ী কল্যাণ অর্জনে—‘জিকরুল্লাহ ফাউন্ডেশন’ পরিবারে আপনাকে উষ্ণ স্বাগতম।'}
-                </p>
+                  )}
+                </button>
               </div>
 
-              {/* 3. Footer: Digital Signature + Action Button */}
-              <div className="pt-6 sm:pt-8 border-t border-emerald-100/90 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
-                {/* Signature & Identity */}
-                <div className="flex flex-col items-center sm:items-start text-center sm:text-left font-solaiman">
-                  <div className="mb-2 flex items-center justify-center sm:justify-start">
-                    <img
-                      src="https://res.cloudinary.com/dlklqihg6/image/upload/v1791661214/vtbxogwfkuzaajs4ptv2.png"
-                      alt={isEn ? 'Signature — Hafizur Rahman Siddik' : 'স্বাক্ষর — হাফিজুর রহমান সিদ্দিক'}
-                      className="h-10 sm:h-12 md:h-13 w-auto max-w-[140px] sm:max-w-[160px] object-contain select-none transition-transform hover:scale-105 duration-300"
-                    />
-                  </div>
-                  <div className="text-base sm:text-lg font-bold text-slate-900 font-solaiman">
-                    {isEn ? 'Hafizur Rahman Siddik (Bogura)' : 'হাফিজুর রহমান সিদ্দিক (বগুড়া)'}
-                  </div>
-                  <div className="text-xs sm:text-sm text-emerald-700 font-semibold font-solaiman mt-0.5">
-                    {isEn ? 'Founder & Chairman, Zikrullah Foundation' : 'প্রতিষ্ঠাতা ও চেয়ারম্যান, জিকরুল্লাহ ফাউন্ডেশন'}
-                  </div>
-                </div>
+              {/* Smooth Accordion Expandable Content (Original Body & Signature Footer) */}
+              <div
+                className={`grid transition-all duration-300 ease-in-out relative z-10 ${
+                  isFounderMessageOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  {/* 2. Message Body */}
+                  <div className="py-6 sm:py-8 space-y-5 sm:space-y-6 font-solaiman text-slate-700 text-sm sm:text-[17.5px] leading-[1.8] text-left">
+                    {/* Paragraph 1: Founder's Deep Feeling & Inception */}
+                    <p className="text-slate-800 font-normal">
+                      {isEn ? (
+                        <>
+                          My heart aches deeply whenever I witness the silent cries and distress of the helpless around us. It was out of that profound sense of compassion that <strong className="text-emerald-900 font-semibold">‘Zikrullah Foundation’</strong> emerged. In this fleeting world, wealth is here today and gone tomorrow—such is the transient reality of worldly possessions. True, lasting success lies in spending it for the welfare of distressed humanity solely to earn the pleasure of Almighty Allah.
+                        </>
+                      ) : (
+                        <>
+                          অসহায় মানুষের নীরব কান্না আর হাহাকার দেখলে আমার কলিজায় রক্তক্ষরণ হয়। সেই দরদি তাগিদ থেকেই আত্মপ্রকাশ করেছে <strong className="text-emerald-900 font-semibold">‘জিকরুল্লাহ ফাউন্ডেশন’</strong>। এই ক্ষণস্থায়ী দুনিয়ায় টাকা-পয়সা আজ আছে, কাল নেই—এটাই সম্পদের বাস্তবতা। আসল সফলতা তো লুকিয়ে আছে আল্লাহর সন্তুষ্টির উদ্দেশ্যে অসহায় মানুষের কল্যাণে তা ব্যয় করার মাঝে।
+                        </>
+                      )}
+                    </p>
 
-                {/* Attractive Call-to-Action Button */}
-                <div className="w-full sm:w-auto">
-                  <button
-                    onClick={() => onOpenDonation('general-sadaqah')}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#087443] to-[#034e2c] hover:from-[#0a8c51] hover:to-[#056338] active:scale-95 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-950/25 transition-all duration-300 cursor-pointer group min-h-[44px]"
-                  >
-                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white group-hover:scale-110 transition-transform duration-300" />
-                    <span>{t.common.donateNow}</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                    {/* Quranic Verse Box (Soft Emerald Accent) */}
+                    <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-2.5 sm:space-y-3">
+                      <p className="font-times font-bold text-emerald-950 text-sm sm:text-[15px] lg:text-base leading-[2.05] tracking-normal" dir="rtl">
+                        الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ
+                      </p>
+                      <blockquote className="text-emerald-950 font-normal text-sm sm:text-base leading-relaxed font-solaiman">
+                        {isEn
+                          ? "“Those who spend their wealth [in Allah's way] by night and by day, secretly and publicly - they will have their reward with their Lord. And no fear will there be concerning them, nor will they grieve.”"
+                          : '“যারা নিজেদের ধন-সম্পদ রাতে ও দিনে, গোপনে ও প্রকাশ্যে ব্যয় করে, তাদের জন্য তাদের রবের নিকট রয়েছে পুরষ্কার। আর তাদের কোনো ভয় নেই এবং তারা চিন্তিতও হবে না।”'}
+                        <span className="not-italic block mt-1.5 text-xs sm:text-sm text-emerald-800 font-solaiman font-semibold">
+                          {isEn ? '— Surah Al-Baqarah : 274' : '— সূরা আল-বাক্বারাহ্ : ২৭৪'}
+                        </span>
+                      </blockquote>
+                    </div>
+
+                    {/* Prophetic Hadith Box: Blessing & Angels' Prayer */}
+                    <div className="bg-[#f6faf8] rounded-xl sm:rounded-2xl p-4 sm:p-7 border border-emerald-100 border-l-4 border-l-[#087443] shadow-2xs space-y-4 text-xs sm:text-[16.5px]">
+                      <p className="text-slate-800 leading-relaxed font-solaiman">
+                        {isEn ? (
+                          <>
+                            The Messenger of Allah (ﷺ) said— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> “Charity does not decrease wealth in the slightest” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih Muslim: 2588)</span>. Whenever you spend seeking the pleasure of Allah, the angels in the heavens supplicate— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> “O Allah, grant the one who spends in charity a blessed compensation” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih al-Bukhari: 1442)</span>.
+                          </>
+                        ) : (
+                          <>
+                            রাসূলুল্লাহ (ﷺ) বলেছেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ»</span> ‘দানের কারণে কখনো সম্পদের ঘাটতি হয় না’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ২৫৮৮)</span>। আপনি যখন আল্লাহর সন্তুষ্টিতে ব্যয় করেন, তখন আসমানের ফেরেশতারা দোয়া করেন— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا»</span> ‘হে আল্লাহ! দানকারীকে তার দানের উত্তম প্রতিদান দিন’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ বুখারী: ১৪৪২)</span>।
+                          </>
+                        )}
+                      </p>
+
+                      <p className="text-slate-800 leading-relaxed border-t border-emerald-100/80 pt-3.5 font-solaiman">
+                        {isEn ? (
+                          <>
+                            Charity brings abundant mercy into a believer&apos;s life. Indeed— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> “Charity is clear proof (of faith)” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Sahih Muslim: 223 / 422)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> “Charity extinguishes sin just as water extinguishes fire” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Jami` at-Tirmidhi: 2616)</span>, and <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> “Verily, charity extinguishes the heat of the grave for those who give it” <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(Al-Silsilah al-Sahihah: 3484)</span>.
+                          </>
+                        ) : (
+                          <>
+                            দান হলো মুমিনের জীবনের বহুমুখী রহমত। কারণ— <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ بُرْهَانٌ»</span> ‘সদকা হলো ঈমানের অকাট্য দলিল’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সহিহ মুসলিম: ৪২২)</span>, <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ»</span> ‘সদকা গুনাহসমূহকে এভাবে মিটিয়ে দেয়, যেমন পানি আগুনকে নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(জামে আত-তিরমিজি: ২৬১৬)</span>, এবং <span className="font-times font-bold text-emerald-950 text-sm sm:text-lg tracking-normal">«إِنَّ الصَّدَقَةَ لَتُطْفِئُ عَنْ أَهْلِهَا حَرَّ الْقُبُورِ»</span> ‘নিশ্চয়ই সদকা দানকারীর কবরের উত্তাপ নিভিয়ে দেয়’ <span className="text-xs sm:text-sm text-emerald-700 font-solaiman font-semibold">(সিলসিলাতুস সহীহাহ: ৩৪৮৪)</span>।
+                          </>
+                        )}
+                      </p>
+                    </div>
+
+                    {/* Medical Hadith Inset Box (Amber Accent) */}
+                    <div className="bg-[#fffdf7] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200/80 border-l-4 border-l-amber-500 shadow-2xs">
+                      <p className="text-slate-800 text-sm sm:text-[16.5px] leading-relaxed font-solaiman">
+                        {isEn ? (
+                          <>
+                            Our beloved Prophet (ﷺ) even advised— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> “Treat your sick ones by giving charity” <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(Sahih al-Jami`: 3358)</span>.
+                          </>
+                        ) : (
+                          <>
+                            এমনকি প্রিয় নবী (ﷺ) নির্দেশ দিয়েছেন— <span className="font-times font-bold text-amber-950 text-sm sm:text-lg tracking-normal">«دَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ»</span> ‘তোমরা দান-সদকার মাধ্যমে তোমাদের অসুস্থদের চিকিৎসা করো’ <span className="text-xs sm:text-sm text-amber-800 font-solaiman font-semibold">(সহিহুল জামে: ৩৩৫৮)</span>।
+                          </>
+                        )}
+                      </p>
+                    </div>
+
+                    {/* Paragraph 3: Warm Institutional Invitation */}
+                    <p className="text-slate-800 font-normal pt-1 font-solaiman">
+                      {isEn
+                        ? "We never knock on anyone's door seeking personal favors; whenever your heart resonates with our noble mission, you are most welcome to join this compassionate service willingly. Even a small gesture of kindness from you can become the means of bringing a precious smile to someone's face. To earn enduring eternal rewards in the Hereafter—we warmly welcome you to the ‘Zikrullah Foundation’ family."
+                        : 'আমরা অনুগ্রহপ্রার্থী হয়ে কারো দ্বারে কিছু চাই না; আমাদের আদর্শের সাথে আপনার মনের টান মিললেই স্বতঃস্ফূর্তভাবে এই খেদমতে যুক্ত হতে পারেন। আপনার সামান্য সহানুভূতিই হতে পারে কারো মুখে এক চিলতে হাসি ফোটানোর উসিলা। পরকালের চিরস্থায়ী কল্যাণ অর্জনে—‘জিকরুল্লাহ ফাউন্ডেশন’ পরিবারে আপনাকে উষ্ণ স্বাগতম।'}
+                    </p>
+                  </div>
+
+                  {/* 3. Footer: Digital Signature + Action Button */}
+                  <div className="pt-6 sm:pt-8 border-t border-emerald-100/90 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    {/* Signature & Identity */}
+                    <div className="flex flex-col items-center sm:items-start text-center sm:text-left font-solaiman">
+                      <div className="mb-2 flex items-center justify-center sm:justify-start">
+                        <img
+                          src="https://res.cloudinary.com/dlklqihg6/image/upload/v1791661214/vtbxogwfkuzaajs4ptv2.png"
+                          alt={isEn ? 'Signature — Hafizur Rahman Siddik' : 'স্বাক্ষর — হাফিজুর রহমান সিদ্দিক'}
+                          className="h-10 sm:h-12 md:h-13 w-auto max-w-[140px] sm:max-w-[160px] object-contain select-none transition-transform hover:scale-105 duration-300"
+                        />
+                      </div>
+                      <div className="text-base sm:text-lg font-bold text-slate-900 font-solaiman">
+                        {isEn ? 'Hafizur Rahman Siddik (Bogura)' : 'হাফিজুর রহমান সিদ্দিক (বগুড়া)'}
+                      </div>
+                      <div className="text-xs sm:text-sm text-emerald-700 font-semibold font-solaiman mt-0.5">
+                        {isEn ? 'Founder & Chairman, Zikrullah Foundation' : 'প্রতিষ্ঠাতা ও চেয়ারম্যান, জিকরুল্লাহ ফাউন্ডেশন'}
+                      </div>
+                    </div>
+
+                    {/* Attractive Call-to-Action Button */}
+                    <div className="w-full sm:w-auto">
+                      <button
+                        onClick={() => onOpenDonation('general-sadaqah')}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#087443] to-[#034e2c] hover:from-[#0a8c51] hover:to-[#056338] active:scale-95 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-950/25 transition-all duration-300 cursor-pointer group min-h-[44px]"
+                      >
+                        <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white group-hover:scale-110 transition-transform duration-300" />
+                        <span>{t.common.donateNow}</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               </div>
             </ScrollReveal>
 
-            {/* Executive Committee & Trustee Members Grid (Matched to screenshot ssss.jpg) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-              {EXECUTIVE_MEMBERS.map((member, idx) => {
-                const dirs: RevealDirection[] = ['zoom', 'up', 'down'];
-                const delays: RevealDelay[] = [0, 100, 200];
-                const isLastLone = EXECUTIVE_MEMBERS.length % 3 === 1 && idx === EXECUTIVE_MEMBERS.length - 1;
-                return (
-                  <ScrollReveal
-                    key={member.id}
-                    direction={dirs[idx % 3]}
-                    delay={delays[idx % 3]}
-                    className={`flex ${isLastLone ? 'lg:col-start-2' : ''}`}
-                  >
-                    <div className="w-full h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all text-center flex flex-col items-center justify-center group">
-                      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-3 border-emerald-100/90 shadow-sm mb-4 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
-                        <img
-                          src={member.image}
-                          alt={isEn ? member.name : (member.nameBn || member.name)}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                      <h3 className="font-serif-bn font-bold text-slate-900 text-base sm:text-lg mb-1 tracking-tight">
-                        {isEn ? member.name : (member.nameBn || member.name)}
-                      </h3>
-                      <span className="text-xs sm:text-[13px] text-slate-500 font-medium font-sans-bn block">
-                        {isEn ? member.role : (member.roleBn || member.role)}
-                      </span>
-                    </div>
-                  </ScrollReveal>
-                );
-              })}
-            </div>
+            {/* Main 12-Member Committee Grid + Executive Members & Honorable Members Modals */}
+            <LeadershipCommitteeGrid />
           </div>
         </div>
 
@@ -743,25 +763,27 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             <p className="text-emerald-100 max-w-xl mx-auto text-sm sm:text-base leading-relaxed mb-6 font-solaiman">
               {t.ctaBanner.paragraph}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <button
-                onClick={() => onOpenDonation('general-sadaqah')}
-                className="px-6 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
-              >
-                {t.common.donateNow}
-              </button>
-              <button
-                onClick={onOpenVolunteer}
-                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm transition-all active:scale-95 cursor-pointer"
-              >
-                {t.common.joinVolunteer}
-              </button>
-              <button
-                onClick={onBackToHome}
-                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-emerald-100 font-semibold text-sm transition-all active:scale-95 cursor-pointer"
-              >
-                ← {t.common.backToHome}
-              </button>
+            <div className="space-y-4">
+              <QuickEngagementBar
+                onOpenVolunteer={onOpenVolunteer}
+                onOpenNeedyInfo={onOpenNeedyInfo}
+                onOpenContactModal={onOpenContactModal}
+              />
+
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                <button
+                  onClick={() => onOpenDonation('general-sadaqah')}
+                  className="px-6 py-3 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+                >
+                  {t.common.donateNow}
+                </button>
+                <button
+                  onClick={onBackToHome}
+                  className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-emerald-100 font-semibold text-sm transition-all active:scale-95 cursor-pointer"
+                >
+                  ← {t.common.backToHome}
+                </button>
+              </div>
             </div>
           </div>
         </ScrollReveal>

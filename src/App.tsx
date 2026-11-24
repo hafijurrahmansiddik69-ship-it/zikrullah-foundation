@@ -13,6 +13,7 @@ import { NeedyInfoModal } from './components/NeedyInfoModal';
 import { DirectContactModal } from './components/DirectContactModal';
 import { MediaGalleryModal } from './components/MediaGalleryModal';
 import { AboutPage } from './pages/AboutPage';
+import { QuickEngagementBar } from './components/QuickEngagementBar';
 import { Heart } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
@@ -118,6 +119,8 @@ function MainApp() {
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
+        onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+        onOpenContactModal={() => setIsDirectContactOpen(true)}
         onOpenGallery={() => setIsGalleryOpen(true)}
       />
 
@@ -126,6 +129,8 @@ function MainApp() {
           <AboutPage
             onBackToHome={() => navigateTo('home')}
             onOpenVolunteer={() => setIsVolunteerOpen(true)}
+            onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+            onOpenContactModal={() => setIsDirectContactOpen(true)}
             onOpenDonation={(cat) => handleOpenDonation(cat)}
           />
         ) : (
@@ -148,6 +153,9 @@ function MainApp() {
 
             <ServicesSection
               onSelectServiceDonation={(title) => handleOpenDonation(title)}
+              onOpenVolunteer={() => setIsVolunteerOpen(true)}
+              onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+              onOpenContactModal={() => setIsDirectContactOpen(true)}
             />
 
             {/* চলমান কার্যক্রমসমূহ (আস-সুন্নাহ ট্রাস্ট ডিজাইনের ৭টি প্রজেক্ট কার্ড) */}
@@ -160,6 +168,28 @@ function MainApp() {
               onOpenDonation={() => handleOpenDonation()}
               onOpenVolunteer={() => setIsVolunteerOpen(true)}
             />
+
+            {/* Bottom Home Pre-Footer Action Band: Easy Access to All 3 Popups */}
+            <section className="py-10 sm:py-14 bg-gradient-to-b from-[#f3f8f5] to-[#e6f2ec] border-t border-emerald-100">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold border border-emerald-200 mb-3">
+                  {isEn ? 'Get Involved With Us' : 'সহযোগিতা ও যোগাযোগ'}
+                </span>
+                <h2 className="font-serif-bn font-bold text-2xl sm:text-3xl text-slate-900 mb-2">
+                  {isEn ? 'Connect, Volunteer or Share a Needy Case' : 'আমাদের সাথে যুক্ত হোন বা অসহায় মানুষের তথ্য দিন'}
+                </h2>
+                <p className="text-slate-600 text-xs sm:text-sm max-w-2xl mx-auto mb-6 font-solaiman">
+                  {isEn
+                    ? 'Your small step can bring hope to a family. Choose any option below to reach our team immediately.'
+                    : 'আপনার একটি ছোট্ট উদ্যোগ একটি অসহায় পরিবারের মুখে হাসি ফোটাতে পারে। নিচের যেকোনো মাধ্যমে সরাসরি আমাদের সাথে যুক্ত হোন।'}
+                </p>
+                <QuickEngagementBar
+                  onOpenVolunteer={() => setIsVolunteerOpen(true)}
+                  onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+                  onOpenContactModal={() => setIsDirectContactOpen(true)}
+                />
+              </div>
+            </section>
           </>
         )}
       </main>
@@ -170,6 +200,8 @@ function MainApp() {
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
+        onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+        onOpenContactModal={() => setIsDirectContactOpen(true)}
         onOpenGallery={() => setIsGalleryOpen(true)}
       />
 

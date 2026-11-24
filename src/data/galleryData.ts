@@ -219,7 +219,7 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     locationEn: 'Shibganj & River Islands, Bogura',
   },
 
-  // 6. প্রতিষ্ঠান ও কার্যনির্বাহী পরিষদ
+  // 6. প্রতিষ্ঠান ও কার্যনির্বাহী টিম
   {
     id: 'gal-team-1',
     mediaType: 'image',
@@ -252,8 +252,8 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795423093/l4w0dizm4o5rp6bdmejj.png',
     titleBn: 'মাওলানা মিলন হোসেন — ভাইস চেয়ারম্যান',
     titleEn: 'Maulana Milon Hosen — Vice Chairman',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের সম্মানিত ভাইস চেয়ারম্যান।',
-    captionEn: 'Respected Vice Chairman of the Executive Committee, Zikrullah Foundation.',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের সম্মানিত ভাইস চেয়ারম্যান।',
+    captionEn: 'Respected Vice Chairman of the Executive Team, Zikrullah Foundation.',
   },
   {
     id: 'gal-team-4',
@@ -262,8 +262,8 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795424595/rjvqtqg4b2rdrxmwhw1e.png',
     titleBn: 'মাওলানা আব্দুল্লাহ হোসাইন — অর্গানাইজিং সেক্রেটারি',
     titleEn: 'Maulana Abdullah Hossain — Organizing Secretary',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের সম্মানিত অর্গানাইজিং সেক্রেটারি।',
-    captionEn: 'Respected Organizing Secretary of the Executive Committee, Zikrullah Foundation.',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের সম্মানিত অর্গানাইজিং সেক্রেটারি।',
+    captionEn: 'Respected Organizing Secretary of the Executive Team, Zikrullah Foundation.',
   },
   {
     id: 'gal-team-5',
@@ -272,8 +272,8 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791638736/wizyfodi4s2zwm8kd47a.jpg',
     titleBn: 'মামুন ইসলাম — পাবলিসিটি সেক্রেটারি',
     titleEn: 'Mamun Islam — Publicity Secretary',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের পাবলিসিটি সেক্রেটারি।',
-    captionEn: 'Publicity Secretary of the Executive Committee, Zikrullah Foundation.',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের পাবলিসিটি সেক্রেটারি।',
+    captionEn: 'Publicity Secretary of the Executive Team, Zikrullah Foundation.',
   },
   {
     id: 'gal-team-6',
@@ -282,8 +282,8 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791638633/cujqjrrv3hi9oka4lqx6.jpg',
     titleBn: 'বোরহান আলী — সোশ্যাল সেক্রেটারি',
     titleEn: 'Borhan Ali — Social Secretary',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের সোশ্যাল সেক্রেটারি।',
-    captionEn: 'Social Secretary of the Executive Committee, Zikrullah Foundation.',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের সোশ্যাল সেক্রেটারি।',
+    captionEn: 'Social Secretary of the Executive Team, Zikrullah Foundation.',
   },
   {
     id: 'gal-team-7',
@@ -292,7 +292,7 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791652095/eswwsejypdjy6cwkadd2.jpg',
     titleBn: 'মোঃ জাকিরুল ইসলাম — কার্যনির্বাহী সদস্য',
     titleEn: 'Md. Jakirul Islam — Executive Member',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের সদস্য।',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের সদস্য।',
     captionEn: 'Executive Member of Zikrullah Foundation.',
   },
   {
@@ -302,7 +302,7 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791641077/l2em2pkkm5c69iyudhb2.jpg',
     titleBn: 'মোঃ শিপন আলী — কার্যনির্বাহী সদস্য',
     titleEn: 'Md. Shipon Ali — Executive Member',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের সদস্য।',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের সদস্য।',
     captionEn: 'Executive Member of Zikrullah Foundation.',
   },
   {
@@ -312,7 +312,7 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     src: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791652723/akbkmpdqu9kmhdlle3er.jpg',
     titleBn: 'মোঃ রেজাউল ইসলাম — কার্যনির্বাহী সদস্য',
     titleEn: 'Md. Rejaul Islam — Executive Member',
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী পরিষদের সদস্য।',
+    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের সদস্য।',
     captionEn: 'Executive Member of Zikrullah Foundation.',
   },
 ];
