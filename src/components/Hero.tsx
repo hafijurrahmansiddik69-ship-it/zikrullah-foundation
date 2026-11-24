@@ -5,7 +5,6 @@ import {
   Sparkles, 
   X, 
   ShieldCheck, 
-  Camera, 
   Heart,
   UserPlus,
   HandHeart,
@@ -407,33 +406,20 @@ export const Hero: React.FC<HeroProps> = ({
             className="bg-[#0f1422] rounded-3xl max-w-2xl w-full relative border border-slate-700/80 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden my-auto text-slate-100 animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col" 
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Banner with Image (if available) */}
+            {/* Top Banner with Image (full uncropped view for all core service activities) */}
             {activeConfig.bannerImage ? (
-              <div className="relative aspect-[16/8] sm:aspect-[16/7] w-full bg-slate-900 overflow-hidden group shrink-0">
+              <div className="relative w-full bg-[#090d16] overflow-hidden shrink-0 flex items-center justify-center border-b border-slate-800/80">
                 <img 
                   src={activeConfig.bannerImage} 
                   alt={selectedCard.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-auto max-h-[48vh] sm:max-h-[58vh] object-contain mx-auto block"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src = 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg';
                   }}
                 />
-                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0f1422]/55 to-transparent pointer-events-none" />
-
-                <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-black/55 border border-white/20 shadow-md">
-                    {selectedCard.badge}
-                  </span>
-                </div>
-
-                <div className="absolute bottom-2.5 left-3.5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/45 text-[11px] text-slate-200 border border-white/10">
-                  <Camera className="w-3 h-3 text-emerald-400" />
-                  <span>{t.projects.modalImageTemplateTag}</span>
-                </div>
-
                 <button 
                   onClick={() => setSelectedCardIndex(null)} 
-                  className="absolute top-3.5 right-3.5 text-slate-300 hover:text-white cursor-pointer z-20 p-2 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 transition-all active:scale-95 shadow-md"
+                  className="absolute top-3 right-3 text-slate-200 hover:text-white cursor-pointer z-20 p-2 rounded-full bg-black/65 hover:bg-black/90 backdrop-blur-md border border-white/25 transition-all active:scale-95 shadow-md"
                   aria-label={t.projects.modalClose}
                 >
                   <X className="w-5 h-5" />

@@ -8,6 +8,7 @@ interface FooterProps {
   onOpenDonation: () => void;
   onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
+  onOpenGallery?: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: (hash?: string) => void;
 }
@@ -15,6 +16,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({
   onOpenDonation,
   onOpenVolunteer,
+  onOpenGallery,
   onNavigateToAbout,
   onNavigateHome
 }) => {
@@ -180,6 +182,17 @@ export const Footer: React.FC<FooterProps> = ({
                   {isEn ? 'Thoughts & Notes' : 'ভাবনা ও কর্মকথা'}
                 </a>
               </li>
+              {onOpenGallery && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={onOpenGallery}
+                    className="hover:text-white transition-colors cursor-pointer text-left block"
+                  >
+                    {isEn ? 'Photos & Videos' : 'ছবি ও ভিডিও দেখুন'}
+                  </button>
+                </li>
+              )}
               <li>
                 <button
                   type="button"

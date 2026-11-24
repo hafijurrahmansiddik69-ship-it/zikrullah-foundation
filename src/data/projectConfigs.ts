@@ -74,7 +74,7 @@ export const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#ff416c]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(255,65,108,0.4)]',
     accentText: 'text-[#ff416c]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795061470/lq8bbafdfnyk7pffhy2e.jpg'
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795525277/owgbychmvbskzhvigort.jpg'
   },
   // 4. Education Aid (Color matched to water-trees emerald green as requested)
   {
@@ -118,6 +118,6 @@ export const CARD_CONFIGS: CardConfig[] = [
     cardBorderClass: 'border-[#f59e0b]',
     cardHoverShadow: 'hover:shadow-[0_12px_28px_rgba(245,158,11,0.45)]',
     accentText: 'text-[#fbbf24]',
-    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792177305/udpqc7mfiwsc57x1ougp.jpg'
+    bannerImage: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795524168/kv3u8czrksvfos92nnwo.jpg'
   }
 ];

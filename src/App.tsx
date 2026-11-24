@@ -11,6 +11,7 @@ import { DonationModal } from './components/DonationModal';
 import { VolunteerModal } from './components/VolunteerModal';
 import { NeedyInfoModal } from './components/NeedyInfoModal';
 import { DirectContactModal } from './components/DirectContactModal';
+import { MediaGalleryModal } from './components/MediaGalleryModal';
 import { AboutPage } from './pages/AboutPage';
 import { Heart } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
@@ -39,6 +40,7 @@ function MainApp() {
   const [isVolunteerOpen, setIsVolunteerOpen] = useState(false);
   const [isNeedyInfoOpen, setIsNeedyInfoOpen] = useState(false);
   const [isDirectContactOpen, setIsDirectContactOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   useEffect(() => {
     const handleHash = () => {
@@ -116,6 +118,7 @@ function MainApp() {
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
+        onOpenGallery={() => setIsGalleryOpen(true)}
       />
 
       <main className="flex-1 overflow-x-clip">
@@ -167,6 +170,7 @@ function MainApp() {
         onNavigateToAbout={() => navigateTo('about')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
+        onOpenGallery={() => setIsGalleryOpen(true)}
       />
 
       {/* Floating Quick Support Trigger */}
@@ -205,6 +209,12 @@ function MainApp() {
       <DirectContactModal
         isOpen={isDirectContactOpen}
         onClose={() => setIsDirectContactOpen(false)}
+      />
+
+      {/* Categorized Photo & Video Gallery Modal */}
+      <MediaGalleryModal
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
       />
 
     </div>

@@ -7,6 +7,7 @@ interface HeaderProps {
   onOpenDonation: (category?: string) => void;
   onOpenZakat?: () => void;
   onOpenVolunteer: () => void;
+  onOpenGallery?: () => void;
   onNavigateToAbout?: () => void;
   onNavigateHome?: (hash?: string) => void;
   currentPage?: 'home' | 'about';
@@ -15,6 +16,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   onOpenDonation,
   onOpenVolunteer,
+  onOpenGallery,
   onNavigateToAbout,
   onNavigateHome,
   currentPage = 'home'
@@ -323,7 +325,17 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </a>
 
-              {/* 4. Get Involved */}
+              {/* 4. Ongoing Activities */}
+              <a
+                href="#ongoing-activities"
+                onClick={(e) => handleNavToSection(e, 'ongoing-activities')}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
+              >
+                <span>{isEn ? 'Ongoing Activities' : 'চলমান কার্যক্রম'}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </a>
+
+              {/* 5. Get Involved (Volunteer) */}
               <button
                 type="button"
                 onClick={() => {
@@ -336,7 +348,20 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
 
-              {/* 6. Thoughts & Field Notes */}
+              {/* 6. Photos & Videos Gallery */}
+              <button
+                type="button"
+                onClick={() => {
+                  closeMobileMenu();
+                  if (onOpenGallery) onOpenGallery();
+                }}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
+              >
+                <span>{isEn ? 'Photos & Videos' : 'ছবি ও ভিডিও দেখুন'}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </button>
+
+              {/* 7. Thoughts & Field Notes */}
               <a
                 href="#thoughts"
                 onClick={(e) => handleNavToSection(e, 'thoughts')}
@@ -346,7 +371,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </a>
 
-              {/* 7. Contact */}
+              {/* 8. Contact */}
               <a
                 href="#footer"
                 onClick={(e) => handleNavToSection(e, 'footer')}

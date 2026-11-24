@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { X, Users, Loader2, Send } from 'lucide-react';
+import { X, Users, Loader2, Send, CheckCircle2 } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
 import { sendVolunteerRegistrationEmail } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
@@ -30,6 +30,7 @@ const INTEREST_OPTIONS = [
   { id: 'education', bn: 'শিক্ষা সহায়তা', en: 'Education Aid' },
   { id: 'livelihood', bn: 'আত্মকর্মসংস্থান', en: 'Self-Reliance & Livelihood' },
   { id: 'other', bn: 'অন্যান্য', en: 'Others' },
+  { id: 'all', bn: 'সবগুলো', en: 'All Categories' },
 ];
 
 export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose }) => {
@@ -238,6 +239,18 @@ export const VolunteerModal: React.FC<VolunteerModalProps> = ({ isOpen, onClose 
                       </option>
                     ))}
                   </select>
+                  <button
+                    type="button"
+                    onClick={() => setInterestId(interestId === 'all' ? INTEREST_OPTIONS[0].id : 'all')}
+                    className={`no-print mt-2 w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                      interestId === 'all'
+                        ? 'bg-[#087443] text-white border-[#087443] shadow-sm'
+                        : 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
+                    }`}
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                    <span>{isEn ? 'All Categories (সবগুলো)' : 'সবগুলো'}</span>
+                  </button>
                 </div>
               </div>
 
