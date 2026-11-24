@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Users, HeartHandshake, CheckCircle2, Sparkles, Send, Loader2, Mail, ExternalLink } from 'lucide-react';
 import { adminDataService } from '../services/adminDataService';
-import { sendVolunteerRegistrationEmail, getDirectGmailUrl, getMailtoUrl } from '../services/emailService';
+import { sendVolunteerRegistrationEmail, getDirectGmailUrl, getMailtoUrl, getEmailWebhookUrl } from '../services/emailService';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -213,7 +213,7 @@ export const VolunteerSection: React.FC<VolunteerSectionProps> = () => {
                 </div>
 
                 <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
-                  {submittedData?.gmailUrl && (
+                  {!getEmailWebhookUrl() && submittedData?.gmailUrl && (
                     <a
                       href={submittedData.gmailUrl}
                       target="_blank"

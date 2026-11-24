@@ -2,7 +2,8 @@ import { FOUNDATION_INFO } from '../data/mockData';
 
 export const RECIPIENT_EMAIL = FOUNDATION_INFO.email || 'zikrullahfoundation@gmail.com';
 
-const DEFAULT_EMAIL_WEBHOOK_URL = '';
+const DEFAULT_EMAIL_WEBHOOK_URL =
+  'https://script.google.com/macros/s/AKfycbyHUPYJCrXk2GOeFRkyjBL8LPVOI-184LZSakr-V_GYH3fthHo9B7L-TkLnnD-rkNfjzA/exec';
 
 export function getEmailWebhookUrl(): string {
   try {
@@ -437,9 +438,54 @@ export function generateDonationEmailContent(data: DonationSubmissionData): {
 জাজাকাল্লাহু খাইরান।
 ${data.donorName || 'সম্মানিত শুভাকাঙ্ক্ষী'}
 মোবাইল: ${data.phone || 'অনুল্লেখিত'}
-ওয়েবসাইট: https://zikrullahfoundation.org`;
+ওয়েবসাইট: https://www.zikrullahfoundation.com`;
 
   return { recipientEmail, subject, body };
+}
+
+export function generateDonationEmailHtml(
+  data: DonationSubmissionData,
+  submissionTime?: string
+): string {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const timeText = submissionTime || formatBengaliDateTimeWithAmPm(new Date());
+
+  const donationTable = buildHtmlTableSection('[ অনুদানের বিস্তারিত তথ্য ]', [
+    ['রসিদ নম্বর', data.receiptId],
+    ['দানকারীর নাম', data.donorName || 'সম্মানিত শুভাকাঙ্ক্ষী'],
+    ['মোবাইল নম্বর', data.phone || 'অনুল্লেখিত'],
+    ['দানের খাত / প্রকল্প', data.category],
+    ['দানের পরিমাণ', `৳ ${data.amount.toLocaleString('bn-BD')} (টাকা)`],
+    ['পেমেন্ট মাধ্যম', data.paymentMethod.toUpperCase()],
+    ['ট্রানজেকশন আইডি (TrxID)', data.transactionId],
+    ['বিশেষ দোয়া বা বার্তা', data.donorMessage || 'কোনো বার্তা নেই'],
+    ['জমার তারিখ ও সময়', `${data.date} (${timeText})`],
+  ]);
+
+  return `
+<div style="margin: 0; padding: 0;">
+<style>
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .no-print, .gmail_attr, .gmail_quote_container { display: none !important; }
+    .zf-print-card { max-width: 680px !important; width: 100% !important; margin: 0 auto !important; box-shadow: none !important; }
+  }
+</style>
+<div class="zf-print-card" style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 18px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706; text-align: center;">
+    <div style="font-size: 19px; font-weight: 700; text-align: center;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 4px; text-align: center;">Official Email: ${escapeHtml(recipientEmail)} | অনলাইন অনুদান রসিদ</div>
+  </div>
+  <div style="padding: 20px; background-color: #ffffff;">
+    <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,<br/>মানবতার খেদমতে জিকরুল্লাহ ফাউন্ডেশনে একটি নতুন অনুদান/সদকার তথ্য প্রেরিত হয়েছে:</p>
+    ${donationTable}
+    <div style="margin-top: 20px; padding-top: 12px; border-top: 1px dashed #94a3b8; font-size: 13px; color: #475569;">
+      দানকারী: <b>${escapeHtml(data.donorName || 'সম্মানিত শুভাকাঙ্ক্ষী')}</b> • Website: https://www.zikrullahfoundation.com
+    </div>
+  </div>
+</div>
+</div>`.trim();
 }
 
 export function getDirectGmailUrlForDonation(data: DonationSubmissionData): string {
@@ -467,7 +513,8 @@ export async function sendDonationEmail(data: DonationSubmissionData): Promise<{
   const { recipientEmail, subject, body } = generateDonationEmailContent(data);
   const gmailUrl = getDirectGmailUrlForDonation(data);
   const mailtoUrl = getMailtoUrlForDonation(data);
-  const submissionTime = new Date().toLocaleString('bn-BD');
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+  const htmlBody = generateDonationEmailHtml(data, submissionTime);
 
   const fields: Record<string, string | number> = {
     'রসিদ নম্বর': data.receiptId,
@@ -487,8 +534,10 @@ export async function sendDonationEmail(data: DonationSubmissionData): Promise<{
         to: recipientEmail,
         recipientEmail,
         subject,
-        htmlBody: `<pre style="font-family: 'Noto Sans Bengali', Arial, sans-serif; white-space: pre-wrap;">${escapeHtml(body)}</pre>`,
+        htmlBody,
+        html: htmlBody,
         textBody: body,
+        body,
         formType: 'donation',
         fields: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, String(v)])),
       });
@@ -552,12 +601,54 @@ ${data.message}
 --------------------------------------------------
 
 প্রেরণের সময়: ${submissionTime}
-ওয়েবসাইট: https://zikrullahfoundation.org
+ওয়েবসাইট: https://www.zikrullahfoundation.com
 
 জাজাকাল্লাহু খাইরান।
 ${data.name}`;
 
   return { recipientEmail, subject, body };
+}
+
+export function generateContactEmailHtml(
+  data: ContactMessageSubmissionData,
+  submissionTime?: string
+): string {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const timeText = submissionTime || formatBengaliDateTimeWithAmPm(new Date());
+
+  const contactTable = buildHtmlTableSection('[ বার্তার বিবরণ ]', [
+    ['প্রেরকের নাম', data.name],
+    ['যোগাযোগ (মোবাইল/ইমেইল)', data.contactInfo],
+    ['বার্তার বিষয়', data.subject || 'সাধারণ যোগাযোগ'],
+    ['বিস্তারিত বার্তা', data.message],
+    ['প্রেরণের সময়', timeText],
+    ['ওয়েবসাইট', 'https://www.zikrullahfoundation.com'],
+  ]);
+
+  return `
+<div style="margin: 0; padding: 0;">
+<style>
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .no-print, .gmail_attr, .gmail_quote_container { display: none !important; }
+    .zf-print-card { max-width: 680px !important; width: 100% !important; margin: 0 auto !important; box-shadow: none !important; }
+  }
+</style>
+<div class="zf-print-card" style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 18px 20px; background-color: #064e3b; color: #ffffff; border-bottom: 3px solid #d97706; text-align: center;">
+    <div style="font-size: 19px; font-weight: 700; text-align: center;">জিকরুল্লাহ ফাউন্ডেশন (Zikrullah Foundation)</div>
+    <div style="font-size: 13px; color: #d1fae5; margin-top: 4px; text-align: center;">Official Email: ${escapeHtml(recipientEmail)} | ওয়েবসাইট যোগাযোগ বার্তা</div>
+  </div>
+  <div style="padding: 20px; background-color: #ffffff;">
+    <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত জিকরুল্লাহ ফাউন্ডেশন টিম,<br/>ওয়েবসাইট থেকে একটি নতুন বার্তা প্রেরিত হয়েছে:</p>
+    ${contactTable}
+    <div style="margin-top: 20px; padding-top: 12px; border-top: 1px dashed #94a3b8; font-size: 13px; color: #475569;">
+      প্রেরক: <b>${escapeHtml(data.name)}</b> • Website: https://www.zikrullahfoundation.com
+    </div>
+  </div>
+</div>
+</div>`.trim();
 }
 
 export function getDirectGmailUrlForContact(data: ContactMessageSubmissionData): string {
@@ -585,7 +676,8 @@ export async function sendContactMessageEmail(data: ContactMessageSubmissionData
   const { recipientEmail, subject, body } = generateContactEmailContent(data);
   const gmailUrl = getDirectGmailUrlForContact(data);
   const mailtoUrl = getMailtoUrlForContact(data);
-  const submissionTime = new Date().toLocaleString('bn-BD');
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+  const htmlBody = generateContactEmailHtml(data, submissionTime);
 
   const fields: Record<string, string> = {
     'প্রেরকের নাম': data.name,
@@ -601,8 +693,10 @@ export async function sendContactMessageEmail(data: ContactMessageSubmissionData
         to: recipientEmail,
         recipientEmail,
         subject,
-        htmlBody: `<pre style="font-family: 'Noto Sans Bengali', Arial, sans-serif; white-space: pre-wrap;">${escapeHtml(body)}</pre>`,
+        htmlBody,
+        html: htmlBody,
         textBody: body,
+        body,
         formType: 'contact',
         fields,
       });
