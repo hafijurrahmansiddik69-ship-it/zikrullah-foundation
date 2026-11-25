@@ -52,6 +52,7 @@ export const EXECUTIVE_MEMBERS: CommitteeMemberItem[] = [
     role: 'Joint Secretary',
     roleBn: 'যুগ্ম সাধারণ সম্পাদক',
     iconKey: 'users',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795590315/xtzwtybdrvk1tqjugpgx.png',
   },
   {
     id: 5,
@@ -111,6 +112,7 @@ export const EXECUTIVE_MEMBERS: CommitteeMemberItem[] = [
     role: 'Information Technology Secretary',
     roleBn: 'তথ্যপ্রযুক্তি সম্পাদক',
     iconKey: 'cpu',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795589444/yoi64vg29lg0zao4o5ua.jpg',
   },
   {
     id: 12,
@@ -119,6 +121,7 @@ export const EXECUTIVE_MEMBERS: CommitteeMemberItem[] = [
     role: 'Media & Publicity Secretary',
     roleBn: 'মিডিয়া ও প্রচার সম্পাদক',
     iconKey: 'megaphone',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795589657/vrezsiuok8xmzlcioh9f.webp',
   },
 ];
 
