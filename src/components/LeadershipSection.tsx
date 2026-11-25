@@ -21,6 +21,7 @@ import {
   EXECUTIVE_MEMBERS,
   EXECUTIVE_SUB_MEMBERS,
   HONORABLE_MEMBERS,
+  FOUNDATION_INFO,
 } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal, RevealDelay, RevealDirection } from './ScrollReveal';
@@ -117,7 +118,6 @@ interface MemberAvatarProps {
 
 const MemberAvatar: React.FC<MemberAvatarProps> = ({ member, displayName }) => {
   const [imgFailed, setImgFailed] = useState(false);
-  const Icon = getRoleIcon(member.iconKey);
 
   return (
     <div className="relative shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-full p-[2.5px] bg-gradient-to-br from-[#10b981] via-[#087443] to-[#045332] shadow-md shadow-emerald-950/30 ring-2 ring-emerald-400/35 group-hover:scale-105 transition-transform duration-300">
@@ -130,8 +130,12 @@ const MemberAvatar: React.FC<MemberAvatarProps> = ({ member, displayName }) => {
           className="w-full h-full rounded-full object-cover object-top bg-emerald-950 border-2 border-[#0f1422]"
         />
       ) : (
-        <div className="w-full h-full rounded-full bg-gradient-to-br from-[#064e3b] via-[#045332] to-[#02311d] border-2 border-[#0f1422] flex items-center justify-center text-emerald-200">
-          <Icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.6} />
+        <div className="w-full h-full rounded-full bg-white border-2 border-[#0f1422] flex items-center justify-center p-1.5 overflow-hidden shadow-inner">
+          <img
+            src={FOUNDATION_INFO.logoUrl}
+            alt="Zikrullah Foundation Logo"
+            className="w-full h-full object-contain"
+          />
         </div>
       )}
     </div>
@@ -313,39 +317,48 @@ export const LeadershipCommitteeGrid: React.FC = () => {
   const { isEn } = useLanguage();
   const [activeModal, setActiveModal] = useState<CommitteeModalTheme | null>(null);
 
+  const toBnDigits = (n: number) => {
+    const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return String(n).replace(/\d/g, (d) => bnNums[Number(d)]);
+  };
+
+  const execCount = EXECUTIVE_MEMBERS.length;
+  const subCount = EXECUTIVE_SUB_MEMBERS.length;
+  const honCount = HONORABLE_MEMBERS.length;
+
   const cards: TriggerCardItem[] = [
     {
       id: 'green',
-      badgeBn: '১২ জন',
-      badgeEn: '12 Leaders',
+      badgeBn: `${toBnDigits(execCount)} জন`,
+      badgeEn: `${execCount} Leaders`,
       titleBn: 'কার্যনির্বাহী টিম',
       titleEn: 'Executive Team',
       subtitleBn: 'নেতৃত্ব ও পরিচালনা',
       subtitleEn: 'Leadership Board',
-      modalSubBn: 'জিকরুল্লাহ ফাউন্ডেশনের ১২ সদস্যবিশিষ্ট কার্যনির্বাহী টিম',
-      modalSubEn: 'The 12-member Executive Team of Zikrullah Foundation',
+      modalSubBn: `জিকরুল্লাহ ফাউন্ডেশনের ${toBnDigits(execCount)} সদস্যবিশিষ্ট কার্যনির্বাহী টিম`,
+      modalSubEn: `The ${execCount}-member Executive Team of Zikrullah Foundation`,
       icon: ShieldCheck,
       members: EXECUTIVE_MEMBERS,
       gridColsClass: 'grid-cols-3',
     },
     {
       id: 'blue',
-      badgeBn: '৩ জন',
-      badgeEn: '3 Members',
+      badgeBn: `${toBnDigits(subCount)} জন`,
+      badgeEn: `${subCount} Members`,
       titleBn: 'কার্যনির্বাহী সদস্য',
       titleEn: 'Executive Members',
       subtitleBn: 'দায়িত্বশীল সদস্যবৃন্দ',
       subtitleEn: 'Committee Members',
-      modalSubBn: 'জিকরুল্লাহ ফাউন্ডেশনের নিবেদিতপ্রাণ কার্যনির্বাহী সদস্যবৃন্দ',
-      modalSubEn: 'Dedicated Executive Members of Zikrullah Foundation',
+      modalSubBn: `জিকরুল্লাহ ফাউন্ডেশনের নিবেদিতপ্রাণ ${toBnDigits(subCount)} জন কার্যনির্বাহী সদস্যবৃন্দ`,
+      modalSubEn: `Dedicated ${subCount} Executive Members of Zikrullah Foundation`,
       icon: Users,
       members: EXECUTIVE_SUB_MEMBERS,
       gridColsClass: 'grid-cols-3',
     },
     {
       id: 'yellow',
-      badgeBn: '৪ জন',
-      badgeEn: '4 Members',
+      badgeBn: `${toBnDigits(honCount)} জন`,
+      badgeEn: `${honCount} Members`,
       titleBn: 'সম্মানিত সদস্যবৃন্দ',
       titleEn: 'Honorable Members',
       subtitleBn: 'মাসিক খেদমতে শরীক',

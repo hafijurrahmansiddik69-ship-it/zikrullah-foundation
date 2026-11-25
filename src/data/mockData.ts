@@ -153,6 +153,15 @@ export const EXECUTIVE_SUB_MEMBERS: CommitteeMemberItem[] = [
     iconKey: 'user-check',
     image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1791652723/akbkmpdqu9kmhdlle3er.jpg',
   },
+  {
+    id: 4,
+    name: 'Jihad Hossain',
+    nameBn: 'জিহাদ হোসেন',
+    role: 'Executive Member',
+    roleBn: 'কার্যনির্বাহী সদস্য',
+    iconKey: 'user-check',
+    image: 'https://res.cloudinary.com/dlklqihg6/image/upload/v1795620355/drgkimlrssyzqballvbg.jpg',
+  },
 ];
 
 export const HONORABLE_MEMBERS: CommitteeMemberItem[] = [
@@ -166,14 +175,6 @@ export const HONORABLE_MEMBERS: CommitteeMemberItem[] = [
   },
   {
     id: 2,
-    name: 'Jihad Hossain',
-    nameBn: 'জিহাদ হোসেন',
-    role: 'Honorable Member · Monthly Khidmat',
-    roleBn: 'সম্মানিত সদস্য · মাসিক খেদমত',
-    iconKey: 'award',
-  },
-  {
-    id: 3,
     name: 'Sourav Hossain',
     nameBn: 'সৌরভ হোসেন',
     role: 'Honorable Member · Monthly Khidmat',
@@ -181,7 +182,7 @@ export const HONORABLE_MEMBERS: CommitteeMemberItem[] = [
     iconKey: 'award',
   },
   {
-    id: 4,
+    id: 3,
     name: 'Saddam Ali (Africa)',
     nameBn: 'সাদ্দাম আলী (আফ্রিকা)',
     role: 'Honorable Member · Monthly Khidmat',
