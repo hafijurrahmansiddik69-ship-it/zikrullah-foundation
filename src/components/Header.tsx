@@ -339,55 +339,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </a>
 
-              {/* 5. Get Involved (Volunteer) */}
-              <button
-                type="button"
-                onClick={() => {
-                  closeMobileMenu();
-                  onOpenVolunteer();
-                }}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-900 bg-emerald-50/70 hover:bg-emerald-100/80 font-semibold transition-all cursor-pointer"
-              >
-                <span>{isEn ? 'Join as Volunteer' : 'স্বেচ্ছাসেবক হিসেবে যোগ দিন'}</span>
-                <ChevronRight className="w-4 h-4 text-emerald-700" />
-              </button>
-
-              {/* 5b. Share Needy Info */}
-              {onOpenNeedyInfo && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    closeMobileMenu();
-                    onOpenNeedyInfo();
-                  }}
-                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 bg-sky-50/70 hover:bg-sky-100/70 font-semibold transition-all cursor-pointer text-left"
-                >
-                  <span className="flex items-center gap-2 pr-2">
-                    <HandHeart className="w-4 h-4 text-amber-500 shrink-0" />
-                    <span>{isEn ? 'Share Needy Info' : 'আপনার গ্রামের অসহায় মানুষের তথ্য দিন'}</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-sky-700 shrink-0" />
-                </button>
-              )}
-
-              {/* 5c. Direct Contact Popup */}
-              {onOpenContactModal && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    closeMobileMenu();
-                    onOpenContactModal();
-                  }}
-                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-                >
-                  <span className="flex items-center gap-2">
-                    <PhoneCall className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>{isEn ? 'Direct Contact' : 'সরাসরি যোগাযোগ করুন'}</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-gray-400 shrink-0" />
-                </button>
-              )}
-
               {/* 6. Photos & Videos Gallery */}
               <button
                 type="button"
