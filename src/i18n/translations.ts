@@ -9,7 +9,7 @@ export const translations = {
       motto: 'সৎকাজ, ইসলামের আদর্শ ও মানবতার সেবাই আমাদের পথচলা।',
       founder: 'হাফিজুর রহমান সিদ্দিক (বগুড়া)',
       established: '১লা জানুয়ারি ২০২৩',
-      address: 'গুজিয়া, মোকামতলা ও শিবগঞ্জ, বগুড়া, বাংলাদেশ',
+      address: 'গুজিয়া, মোকামতলা, শিবগঞ্জ, বগুড়া',
       donate: 'খেদমতে শরীক হোন',
       donateNow: 'খেদমতে শরীক হোন',
       volunteer: 'স্বেচ্ছাসেবক হোন',
@@ -29,6 +29,7 @@ export const translations = {
     nav: {
       home: 'হোম',
       about: 'আমাদের সম্পর্কে',
+      founder: 'প্রতিষ্ঠাতা ও চেয়ারম্যান',
       projects: 'চলমান প্রকল্প',
       activities: 'সেবামূলক কার্যক্রম',
       services: 'প্রোগ্রাম ও সেবা',
@@ -304,7 +305,7 @@ export const translations = {
       motto: 'Virtue, Islamic values, and service to humanity guide our journey.',
       founder: 'Hafizur Rahman Siddik (Bogura)',
       established: 'January 1, 2023',
-      address: 'Gujia, Mokamtala & Shibganj, Bogura, Bangladesh',
+      address: 'Gujia, Mokamtala, Shibganj, Bogura',
       donate: 'Join Khidmat',
       donateNow: 'Join the Cause',
       volunteer: 'Be a Volunteer',
@@ -324,6 +325,7 @@ export const translations = {
     nav: {
       home: 'Home',
       about: 'About Us',
+      founder: 'Founder & Chairman',
       projects: 'Ongoing Projects',
       activities: 'Activities',
       services: 'Programs & Services',

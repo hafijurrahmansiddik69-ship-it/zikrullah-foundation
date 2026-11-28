@@ -39,6 +39,10 @@
   font-family: 'SolaimanLipi', 'Solaiman Lipi', 'Hind Siliguri', system-ui, sans-serif;
 }
 
+.font-bornomala {
+  font-family: 'Bornomala', 'Noto Serif Bengali', 'Hind Siliguri', serif;
+}
+
 /* English Mode Typography */
 body.lang-en {
   font-family: 'Poppins', 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -56,6 +60,10 @@ body.lang-en .font-sans-bn {
 
 body.lang-en .font-solaiman {
   font-family: 'Inter', 'Poppins', 'Plus Jakarta Sans', sans-serif;
+}
+
+body.lang-en .font-bornomala {
+  font-family: 'Plus Jakarta Sans', 'Poppins', 'Inter', sans-serif;
 }
 
 @font-face {
@@ -162,6 +170,21 @@ body.lang-en .font-solaiman {
 
 .animate-soft-breath-glow {
   animation: softBreathGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes micWhiteTwinkle {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7)) brightness(1);
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.75)) brightness(1.25);
+    transform: scale(1.12);
+  }
+}
+
+.animate-mic-twinkle {
+  animation: micWhiteTwinkle 2.1s ease-in-out infinite;
 }
 
 @keyframes modalFadeIn {

@@ -51,7 +51,7 @@ async function sendViaCustomHtmlWebhook(payload: {
   html?: string;
   textBody: string;
   body?: string;
-  formType: 'volunteer' | 'needy-info' | 'donation' | 'contact';
+  formType: 'volunteer' | 'needy-info' | 'donation' | 'contact' | 'invitation';
   fields?: Record<string, string>;
   data?: Record<string, string>;
   [key: string]: unknown;
@@ -1013,3 +1013,207 @@ export async function sendNewsletterSubscriptionEmail(
     };
   }
 }
+
+/* ==========================================================================
+   6. FOUNDER OFFICIAL INVITATION SUBMISSION (মাহফিল ও জুমার দাওয়াতের আবেদন)
+   ========================================================================== */
+
+export interface FounderInvitationData {
+  referenceCode: string;
+  organizerNameAndRole: string;
+  institutionName: string;
+  phone: string;
+  invitationType: string;
+  proposedDateTime: string;
+  venueAddressAndDistance: string;
+  expectedAudienceAndProtocol: string;
+  travelHospitalityAssurance: string;
+  hadiyaConfirmation: string;
+  agreedToTerms: boolean;
+  chiefOrganizerInfo?: string;
+  majlisDetails?: string;
+  adminAndVolunteerInfo?: string;
+  religiousAndSocialContext?: string;
+}
+
+export function generateFounderInvitationEmailHtml(
+  data: FounderInvitationData,
+  submissionTime?: string
+): string {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const timeText = submissionTime || formatBengaliDateTimeWithAmPm(new Date());
+
+  const rows: Array<[string, string]> = [
+    ['রেফারেন্স কোড', data.referenceCode],
+    ['দাওয়াতের ধরন', data.invitationType],
+    ['আবেদনকারীর নাম ও পদবি', data.organizerNameAndRole],
+    ['যোগাযোগ মোবাইল নম্বর', data.phone],
+    ['প্রস্তাবিত তারিখ', data.proposedDateTime],
+    ['প্রোগ্রামের স্থান ও পূর্ণ ঠিকানা', data.venueAddressAndDistance],
+    ['মসজিদ / মাদরাসা / প্রতিষ্ঠান', data.institutionName],
+  ];
+
+  if (data.chiefOrganizerInfo) {
+    rows.push(['প্রধান আয়োজকের তথ্য', data.chiefOrganizerInfo]);
+  }
+  if (data.majlisDetails) {
+    rows.push(['মাহফিল ও আলোচনার বিবরণ', data.majlisDetails]);
+  }
+  rows.push(['প্রত্যাশিত শ্রোতা ও নিরাপত্তা', data.expectedAudienceAndProtocol]);
+  rows.push(['যাতায়াত ও ব্যবস্থাপনা', data.travelHospitalityAssurance]);
+  if (data.adminAndVolunteerInfo) {
+    rows.push(['প্রশাসন ও ভলান্টিয়ার', data.adminAndVolunteerInfo]);
+  }
+  if (data.religiousAndSocialContext) {
+    rows.push(['দলীয় ও সামাজিক প্রেক্ষাপট', data.religiousAndSocialContext]);
+  }
+  rows.push(['হাদিয়া ও সম্মাননা', data.hadiyaConfirmation]);
+  rows.push(['নীতিমালা ও শর্তাবলি সম্মতি', data.agreedToTerms ? 'হ্যাঁ, সম্মতি প্রদান করা হয়েছে' : 'অসম্মত']);
+  rows.push(['আবেদনের সময়', timeText]);
+
+  const inviteTable = buildHtmlTableSection('[ দাওয়াত আবেদনের বিস্তারিত বিবরণ ]', rows);
+
+  return `
+<div style="margin: 0; padding: 0;">
+<style>
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .no-print, .gmail_attr, .gmail_quote_container { display: none !important; }
+    .zf-print-card { max-width: 680px !important; width: 100% !important; margin: 0 auto !important; box-shadow: none !important; }
+  }
+</style>
+<div class="zf-print-card" style="font-family: 'Noto Sans Bengali', Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6; background-color: #ffffff; border: 1.5px solid #94a3b8;">
+  <div style="padding: 18px 20px; background-color: #064E3B; color: #ffffff; border-bottom: 3px solid #D4AF37; text-align: center;">
+    <div style="font-size: 19px; font-weight: 700; text-align: center;">জিকরুল্লাহ ফাউন্ডেশন — দাওয়াত আবেদন পত্র</div>
+    <div style="font-size: 13px; color: #fde68a; margin-top: 4px; text-align: center;">হাফিজুর রহমান সিদ্দিক (বগুড়া) — প্রতিষ্ঠাতা ও চেয়ারম্যান • রেফারেন্স: ${escapeHtml(data.referenceCode)}</div>
+  </div>
+  <div style="padding: 20px; background-color: #ffffff;">
+    <p style="margin: 0 0 14px 0; font-size: 14px;">সম্মানিত কার্যালয়,<br/>জিকরুল্লাহ ফাউন্ডেশনের ওয়েবসাইট থেকে একটি নতুন দাওয়াত আবেদন জমা হয়েছে:</p>
+    ${inviteTable}
+    <div style="margin-top: 20px; padding-top: 12px; border-top: 1px dashed #94a3b8; font-size: 13px; color: #475569;">
+      আবেদনকারী: <b>${escapeHtml(data.organizerNameAndRole)}</b> • Official Email: ${escapeHtml(recipientEmail)} • Website: https://www.zikrullahfoundation.com
+    </div>
+  </div>
+</div>
+</div>`.trim();
+}
+
+export function generateFounderInvitationEmailContent(data: FounderInvitationData): {
+  recipientEmail: string;
+  subject: string;
+  body: string;
+  htmlBody: string;
+} {
+  const recipientEmail = RECIPIENT_EMAIL;
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+  const subject = `[দাওয়াতের আবেদন ${data.referenceCode}] ${data.invitationType} — ${data.institutionName}`;
+
+  const bodyLines = [
+    'বিসমিল্লাহির রাহমানির রাহীম',
+    'জিকরুল্লাহ ফাউন্ডেশন — দাওয়াত আবেদন পত্র',
+    'হাফিজুর রহমান সিদ্দিক (বগুড়া) — প্রতিষ্ঠাতা ও চেয়ারম্যান',
+    `রেফারেন্স কোড: ${data.referenceCode}`,
+    '========================================',
+    '',
+    `১. দাওয়াতের ধরন: ${data.invitationType}`,
+    `২. আবেদনকারীর নাম ও পদবি: ${data.organizerNameAndRole}`,
+    `৩. মোবাইল নম্বর: ${data.phone}`,
+    `৪. প্রস্তাবিত তারিখ: ${data.proposedDateTime}`,
+    `৫. প্রোগ্রামের স্থান ও ঠিকানা: ${data.venueAddressAndDistance}`,
+    `৬. মসজিদ / মাদরাসা / প্রতিষ্ঠান: ${data.institutionName}`,
+    data.chiefOrganizerInfo ? `৭. প্রধান আয়োজকের তথ্য: ${data.chiefOrganizerInfo}` : '',
+    data.majlisDetails ? `৮. মাহফিল ও আলোচনার বিবরণ: ${data.majlisDetails}` : '',
+    `৯. প্রত্যাশিত শ্রোতা ও নিরাপত্তা: ${data.expectedAudienceAndProtocol}`,
+    `১০. যাতায়াত ও ব্যবস্থাপনা: ${data.travelHospitalityAssurance}`,
+    data.adminAndVolunteerInfo ? `১১. প্রশাসন ও ভলান্টিয়ার: ${data.adminAndVolunteerInfo}` : '',
+    data.religiousAndSocialContext ? `১২. দলীয় ও সামাজিক প্রেক্ষাপট: ${data.religiousAndSocialContext}` : '',
+    `১৩. হাদিয়া ও সম্মাননা: ${data.hadiyaConfirmation}`,
+    `১৪. নীতিমালা ও শর্তাবলি সম্মতি: ${data.agreedToTerms ? 'হ্যাঁ, সম্মত' : 'না'}`,
+    '',
+    `আবেদনের সময়: ${submissionTime}`,
+    'ওয়েবসাইট: https://www.zikrullahfoundation.com',
+  ].filter(Boolean);
+
+  const body = bodyLines.join('\n');
+  const htmlBody = generateFounderInvitationEmailHtml(data, submissionTime);
+
+  return { recipientEmail, subject, body, htmlBody };
+}
+
+export async function sendFounderInvitationEmail(data: FounderInvitationData): Promise<{
+  success: boolean;
+  mailtoUrl: string;
+  gmailUrl: string;
+  sentViaWebhook: boolean;
+}> {
+  const { recipientEmail, subject, body, htmlBody } = generateFounderInvitationEmailContent(data);
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const submissionTime = formatBengaliDateTimeWithAmPm(new Date());
+
+  const structuredFields: Record<string, string> = {
+    'রেফারেন্স কোড': data.referenceCode,
+    'দাওয়াতের ধরন': data.invitationType,
+    'আবেদনকারীর নাম ও পদবি': data.organizerNameAndRole,
+    'মোবাইল নম্বর': data.phone,
+    'প্রস্তাবিত তারিখ': data.proposedDateTime,
+    'প্রোগ্রামের স্থান ও ঠিকানা': data.venueAddressAndDistance,
+    'মসজিদ / মাদরাসা / প্রতিষ্ঠান': data.institutionName,
+    ...(data.chiefOrganizerInfo ? { 'প্রধান আয়োজকের তথ্য': data.chiefOrganizerInfo } : {}),
+    ...(data.majlisDetails ? { 'মাহফিল ও আলোচনার বিবরণ': data.majlisDetails } : {}),
+    'প্রত্যাশিত শ্রোতা ও নিরাপত্তা': data.expectedAudienceAndProtocol,
+    'যাতায়াত ও ব্যবস্থাপনা': data.travelHospitalityAssurance,
+    ...(data.adminAndVolunteerInfo ? { 'প্রশাসন ও ভলান্টিয়ার': data.adminAndVolunteerInfo } : {}),
+    ...(data.religiousAndSocialContext ? { 'দলীয় ও সামাজিক প্রেক্ষাপট': data.religiousAndSocialContext } : {}),
+    'হাদিয়া ও সম্মাননা': data.hadiyaConfirmation,
+    'আবেদনের সময়': submissionTime,
+    'ওয়েবসাইট': 'https://www.zikrullahfoundation.com',
+  };
+
+  let sentViaWebhook = false;
+  try {
+    if (getEmailWebhookUrl()) {
+      sentViaWebhook = await sendViaCustomHtmlWebhook({
+        to: recipientEmail,
+        recipientEmail,
+        subject,
+        htmlBody,
+        html: htmlBody,
+        textBody: body,
+        body,
+        formType: 'volunteer',
+        submissionType: 'invitation',
+        name: data.organizerNameAndRole,
+        phone: data.phone,
+        address: data.venueAddressAndDistance,
+        fullAddress: data.venueAddressAndDistance,
+        message: body,
+        submissionTime,
+        fields: structuredFields,
+        data: {
+          referenceCode: data.referenceCode,
+          name: data.organizerNameAndRole,
+          phone: data.phone,
+          institutionName: data.institutionName,
+          invitationType: data.invitationType,
+          proposedDateTime: data.proposedDateTime,
+          venueAddressAndDistance: data.venueAddressAndDistance,
+          submissionTime,
+        },
+      });
+    } else {
+      sentViaWebhook = await sendViaFormSubmit(recipientEmail, subject, structuredFields);
+    }
+  } catch (err) {
+    console.warn('Founder invitation background dispatch notice:', err);
+  }
+
+  return {
+    success: true,
+    mailtoUrl,
+    gmailUrl,
+    sentViaWebhook,
+  };
+}
+

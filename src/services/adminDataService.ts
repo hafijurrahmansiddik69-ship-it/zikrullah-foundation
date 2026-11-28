@@ -38,9 +38,27 @@ export interface ContactMessageRecord {
   status: 'নতুন' | 'পঠিত' | 'সম্পন্ন';
 }
 
+export interface InvitationRecord {
+  id: string;
+  referenceCode: string;
+  organizerNameAndRole: string;
+  institutionName: string;
+  phone: string;
+  invitationType: string;
+  proposedDateTime: string;
+  venueAddressAndDistance: string;
+  expectedAudienceAndProtocol: string;
+  travelHospitalityAssurance: string;
+  hadiyaConfirmation: string;
+  date: string;
+  timestamp: number;
+  status: 'পর্যালোচনাধীন' | 'গৃহীত' | 'সম্পন্ন';
+}
+
 const DONATIONS_STORAGE_KEY = 'zikrullah_donations_data_v1';
 const VOLUNTEERS_STORAGE_KEY = 'zikrullah_volunteers_data_v1';
 const MESSAGES_STORAGE_KEY = 'zikrullah_contact_messages_v1';
+const INVITATIONS_STORAGE_KEY = 'zikrullah_founder_invitations_v1';
 export const ADMIN_DATA_EVENT = 'zikrullah_admin_data_updated';
 
 const INITIAL_DONATIONS: DonationRecord[] = [
@@ -193,6 +211,37 @@ export const adminDataService = {
     const updated = [newRecord, ...list];
     try {
       localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // ignore storage quota error
+    }
+    notifyUpdate();
+    return newRecord;
+  },
+
+  getInvitations(): InvitationRecord[] {
+    try {
+      const stored = localStorage.getItem(INVITATIONS_STORAGE_KEY);
+      if (stored) return JSON.parse(stored);
+      return [];
+    } catch {
+      return [];
+    }
+  },
+
+  addInvitation(
+    inv: Omit<InvitationRecord, 'id' | 'date' | 'timestamp' | 'status'>
+  ): InvitationRecord {
+    const list = this.getInvitations();
+    const newRecord: InvitationRecord = {
+      id: inv.referenceCode,
+      ...inv,
+      date: new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' }),
+      timestamp: Date.now(),
+      status: 'পর্যালোচনাধীন',
+    };
+    const updated = [newRecord, ...list];
+    try {
+      localStorage.setItem(INVITATIONS_STORAGE_KEY, JSON.stringify(updated));
     } catch {
       // ignore storage quota error
     }

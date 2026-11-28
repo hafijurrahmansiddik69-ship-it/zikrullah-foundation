@@ -1,4 +1,4 @@
-import { EXECUTIVE_MEMBERS, EXECUTIVE_SUB_MEMBERS } from './mockData';
+import { EXECUTIVE_MEMBERS, EXECUTIVE_SUB_MEMBERS, FOUNDATION_INFO } from './mockData';
 
 export type GalleryCategoryId =
   | 'all'
@@ -29,6 +29,7 @@ export interface GalleryMediaItem {
   locationBn?: string;
   locationEn?: string;
   highlightCaptionWhite?: boolean;
+  isLogoFallback?: boolean;
 }
 
 export const GALLERY_CATEGORIES: GalleryCategoryTab[] = [
@@ -42,7 +43,7 @@ export const GALLERY_CATEGORIES: GalleryCategoryTab[] = [
   { id: 'videos', labelBn: 'ভিডিও', labelEn: 'Videos' },
 ];
 
-export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
+const STATIC_GALLERY_ITEMS: GalleryMediaItem[] = [
   // 1. খাদ্য ও শীতবস্ত্র
   {
     id: 'gal-food-1',
@@ -221,30 +222,51 @@ export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = [
     locationEn: 'Shibganj & River Islands, Bogura',
   },
 
-  // 6. প্রতিষ্ঠান ও কার্যনির্বাহী টিম (Auto-synced from EXECUTIVE_MEMBERS and EXECUTIVE_SUB_MEMBERS)
-  ...EXECUTIVE_MEMBERS.map((member, index) => ({
-    id: `gal-exec-${member.id}`,
-    mediaType: 'image' as const,
-    category: 'foundation-team' as const,
-    src: member.image || 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
-    titleBn: `${member.nameBn} — ${member.roleBn}`,
-    titleEn: `${member.name} — ${member.role}`,
-    captionBn: index === 0 ? 'জিকরুল্লাহ ফাউন্ডেশনের সম্মানিত প্রতিষ্ঠাতা ও চেয়ারম্যান।' : `জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের ${member.roleBn} হিসেবে দায়িত্বরত।`,
-    captionEn: index === 0 ? 'Respected Founder & Chairman of Zikrullah Foundation.' : `Serving as ${member.role} of the Executive Team, Zikrullah Foundation.`,
-    locationBn: index === 0 ? 'বগুড়া, বাংলাদেশ' : 'মোকামতলা ও শিবগঞ্জ, বগুড়া',
-    locationEn: index === 0 ? 'Bogura, Bangladesh' : 'Mokamtala & Shibganj, Bogura',
-    highlightCaptionWhite: index === 0,
-  })),
-  ...EXECUTIVE_SUB_MEMBERS.map((subMember) => ({
-    id: `gal-sub-${subMember.id}`,
-    mediaType: 'image' as const,
-    category: 'foundation-team' as const,
-    src: subMember.image || 'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg',
-    titleBn: `${subMember.nameBn} — ${subMember.roleBn}`,
-    titleEn: `${subMember.name} — ${subMember.role}`,
-    captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী সদস্য।',
-    captionEn: 'Executive Member of Zikrullah Foundation.',
-    locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া',
-    locationEn: 'Mokamtala & Shibganj, Bogura',
-  })),
 ];
+
+export function getGalleryMediaItems(): GalleryMediaItem[] {
+  const executiveItems: GalleryMediaItem[] = EXECUTIVE_MEMBERS.map((member, index) => {
+    const hasPhoto = Boolean(member.image && member.image.trim().length > 0);
+    return {
+      id: `gal-exec-${member.id}`,
+      mediaType: 'image',
+      category: 'foundation-team',
+      src: hasPhoto ? member.image!.trim() : FOUNDATION_INFO.logoUrl,
+      isLogoFallback: !hasPhoto,
+      titleBn: `${member.nameBn} — ${member.roleBn}`,
+      titleEn: `${member.name} — ${member.role}`,
+      captionBn:
+        index === 0
+          ? 'জিকরুল্লাহ ফাউন্ডেশনের সম্মানিত প্রতিষ্ঠাতা ও চেয়ারম্যান।'
+          : `জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী টিমের ${member.roleBn} হিসেবে দায়িত্বরত।`,
+      captionEn:
+        index === 0
+          ? 'Respected Founder & Chairman of Zikrullah Foundation.'
+          : `Serving as ${member.role} of the Executive Team, Zikrullah Foundation.`,
+      locationBn: index === 0 ? 'বগুড়া, বাংলাদেশ' : 'মোকামতলা ও শিবগঞ্জ, বগুড়া',
+      locationEn: index === 0 ? 'Bogura, Bangladesh' : 'Mokamtala & Shibganj, Bogura',
+      highlightCaptionWhite: index === 0,
+    };
+  });
+
+  const subMemberItems: GalleryMediaItem[] = EXECUTIVE_SUB_MEMBERS.map((subMember) => {
+    const hasPhoto = Boolean(subMember.image && subMember.image.trim().length > 0);
+    return {
+      id: `gal-sub-${subMember.id}`,
+      mediaType: 'image',
+      category: 'foundation-team',
+      src: hasPhoto ? subMember.image!.trim() : FOUNDATION_INFO.logoUrl,
+      isLogoFallback: !hasPhoto,
+      titleBn: `${subMember.nameBn} — ${subMember.roleBn}`,
+      titleEn: `${subMember.name} — ${subMember.role}`,
+      captionBn: 'জিকরুল্লাহ ফাউন্ডেশনের কার্যনির্বাহী সদস্য।',
+      captionEn: 'Executive Member of Zikrullah Foundation.',
+      locationBn: 'মোকামতলা ও শিবগঞ্জ, বগুড়া',
+      locationEn: 'Mokamtala & Shibganj, Bogura',
+    };
+  });
+
+  return [...STATIC_GALLERY_ITEMS, ...executiveItems, ...subMemberItems];
+}
+
+export const GALLERY_MEDIA_ITEMS: GalleryMediaItem[] = getGalleryMediaItems();

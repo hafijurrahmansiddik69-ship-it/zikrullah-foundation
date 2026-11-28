@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
 import { OngoingActivitiesSection } from './components/OngoingActivitiesSection';
@@ -12,18 +11,29 @@ import { VolunteerModal } from './components/VolunteerModal';
 import { NeedyInfoModal } from './components/NeedyInfoModal';
 import { DirectContactModal } from './components/DirectContactModal';
 import { MediaGalleryModal } from './components/MediaGalleryModal';
+import { OfficialInvitationModal } from './components/OfficialInvitationModal';
+import { EstablishmentContextModal } from './components/EstablishmentContextModal';
 import { AboutPage } from './pages/AboutPage';
+import { FounderProfilePage } from './pages/FounderProfilePage';
 import { QuickEngagementBar } from './components/QuickEngagementBar';
-import { Heart } from 'lucide-react';
+import { Heart, Mic } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
 function MainApp() {
   const { isEn } = useLanguage();
-  const [currentPage, setCurrentPage] = useState<'home' | 'about'>(() => {
+  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'founder'>(() => {
     if (typeof window !== 'undefined') {
       try {
         const hash = window.location.hash;
         const path = window.location.pathname.toLowerCase();
+        if (
+          hash === '#founder-profile' ||
+          path === '/founder' ||
+          path === '/founder/' ||
+          path === '/founder-profile'
+        ) {
+          return 'founder';
+        }
         if (hash === '#about-page' || path === '/about' || path === '/about/' || path === '/about-page') {
           return 'about';
         }
@@ -42,13 +52,28 @@ function MainApp() {
   const [isNeedyInfoOpen, setIsNeedyInfoOpen] = useState(false);
   const [isDirectContactOpen, setIsDirectContactOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
+  const [isContextModalOpen, setIsContextModalOpen] = useState(false);
 
   useEffect(() => {
     const handleHash = () => {
       try {
         const hash = window.location.hash;
         const path = window.location.pathname.toLowerCase();
-        if (hash === '#about-page' || path === '/about' || path === '/about/' || path === '/about-page') {
+        if (
+          hash === '#founder-profile' ||
+          path === '/founder' ||
+          path === '/founder/' ||
+          path === '/founder-profile'
+        ) {
+          setCurrentPage('founder');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (
+          hash === '#about-page' ||
+          path === '/about' ||
+          path === '/about/' ||
+          path === '/about-page'
+        ) {
           setCurrentPage('about');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
@@ -70,7 +95,12 @@ function MainApp() {
     
     // Check initial hash on page load
     try {
-      if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#about-page') {
+      if (
+        window.location.hash &&
+        window.location.hash !== '#' &&
+        window.location.hash !== '#about-page' &&
+        window.location.hash !== '#founder-profile'
+      ) {
         const cleanHash = window.location.hash.replace('#', '');
         setTimeout(() => {
           const el = document.getElementById(cleanHash);
@@ -84,9 +114,12 @@ function MainApp() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  const navigateTo = (page: 'home' | 'about', targetHash?: string) => {
+  const navigateTo = (page: 'home' | 'about' | 'founder', targetHash?: string) => {
     setCurrentPage(page);
-    if (page === 'about') {
+    if (page === 'founder') {
+      window.location.hash = 'founder-profile';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (page === 'about') {
       window.location.hash = 'about-page';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -117,6 +150,7 @@ function MainApp() {
         currentPage={currentPage}
         onNavigateHome={(hash) => navigateTo('home', hash)}
         onNavigateToAbout={() => navigateTo('about')}
+        onNavigateToFounder={() => navigateTo('founder')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
         onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
@@ -125,7 +159,13 @@ function MainApp() {
       />
 
       <main className="flex-1 overflow-x-clip">
-        {currentPage === 'about' ? (
+        {currentPage === 'founder' ? (
+          <FounderProfilePage
+            onBackToHome={() => navigateTo('home')}
+            onOpenInvitationModal={() => setIsInvitationModalOpen(true)}
+            onNavigateToAbout={() => navigateTo('about')}
+          />
+        ) : currentPage === 'about' ? (
           <AboutPage
             onBackToHome={() => navigateTo('home')}
             onOpenVolunteer={() => setIsVolunteerOpen(true)}
@@ -137,18 +177,12 @@ function MainApp() {
           <>
             <Hero
               onNavigateToAbout={() => navigateTo('about')}
+              onNavigateToFounder={() => navigateTo('founder')}
+              onOpenEstablishmentContext={() => setIsContextModalOpen(true)}
               onOpenDonation={(cat) => handleOpenDonation(cat)}
               onOpenVolunteer={() => setIsVolunteerOpen(true)}
               onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
               onOpenContactModal={() => setIsDirectContactOpen(true)}
-            />
-
-            <AboutSection 
-              onNavigateToAbout={() => navigateTo('about')}
-              onOpenVolunteer={() => setIsVolunteerOpen(true)}
-              onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
-              onOpenContactModal={() => setIsDirectContactOpen(true)}
-              onOpenDonation={() => handleOpenDonation()}
             />
 
             <ServicesSection
@@ -198,6 +232,7 @@ function MainApp() {
       <Footer
         onNavigateHome={(hash) => navigateTo('home', hash)}
         onNavigateToAbout={() => navigateTo('about')}
+        onNavigateToFounder={() => navigateTo('founder')}
         onOpenDonation={() => handleOpenDonation()}
         onOpenVolunteer={() => setIsVolunteerOpen(true)}
         onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
@@ -205,16 +240,29 @@ function MainApp() {
         onOpenGallery={() => setIsGalleryOpen(true)}
       />
 
-      {/* Floating Quick Support Trigger */}
+      {/* Floating Quick Support / Founder Invitation Corner Trigger */}
       <div className="floating-cta no-print fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
-        <button
-          onClick={() => handleOpenDonation()}
-          className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white whitespace-nowrap"
-          aria-label={isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}
-        >
-          <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
-          <span>{isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}</span>
-        </button>
+        {currentPage === 'founder' ? (
+          <button
+            type="button"
+            onClick={() => setIsInvitationModalOpen(true)}
+            className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-gradient-to-r from-[#047857] via-[#059669] to-[#10b981] hover:brightness-110 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-900/40 transition-all cursor-pointer border-2 border-white whitespace-nowrap"
+            aria-label={isEn ? 'Apply for Invitation' : 'দাওয়াতের জন্য আবেদন'}
+          >
+            <Mic className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <span>{isEn ? 'Apply for Invitation' : 'দাওয়াতের জন্য আবেদন'}</span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => handleOpenDonation()}
+            className="flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-[#087443] hover:bg-[#045332] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-950/30 transition-all cursor-pointer border-2 border-white whitespace-nowrap"
+            aria-label={isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}
+          >
+            <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
+            <span>{isEn ? 'Join Khidmat' : 'খেদমতে শরীক হোন'}</span>
+          </button>
+        )}
       </div>
 
       {/* Donation Flow Modal */}
@@ -247,6 +295,22 @@ function MainApp() {
       <MediaGalleryModal
         isOpen={isGalleryOpen}
         onClose={() => setIsGalleryOpen(false)}
+      />
+
+      {/* Founder Official Invitation Popup Modal */}
+      <OfficialInvitationModal
+        isOpen={isInvitationModalOpen}
+        onClose={() => setIsInvitationModalOpen(false)}
+      />
+
+      {/* Establishment Context Popup Modal */}
+      <EstablishmentContextModal
+        isOpen={isContextModalOpen}
+        onClose={() => setIsContextModalOpen(false)}
+        onOpenDonation={() => {
+          setIsContextModalOpen(false);
+          handleOpenDonation('general-sadaqah');
+        }}
       />
 
     </div>

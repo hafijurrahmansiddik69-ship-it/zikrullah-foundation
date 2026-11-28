@@ -11,10 +11,11 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import {
   GALLERY_CATEGORIES,
-  GALLERY_MEDIA_ITEMS,
+  getGalleryMediaItems,
   GalleryCategoryId,
   GalleryMediaItem,
 } from '../data/galleryData';
+import { FOUNDATION_INFO } from '../data/mockData';
 
 interface MediaGalleryModalProps {
   isOpen: boolean;
@@ -25,14 +26,17 @@ export const MediaGalleryModal: React.FC<MediaGalleryModalProps> = ({ isOpen, on
   const { isEn } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<GalleryCategoryId>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [failedIds, setFailedIds] = useState<Record<string, boolean>>({});
+
+  const galleryItems = useMemo(() => getGalleryMediaItems(), [isOpen]);
 
   const filteredItems = useMemo(() => {
-    if (activeCategory === 'all') return GALLERY_MEDIA_ITEMS;
+    if (activeCategory === 'all') return galleryItems;
     if (activeCategory === 'videos') {
-      return GALLERY_MEDIA_ITEMS.filter((item) => item.mediaType === 'video');
+      return galleryItems.filter((item) => item.mediaType === 'video');
     }
-    return GALLERY_MEDIA_ITEMS.filter((item) => item.category === activeCategory);
-  }, [activeCategory]);
+    return galleryItems.filter((item) => item.category === activeCategory);
+  }, [activeCategory, galleryItems]);
 
   const categoryLabelMap = useMemo(() => {
     const map: Record<string, { bn: string; en: string }> = {};
@@ -119,10 +123,10 @@ export const MediaGalleryModal: React.FC<MediaGalleryModalProps> = ({ isOpen, on
               const isSelected = activeCategory === tab.id;
               const count =
                 tab.id === 'all'
-                  ? GALLERY_MEDIA_ITEMS.length
+                  ? galleryItems.length
                   : tab.id === 'videos'
-                    ? GALLERY_MEDIA_ITEMS.filter((i) => i.mediaType === 'video').length
-                    : GALLERY_MEDIA_ITEMS.filter((i) => i.category === tab.id).length;
+                    ? galleryItems.filter((i) => i.mediaType === 'video').length
+                    : galleryItems.filter((i) => i.category === tab.id).length;
 
               return (
                 <button
@@ -178,27 +182,49 @@ export const MediaGalleryModal: React.FC<MediaGalleryModalProps> = ({ isOpen, on
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               {filteredItems.map((item, idx) => {
                 const catLabel = categoryLabelMap[item.category];
+                const isLogoDisplay =
+                  Boolean(item.isLogoFallback) ||
+                  Boolean(failedIds[item.id]) ||
+                  item.src === FOUNDATION_INFO.logoUrl;
+                const displaySrc = failedIds[item.id] ? FOUNDATION_INFO.logoUrl : item.src;
+
                 return (
                   <div
                     key={item.id}
                     onClick={() => setLightboxIndex(idx)}
                     className="bg-white rounded-2xl border border-slate-200/90 hover:border-emerald-400 shadow-xs hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col group cursor-pointer"
                   >
-                    <div className="relative aspect-[4/3] w-full bg-slate-100 overflow-hidden">
+                    <div
+                      className={`relative aspect-[4/3] w-full overflow-hidden ${
+                        isLogoDisplay
+                          ? 'bg-gradient-to-br from-emerald-50 via-white to-amber-50/70 flex items-center justify-center p-5'
+                          : 'bg-slate-100'
+                      }`}
+                    >
                       <img
-                        src={item.src}
+                        src={displaySrc}
                         alt={isEn ? item.titleEn : item.titleBn}
                         loading="lazy"
                         referrerPolicy="no-referrer"
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src =
-                            'https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg';
+                          const imgEl = e.currentTarget as HTMLImageElement;
+                          if (!failedIds[item.id]) {
+                            setFailedIds((prev) => ({ ...prev, [item.id]: true }));
+                          } else if (!imgEl.src.endsWith('/logo.jpg')) {
+                            imgEl.src = '/logo.jpg';
+                          }
                         }}
-                        className={`w-full h-full object-cover ${
-                          item.category === 'foundation-team' ? 'object-top' : 'object-center'
-                        } group-hover:scale-105 transition-transform duration-500`}
+                        className={
+                          isLogoDisplay
+                            ? 'w-32 h-32 sm:w-36 sm:h-36 object-contain rounded-2xl shadow-sm border border-emerald-200/80 bg-white p-2 group-hover:scale-105 transition-transform duration-500'
+                            : `w-full h-full object-cover ${
+                                item.category === 'foundation-team' ? 'object-top' : 'object-center'
+                              } group-hover:scale-105 transition-transform duration-500`
+                        }
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/15 opacity-80 group-hover:opacity-95 transition-opacity" />
+                      {!isLogoDisplay && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/15 opacity-80 group-hover:opacity-95 transition-opacity" />
+                      )}
 
                       <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-[#045332]/90 text-white text-[11px] font-semibold backdrop-blur-xs border border-emerald-300/30">
                         {catLabel ? (isEn ? catLabel.en : catLabel.bn) : ''}
@@ -321,10 +347,26 @@ export const MediaGalleryModal: React.FC<MediaGalleryModalProps> = ({ isOpen, on
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={activeLightboxItem.src}
+              src={
+                failedIds[activeLightboxItem.id]
+                  ? FOUNDATION_INFO.logoUrl
+                  : activeLightboxItem.src
+              }
               alt={isEn ? activeLightboxItem.titleEn : activeLightboxItem.titleBn}
               referrerPolicy="no-referrer"
-              className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl border border-white/10"
+              onError={(e) => {
+                const imgEl = e.currentTarget as HTMLImageElement;
+                if (!imgEl.src.endsWith('/logo.jpg')) {
+                  imgEl.src = '/logo.jpg';
+                }
+              }}
+              className={`max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl border border-white/10 ${
+                activeLightboxItem.isLogoFallback ||
+                failedIds[activeLightboxItem.id] ||
+                activeLightboxItem.src === FOUNDATION_INFO.logoUrl
+                  ? 'bg-white p-6'
+                  : ''
+              }`}
             />
             <div className="text-center text-white max-w-2xl px-4">
               <h4 className="font-serif-bn font-bold text-base sm:text-xl text-amber-300">

@@ -12,6 +12,7 @@ interface FooterProps {
   onOpenContactModal?: () => void;
   onOpenGallery?: () => void;
   onNavigateToAbout?: () => void;
+  onNavigateToFounder?: () => void;
   onNavigateHome?: (hash?: string) => void;
 }
 
@@ -22,6 +23,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenContactModal,
   onOpenGallery,
   onNavigateToAbout,
+  onNavigateToFounder,
   onNavigateHome
 }) => {
   const { t, isEn } = useLanguage();
@@ -124,6 +126,16 @@ export const Footer: React.FC<FooterProps> = ({
                   {t.nav.about}
                 </button>
               </li>
+              {onNavigateToFounder && (
+                <li>
+                  <button
+                    onClick={onNavigateToFounder}
+                    className="hover:text-amber-300 text-amber-200/90 transition-colors cursor-pointer text-left font-medium"
+                  >
+                    {t.nav.founder}
+                  </button>
+                </li>
+              )}
               <li>
                 <a
                   href="#projects"

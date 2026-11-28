@@ -9,7 +9,8 @@ import {
   UserPlus,
   HandHeart,
   PhoneCall,
-  Coins
+  Coins,
+  User
 } from 'lucide-react';
 import { FOUNDATION_INFO } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
@@ -21,6 +22,8 @@ import { ModalEngagementBlocks } from './ModalEngagementBlocks';
 interface HeroProps {
   onOpenDonation?: (category?: string) => void;
   onNavigateToAbout?: () => void;
+  onNavigateToFounder?: () => void;
+  onOpenEstablishmentContext?: () => void;
   onOpenVolunteer?: () => void;
   onOpenNeedyInfo?: () => void;
   onOpenContactModal?: () => void;
@@ -42,6 +45,8 @@ const BOGURA_HUB = { x: 270, y: 245, nameBn: 'বগুড়া', nameEn: 'Bogura'
 export const Hero: React.FC<HeroProps> = ({ 
   onOpenDonation, 
   onNavigateToAbout,
+  onNavigateToFounder,
+  onOpenEstablishmentContext,
   onOpenVolunteer,
   onOpenNeedyInfo,
   onOpenContactModal
@@ -80,12 +85,12 @@ export const Hero: React.FC<HeroProps> = ({
           className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.06]"
         />
         
-        {/* Bangladesh Map & Bogura Light Rays Overlay (Opens first upon loading, radiating across Bangladesh) */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-80 sm:opacity-90 animate-map-opening">
+        {/* Bangladesh Map & Bogura Light Rays Overlay (Full uncropped responsive framing across all screens) */}
+        <div className="absolute inset-0 flex items-start justify-center pt-4 sm:pt-7 pb-4 px-2 pointer-events-none select-none opacity-80 sm:opacity-90 animate-map-opening">
           <svg
-            viewBox="0 0 600 720"
-            className="w-full max-w-[620px] h-auto object-contain mx-auto select-none pointer-events-none drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]"
-            preserveAspectRatio="xMidYMid meet"
+            viewBox="15 20 570 635"
+            className="w-full h-auto max-w-[94vw] sm:max-w-[580px] md:max-w-[640px] lg:max-w-[680px] max-h-[92%] object-contain mx-auto select-none pointer-events-none drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]"
+            preserveAspectRatio="xMidYMin meet"
           >
             <defs>
               <linearGradient id="bdMapFill" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -231,14 +236,20 @@ export const Hero: React.FC<HeroProps> = ({
           </h1>
         </div>
 
-        {/* 2. First Line Buttons (ONLY 2 Buttons on 1 line: "প্রতিষ্ঠার প্রেক্ষাপট" + "আমাদের সম্পর্কে জানুন") */}
-        <div className="hero-reveal-zoom hero-delay-1350 flex flex-nowrap items-center justify-center gap-2 sm:gap-4 mb-7 sm:mb-10 px-1 sm:px-2 font-solaiman w-full max-w-full">
+        {/* 2. Exact Section Sequence Buttons: "প্রতিষ্ঠার প্রেক্ষাপট" -> "আমাদের সম্পর্কে জানুন" -> "চেয়ারম্যান পরিচিতি" */}
+        <div className="hero-reveal-zoom hero-delay-1350 flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-7 sm:mb-10 px-1 sm:px-2 font-bornomala w-full max-w-full">
           
-          {/* Button 1: "প্রতিষ্ঠার প্রেক্ষাপট" (Free Healthcare Cyan/Blue Gradient) */}
+          {/* Button 1: "প্রতিষ্ঠার প্রেক্ষাপট" */}
           <button
             type="button"
-            onClick={() => setIsContextModalOpen(true)}
-            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00c6ff] to-[#0072ff] hover:from-[#00b4ea] hover:to-[#005ece] active:scale-95 text-white font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(0,198,255,0.45)] border-2 border-cyan-200 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+            onClick={() => {
+              if (onOpenEstablishmentContext) {
+                onOpenEstablishmentContext();
+              } else {
+                setIsContextModalOpen(true);
+              }
+            }}
+            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#00c6ff] to-[#0072ff] hover:from-[#00b4ea] hover:to-[#005ece] active:scale-95 text-white font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(0,198,255,0.45)] border-2 border-cyan-200 transition-all cursor-pointer whitespace-nowrap group shrink-0"
           >
             <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:rotate-6 transition-transform shrink-0" />
             <span className="tracking-wide">
@@ -247,11 +258,11 @@ export const Hero: React.FC<HeroProps> = ({
             <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-100 animate-pulse shrink-0" />
           </button>
 
-          {/* Button 2: "আমাদের সম্পর্কে জানুন" (Matching "সরাসরি যোগাযোগ করুন" white background style) */}
+          {/* Button 2: "আমাদের সম্পর্কে জানুন" */}
           <button
             type="button"
             onClick={onNavigateToAbout}
-            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-slate-100 active:scale-95 text-slate-900 font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white hover:bg-slate-100 active:scale-95 text-slate-900 font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
           >
             <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 group-hover:scale-110 transition-transform shrink-0" />
             <span className="tracking-wide">
@@ -259,6 +270,21 @@ export const Hero: React.FC<HeroProps> = ({
             </span>
             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0" />
           </button>
+
+          {/* Button 3: "প্রতিষ্ঠাতা ও চেয়ারম্যান" Full Page (Matching "আমাদের সম্পর্কে জানুন" white/emerald colors) */}
+          {onNavigateToFounder && (
+            <button
+              type="button"
+              onClick={onNavigateToFounder}
+              className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white hover:bg-slate-100 active:scale-95 text-slate-900 font-bold text-[11px] sm:text-sm shadow-[0_0_18px_rgba(16,185,129,0.25)] border-2 border-emerald-500/80 transition-all cursor-pointer whitespace-nowrap group shrink-0"
+            >
+              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 group-hover:scale-110 transition-transform shrink-0" />
+              <span className="tracking-wide">
+                {isEn ? 'Founder & Chairman' : 'প্রতিষ্ঠাতা ও চেয়ারম্যান'}
+              </span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0" />
+            </button>
+          )}
 
         </div>
 

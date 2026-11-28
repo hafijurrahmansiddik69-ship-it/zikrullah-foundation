@@ -11,8 +11,9 @@ interface HeaderProps {
   onOpenContactModal?: () => void;
   onOpenGallery?: () => void;
   onNavigateToAbout?: () => void;
+  onNavigateToFounder?: () => void;
   onNavigateHome?: (hash?: string) => void;
-  currentPage?: 'home' | 'about';
+  currentPage?: 'home' | 'about' | 'founder';
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -22,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenContactModal,
   onOpenGallery,
   onNavigateToAbout,
+  onNavigateToFounder,
   onNavigateHome,
   currentPage = 'home'
 }) => {
@@ -104,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Main Sticky Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-xs sm:shadow-sm transition-all">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
           
           {/* Brand Wordmark (Zone 1) */}
           <button
@@ -135,12 +137,13 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {/* Navigation Links (Zone 2) */}
-          <nav className="hidden lg:flex items-center gap-1 text-[15px] font-medium text-slate-700">
+          <nav className="hidden lg:flex items-center gap-0.5 text-[11.5px] xl:text-[13px] font-medium text-slate-700">
+            {/* 1. হোম */}
             <button
               onClick={() => {
                 if (onNavigateHome) onNavigateHome();
               }}
-              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer ${
+              className={`px-1.5 xl:px-2.5 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                 currentPage === 'home'
                   ? 'text-emerald-800 bg-emerald-50/90 font-semibold'
                   : 'hover:text-emerald-700 hover:bg-emerald-50/70'
@@ -148,11 +151,65 @@ export const Header: React.FC<HeaderProps> = ({
             >
               {t.nav.home}
             </button>
+
+            {/* 2. প্রতিষ্ঠাতা ও চেয়ারম্যান */}
+            <button
+              onClick={() => {
+                if (onNavigateToFounder) onNavigateToFounder();
+              }}
+              className={`px-1.5 xl:px-2.5 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
+                currentPage === 'founder'
+                  ? 'text-amber-900 bg-amber-50 border border-amber-200/80 font-semibold'
+                  : 'hover:text-emerald-700 hover:bg-emerald-50/70'
+              }`}
+            >
+              {t.nav.founder}
+            </button>
+
+            {/* 3. সেবামূলক কার্যক্রম */}
+            <a
+              href="#projects"
+              onClick={(e) => handleNavToSection(e, 'projects')}
+              className="px-1.5 xl:px-2.5 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 font-semibold text-emerald-800 transition-colors whitespace-nowrap shrink-0"
+            >
+              {t.nav.activities}
+            </a>
+
+            {/* 4. চলমান কার্যক্রম */}
+            <a
+              href="#ongoing-activities"
+              onClick={(e) => handleNavToSection(e, 'ongoing-activities')}
+              className="px-1.5 xl:px-2.5 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors whitespace-nowrap shrink-0"
+            >
+              {isEn ? 'Ongoing Activities' : 'চলমান কার্যক্রম'}
+            </a>
+
+            {/* 5. ভাবনা ও কর্মকথা */}
+            <a
+              href="#thoughts"
+              onClick={(e) => handleNavToSection(e, 'thoughts')}
+              className="px-1.5 xl:px-2.5 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors whitespace-nowrap shrink-0"
+            >
+              {isEn ? 'Reflections' : 'ভাবনা ও কর্মকথা'}
+            </a>
+
+            {/* 6. ছবি ও ভিডিও দেখুন */}
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenGallery) onOpenGallery();
+              }}
+              className="px-1.5 xl:px-2.5 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors cursor-pointer whitespace-nowrap shrink-0"
+            >
+              {isEn ? 'Photos & Videos' : 'ছবি ও ভিডিও দেখুন'}
+            </button>
+
+            {/* 7. আমাদের সম্পর্কে */}
             <button
               onClick={() => {
                 if (onNavigateToAbout) onNavigateToAbout();
               }}
-              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer ${
+              className={`px-1.5 xl:px-2.5 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                 currentPage === 'about'
                   ? 'text-emerald-800 bg-emerald-50/90 font-semibold'
                   : 'hover:text-emerald-700 hover:bg-emerald-50/70'
@@ -160,31 +217,12 @@ export const Header: React.FC<HeaderProps> = ({
             >
               {t.nav.about}
             </button>
-            <a
-              href="#projects"
-              onClick={(e) => handleNavToSection(e, 'projects')}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 font-semibold text-emerald-800 transition-colors"
-            >
-              {t.nav.projects}
-            </a>
-            <a
-              href="#services"
-              onClick={(e) => handleNavToSection(e, 'services')}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
-            >
-              {t.nav.services}
-            </a>
-            <a
-              href="#thoughts"
-              onClick={(e) => handleNavToSection(e, 'thoughts')}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
-            >
-              {isEn ? 'Reflections' : 'ভাবনা ও কর্মকথা'}
-            </a>
+
+            {/* 8. যোগাযোগ */}
             <a
               href="#footer"
               onClick={(e) => handleNavToSection(e, 'footer')}
-              className="px-3 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors"
+              className="px-1.5 xl:px-2.5 py-2 rounded-lg hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors whitespace-nowrap shrink-0"
             >
               {t.nav.contact}
             </a>
@@ -287,7 +325,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Navigation Menu Layout */}
             <nav className="p-3 space-y-1 font-sans text-sm">
-              {/* 1. Home */}
+              {/* 1. হোম */}
               <button
                 onClick={() => {
                   closeMobileMenu();
@@ -303,7 +341,66 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
 
-              {/* 2. About Us */}
+              {/* 2. প্রতিষ্ঠাতা ও চেয়ারম্যান */}
+              <button
+                onClick={() => {
+                  closeMobileMenu();
+                  if (onNavigateToFounder) onNavigateToFounder();
+                }}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all cursor-pointer ${
+                  currentPage === 'founder'
+                    ? 'bg-amber-50 text-amber-900 font-semibold border border-amber-300/80 shadow-xs'
+                    : 'text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70'
+                }`}
+              >
+                <span>{t.nav.founder}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </button>
+
+              {/* 3. সেবামূলক কার্যক্রম */}
+              <a
+                href="#projects"
+                onClick={(e) => handleNavToSection(e, 'projects')}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
+              >
+                <span>{t.nav.activities}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </a>
+
+              {/* 4. চলমান কার্যক্রম */}
+              <a
+                href="#ongoing-activities"
+                onClick={(e) => handleNavToSection(e, 'ongoing-activities')}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
+              >
+                <span>{isEn ? 'Ongoing Activities' : 'চলমান কার্যক্রম'}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </a>
+
+              {/* 5. ভাবনা ও কর্মকথা */}
+              <a
+                href="#thoughts"
+                onClick={(e) => handleNavToSection(e, 'thoughts')}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
+              >
+                <span>{isEn ? 'Thoughts & Field Notes' : 'ভাবনা ও কর্মকথা'}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </a>
+
+              {/* 6. ছবি ও ভিডিও দেখুন */}
+              <button
+                type="button"
+                onClick={() => {
+                  closeMobileMenu();
+                  if (onOpenGallery) onOpenGallery();
+                }}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
+              >
+                <span>{isEn ? 'Photos & Videos' : 'ছবি ও ভিডিও দেখুন'}</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </button>
+
+              {/* 7. আমাদের সম্পর্কে */}
               <button
                 onClick={() => {
                   closeMobileMenu();
@@ -319,50 +416,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
 
-              {/* 3. Activities */}
-              <a
-                href="#projects"
-                onClick={(e) => handleNavToSection(e, 'projects')}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-              >
-                <span>{t.nav.activities}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </a>
-
-              {/* 4. Ongoing Activities */}
-              <a
-                href="#ongoing-activities"
-                onClick={(e) => handleNavToSection(e, 'ongoing-activities')}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-              >
-                <span>{isEn ? 'Ongoing Activities' : 'চলমান কার্যক্রম'}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </a>
-
-              {/* 6. Photos & Videos Gallery */}
-              <button
-                type="button"
-                onClick={() => {
-                  closeMobileMenu();
-                  if (onOpenGallery) onOpenGallery();
-                }}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-              >
-                <span>{isEn ? 'Photos & Videos' : 'ছবি ও ভিডিও দেখুন'}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </button>
-
-              {/* 7. Thoughts & Field Notes */}
-              <a
-                href="#thoughts"
-                onClick={(e) => handleNavToSection(e, 'thoughts')}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all cursor-pointer"
-              >
-                <span>{isEn ? 'Thoughts & Field Notes' : 'ভাবনা ও কর্মকথা'}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </a>
-
-              {/* 8. Contact */}
+              {/* 8. যোগাযোগ */}
               <a
                 href="#footer"
                 onClick={(e) => handleNavToSection(e, 'footer')}

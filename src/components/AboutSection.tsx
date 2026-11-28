@@ -1,79 +1,212 @@
 import React from 'react';
+import { BookOpen, ArrowRight, Heart, Landmark, GraduationCap, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ScrollReveal } from './ScrollReveal';
+import { FOUNDATION_INFO } from '../data/mockData';
 
 interface AboutSectionProps {
   onOpenVolunteer?: () => void;
   onOpenNeedyInfo?: () => void;
   onOpenContactModal?: () => void;
   onNavigateToAbout?: () => void;
+  onOpenEstablishmentModal?: () => void;
   onOpenDonation?: () => void;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({
-  onOpenDonation
+  onNavigateToAbout,
+  onOpenEstablishmentModal,
+  onOpenDonation,
 }) => {
   const { t, isEn } = useLanguage();
 
   return (
-    <section id="about" className="py-16 sm:py-20 bg-[#fafcfb] border-b border-emerald-100/60 overflow-x-clip">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center">
-        {/* Visual Showcase & Quranic Verse Card: 1. বাম থেকে */}
-        <ScrollReveal direction="left" className="w-full max-w-md sm:max-w-lg relative">
-          <div className="relative rounded-3xl overflow-hidden border-2 border-emerald-800/20 shadow-2xl shadow-emerald-950/20 aspect-4/5 bg-[#012213] group">
-            {/* Rich forest green backdrop and photo with warm lighting */}
-            <img
-              src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg"
-              alt={isEn ? 'Zikrullah Foundation Humanitarian Work' : 'জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম'}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
-            />
-            {/* Forest green overlay with warm lighting gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#012615] via-[#02381e]/40 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,158,11,0.15),transparent_60%)]" />
-
-            {/* Bottom Quranic Ayah Box with Semi-Transparent Glass Effect */}
-            <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 p-3.5 sm:p-5 rounded-2xl bg-gradient-to-br from-[#120720]/60 via-[#1e0a3d]/50 to-[#290545]/60 backdrop-blur-md border border-white/25 sm:border-2 sm:border-[#a855f7]/50 shadow-[0_12px_28px_rgba(0,0,0,0.35)] text-white z-20 overflow-hidden">
-              {/* Subtle Purple & Amber ambient glow inside frosted glass */}
-              <div className="absolute -top-6 -right-6 w-20 h-20 bg-purple-500/15 rounded-full blur-xl pointer-events-none" />
-              <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-amber-400/10 rounded-full blur-xl pointer-events-none" />
-
-              {/* Arabic Portion */}
-              <p
-                className="font-times font-bold text-white text-[15px] sm:text-[17px] md:text-[19px] leading-[2.05] sm:leading-[2.15] tracking-normal mb-2 text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] selection:bg-purple-900 selection:text-white"
-                style={{ color: '#FFFFFF' }}
-                dir="rtl"
-                lang="ar"
-              >
-                {t.aboutVisual.quranArabic}
-              </p>
-
-              {/* Translation & Surah Reference */}
-              <p className="font-solaiman text-[11px] sm:text-xs text-purple-100/95 leading-relaxed font-normal text-center mb-2.5">
-                {t.aboutVisual.quranTranslation}
-                <span className="block text-amber-300 font-bold text-[10px] sm:text-xs mt-1">
-                  {t.aboutVisual.surahRef}
+    <>
+      {/* Section 1: প্রতিষ্ঠার প্রেক্ষাপট (Deep Emerald Green Harmonized Section) */}
+      <section
+        id="establishment-context"
+        className="relative py-14 sm:py-18 bg-gradient-to-br from-[#042F2E] via-[#064E3B] to-[#042F2E] text-white border-b border-[#D4AF37]/30 overflow-x-clip"
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+          <ScrollReveal direction="up">
+            <div className="rounded-3xl bg-white/[0.06] backdrop-blur-sm border border-[#D4AF37]/35 shadow-2xl p-6 sm:p-10 space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/15 pb-4">
+                <div>
+                  <span className="text-xs font-bold tracking-[0.12em] uppercase text-[#D4AF37] block mb-1">
+                    {isEn ? 'Background of Establishment' : 'আমাদের শুরুর কথা'}
+                  </span>
+                  <h2 className="font-bornomala font-bold text-2xl sm:text-3xl text-white">
+                    {isEn ? 'Background of Establishment' : 'প্রতিষ্ঠার প্রেক্ষাপট'}
+                  </h2>
+                </div>
+                <span className="font-sans text-xs font-semibold text-[#D4AF37] self-start sm:self-auto">
+                  {isEn ? 'Est. January 1, 2023 · Bogura' : 'প্রতিষ্ঠাকাল: ১লা জানুয়ারি ২০২৩ · বগুড়া'}
                 </span>
-              </p>
+              </div>
 
-              {/* Prominent Glowing Green 'দান করুন' (Donate) Button */}
-              {onOpenDonation && (
-                <div className="flex justify-end pt-1 border-t border-white/15">
+              <div className="space-y-4 font-bornomala text-emerald-50/95 text-sm sm:text-base leading-relaxed">
+                <p className="text-white font-medium text-base sm:text-lg leading-relaxed">
+                  {t.hero.quote}
+                </p>
+                <p className="text-emerald-100/90">
+                  {isEn
+                    ? "Treating compassionate service as sincere worship during this critical hour for the Ummah, Zikrullah Foundation was established on January 1, 2023 in Gujia, Mokamtala, Shibganj, Bogura under the initiative of Hafizur Rahman Siddik (Bogura)—a non-political charitable organization dedicated to education, Da'wah, and human welfare."
+                    : 'উম্মাহর এই ক্রান্তিলগ্নে সেবাকে ইবাদত মনে করে এবং মানবিক দায়বদ্ধতা থেকে ১লা জানুয়ারি ২০২৩ ঈসায়ীতে গুজিয়া, মোকামতলা, শিবগঞ্জ, বগুড়া থেকে হাফিজুর রহমান সিদ্দিক (বগুড়া)-এর উদ্যোগে প্রতিষ্ঠিত হয় “জিকরুল্লাহ ফাউন্ডেশন”—যা শিক্ষা, দাওয়াহ ও মানবকল্যাণে নিবেদিত একটি অরাজনৈতিক সেবামূলক প্রতিষ্ঠান।'}
+                </p>
+              </div>
+
+              {onOpenEstablishmentModal && (
+                <div className="pt-1">
                   <button
-                    onClick={onOpenDonation}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#10b981] hover:bg-[#059669] active:scale-95 text-white font-bold text-xs shadow-[0_0_15px_rgba(16,185,129,0.5)] hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] border border-emerald-200/40 transition-all duration-300 cursor-pointer"
+                    type="button"
+                    onClick={onOpenEstablishmentModal}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D4AF37] hover:brightness-105 active:scale-98 text-[#0F172A] font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer whitespace-nowrap shrink-0"
                   >
-                    <svg className="w-3.5 h-3.5 stroke-white fill-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                    </svg>
-                    <span>{t.aboutVisual.btnDonate}</span>
+                    <BookOpen className="w-4 h-4 shrink-0" />
+                    <span>
+                      {isEn ? 'Read Complete Inception Story' : 'প্রতিষ্ঠার পূর্ণ প্রেক্ষাপট পড়ুন'}
+                    </span>
+                    <ArrowRight className="w-4 h-4 shrink-0" />
                   </button>
                 </div>
               )}
             </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Section 2: আমাদের সম্পর্কে জানুন */}
+      <section
+        id="about"
+        className="py-14 sm:py-20 bg-white border-b border-emerald-100/70 overflow-x-clip"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Visual Showcase & Quranic Verse Card (Amiri Arabic font) */}
+          <ScrollReveal direction="left" className="lg:col-span-5 w-full max-w-md mx-auto lg:max-w-none relative">
+            <div className="relative rounded-3xl overflow-hidden border-2 border-[#D4AF37]/40 shadow-2xl shadow-emerald-950/15 aspect-4/5 bg-[#042F2E] group">
+              <img
+                src="https://res.cloudinary.com/dlklqihg6/image/upload/v1792153191/wi0sp7ihynsemd1lmooq.jpg"
+                alt={isEn ? 'Zikrullah Foundation Humanitarian Work' : 'জিকরুল্লাহ ফাউন্ডেশন কার্যক্রম'}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#042F2E] via-[#064E3B]/40 to-transparent" />
+
+              {/* Bottom Quranic Ayah Box with Amiri Arabic Font */}
+              <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 p-3.5 sm:p-5 rounded-2xl bg-[#0F172A]/80 backdrop-blur-md border border-[#D4AF37]/50 shadow-xl text-white z-20">
+                <p
+                  className="font-arabic font-bold text-white text-[16px] sm:text-[18px] md:text-[20px] leading-[2.1] mb-2 text-center drop-shadow"
+                  style={{ color: '#FFFFFF' }}
+                  dir="rtl"
+                  lang="ar"
+                >
+                  {t.aboutVisual.quranArabic}
+                </p>
+
+                <p className="font-bornomala text-[11px] sm:text-xs text-emerald-100 leading-relaxed text-center mb-2.5">
+                  {t.aboutVisual.quranTranslation}
+                  <span className="block text-[#D4AF37] font-bold text-[10px] sm:text-xs mt-1">
+                    {t.aboutVisual.surahRef}
+                  </span>
+                </p>
+
+                {onOpenDonation && (
+                  <div className="flex justify-end pt-1.5 border-t border-white/15">
+                    <button
+                      type="button"
+                      onClick={onOpenDonation}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#064E3B] hover:bg-[#042F2E] text-white font-bold text-xs border border-[#D4AF37]/60 transition-all cursor-pointer"
+                    >
+                      <Heart className="w-3.5 h-3.5 fill-white" />
+                      <span>{t.aboutVisual.btnDonate}</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Editorial Overview: আমাদের সম্পর্কে জানুন */}
+          <ScrollReveal direction="right" className="lg:col-span-7 space-y-5">
+            <div>
+              <span className="text-xs font-bold tracking-[0.12em] uppercase text-[#064E3B] block mb-1">
+                {isEn ? 'Learn About Us' : 'সংগঠন ও শাখা পরিচিতি'}
+              </span>
+              <h2 className="font-bornomala font-bold text-2xl sm:text-4xl text-[#0F172A] leading-snug">
+                {isEn ? 'Learn About Us' : 'আমাদের সম্পর্কে জানুন'}
+              </h2>
+            </div>
+
+            <p className="font-bornomala text-sm sm:text-base text-slate-700 leading-relaxed">
+              {isEn
+                ? 'Zikrullah Foundation is a non-political charitable organization operating in Gujia, Mokamtala, Shibganj, Bogura, committed to food relief, healthcare, clean water, and sustainable livelihoods. Alongside welfare initiatives, Darul Haramain Academy operates as our distinct educational wing for balanced academic and Islamic instruction.'
+                : 'জিকরুল্লাহ ফাউন্ডেশন গুজিয়া, মোকামতলা, শিবগঞ্জ, বগুড়া অঞ্চলে পরিচালিত একটি অরাজনৈতিক কল্যাণমূলক ও শিক্ষা-সেবা প্রতিষ্ঠান। আমরা খাদ্য ও ত্রাণ সহায়তা, বিনামূল্যে চিকিৎসা ক্যাম্প, সুপেয় পানির নলকূপ এবং স্বাবলম্বীকরণ প্রকল্প পরিচালনা করি—যেখানে যেকোনো শুভাকাঙ্ক্ষী স্বতঃস্ফূর্তভাবে খেদমতে অংশগ্রহণ করতে পারেন।'}
+            </p>
+
+            {/* Institutional Structure Cards: Parent Organization & Distinct Educational Wing */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-2xl bg-[#F9FAF9] border border-emerald-200/80 p-4 space-y-1.5">
+                <div className="flex items-center gap-2 text-[#064E3B] text-xs font-bold">
+                  <Landmark className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  <span>{isEn ? 'Parent Organization' : 'মূল কল্যাণমূলক সংস্থা'}</span>
+                </div>
+                <div className="font-bornomala font-bold text-base text-[#0F172A]">
+                  {isEn ? 'Zikrullah Foundation' : 'জিকরুল্লাহ ফাউন্ডেশন'}
+                </div>
+                <p className="text-xs text-slate-600">
+                  {isEn ? FOUNDATION_INFO.addressEn : FOUNDATION_INFO.address}
+                </p>
+                <a
+                  href="tel:+8801620500920"
+                  className="inline-flex items-center gap-1.5 text-xs font-sans font-bold text-[#064E3B] hover:underline pt-1"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>01620500920</span>
+                </a>
+              </div>
+
+              <div className="rounded-2xl bg-[#F9FAF9] border border-slate-200 p-4 space-y-1.5">
+                <div className="flex items-center gap-2 text-[#0F172A] text-xs font-bold">
+                  <GraduationCap className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  <span>{isEn ? 'Distinct Educational Wing' : 'স্বতন্ত্র শিক্ষাপ্রতিষ্ঠান'}</span>
+                </div>
+                <div className="font-bornomala font-bold text-base text-[#0F172A]">
+                  {isEn ? 'Darul Haramain Academy' : 'দারুল হারামাইন একাডেমী'}
+                </div>
+                <p className="text-xs text-slate-600">
+                  {isEn
+                    ? 'Integrated general, Arabic & English studies'
+                    : 'সাধারণ শিক্ষা, আরবি ও ইংরেজি ভাষার সমন্বিত পাঠদান'}
+                </p>
+                <a
+                  href="tel:+8801804500509"
+                  className="inline-flex items-center gap-1.5 text-xs font-sans font-bold text-[#0F172A] hover:underline pt-1"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>01804500509</span>
+                </a>
+              </div>
+            </div>
+
+            {onNavigateToAbout && (
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={onNavigateToAbout}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0F172A] hover:bg-[#064E3B] text-white font-bold text-xs sm:text-sm border border-[#D4AF37]/50 transition-all cursor-pointer"
+                >
+                  <span>
+                    {isEn
+                      ? 'Explore Full Vision, Mission & Executive Team'
+                      : 'বিস্তারিত লক্ষ্য, উদ্দেশ্য ও কার্যনির্বাহী টিম দেখুন'}
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
+                </button>
+              </div>
+            )}
+          </ScrollReveal>
+        </div>
+      </section>
+    </>
   );
 };
