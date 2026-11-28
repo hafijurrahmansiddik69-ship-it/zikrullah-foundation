@@ -284,13 +284,13 @@ export const FounderProfilePage: React.FC<FounderProfilePageProps> = ({
               </div>
               <h3 className="font-bornomala font-bold text-2xl sm:text-3xl text-[#0F172A] leading-snug">
                 {isEn
-                  ? 'Invite Hafizur Rahman Siddik (Bogura) to Your Mosque or Program'
-                  : 'আপনার মসজিদ, মাহফিল বা ইসলামী সেমিনারে দাওয়াত দিতে আবেদন করুন'}
+                  ? 'You Can Invite Hafizur Rahman to Your Mosque, Mahfil or Islamic Seminar!'
+                  : 'আপনার মসজিদ, মাহফিল বা ইসলামী সেমিনারে হাফিজুর রহমানকে দাওয়াত জানাতে পারেন!'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 {isEn
-                  ? 'Submit your invitation request with venue, travel, and Hadiya details. Selected schedules are confirmed by the Bogura office.'
-                  : 'ভেন্যু, যাতায়াত ও হাদিয়ার তথ্যসহ নির্ধারিত ফরমে আবেদন জমা দিন। সময়সূচি সাপেক্ষে কার্যালয় থেকে যোগাযোগ করা হবে।'}
+                  ? 'Send the form with the program venue and essential travel details. If the schedule matches, our team will contact you warmly, InshaAllah.'
+                  : 'প্রোগ্রামের স্থান এবং যাতায়াতের প্রয়োজনীয় তথ্য দিয়ে ফরমটি পাঠিয়ে দিন। সময়সূচি মিললে আমাদের টিম থেকে আন্তরিকভাবে যোগাযোগ করা হবে, ইনশাআল্লাহ।'}
               </p>
             </div>
 
@@ -304,7 +304,7 @@ export const FounderProfilePage: React.FC<FounderProfilePageProps> = ({
                 <span className="absolute -inset-1 rounded-full bg-white/15 blur-xs animate-pulse" />
                 <Mic className="w-5 h-5 text-white animate-mic-twinkle relative z-10" />
               </span>
-              <span>{isEn ? 'Apply for Invitation' : 'দাওয়াতের জন্য আবেদন'}</span>
+              <span>{isEn ? 'Send Invitation' : 'দাওয়াত পাঠান'}</span>
             </button>
           </div>
         </ScrollReveal>

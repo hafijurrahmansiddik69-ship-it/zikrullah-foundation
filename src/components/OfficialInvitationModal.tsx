@@ -1831,38 +1831,43 @@ export const OfficialInvitationModal: React.FC<OfficialInvitationModalProps> = (
                     <AlertTriangle className="w-4 h-4 shrink-0 text-[#dc2626]" aria-hidden="true" />
                     <span>{isEn ? 'Important Terms & Conditions' : 'গুরুত্বপূর্ণ শর্তাবলি'}</span>
                   </div>
-                  <ol className="list-decimal pl-5 text-[12px] leading-relaxed space-y-1">
+                  <ol className="list-decimal pl-5 text-[12px] leading-relaxed space-y-1.5">
                     <li>
                       <strong>{isEn ? 'Accurate Information:' : 'সঠিক তথ্য:'}</strong>{' '}
                       {isEn
-                        ? 'All information provided in the form must be completely accurate.'
-                        : 'ফর্মে প্রদত্ত সকল তথ্য অবশ্যই নির্ভুল হতে হবে।'}
+                        ? 'All information must be accurate; providing false information will result in cancellation of the application.'
+                        : 'সব তথ্য নির্ভুল হতে হবে; মিথ্যা তথ্য প্রদান করলে আবেদনটি বাতিল বলে গণ্য হবে।'}
                     </li>
                     <li>
-                      <strong>{isEn ? 'Travel Arrangement:' : 'যাতায়াত ব্যবস্থা:'}</strong>{' '}
+                      <strong>{isEn ? 'Publicity:' : 'প্রচারণা:'}</strong>{' '}
                       {isEn
-                        ? 'The organizing committee must ensure respectful travel arrangements and protocol.'
-                        : 'আয়োজক কমিটিকে সম্মানজনক যাতায়াত ও প্রটোকল নিশ্চিত করতে হবে।'}
+                        ? 'Advertising by name, poster, or loudspeaker announcement before final approval is prohibited.'
+                        : 'চূড়ান্ত সম্মতির আগে নাম, পোস্টার বা মাইকিং প্রচার নিষিদ্ধ।'}
                     </li>
                     <li>
-                      <strong>{isEn ? 'Event Security:' : 'অনুষ্ঠানের নিরাপত্তা:'}</strong>{' '}
+                      <strong>{isEn ? 'Travel & Protocol:' : 'যাতায়াত ও প্রোটোকল:'}</strong>{' '}
                       {isEn
-                        ? 'Overall security and an orderly environment must be maintained at the Mahfil or event.'
-                        : 'মাহফিল বা আয়োজনের সার্বিক নিরাপত্তা ও সুষ্ঠু পরিবেশ বজায় রাখতে হবে।'}
+                        ? 'Ensuring respectful travel and protocol is the responsibility of the organizing committee.'
+                        : 'সম্মানজনক যাতায়াত ও প্রোটোকল আয়োজক কমিটির দায়িত্ব।'}
                     </li>
                     <li>
-                      <strong>{isEn ? 'Final Decision:' : 'চূড়ান্ত সিদ্ধান্ত:'}</strong>{' '}
+                      <strong>{isEn ? 'Permission & Security:' : 'অনুমতি ও নিরাপত্তা:'}</strong>{' '}
                       {isEn
-                        ? 'The authority reserves the right to accept or reschedule invitations subject to time and date availability.'
-                        : 'সময় ও তারিখ সাপেক্ষে দাওয়াত গ্রহণ বা পরিবর্তনের এখতিয়ার কর্তৃপক্ষের সংরক্ষিত।'}
+                        ? 'Administrative permission and security for the Mahfil are the responsibility of the organizing committee.'
+                        : 'প্রশাসনিক অনুমতি এবং মাহফিলের নিরাপত্তার দায়িত্ব আয়োজক কমিটির।'}
                     </li>
                     <li>
-                      <strong>{isEn ? 'Publicity Restriction:' : 'প্রচারণা নিষেধাজ্ঞা:'}</strong>{' '}
+                      <strong>{isEn ? 'Date, Time & Changes:' : 'তারিখ, সময় ও পরিবর্তন:'}</strong>{' '}
                       {isEn
-                        ? 'Do not publicize the speaker’s name on posters, banners, or loudspeaker announcements prior to final consent.'
-                        : 'চূড়ান্ত সম্মতির পূর্বে পোস্টার, ব্যানার বা মাইকিংয়ে নাম প্রচার করা যাবে না।'}
+                        ? 'Please consult with us before finalizing the program date and time. Dates may change due to natural disasters or unforeseen circumstances.'
+                        : 'প্রোগ্রামের তারিখ ও সময় চূড়ান্ত করার পূর্বে আমাদের সাথে পরামর্শ করবেন। প্রাকৃতিক দুর্যোগ বা অনাকাঙ্ক্ষিত সমস্যার কারণে তারিখ পরিবর্তন হতে পারে।'}
                     </li>
                   </ol>
+                  <p className="mt-2.5 pt-2 border-t border-[#fecaca] text-[12px] italic font-semibold text-[#991b1b]">
+                    {isEn
+                      ? 'Acceptance or rescheduling of the invitation will be finalized through mutual coordination, InshaAllah.'
+                      : 'পারস্পরিক সমন্বয়ে দাওয়াত গ্রহণ বা পরিবর্তনের বিষয়টি চূড়ান্ত করা হবে, ইনশাআল্লাহ।'}
+                  </p>
                 </div>
 
                 <div data-field-name="agreedToTerms">

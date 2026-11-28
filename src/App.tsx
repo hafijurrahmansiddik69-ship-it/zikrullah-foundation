@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
 import { OngoingActivitiesSection } from './components/OngoingActivitiesSection';
@@ -180,6 +181,16 @@ function MainApp() {
               onNavigateToFounder={() => navigateTo('founder')}
               onOpenEstablishmentContext={() => setIsContextModalOpen(true)}
               onOpenDonation={(cat) => handleOpenDonation(cat)}
+              onOpenVolunteer={() => setIsVolunteerOpen(true)}
+              onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
+              onOpenContactModal={() => setIsDirectContactOpen(true)}
+            />
+
+            <AboutSection
+              onNavigateToAbout={() => navigateTo('about')}
+              onNavigateToFounder={() => navigateTo('founder')}
+              onOpenEstablishmentModal={() => setIsContextModalOpen(true)}
+              onOpenDonation={() => handleOpenDonation('general-sadaqah')}
               onOpenVolunteer={() => setIsVolunteerOpen(true)}
               onOpenNeedyInfo={() => setIsNeedyInfoOpen(true)}
               onOpenContactModal={() => setIsDirectContactOpen(true)}

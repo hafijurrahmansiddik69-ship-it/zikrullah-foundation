@@ -74,7 +74,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden bg-[#030805] text-white pt-8 sm:pt-12 pb-16 sm:pb-20"
+      className="relative flex flex-col items-center justify-start overflow-hidden bg-[#030805] text-white pt-7 sm:pt-10 pb-8 sm:pb-10"
     >
       {/* 1. Background Layer: User's Cloudinary Image + Bangladesh Map & Bogura Light Rays Animation */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
@@ -85,12 +85,12 @@ export const Hero: React.FC<HeroProps> = ({
           className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.06]"
         />
         
-        {/* Bangladesh Map & Bogura Light Rays Overlay (Full uncropped responsive framing across all screens) */}
-        <div className="absolute inset-0 flex items-start justify-center pt-4 sm:pt-7 pb-4 px-2 pointer-events-none select-none opacity-80 sm:opacity-90 animate-map-opening">
+        {/* Bangladesh Map & Bogura Light Rays Overlay (Identical centered responsive framing on mobile, laptop & desktop) */}
+        <div className="absolute inset-0 flex items-center justify-center py-3 sm:py-4 px-3 pointer-events-none select-none opacity-85 animate-map-opening">
           <svg
             viewBox="15 20 570 635"
-            className="w-full h-auto max-w-[94vw] sm:max-w-[580px] md:max-w-[640px] lg:max-w-[680px] max-h-[92%] object-contain mx-auto select-none pointer-events-none drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]"
-            preserveAspectRatio="xMidYMin meet"
+            className="w-[92%] max-w-[540px] h-[92%] mx-auto select-none pointer-events-none drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]"
+            preserveAspectRatio="xMidYMid meet"
           >
             <defs>
               <linearGradient id="bdMapFill" x1="0%" y1="0%" x2="100%" y2="100%">
